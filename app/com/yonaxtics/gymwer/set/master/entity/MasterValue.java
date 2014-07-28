@@ -27,7 +27,7 @@ public class MasterValue  extends Entity{
 	
 	public boolean isEmpty(){
 		
-		return value1 == null ;
+		return value1 == null || value1 == "" || value2 == null || value2 == "";
 		
 	}
 	

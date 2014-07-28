@@ -24,6 +24,14 @@ public class User extends MasterValue {
 		
 	}
 	
+	public User(String user, String password){
+		
+		super(0);
+		setValue1(user);
+		setValue2(password);
+		
+	}
+	
 	public User(int id, String user, String password){
 		
 		super(id);
@@ -37,6 +45,8 @@ public class User extends MasterValue {
 		super(0);
 		setValue2(password);
 	}
+	
+	
 	
 	public String getName(){
 		

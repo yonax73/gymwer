@@ -1,11 +1,11 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
 
-#loginControl
+#UserControl
 
-GET      /login                           com.gymwer.set.controller.login.LoginControl.login()
-GET      /signup                          com.gymwer.set.controller.login.LoginControl.signUp()
-POST    /createAccount                    com.gymwer.set.controller.login.LoginControl.createAccount()
+GET      /login                           com.yonaxtics.gymwer.set.user.controller.UserControl.login()
+GET      /signup                          com.yonaxtics.gymwer.set.user.controller.UserControl.signUp()
+POST    /createAccount                    com.yonaxtics.gymwer.set.user.controller.UserControl.createAccount()
 
 
 

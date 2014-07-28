@@ -9,11 +9,24 @@ package com.yonaxtics.gymwer.util;
  */
 public class Constant {
 
-	
+	/**
+	 * SEX
+	 */
 	public final static int FEMALE = 0;
 	public final static int  MALE = 1;
 	
+	/**
+	 * CLIENT
+	 */	
 	public final static String CHECKED = "on";
-	public final static String USER_ADMIN = "ADMIN";
+	
+	
+	/**
+	 * ROLES
+	 */
+	public final static String USER_ADMIND = "ADMIN";
+	public final static int ROL_ADMIND = 2;
+	
+	
 	
 }

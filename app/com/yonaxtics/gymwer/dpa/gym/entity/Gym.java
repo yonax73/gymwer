@@ -28,6 +28,13 @@ public class Gym extends Entity {
 		
 	}
 	
+	public Gym(String name, Person contact){
+		
+		super(0);
+		this.name = name;
+		this.contact = contact;
+	}
+	
 	public String getNit() {
 		return nit;
 	}

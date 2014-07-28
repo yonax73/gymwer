@@ -32,10 +32,7 @@ public class Entity {
 	
 	
 		
-	public boolean isNull(){
-		
-		return this == null;
-	}
+
 	
 	
 	
@@ -55,7 +52,7 @@ public class Entity {
 	
 	public boolean isValid(){
 		
-		return  !isNull() && exists();
+		return   exists() && isActive();
 	}
 	
 	

@@ -2,14 +2,19 @@ package com.yonaxtics.gymwer.set.user.controller;
 
 import java.util.Map;
 
-
-import com.yonaxtics.gymwer.set.user.entity.User;
-import com.yonaxtics.gymwer.util.Constant;
-
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.set.login.login;
 import views.html.set.login.signup;
+
+import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
+import com.yonaxtics.gymwer.dpa.gym.logic.GymLogic;
+import com.yonaxtics.gymwer.set.master.entity.Role;
+import com.yonaxtics.gymwer.set.person.entity.Person;
+import com.yonaxtics.gymwer.set.person.logic.PersonLogic;
+import com.yonaxtics.gymwer.set.user.entity.User;
+import com.yonaxtics.gymwer.set.user.logic.UserLogic;
+import com.yonaxtics.gymwer.util.Constant;
 /**
  * 
  * @author yonatan quintero
@@ -18,6 +23,9 @@ import views.html.set.login.signup;
  */
 public class UserControl extends Controller {
 
+	
+	
+	
 	public static Result login() {
 
 		return ok(login.render());
@@ -36,21 +44,57 @@ public class UserControl extends Controller {
 	
 	public static Result createAccount() {
 
-		final Map<String, String[]> data = request().body().asFormUrlEncoded();
-		
+		String result = null;
 		User user = null;
+		Person contact = null;
+		Gym gym = null;		
 		
-		if (data.get("cbxTerms")[0] == Constant.CHECKED) {
+		final Map<String, String[]> data = request().body().asFormUrlEncoded();		
+		
+		if (data.get("cbxTerms")[0].equals(Constant.CHECKED)) {
 
-			if (data.get("txtPassword")[0] == data.get("txtConfirmPassword")[0]) {
+			if (data.get("txtPassword")[0].equals(data.get("txtConfirmPassword")[0])) {
 
-				user = new User(0, data.get("txtName")[0],data.get("txtPassword")[0]);
+				user = new User(Constant.USER_ADMIND,data.get("txtPassword")[0]);				
 				
-			}
-
+		        if(UserLogic.create(user)){
+		        	
+		        	contact = new Person(data.get("txtEmail")[0],user);
+		        	contact.setRole(new Role(Constant.ROL_ADMIND));
+		        	
+		        	if(PersonLogic.create(contact)){
+		        		
+		        		gym = new Gym(data.get("txtName")[0], contact);
+		        		
+		        		if(GymLogic.create(gym)){
+		        			
+		        			return ok("Has been creating account Successfully");
+		        			
+		        		}else {
+		        		   
+		        			result = "3001 - Server Internal Error";
+		        		}		        		
+		        		
+		        	}else {
+		        		
+		        		result = "2001 - Server Internal Error";
+		        	}
+		        	
+		        } else {
+		        	
+		        	result = "1001 - Server Internal Error";
+		        }				
+			} else { 
+				
+				result = "The password and its confirm are not the same."; 
+		 	}
+			
+		} else {
+			
+			result = "Please choose Terms and Conditions."; 
 		}
 
-		return ok();
+		return ok(result);
 
 	}
 

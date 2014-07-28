@@ -25,19 +25,14 @@ public class Person extends Entity {
 		
 		super(id);		
 	}
-	
-	public Person(int id, String name){
 		
-		super(id);
-		this.name = name;
-	}
-	
-	public Person(int id, String name,String email){
+	public Person(String email, User user){
 		
-		super(id);
-		this.name = name;
+		super(0);
 		this.email = email;
-	}
+		this.user = user;
+	}	
+
 	
 	public User getUser() {
 		return user;
