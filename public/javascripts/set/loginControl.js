@@ -1,9 +1,9 @@
 require.config({
 	baseUrl : 'assets/javascripts',
 	paths : {
-		Constants : 'play/utils/Constants',
-		Play : 'play/utils/Play',
-		Validate: 'play/utils/Validate' 
+		Constants : 'play/yonaxtics/Constants',
+		Play : 'play/yonaxtics/Play',
+		Validate: 'play/yonaxtics/Validate' 
 	}
 });
 
@@ -49,8 +49,31 @@ requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate)
  */
 	var altSignUp = Play.getId('alertSignUp');
 	var btnClose = Play.getClass('close');
-	var msgName = Play.getId('msgName');
+	
+	
 	var txtName = Play.getId('txtName');
+	var msgName = Play.getId('msgName');	
+	var txtNameMessage = 'The name can only consist of alphabetical,dot andunderscore';
+	
+	var txtEmail = Play.getId('txtEmail');
+	var msgEmail = Play.getId('msgEmail');
+	var txtEmailMessage = 'The input is not a valid email address';
+	
+	var txtPassword = Play.getId('txtPassword');
+	var msgPassword = Play.getId('msgPassword');
+	var txtPasswordMessage = 'The confirm password is required and can\'t be empty';
+	
+	var txtConfirmPassword = Play.getId('txtConfirmPassword');
+	var msgConfirmPassword = Play.getId('msgConfirmPassword');
+	var txtConfirmPasswordMessage = 'The password and its confirm are not the same';
+	
+	var cbxTerms = Play.getId('cbxTerms');
+	var msgTerms  = Play.getId('msgTerms');
+	var txtTermsMessage = 'Please choose Terms and Conditions.';
+	
+	var frmSingUp = Play.getId('frmSignUp');
+	
+	var valid = false;
 	
 /* ==================================================================================================================
  *  END REGION ATRIBUTOS
@@ -91,15 +114,39 @@ requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate)
 	/**
 	 * Reset messages input form
 	 */
-	Play.addClass(msgName, Constants.HIDDEN);	
+	Play.addClass(msgName, Constants.HIDDEN);
+	Play.addClass(msgEmail, Constants.HIDDEN);
+	Play.addClass(msgPassword, Constants.HIDDEN);
+	Play.addClass(msgConfirmPassword, Constants.HIDDEN);
+	Play.addClass(msgTerms, Constants.HIDDEN);
 	
-	txtName.addEventListener('blur', function() {Validate.validateName(this,'The name can only consist of alphabetical, number, dot andunderscore');}, false);
-	txtName.addEventListener('keyup', function() {Validate.validateName(this,'The name can only consist of alphabetical, number, dot andunderscore');}, false);
-
-
+	/**
+	 * Validate inputs
+	 */
+	
+	txtName.onblur = function(){ valid =	Validate.fullName(this,msgName,txtNameMessage); }	
+	txtName.onkeyup = function() { valid =	Validate.fullName(this,msgName,txtNameMessage); }
+	
+	txtEmail.onblur = function(){ valid =	Validate.email(this,msgEmail,txtEmailMessage); }	
+	txtEmail.onkeyup = function() { valid =	Validate.email(this,msgEmail,txtEmailMessage); }
+	
+	txtEmail.onblur = function(){ valid =	Validate.email(this,msgEmail,txtEmailMessage); }	
+	
 			
+	frmSignUp.onsubmit = function(e) {
+		
+		e.preventDefault();
+		
+		if(valid){
 			
-
+			alert('ok');
+		
+		} else {
+			
+			alert('error');
+		}
+	}
+   
 
 	
 
