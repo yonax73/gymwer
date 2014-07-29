@@ -1,0 +1,8 @@
+#Server Internal Error User - 10
+1001 = Error creating user From UserControl - createAcount
+
+#Server Internal Error Person- 20
+2001 = Error creating person From UserControl - createAcount
+
+#Server Internal Error Gym- 20
+3001 = Error creating gym From UserControl - createAcount

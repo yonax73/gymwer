@@ -1,13 +1,11 @@
-//require.config({
-//	baseUrl : 'assets/javascripts',
-//	paths : {
-//		jquery : 'plugins/jquery-1.11.1.min',
-//		bootstrap : 'plugins/bootstrap.min',
-//		bootstrapValidator : 'plugins/bootstrapValidator.min',
-//		notify : 'plugins/notify.min'
-//			
-//	}
-//});
+require.config({
+	baseUrl : 'assets/javascripts',
+	paths : {
+		Constants : 'play/utils/Constants',
+		Play : 'play/utils/Play',
+		Validate: 'play/utils/Validate' 
+	}
+});
 
 /*
  * ! loginControl Copyright 2014 YonaxTics, Inc. Licensed under
@@ -33,230 +31,232 @@
  * the License.
  * ========================================================================
  */
+/*
+ * ========================================================================
+ * Version 0.1: 28-june-2014 Created on : 28-june-2014 Author : Yonatan Alexis
+ * Quintero Rodriguez
+ * ========================================================================
+ */
 
-function getId(id){
+
+
+
+requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate) {
+
+/* ==================================================================================================================
+ * REGION ATRIBUTOS
+ * ===================================================================================================================
+ */
+	var altSignUp = Play.getId('alertSignUp');
+	var btnClose = Play.getClass('close');
+	var msgName = Play.getId('msgName');
+	var txtName = Play.getId('txtName');
 	
-	return document.getElementById(id);
-}
-
-function appendClass(element,className){
+/* ==================================================================================================================
+ *  END REGION ATRIBUTOS
+ * ===================================================================================================================
+ */
 	
-	element.className +=' '+className;
-}
-
-function addClass(element,className){
 	
-	element.className =className;
-}
-
-function getClass(className){
 	
-	return document.getElementsByClassName(className)[0];
-}
-
-function addHtml(id,html){
 	
-	getId(id).innerHTML = html;
-}
+/* ==================================================================================================================
+ * REGION ALERTS
+ * ===================================================================================================================
+ */
+			
 
-function serializeForm(form) {
+	Play.addClass(altSignUp, Constants.HIDDEN);
 
-	 
-	  var elems = form.elements;
-	  
-	  var serialized = [], i, len = elems.length, str='';
-	  
-	  for(i = 0; i < len; i += 1) {
-	  
-	    var element = elems[i];
-	    var type = element.type;
-	    var name = element.name;
-	    var value = element.value;
-	    
-	    switch(type) {
-	    
-	      case 'text':
-	      case 'radio':
-	      case 'checkbox':
-	      case 'textarea':
-	      case 'select-one':
-	      case 'password':	  
-	      
-	      str = name + '=' + value;
-	      
-	      serialized.push(str);
-	      
-	      break;
-	      
-	      default:
-	      
-	      
-	        break;
-	        
-	    }    
-	  
-	  }
-	  
-	  return serialized.join('&');
+	Play.addClass(altSignUp, Constants.ALERT_DANGER);
 
-	}
+	Play.appendClass(altSignUp, Constants.SHOW);
+
+	btnClose.addEventListener('click', function() {Play.addClass(altSignUp, Constants.HIDDEN);}, false);
+
+	
+	
+/* ==================================================================================================================
+ * END REGION ALERTS
+ * ===================================================================================================================
+ */
+			
+
+/* ==================================================================================================================
+ * REGION FORM
+ * ===================================================================================================================
+ */
+		
+
+	/**
+	 * Reset messages input form
+	 */
+	Play.addClass(msgName, Constants.HIDDEN);	
+	
+	txtName.addEventListener('blur', function() {Validate.validateName(this,'The name can only consist of alphabetical, number, dot andunderscore');}, false);
+	txtName.addEventListener('keyup', function() {Validate.validateName(this,'The name can only consist of alphabetical, number, dot andunderscore');}, false);
 
 
-var alertSuccess = 'alert alert-success alert-dismissible';
-var alertInfo = 'alert alert-info alert-dismissible';
-var alertWarning = 'alert alert-warning alert-dismissible';
-var alertDanger = 'alert alert-danger alert-dismissible';
-
-var hidden = 'hidden';
-var show = 'show';
-
-var alertSu = getId('alertSignUp');
-
-addClass(alertSu,hidden);
-addClass(alertSu,alertDanger);
-appendClass(alertSu,show);
-
-var btnClose = getClass('close');
-btnClose.addEventListener('click', function(){addClass(alertSu,hidden);}, false);
+			
+			
 
 
-getId('frmSignUp').onsubmit = function(e) {
-	 
-    e.preventDefault();   
-    
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = alertContents;    
-    xhr.open('POST','/createAccount');
-    xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
-    xhr.send(serializeForm(e.target));
+	
 
-    function alertContents (){
+/* ==================================================================================================================
+ * END REGION FORM
+ * ===================================================================================================================
+ */
+			
+			
+			
+			
+			
+});
 
-    	alertSu.innerHTML +='momemt please..';
-     
-          if (this.readyState === 4 && this.status === 200) {
-            	
-           	 
-           	 alertSu.innerHTML = this.responseText;
-          } 
-    }
- 
- 
-    
-
-
-
-    
-
-    
-    
-    
-}
-
-
-//requirejs(
-//		[ 'jquery', 'bootstrap','bootstrapValidator','notify' ],
-//		function($, bootstrap,bootstrapValidator) {
+// getId('frmSignUp').onsubmit = function(e) {
+//	 
+//	
+//	
+//	
+// e.preventDefault();
+//    
+// var xhr = new XMLHttpRequest();
+// xhr.onreadystatechange = alertContents;
+// xhr.open('POST','/createAccount');
+// xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;
+// charset=UTF-8");
+// xhr.send(serializeForm(e.target));
 //
-//			if (document.createStyleSheet) {
-//				document
-//						.createStyleSheet('assets/stylesheets/bootstrapValidator.min.css');
-//			} else {
-//				$('head')
-//						.append(
-//								$('<link rel="stylesheet" href="assets/stylesheets/bootstrapValidator.min.css" type="text/css" media="screen" />'));
-//			}
+// function alertContents (){
+//
+// altSignUp.innerHTML +='momemt please..';
+//     
+// if (this.readyState === 4 && this.status === 200) {
+//            	
+//           	 
+// altSignUp.innerHTML = this.responseText;
+// }
+// }
+// 
+// 
+//    
 //
 //
 //
-//			$('#frmSignUp')
-//					.bootstrapValidator(
-//							{
-//								message : 'This value is not valid',
-//								fields : {
-//									'txtName' : {
-//										message : 'The name is not valid',
-//										validators : {
-//											notEmpty : {
-//												message : 'The name is required and can\'t be empty'
-//											},
-//											stringLength : {
-//												min : 6,
-//												max : 40,
-//												message : 'The name must be more than 6 and less than 30 characters long'
-//											},
-//											regexp : {
-//												regexp : /^[a-zA-Z][a-zA-Z ]+$/,
-//												message : 'The name can only consist of alphabetical, number, dot and underscore'
-//											},
-//											different : {
-//												field : 'txtPassword',
-//												message : 'The name and password can\'t be the same as each other'
-//											}
-//										}
-//									},
-//									txtEmail : {
-//										validators : {
-//											notEmpty : {
-//												message : 'The email address is required and can\'t be empty'
-//											},
-//											emailAddress : {
-//												message : 'The input is not a valid email address'
-//											}
-//										}
-//									},
-//									txtPassword : {
-//										validators : {
-//											notEmpty : {
-//												message : 'The password is required and can\'t be empty'
-//											},
-//											identical : {
-//												field : 'txtConfirmPassword',
-//												message : 'The password and its confirm are not the same'
-//											},
-//											different : {
-//												field : 'txtName',
-//												message : 'The password can\'t be the same as username'
-//											}
-//										}
-//									},
-//									txtConfirmPassword : {
-//										validators : {
-//											notEmpty : {
-//												message : 'The confirm password is required and can\'t be empty'
-//											},
-//											identical : {
-//												field : 'txtPassword',
-//												message : 'The password and its confirm are not the same'
-//											},
-//											different : {
-//												field : 'txtName',
-//												message : 'The password can\'t be the same as username'
-//											}
-//										}
-//									},
-//									cbxTerms:{
-//						                  validators: {
-//						                    choice: {
-//						                        min: 1,
-//						                        max: 1,
-//						                        message: 'Please choose Terms and Conditions.'
-//						                    }
-//						                }
-//									},
-//								}
-//							})
-//					        .on('success.form.bv', function(e) {
+//    
+//
+//    
+//    
+//    
+// }
+
+// requirejs(
+// [ 'jquery', 'bootstrap','bootstrapValidator','notify' ],
+// function($, bootstrap,bootstrapValidator) {
+//
+// if (document.createStyleSheet) {
+// document
+// .createStyleSheet('assets/stylesheets/bootstrapValidator.min.css');
+// } else {
+// $('head')
+// .append(
+// $('<link rel="stylesheet"
+// href="assets/stylesheets/bootstrapValidator.min.css" type="text/css"
+// media="screen" />'));
+// }
+//
+//
+//
+// $('#frmSignUp')
+// .bootstrapValidator(
+// {
+// message : 'This value is not valid',
+// fields : {
+// 'txtName' : {
+// message : 'The name is not valid',
+// validators : {
+// notEmpty : {
+// message : 'The name is required and can\'t be empty'
+// },
+// stringLength : {
+// min : 6,
+// max : 40,
+// message : 'The name must be more than 6 and less than 30 characters long'
+// },
+// regexp : {
+// regexp : /^[a-zA-Z][a-zA-Z ]+$/,
+// message : 'The name can only consist of alphabetical, number, dot and
+// underscore'
+// },
+// different : {
+// field : 'txtPassword',
+// message : 'The name and password can\'t be the same as each other'
+// }
+// }
+// },
+// txtEmail : {
+// validators : {
+// notEmpty : {
+// message : 'The email address is required and can\'t be empty'
+// },
+// emailAddress : {
+// message : 'The input is not a valid email address'
+// }
+// }
+// },
+// txtPassword : {
+// validators : {
+// notEmpty : {
+// message : 'The password is required and can\'t be empty'
+// },
+// identical : {
+// field : 'txtConfirmPassword',
+// message : 'The password and its confirm are not the same'
+// },
+// different : {
+// field : 'txtName',
+// message : 'The password can\'t be the same as username'
+// }
+// }
+// },
+// txtConfirmPassword : {
+// validators : {
+// notEmpty : {
+// message : 'The confirm password is required and can\'t be empty'
+// },
+// identical : {
+// field : 'txtPassword',
+// message : 'The password and its confirm are not the same'
+// },
+// different : {
+// field : 'txtName',
+// message : 'The password can\'t be the same as username'
+// }
+// }
+// },
+// cbxTerms:{
+// validators: {
+// choice: {
+// min: 1,
+// max: 1,
+// message: 'Please choose Terms and Conditions.'
+// }
+// }
+// },
+// }
+// })
+// .on('success.form.bv', function(e) {
 //					            
-//					            e.preventDefault();					          
-//					            var $form = $(e.target);					          
-//					            $.post('/createAccount',$form.serialize(), function( data ) {
+// e.preventDefault();
+// var $form = $(e.target);
+// $.post('/createAccount',$form.serialize(), function( data ) {
 //					            	     
 //					            	
-//					            	$('#frmSignUp').notify(data,{ position:'top center' });
+// $('#frmSignUp').notify(data,{ position:'top center' });
 //					            	
-//					            	alert(data);
-//					            	});					
-//					        });
+// alert(data);
+// });
+// });
 //
-//		});
+// });
