@@ -104,6 +104,53 @@ define(['./Play','./Constants'], function(Play,Constants) {
 	
 	
 	
+	/**
+	 * @param input
+	 * @param input1
+	 * @param msg
+	 * @returns isValid
+	 */
+	Validate.equals = function (input,input1,message,value) {
+
+		if (input.value === input1.value) {
+
+			Play.addClass(input.parentNode.parentNode,Constants.HAS_SUCCESS);
+			Play.addClass(message, Constants.HIDDEN);
+			return true;
+
+		} else {
+
+			Play.addClass(input.parentNode.parentNode,Constants.HAS_ERROR);
+			Play.addClass(message, Constants.TEXT_DANGER);
+			Play.addHtml(message,value);
+			return false;
+		}
+	}
+	
+
+	
+	/**
+	 * @param input
+	 * @param msg
+	 * @returns isValid
+	 */
+	Validate.isChecked = function (input,message,value) {
+
+		if (input.checked) {
+
+			
+			Play.addClass(message, Constants.HIDDEN);
+			return true;
+
+		} else {
+
+			
+			Play.addClass(message, Constants.TEXT_DANGER);
+			Play.addHtml(message,value);
+			return false;
+		}
+	}	
+	
 	
 	return Validate;
 	

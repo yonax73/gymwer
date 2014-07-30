@@ -130,7 +130,13 @@ requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate)
 	txtEmail.onblur = function(){ valid =	Validate.email(this,msgEmail,txtEmailMessage); }	
 	txtEmail.onkeyup = function() { valid =	Validate.email(this,msgEmail,txtEmailMessage); }
 	
-	txtEmail.onblur = function(){ valid =	Validate.email(this,msgEmail,txtEmailMessage); }	
+	txtPassword.onblur = function(){ valid =	Validate.empty(this,msgPassword,txtPasswordMessage); }
+	txtPassword.onkeyup = function(){ valid =	Validate.empty(this,msgPassword,txtPasswordMessage); }
+	
+	txtConfirmPassword.onblur = function(){ valid =  Validate.equals(this,txtPassword,msgConfirmPassword,txtConfirmPasswordMessage) }
+	txtConfirmPassword.onkeyup = function(){ valid = Validate.equals(this,txtPassword,msgConfirmPassword,txtConfirmPasswordMessage) }
+	
+	
 	
 			
 	frmSignUp.onsubmit = function(e) {
@@ -139,15 +145,41 @@ requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate)
 		
 		if(valid){
 			
-			alert('ok');
-		
-		} else {
-			
-			alert('error');
-		}
-	}
+			if(Validate.fullName(txtName,msgName,txtNameMessage){
+				
+				if(Validate.email(txtEmail,msgEmail,txtEmailMessage)){
+					
+					if(Validate.empty(txtPassword,msgPassword,txtPasswordMessage)){
+						
+						if(Validate.equals(txtConfirmPassword,txtPassword,msgConfirmPassword,txtConfirmPasswordMessage)){
+			              
+							if(Validate.isChecked(cbxTerms,msgTerms,txtTermsMessage)){
+							     
+								 var xhr = new XMLHttpRequest();
+								 
+								 xhr.onreadystatechange = alertContents;
+								 xhr.open('POST','/createAccount');
+								 xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;
+								 charset=UTF-8");
+								 xhr.send(serializeForm(e.target));
+								
+								 function alertContents (){
+								
+								 altSignUp.innerHTML +='momemt please..';
+								     
+								 if (this.readyState === 4 && this.status === 200) {
+								            	
+								           	 
+								 altSignUp.innerHTML = this.responseText;
+								 }					
+							}							
+						}
+					}					
+				}				
+			}	
+	    }
    
-
+	}
 	
 
 /* ==================================================================================================================
