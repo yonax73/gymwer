@@ -8,7 +8,7 @@ require.config({
 });
 
 /*
- * ! loginControl Copyright 2014 YonaxTics, Inc. Licensed under
+ * ! signup Copyright 2014 YonaxTics, Inc. Licensed under
  * http://www.apache.org/licenses/LICENSE-2.0
  */
 
@@ -94,7 +94,7 @@ requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate)
 			
 
 	Play.addClass(altSignUp, Constants.HIDDEN);
-	btnClose.addEventListener('click', function() {Play.addClass(altSignUp, Constants.HIDDEN);}, false);
+	btnClose.onclick = function (){Play.addClass(altSignUp, Constants.HIDDEN);};
 	
 	
 /* ==================================================================================================================
@@ -164,12 +164,20 @@ requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate)
 									 
 									 btnSignUp.disabled = true;
 								        
-									  if (this.readyState === 4 && this.status === 200) {
-										  										  
-										    msgSignUp.textContent  = this.responseText;
-										    Play.addClass(icoSignUp, Constants.ICO_ERROR);
-											Play.addClass(altSignUp, Constants.ALERT_DANGER);
-											btnSignUp.disabled = false;;
+									  if (this.readyState === 4) {
+										  						
+										  if(this.status === 200 && this.responseText === Constants.REQUEST_SUCCESS){
+											  
+											  sessionStorage.setItem("msgLoginSession", "Your account has been created successfully");
+											  window.location = '/login';
+											  
+										  }else {
+											  
+											    msgSignUp.textContent  = this.responseText;
+											    Play.addClass(icoSignUp, Constants.ICO_ERROR);
+												Play.addClass(altSignUp, Constants.ALERT_DANGER);
+												btnSignUp.disabled = false;											  
+										  }
 									  }
 								 }
 								 xhr.open('POST','/createAccount');

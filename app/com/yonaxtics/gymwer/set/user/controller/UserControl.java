@@ -68,7 +68,7 @@ public class UserControl extends Controller {
 		        		
 		        		if(GymLogic.create(gym)){
 		        			
-		        			return ok("Has been creating account Successfully");
+		        			return ok(Constant.REQUEST_SUCCESS);
 		        			
 		        		}else {
 		        		   
@@ -97,5 +97,13 @@ public class UserControl extends Controller {
 		return ok(result);
 
 	}
-
+    
+	
+	
+	
+	public static Result signIn(){
+		
+		return ok();
+		
+	}
 }

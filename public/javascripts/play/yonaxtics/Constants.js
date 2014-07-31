@@ -38,10 +38,10 @@ define([], function() {
 	Constants.ALERT_WARNING = 'alert alert-warning alert-dismissible';
 	Constants.ALERT_DANGER = 'alert alert-danger alert-dismissible';
 	
-	Constants.ICO_COG_SPIN = 'fa fa-cog fa-spin fa-lg';
-	Constants.ICO_SUCCESS = 'fa fa-check fa-lg';
-	Constants.ICO_WARNING = 'fa fa-exclamation-triangle fa-lg';
-	Constants.ICO_ERROR = 'fa fa-hand-o-right fa-lg';
+	Constants.ICO_COG_SPIN = 'fa fa-cog fa-spin fa-lg pull-left';
+	Constants.ICO_SUCCESS = 'fa fa-check fa-lg pull-left';
+	Constants.ICO_WARNING = 'fa fa-exclamation-triangle fa-lg pull-left';
+	Constants.ICO_ERROR = 'fa fa-hand-o-right fa-lg pull-left';
 	
 
 	/**
@@ -58,6 +58,10 @@ define([], function() {
 	Constants.HAS_ERROR = 'form-group has-error';
 	Constants.TEXT_DANGER = 'show text-danger';
 	
+	/**
+	 * STATES REQUEST
+	 */
+	Constants.REQUEST_SUCCESS = '19880511';
 	
 
 	return Constants;

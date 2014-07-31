@@ -29,4 +29,10 @@ public class Constant {
 	
 	
 	
+	
+	/**
+	 * STATES REQUEST
+	 */
+	public final static String REQUEST_SUCCESS = "19880511"; 
+	
 }
