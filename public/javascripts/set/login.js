@@ -51,8 +51,26 @@ requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate)
 	var icoLogin = Play.getId('icoLogin');
 	var msgLogin = Play.getId('msgLogin');
 	var btnClose = Play.getClass('close');	
-
+	
+	var frmLogin = Play.getId('frmLogin');
+	
+	var txtName = Play.getId('txtName');
+	var msgName = Play.getId('msgName');
+	
+	var txtEmail = Play.getId('txtEmail');
+	var msgEmail = Play.getId('msgEmail');
+	
+	var txtPassword = Play.getId('txtPassword');
+	var msgPassword = Play.getId('msgPassword');
+	
+	var btnSignin = Play.getId('btnSignin');    
+	
+	var txtEmptyMessage = "The confirm filed is required and can\'t be empty";
+	var valid = false;
+	
 	init();
+	
+	formLoginAction();
 			
 /* ==================================================================================================================
  * REGION INIT
@@ -80,19 +98,105 @@ requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate)
 			Play.addClass(altLogin, Constants.HIDDEN);
 		}
 				
-	}			
+	}
+	
 			
-			
-			
-			
-			
+	
+	
 /* ==================================================================================================================
  * END REGION INIT
  * ===================================================================================================================
  */
 				
-			
+	
+	
+	
+/* ==================================================================================================================
+ * REGION FORM
+ * ===================================================================================================================
+ */
 
+	
+	function formLoginAction(){
+		
+		/**
+		 * Reset messages input form
+		 */
+		Play.addClass(msgName, Constants.HIDDEN);
+		Play.addClass(msgEmail, Constants.HIDDEN);
+		Play.addClass(msgPassword, Constants.HIDDEN);
+		
+		/**
+		 * Validate inputs
+		 */		
+		txtName.onblur = function(){ valid =	Validate.empty(this,msgName,txtEmptyMessage); }
+		txtEmail.onblur = function(){ valid =	Validate.empty(this,msgEmail,txtEmptyMessage); }
+		txtPassword.onblur = function(){ valid =	Validate.empty(this,msgPassword,txtEmptyMessage); }		
+				
+		
+		frmLogin.onsubmit = function(e) {
+			
+			e.preventDefault();
+			
+			if(valid){
+				
+				if(Validate.empty(txtName,msgName,txtEmptyMessage)){
+					
+					if(Validate.empty(txtEmail,msgEmail,txtEmptyMessage)){
+						
+						if(Validate.empty(txtPassword,msgPassword,txtEmptyMessage)){
+							
+//									 var xhr = new XMLHttpRequest();
+//									 
+//									 xhr.onreadystatechange = function () {	
+//										 
+//										 msgSignUp.textContent = "Loading...";			
+//										 Play.addClass(icoSignUp, Constants.ICO_COG_SPIN);
+//										 Play.addClass(altSignUp, Constants.ALERT_INFO);
+//										 Play.appendClass(altSignUp, Constants.SHOW);
+//										 
+//										 btnSignUp.disabled = true;
+//									        
+//										  if (this.readyState === 4) {
+//											  						
+//											  if(this.status === 200 && this.responseText === Constants.REQUEST_SUCCESS){
+//												  
+//												  sessionStorage.setItem("msgLoginSession", "Your account has been created successfully");
+//												  window.location = '/login';
+//												  
+//											  }else {
+//												  
+//												    msgSignUp.textContent  = this.responseText;
+//												    Play.addClass(icoSignUp, Constants.ICO_ERROR);
+//													Play.addClass(altSignUp, Constants.ALERT_DANGER);
+//													btnSignUp.disabled = false;											  
+//											  }
+//										  }
+//									 }
+//									 xhr.open('POST','/createAccount');
+//									 xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
+//									 xhr.send(Play.serialize(e.target));	
+						}
+					}
+				}
+				
+			} else {
+				
+				
+				msgLogin.textContent = txtEmptyMessage;
+				Play.addClass(icoLogin, Constants.ICO_ERROR);
+				Play.addClass(icoLogin, Constants.ALERT_DANGER);
+			}
+		}
+		
+	}
+	
+	
+	
+/* ==================================================================================================================
+ * END REGION FORM
+ * ===================================================================================================================
+ */
 			
 });
 

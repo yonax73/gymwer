@@ -6,6 +6,7 @@
 GET      /login                           com.yonaxtics.gymwer.set.user.controller.UserControl.login()
 GET      /signup                          com.yonaxtics.gymwer.set.user.controller.UserControl.signUp()
 POST    /createAccount                    com.yonaxtics.gymwer.set.user.controller.UserControl.createAccount()
+POST    /signIn                           com.yonaxtics.gymwer.set.user.controller.UserControl.signIn()
 
 
 

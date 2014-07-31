@@ -86,11 +86,12 @@ define(['./Play','./Constants'], function(Play,Constants) {
 	 * @returns isValid
 	 */
 	Validate.empty = function (input,message,value) {
-
-		if (input.value.match(/^\d*\.?\d+$/)) {
+	
+		if (input.value.match(/^\S+$|[^\s]+$/)) {
 
 			Play.addClass(input.parentNode.parentNode,Constants.HAS_SUCCESS);
 			Play.addClass(message, Constants.HIDDEN);
+		
 			return true;
 
 		} else {
@@ -98,8 +99,10 @@ define(['./Play','./Constants'], function(Play,Constants) {
 			Play.addClass(input.parentNode.parentNode,Constants.HAS_ERROR);
 			Play.addClass(message, Constants.TEXT_DANGER);
 			Play.addHtml(message,value);
+			
 			return false;
 		}
+		
 	}
 	
 	
