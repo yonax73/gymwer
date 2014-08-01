@@ -25,6 +25,12 @@ public class Person extends Entity {
 		
 		super(id);		
 	}
+	
+	public Person(String email){
+		
+		super(0);
+		this.email = email;		
+	}	
 		
 	public Person(String email, User user){
 		

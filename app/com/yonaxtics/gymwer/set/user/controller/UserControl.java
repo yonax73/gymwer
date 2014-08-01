@@ -55,35 +55,47 @@ public class UserControl extends Controller {
 
 			if (data.get("txtPassword")[0].equals(data.get("txtConfirmPassword")[0])) {
 
-				user = new User(Constant.USER_ADMIND,data.get("txtPassword")[0]);				
+				contact = new Person(data.get("txtEmail")[0]);
 				
-		        if(UserLogic.create(user)){
-		        	
-		        	contact = new Person(data.get("txtEmail")[0],user);
-		        	contact.setRole(new Role(Constant.ROL_ADMIND));
-		        	
-		        	if(PersonLogic.create(contact)){
-		        		
-		        		gym = new Gym(data.get("txtName")[0], contact);
-		        		
-		        		if(GymLogic.create(gym)){
-		        			
-		        			return ok(Constant.REQUEST_SUCCESS);
-		        			
-		        		}else {
-		        		   
-		        			result = "3001 - Server Internal Error";
-		        		}		        		
-		        		
-		        	}else {
-		        		
-		        		result = "2001 - Server Internal Error";
-		        	}
-		        	
-		        } else {
-		        	
-		        	result = "1001 - Server Internal Error";
-		        }				
+				if(!PersonLogic.exists(contact)){
+				
+					user = new User(Constant.USER_ADMIND,data.get("txtPassword")[0]);				
+					
+			        if(UserLogic.create(user)){
+			        	
+			        	contact.setUser(user);
+			        	contact.setRole(new Role(Constant.ROL_ADMIND));
+			        	
+			        	if(PersonLogic.create(contact)){
+			        		
+			        		gym = new Gym(data.get("txtName")[0], contact);
+			        		
+			        		if(GymLogic.create(gym)){
+			        			
+			        			return ok(Constant.REQUEST_SUCCESS);
+			        			
+			        		}else {
+			        		   
+			        			result = "3001 - Server Internal Error";
+			        		}		        		
+			        		
+			        	}else {
+			        		
+			        		result = "2001 - Server Internal Error";
+			        	}
+			        	
+			        } else {
+			        	
+			        	result = "1001 - Server Internal Error";
+			        }	
+					
+				} else {
+					
+					result = "This user already exists";
+					
+				}
+				
+					
 			} else { 
 				
 				result = "The password and its confirm are not the same."; 

@@ -71,41 +71,7 @@ public class GymDao extends Dao{
 	
 	public static boolean signIn(Gym gym) {
 		
-		boolean result = false;		
-		CallableStatement cst = null;
-		ResultSet rs  = null;
-		Connection conn = null;
-		
-		try {
-			
-			conn = DB.getConnection();
-			String sql = "CALL sp_set_user_LOGIN(?, ?, ?);";
-			cst = conn.prepareCall(sql);
-			
-			cst.setString(1, gym.getName());
-			cst.setString(2, gym.getContact().getEmail());
-			cst.setString(3, gym.getContact().getUser().getPassword());
-			
-			rs  = cst.executeQuery();	
-			
-			if(rs.next()){
-				
-				result = rs.getInt(1) == 1;				
-				if(result) gym.setId(cst.getInt(2));				
-			}
-			
-			
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-			
-		} finally{
-			
-			if(cst != null) cst = null;
-			close(conn);
-		}
-		
-		return result;		
+
 	}
 	
 	

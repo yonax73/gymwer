@@ -12,6 +12,7 @@ public class GymControl extends Controller {
 	public static Result home(){
 		
 		String user = session(Constant.SESSION_OK);
+		
 	    if(user != null) {
 	    	
 	    	return ok(dashboard.render());

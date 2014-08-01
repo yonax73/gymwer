@@ -2,6 +2,7 @@ package com.yonaxtics.gymwer.set.person.dao;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.Types;
 
 import play.db.DB;
@@ -60,6 +61,45 @@ public class PersonDao extends Dao{
 			result = cst.executeUpdate() > 0;
 			
 			if(result) person.setId(cst.getInt(1));
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+		} finally{
+			
+			if(cst != null) cst = null;
+			close(conn);
+		}
+		
+		return result;		
+	}
+
+	
+	
+	public static boolean exists(Person person){
+		
+		boolean result = false;		
+		CallableStatement cst = null;
+		ResultSet rs  = null;
+		Connection conn = null;
+		
+		try {
+			
+			conn = DB.getConnection();
+			String sql = "CALL sp_set_user_EXISTS(?);";
+			cst = conn.prepareCall(sql);
+			
+			cst.setString(1, person.getEmail());			
+			
+			rs  = cst.executeQuery();	
+			
+			if(rs.next()){
+				
+				result = rs.getInt(1) > 0;				
+						
+			}
+			
 			
 		} catch (Exception e) {
 			
