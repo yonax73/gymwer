@@ -8,8 +8,9 @@ GET      /signup                          com.yonaxtics.gymwer.set.user.controll
 POST    /createAccount                    com.yonaxtics.gymwer.set.user.controller.UserControl.createAccount()
 POST    /signIn                           com.yonaxtics.gymwer.set.user.controller.UserControl.signIn()
 
+#GymControl
 
-
+GET     /home                              com.yonaxtics.gymwer.dpa.gym.controller.GymControl.home()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

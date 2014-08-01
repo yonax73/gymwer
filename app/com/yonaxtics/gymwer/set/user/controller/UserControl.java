@@ -103,7 +103,25 @@ public class UserControl extends Controller {
 	
 	public static Result signIn(){
 		
-		return ok();
+		final Map<String, String[]> data = request().body().asFormUrlEncoded();		
+		
+		String result = null;
+		User user = new User(data.get("txtPassword")[0]);
+		Person  contact = new Person(data.get("txtEmail")[0], user);
+		Gym gym = new Gym(data.get("txtName")[0], contact);
+		
+		
+		if(GymLogic.signIn(gym)){
+			
+			session(Constant.SESSION_OK, String.valueOf(gym.getId()));
+			return ok(Constant.REQUEST_SUCCESS);
+			
+		} else {
+			
+			result = "The name, password or user are incorrect!";
+		}        
+		
+		return ok(result);
 		
 	}
 }

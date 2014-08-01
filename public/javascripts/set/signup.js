@@ -180,6 +180,7 @@ requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate)
 										  }
 									  }
 								 }
+								 
 								 xhr.open('POST','/createAccount');
 								 xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
 								 xhr.send(Play.serialize(e.target));								

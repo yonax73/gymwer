@@ -35,4 +35,13 @@ public class Constant {
 	 */
 	public final static String REQUEST_SUCCESS = "19880511"; 
 	
+	
+	
+	
+	/**
+	 * STATES SESSION
+	 */
+	public final static String SESSION_OK = "11508891";
+	
+	
 }

@@ -63,9 +63,9 @@ requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate)
 	var txtPassword = Play.getId('txtPassword');
 	var msgPassword = Play.getId('msgPassword');
 	
-	var btnSignin = Play.getId('btnSignin');    
+	var btnLogin = Play.getId('btnSignin');    
 	
-	var txtEmptyMessage = "The confirm filed is required and can\'t be empty";
+	var txtEmptyMessage = "All fileds are required and can\'t be empty";
 	var valid = false;
 	
 	init();
@@ -146,46 +146,49 @@ requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate)
 						
 						if(Validate.empty(txtPassword,msgPassword,txtEmptyMessage)){
 							
-//									 var xhr = new XMLHttpRequest();
-//									 
-//									 xhr.onreadystatechange = function () {	
-//										 
-//										 msgSignUp.textContent = "Loading...";			
-//										 Play.addClass(icoSignUp, Constants.ICO_COG_SPIN);
-//										 Play.addClass(altSignUp, Constants.ALERT_INFO);
-//										 Play.appendClass(altSignUp, Constants.SHOW);
-//										 
-//										 btnSignUp.disabled = true;
-//									        
-//										  if (this.readyState === 4) {
-//											  						
-//											  if(this.status === 200 && this.responseText === Constants.REQUEST_SUCCESS){
-//												  
-//												  sessionStorage.setItem("msgLoginSession", "Your account has been created successfully");
-//												  window.location = '/login';
-//												  
-//											  }else {
-//												  
-//												    msgSignUp.textContent  = this.responseText;
-//												    Play.addClass(icoSignUp, Constants.ICO_ERROR);
-//													Play.addClass(altSignUp, Constants.ALERT_DANGER);
-//													btnSignUp.disabled = false;											  
-//											  }
-//										  }
-//									 }
-//									 xhr.open('POST','/createAccount');
-//									 xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-//									 xhr.send(Play.serialize(e.target));	
+							
+									 var xhr = new XMLHttpRequest();
+									 
+									 xhr.onreadystatechange = function () {	
+										 
+										 msgLogin.textContent = "Loading...";			
+										 Play.addClass(icoLogin, Constants.ICO_COG_SPIN);
+										 Play.addClass(altLogin, Constants.ALERT_INFO);
+										 Play.appendClass(altLogin, Constants.SHOW);
+										 
+										 btnLogin.disabled = true;
+									        
+										  if (this.readyState === 4) {
+											  						
+											  if(this.status === 200 && this.responseText === Constants.REQUEST_SUCCESS){
+												  
+
+												  
+												  sessionStorage.setItem("msgWelcome", "Welcome!");
+												  window.location = '/home';
+												  
+											  }else {
+												  
+												    msgLogin.textContent  = this.responseText;
+												    Play.addClass(icoLogin, Constants.ICO_ERROR);
+													Play.addClass(altLogin, Constants.ALERT_DANGER);
+													btnLogin.disabled = false;											  
+											  }
+										  }
+									 }
+									 xhr.open('POST','/signIn');
+									 xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
+									 xhr.send(Play.serialize(e.target));	
 						}
 					}
 				}
 				
 			} else {
-				
-				
+								
 				msgLogin.textContent = txtEmptyMessage;
 				Play.addClass(icoLogin, Constants.ICO_ERROR);
-				Play.addClass(icoLogin, Constants.ALERT_DANGER);
+				Play.addClass(altLogin, Constants.ALERT_DANGER);
+					
 			}
 		}
 		
