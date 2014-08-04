@@ -24,8 +24,8 @@ public class Constant {
 	/**
 	 * ROLES
 	 */
-	public final static String USER_ADMIND = "ADMIN";
-	public final static int ROL_ADMIND = 2;
+	public final static String USER_ADMIN = "ADMIN";
+	public final static int ROL_ADMIN = 2;
 	
 	
 	
@@ -33,8 +33,15 @@ public class Constant {
 	/**
 	 * STATES REQUEST
 	 */
-	public final static String REQUEST_SUCCESS = "19880511"; 
+	public final static String REQUEST_SUCCESS = "19880511";
 	
+	
+	
+	/**
+	 * #
+	 */
+	public final static String KEY = "#Y4F53DBX";
+	public final static int  KEY_SIZE = 256;
 	
 	
 	
