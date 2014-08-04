@@ -1,5 +1,7 @@
 package com.yonaxtics.gymwer.dpa.gym.logic;
 
+import play.libs.F.Promise;
+
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 import com.yonaxtics.gymwer.dpa.gym.dao.*;
 /**
@@ -40,4 +42,11 @@ public class GymLogic {
 		
 		return result;		
 	}
+	
+	  
+
+	     
+
+
+	 
 }

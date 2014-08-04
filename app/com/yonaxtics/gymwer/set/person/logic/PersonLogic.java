@@ -1,7 +1,9 @@
 package com.yonaxtics.gymwer.set.person.logic;
 
+import play.libs.F.Promise;
+
+import com.yonaxtics.gymwer.set.person.dao.PersonDao;
 import com.yonaxtics.gymwer.set.person.entity.Person;
-import com.yonaxtics.gymwer.set.person.dao.*;
 
 
 public class PersonLogic {
@@ -19,9 +21,14 @@ public class PersonLogic {
 	    return result;
 	}
 	
+	public static Promise<Boolean> exists (Person person){
+		
+		return Promise.promise(() ->_exists(person));
+		
+	}
 	
 	
-	public static boolean exists(Person person){
+	private static boolean _exists(Person person){		
 		
 		boolean result = false;
 		
@@ -32,8 +39,8 @@ public class PersonLogic {
 		
 		return result;
 	}
-	
-	
-	
+
+
+
 	
 }

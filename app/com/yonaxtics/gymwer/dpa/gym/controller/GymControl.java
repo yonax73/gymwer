@@ -1,29 +1,42 @@
 package com.yonaxtics.gymwer.dpa.gym.controller;
 
-import com.yonaxtics.gymwer.util.Constant;
-
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.dpa.dashboard.dashboard;
+import views.html.dpa.home.home;
+
+import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
+import com.yonaxtics.gymwer.util.Constant;
 
 public class GymControl extends Controller {
 
 	
 	public static Result home(){
 		
-		String user = session(Constant.SESSION_OK);
+		int gymId = Integer.parseInt(session(Constant.SESSION_OK));
 		
-	    if(user != null) {
+	    if(gymId > 0) {	    	
 	    	
-	    	return ok(dashboard.render());
+	    	return ok(home.render());
 	    	
 	    } else {
 	    	
 	        return unauthorized("Oops, you are not connected");
-	    }
-		
+	    }		
 		
 	}
+	
+	
+	
+	public static Result load(){
+		
+		Gym gym = new Gym(Integer.parseInt(session(Constant.SESSION_OK)));
+    	gym.setName("Prueba");
+    	
+    	return ok(Json.toJson(gym));
+		
+	}
+	
 	
 	
 }

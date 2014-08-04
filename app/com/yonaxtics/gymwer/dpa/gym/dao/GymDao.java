@@ -29,24 +29,12 @@ public class GymDao extends Dao{
 		try {
 			
 			conn = DB.getConnection();
-			String sql = "CALL sp_dpa_gym_CREATE(?, ?, ?, ?, ?);";
+			String sql = "CALL sp_dpa_gym_CREATE(?, ?, ?);";
 			cst = conn.prepareCall(sql);
-			cst.registerOutParameter(1, Types.INTEGER);		
+			cst.registerOutParameter(1, Types.INTEGER);			
 			
-			cst.setString(2, gym.getNit());
-			cst.setString(3, gym.getName());
-			
-			if(gym.getContact()== null){
-				
-				gym.setContact(new Person(0));
-			}			
-			cst.setInt(4, gym.getContact().getId());
-			
-			if(gym.getLocation()== null){
-				
-				gym.setLocation(new Location(0));
-			}
-			cst.setInt(5, gym.getLocation().getId());			
+			cst.setString(2, gym.getName());			
+			cst.setInt(3, gym.getContact().getId());						
 			
 			result = cst.executeUpdate() > 0;
 			
@@ -71,7 +59,41 @@ public class GymDao extends Dao{
 	
 	public static boolean signIn(Gym gym) {
 		
-
+		boolean result = false;		
+		CallableStatement cst = null;
+		ResultSet rs  = null;
+		Connection conn = null;
+		
+		try {
+			
+			conn = DB.getConnection();
+			String sql = "CALL sp_set_user_LOGIN(?,?,?);";
+			cst = conn.prepareCall(sql);
+			
+			cst.setString(1, gym.getName());
+			cst.setString(2, gym.getContact().getEmail());
+			cst.setString(3, gym.getContact().getUser().getPassword());
+			
+			rs  = cst.executeQuery();	
+			
+			if(rs.next()){
+				
+				result = rs.getInt(1) == 1;
+				
+				if(result) gym.setId(rs.getInt(2));
+			}			
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+		} finally{
+			
+			if(cst != null) cst = null;
+			close(conn);
+		}
+		
+		return result;		
 	}
 	
 	

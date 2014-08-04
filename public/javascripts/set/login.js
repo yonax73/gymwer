@@ -159,12 +159,12 @@ requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate)
 										 btnLogin.disabled = true;
 									        
 										  if (this.readyState === 4) {
-											  						
+											  
+											  console.log(this.responseText);
+											  
 											  if(this.status === 200 && this.responseText === Constants.REQUEST_SUCCESS){
+												 
 												  
-
-												  
-												  sessionStorage.setItem("msgWelcome", "Welcome!");
 												  window.location = '/home';
 												  
 											  }else {

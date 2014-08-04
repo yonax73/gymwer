@@ -96,10 +96,8 @@ public class PersonDao extends Dao{
 			
 			if(rs.next()){
 				
-				result = rs.getInt(1) > 0;				
-						
-			}
-			
+				result = rs.getInt(1) > 0;							
+			}			
 			
 		} catch (Exception e) {
 			
