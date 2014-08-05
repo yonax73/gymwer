@@ -12,6 +12,8 @@ import java.util.Map;
 
 
 import play.Logger;
+import play.libs.F;
+import play.libs.F.Promise;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.set.login.login;
@@ -37,9 +39,9 @@ public class UserControl extends Controller {
 	
 	
 	
-	public static Result login() {
+	public static  Result  login() {
 
-		return ok(login.render());
+		return ok(login.render());   
 	}
 
 	
@@ -47,7 +49,7 @@ public class UserControl extends Controller {
 	
 	public static Result signUp() {
 
-		return ok(signup.render());
+		return ok(signup.render());   
 	}
 
 	
@@ -68,7 +70,7 @@ public class UserControl extends Controller {
 
 				contact = new Person(data.get("txtEmail")[0]);
 
-				if(!PersonLogic.exists(contact).get(0)){
+				if(!PersonLogic.exists(contact)){
 				
 					user = new User(Constant.USER_ADMIND,data.get("txtPassword")[0]);				
 					
@@ -131,64 +133,14 @@ public class UserControl extends Controller {
 		String result = null;
 		User user = new User(data.get("txtPassword")[0]);
 		Person  contact = new Person(data.get("txtEmail")[0], user);
-		Gym gym = new Gym(data.get("txtName")[0], contact);		
-		
+		Gym gym = new Gym(data.get("txtName")[0], contact);				
+	
 
 		if(GymLogic.signIn(gym)){
 			
 			session(Constant.SESSION_OK, String.valueOf(gym.getId()));
 			
-			String ipAddress = null;
-			
-		    Enumeration<NetworkInterface> net = null;
-		    try {
-		    	
-		        net = NetworkInterface.getNetworkInterfaces();
-		        
-		    } catch (SocketException e) {
-		        throw new RuntimeException(e);
-		    }
 
-		    while(net.hasMoreElements()){
-		    	
-		        NetworkInterface element = net.nextElement();
-		        
-		        Enumeration<InetAddress> addresses = element.getInetAddresses();
-		        
-		        while (ipAddress == null && addresses.hasMoreElements()){
-		        	
-		            InetAddress ip = addresses.nextElement();
-		            
-		            if (ip instanceof Inet4Address || ip instanceof Inet6Address){
-
-		                if (ip.isSiteLocalAddress()){
-
-		                    ipAddress = ip.getHostAddress();
-		                    NetworkInterface network;
-							try {
-								network = NetworkInterface.getByInetAddress(ip);
-								  byte [] mac = network.getHardwareAddress();
-								  
-									StringBuffer sb = new StringBuffer();
-									
-									for (int i = 0; i < mac.length; i++) {
-										sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));		
-									}
-									
-									ipAddress += " MAC:  "+sb.toString();
-									Logger.info("Calling action for ");
-				                    
-							} catch (SocketException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-		                  
-		                }
-
-		            }
-
-		        }
-		    }
 			
 			
 			
