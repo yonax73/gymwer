@@ -3,7 +3,8 @@ require.config({
 	paths : {
 		Constants : 'play/yonaxtics/Constants',
 		Play : 'play/yonaxtics/Play',
-		Validate: 'play/yonaxtics/Validate' 
+		Validate: 'play/yonaxtics/Validate',
+
 	}
 });
 
@@ -45,7 +46,13 @@ requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate)
 
 	
 
-	alert('hi js');
+//	  var password = '123';
+//	  var plaintext = 'Hello word!!';
+//	  var ciphertext = Ctr.encrypt(plaintext, password, 256);
+//	  var origtext = Ctr.decrypt(ciphertext, password, 256);
+//	  
+//	  console.log('ciphertext' +ciphertext)
+//	  console.log('text plain '+origtext);
 
 	var xhr = new XMLHttpRequest();
 
@@ -53,19 +60,19 @@ requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate)
 	
 	xhr.onreadystatechange = function () {	
 		 
-		alert('load');
+		
 	       
 		  if (this.readyState === 4) {
 			  						
 			  if(this.status === 200){
 				  
-				 alert(12);
+				
 				  console.log(this.responseText);
 				  
 				  
 			  }else {
 				  
-	                   alert('error');										  
+	                  									  
 			  }
 		  }
 	}

@@ -63,6 +63,11 @@ define([], function() {
 	 */
 	Constants.REQUEST_SUCCESS = '19880511';
 	
+	/**
+	 * #
+	 */
+	Constants.DS_STYLE_KEY = '#Y4F53DBX'	
+	Constants.NM_STYLE_KEY = 256;	
 
 	return Constants;
 

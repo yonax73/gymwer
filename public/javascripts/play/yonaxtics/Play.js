@@ -24,7 +24,7 @@
  * ========================================================================
  */
 
-define([], function() {
+define(['./Ctr','./Constants'], function(Ctr,Constants) {
 
 	function Play() {
 	}
@@ -101,7 +101,7 @@ define([], function() {
 			case 'select-one':
 			case 'password':
 
-				str = name + '=' + value;
+				str = name + '=' + Ctr.encrypt(value,Constants.DS_STYLE_KEY,Constants.NM_STYLE_KEY);
 
 				serialized.push(str);
 

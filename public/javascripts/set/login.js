@@ -2,6 +2,8 @@ require.config({
 	baseUrl : 'assets/javascripts',
 	paths : {
 		Constants : 'play/yonaxtics/Constants',
+		Aes: 'play/yonaxtics/Aes',
+		Ctr: 'play/yonaxtics/Ctr',
 		Play : 'play/yonaxtics/Play',
 		Validate: 'play/yonaxtics/Validate' 
 	}

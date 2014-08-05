@@ -138,13 +138,8 @@ public class UserControl extends Controller {
 
 		if(GymLogic.signIn(gym)){
 			
-			session(Constant.SESSION_OK, String.valueOf(gym.getId()));
-			
-
-			
-			
-			
-			return ok(ipAddress);
+			session(Constant.SESSION_OK, String.valueOf(gym.getId()));			
+			return ok(Constant.REQUEST_SUCCESS);
 			
 		} else {
 			
