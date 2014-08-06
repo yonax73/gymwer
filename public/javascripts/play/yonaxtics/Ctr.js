@@ -43,7 +43,7 @@ define(['./Aes'], function(Aes) {
 	
 	
 	
-	function Ctr(){}
+	function Ctr(){console.log(Aes.sBox)}
 	
 
 
@@ -75,8 +75,9 @@ define(['./Aes'], function(Aes) {
 	        pwBytes[i] = isNaN(password.charCodeAt(i)) ? 0 : password.charCodeAt(i);
 	    }
 	    var key = Aes.cipher(pwBytes, Aes.keyExpansion(pwBytes)); // gives us 16-byte key
+	    console.log(key);
 	    key = key.concat(key.slice(0, nBytes-16));  // expand key to 16/24/32 bytes long
-
+	    console.log(key);
 	    // initialise 1st 8 bytes of counter block with nonce (NIST SP800-38A §B.2): [0-1] = millisec,
 	    // [2-3] = random, [4-7] = seconds, together giving full sub-millisec uniqueness up to Feb 2106
 	    var counterBlock = new Array(blockSize);

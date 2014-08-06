@@ -14,7 +14,9 @@ import com.yonaxtics.gymwer.set.person.entity.Person;
 import com.yonaxtics.gymwer.set.person.logic.PersonLogic;
 import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.set.user.logic.UserLogic;
-import com.yonaxtics.gymwer.util.Constant;
+import static com.yonaxtics.gymwer.util.Constant.*;
+
+import com.yonaxtics.security.cryptography.aes.*;
 /**
  * 
  * @author yonatan quintero
@@ -28,6 +30,8 @@ public class UserControl extends Controller {
 	
 	public static  Result  login() {
 
+		
+		
 		return ok(login.render());   
 	}
 
@@ -51,7 +55,7 @@ public class UserControl extends Controller {
 		
 		final Map<String, String[]> data = request().body().asFormUrlEncoded();		
 		
-		if (data.get("cbxTerms")[0].equals(Constant.CHECKED)) {
+		if (data.get("cbxTerms")[0].equals(CHECKED)) {
 
 			if (data.get("txtPassword")[0].equals(data.get("txtConfirmPassword")[0])) {
 
@@ -59,12 +63,12 @@ public class UserControl extends Controller {
 
 				if(!PersonLogic.exists(contact)){
 				
-					user = new User(Constant.USER_ADMIN,data.get("txtPassword")[0]);				
+					user = new User(USER_ADMIN,data.get("txtPassword")[0]);				
 					
 			        if(UserLogic.create(user)){
 			        	
 			        	contact.setUser(user);
-			        	contact.setRole(new Role(Constant.ROL_ADMIN));
+			        	contact.setRole(new Role(ROL_ADMIN));
 			        	
 			        	if(PersonLogic.create(contact)){
 			        		
@@ -72,7 +76,7 @@ public class UserControl extends Controller {
 			        		
 			        		if(GymLogic.create(gym)){
 			        			
-			        			return ok(Constant.REQUEST_SUCCESS);
+			        			return ok(REQUEST_SUCCESS);
 			        			
 			        		}else {
 			        		   
@@ -124,8 +128,8 @@ public class UserControl extends Controller {
 
 		if(GymLogic.signIn(gym)){
 			
-			session(Constant.SESSION_OK, String.valueOf(gym.getId()));			
-			return ok(Constant.REQUEST_SUCCESS);
+			session(SESSION_OK, String.valueOf(gym.getId()));			
+			return ok(REQUEST_SUCCESS);
 			
 		} else {
 			

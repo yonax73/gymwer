@@ -2,9 +2,8 @@ require.config({
 	baseUrl : 'assets/javascripts',
 	paths : {
 		Constants : 'play/yonaxtics/Constants',
-		aes : 'play/yonaxtics/aes1',
-    	pbkdf2 : 'play/yonaxtics/pbkdf2',
-    	AesUtil : 'play/yonaxtics/AesUtil',
+		Aes : 'play/yonaxtics/Aes',
+    	Ctr : 'play/yonaxtics/Ctr',    	
 		Play : 'play/yonaxtics/Play',
 		Validate: 'play/yonaxtics/Validate' 
 			
@@ -45,7 +44,7 @@ require.config({
 
 
 
-requirejs([ 'Constants', 'Play','Validate','aes','pbkdf2','AesUtil' ],function(Constants, Play, Validate) {
+requirejs([ 'Constants', 'Play','Validate','Aes','Ctr'],function(Constants, Play, Validate) {
 
 /* ==================================================================================================================
  * REGION ATRIBUTOS
@@ -210,7 +209,7 @@ requirejs([ 'Constants', 'Play','Validate','aes','pbkdf2','AesUtil' ],function(C
 	
 	
 	
-	var iv = "F27D5C9927726BCEFE7510B1BDD3D137";
+/*	var iv = "F27D5C9927726BCEFE7510B1BDD3D137";
 	var salt = "3FF2EC019C627B945225DEBAD71A01B6985FE84C95A70EB132882F88C0A59A55";
 	var plainText = 'hello word';
 	var keySize = 128;
@@ -229,7 +228,7 @@ requirejs([ 'Constants', 'Play','Validate','aes','pbkdf2','AesUtil' ],function(C
 	    var aesUtil = new AesUtil(keySize, iterationCount)
 	    var decrypt = aesUtil.decrypt(salt, iv, passPhrase, cipherText);
 	   
-	    console.log(decrypt);
+	    console.log(decrypt);*/
 	
 });
 

@@ -24,17 +24,19 @@
  * ========================================================================
  */
 
-define(['./Constants'], function(Constants) {
+define(['./Constants','./Ctr'], function(Constants,Ctr) {
 
 	function Play() {
+		
+	
 	}
-
+	console.log(Ctr.encrypt("yonatan", '12345678', 128));
 	/**
 	 * @param element
 	 * @return element id
 	 */
 	Play.getId = function(element) {
-
+		
 		return document.getElementById(element);
 	}
 
@@ -101,7 +103,7 @@ define(['./Constants'], function(Constants) {
 			case 'select-one':
 			case 'password':
 
-				str =  name + '=' + value;
+				str =  name + '=' + Ctr.encrypt(value, '12345678123456781234567812345678', 256);
 
 				serialized.push(str);
 

@@ -188,6 +188,7 @@ define([], function() {
 	 */
 	Aes.subWord = function(w) {
 	    for (var i=0; i<4; i++) w[i] = Aes.sBox[w[i]];
+	 
 	    return w;
 	}
 
