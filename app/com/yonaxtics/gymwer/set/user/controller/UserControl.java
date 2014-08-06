@@ -2,7 +2,6 @@ package com.yonaxtics.gymwer.set.user.controller;
 
 import java.util.Map;
 
-import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.set.login.login;
@@ -10,7 +9,6 @@ import views.html.set.login.signup;
 
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 import com.yonaxtics.gymwer.dpa.gym.logic.GymLogic;
-import com.yonaxtics.gymwer.sec.aes.AES;
 import com.yonaxtics.gymwer.set.master.entity.Role;
 import com.yonaxtics.gymwer.set.person.entity.Person;
 import com.yonaxtics.gymwer.set.person.logic.PersonLogic;
@@ -116,14 +114,10 @@ public class UserControl extends Controller {
 	
 	public static Result signIn(){
 		
-		final Map<String, String[]> data = request().body().asFormUrlEncoded();		
-		
-		AES aes = new AES();
-		
-		
+		final Map<String, String[]> data = request().body().asFormUrlEncoded();				
 		
 		String result = null;
-		User user = new User(aes.decrypt(data.get("txtPassword")[0]));
+		User user = new User(data.get("txtPassword")[0]);
 		Person  contact = new Person(data.get("txtEmail")[0], user);
 		Gym gym = new Gym(data.get("txtName")[0], contact);				
 	

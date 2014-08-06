@@ -2,10 +2,12 @@ require.config({
 	baseUrl : 'assets/javascripts',
 	paths : {
 		Constants : 'play/yonaxtics/Constants',
-		Aes: 'play/yonaxtics/Aes',
-		Ctr: 'play/yonaxtics/Ctr',
+		aes : 'play/yonaxtics/aes1',
+    	pbkdf2 : 'play/yonaxtics/pbkdf2',
+    	AesUtil : 'play/yonaxtics/AesUtil',
 		Play : 'play/yonaxtics/Play',
 		Validate: 'play/yonaxtics/Validate' 
+			
 	}
 });
 
@@ -43,7 +45,7 @@ require.config({
 
 
 
-requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate) {
+requirejs([ 'Constants', 'Play','Validate','aes','pbkdf2','AesUtil' ],function(Constants, Play, Validate) {
 
 /* ==================================================================================================================
  * REGION ATRIBUTOS
@@ -202,7 +204,33 @@ requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate)
  * END REGION FORM
  * ===================================================================================================================
  */
-			
+
+	
+	
+	
+	
+	
+	var iv = "F27D5C9927726BCEFE7510B1BDD3D137";
+	var salt = "3FF2EC019C627B945225DEBAD71A01B6985FE84C95A70EB132882F88C0A59A55";
+	var plainText = 'hello word';
+	var keySize = 128;
+	var iterations = iterationCount = 10000;
+	var passPhrase = "the quick brown fox jumps over the lazy dog";
+	
+	
+	  var aesUtil = new AesUtil(keySize, iterationCount)
+	    var encrypt = aesUtil.encrypt(salt, iv, passPhrase, plainText);
+	  var cipherText = encrypt;
+	    
+	    console.log('******************************');
+	    console.log(encrypt);
+	    console.log('******************************');
+	    
+	    var aesUtil = new AesUtil(keySize, iterationCount)
+	    var decrypt = aesUtil.decrypt(salt, iv, passPhrase, cipherText);
+	   
+	    console.log(decrypt);
+	
 });
 
 

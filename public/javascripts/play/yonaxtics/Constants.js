@@ -66,7 +66,7 @@ define([], function() {
 	/**
 	 * #
 	 */
-	Constants.DS_STYLE_KEY = '#Y4F53DBX'	
+	Constants.DS_STYLE_KEY = '#Y4F53DBX-*12.!7'	
 	Constants.NM_STYLE_KEY = 256;	
 
 	return Constants;
