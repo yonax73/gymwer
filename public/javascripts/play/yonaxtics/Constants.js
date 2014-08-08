@@ -64,10 +64,11 @@ define([], function() {
 	Constants.REQUEST_SUCCESS = '19880511';
 	
 	/**
-	 * #
+	 * #7h32k132
+	 * #3l c13l0
 	 */
-	Constants.KEY = '0123456789abcdef'	
-	Constants.IV = 'fedcba9876543210';	
+	Constants.KEY = '376833326b313332'	
+	Constants.IV = '336c206331336c30';	
 
 	return Constants;
 

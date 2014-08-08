@@ -1,12 +1,20 @@
 require.config({
-	baseUrl : 'assets/javascripts',
+	
+	
+	
+	
+	baseUrl :       'assets/javascripts',
+		
+	
 	paths : {
-		Aes : 'play/yonaxtics/google/aes',		
-		Constants : 'play/yonaxtics/Constants',	
-    	Utils: 'play/yonaxtics/Utils',
-		Play : 'play/yonaxtics/Play',
-		Validate: 'play/yonaxtics/Validate' 
 			
+		
+		Aes :       'play/yonaxtics/google/aes',		
+		Constants : 'play/yonaxtics/Constants',    	
+		Play :      'play/yonaxtics/Play',
+		Validate:   'play/yonaxtics/Validate' 
+				
+				
 	}
 });
 
@@ -44,7 +52,7 @@ require.config({
 
 
 
-requirejs(['Aes','Constants','Utils','Play','Validate'],function(Aes,Constants,Utils, Play, Validate) {
+requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Validate) {
 
 /* ==================================================================================================================
  * REGION ATRIBUTOS
@@ -206,7 +214,7 @@ requirejs(['Aes','Constants','Utils','Play','Validate'],function(Aes,Constants,U
 
 	
 	
-	alert(Utils.enc('Yonatan'));
+	
 	
 	
 

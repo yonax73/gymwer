@@ -6,16 +6,21 @@ import play.mvc.Result;
 import views.html.dpa.home.home;
 
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
-import com.yonaxtics.gymwer.util.Constant;
-
+import static com.yonaxtics.gymwer.util.Constant.*;
+import static com.yonaxtics.gymwer.sec.Sec.*;
+/**
+ * 
+ * @author yonatan quintero
+ * @version 0.1 (9/8/2014)
+ *
+ */
 public class GymControl extends Controller {
 
 	
 	public static Result home(){
 		
-		int gymId = Integer.parseInt(session(Constant.SESSION_OK));
-		
-	    if(gymId > 0) {	    	
+				
+	    if(Integer.parseInt(session(SESSION_OK)) > 0) {	    	
 	    	
 	    	return ok(home.render());
 	    	
@@ -30,10 +35,10 @@ public class GymControl extends Controller {
 	
 	public static Result load(){
 		
-		Gym gym = new Gym(Integer.parseInt(session(Constant.SESSION_OK)));
+		Gym gym = new Gym((Integer.parseInt(session(SESSION_OK))));
     	gym.setName("Prueba");
     	
-    	return ok(Json.toJson(gym));
+    	return ok(enc(Json.toJson(gym).toString()));
 		
 	}
 	

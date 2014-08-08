@@ -1,7 +1,11 @@
+/*
+ * ! Play Json Copyright 2014 YonaxTics, Inc. Licensed under
+ * http://www.apache.org/licenses/LICENSE-2.0
+ */
 
 /*
  * ========================================================================
- * Play Utils yonax73@gmail.com
+ * Play Json yonax73@gmail.com
  * ========================================================================
  * Copyright 2014 yonaxTics, Inc.
  * 
@@ -18,51 +22,30 @@
  * the License.
  * ========================================================================
  */
-/* ========================================================================
- * Version 0.1: 08-august-2014 
- * Created on : 08-august-2014
- * Author     : Yonatan Alexis Quintero Rodriguez
+/*
+ * ========================================================================
+ * Version 0.1: 9-August-2014 Created on : 9-August-2014 Author : Yonatan Alexis
+ * Quintero Rodriguez
  * ========================================================================
  */
-define(['./Constants'], function(Constants) {
-	
-	
-	function Utils(){}
-	
-	
 
+define(['./Constants','./Play'], function(Constants,Play) {
 	
 	
-		
-	Utils.padString = function(source){
-		
-	    var paddingChar = ' ';
-	    var size = 16;
-	    var x = source.length % size;
-	    var padLength = size - x;
-	    
-	    for (var i = 0; i < padLength; i++) source += paddingChar;
-	    
-	    return source;
-	}
+	function Json(){}
 	
 	
-
-	Utils.enc = function(plainText){
+	
+	Json.parse = function(strJson){
+	
+		console.log(strJson.length)
+		var str = Play.dec(String(strJson));
 		
-		var key = CryptoJS.enc.Latin1.parse(Constants.KEY);
-		var iv  = CryptoJS.enc.Latin1.parse(Constants.IV);
-		
-		var padMsg = Utils.padString(plainText);
-
-		return CryptoJS.AES.encrypt(padMsg, key, { iv: iv, padding: CryptoJS.pad.NoPadding, mode: CryptoJS.mode.CBC});
-		
+		return JSON.parse(str);
 	}
 	
 	
 	
-	
-	return Utils;
-	
+	return Json;
 	
 });

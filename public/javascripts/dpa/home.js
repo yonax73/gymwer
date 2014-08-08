@@ -1,10 +1,17 @@
 require.config({
+	
+	
 	baseUrl : 'assets/javascripts',
+	
+	
 	paths : {
+		
+	    Aes :       'play/yonaxtics/google/aes',	
 		Constants : 'play/yonaxtics/Constants',
-		Play : 'play/yonaxtics/Play',
-		Validate: 'play/yonaxtics/Validate',
+		Play :      'play/yonaxtics/Play',		
+		Json :      'play/yonaxtics/Json'
 
+			
 	}
 });
 
@@ -42,7 +49,7 @@ require.config({
 
 
 
-requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate) {
+requirejs(['Aes', 'Constants', 'Play','Json'],function(Aes,Constants, Play, Json ) {
 
 	
 
@@ -67,8 +74,10 @@ requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate)
 			  if(this.status === 200){
 				  
 				
-				  console.log(this.responseText);
+				 console.log(this.responseText);
 				  
+				  var gym = Json.parse(this.responseText);
+				  console.log(gym.id);
 				  
 			  }else {
 				  

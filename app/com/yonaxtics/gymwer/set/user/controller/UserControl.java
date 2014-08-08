@@ -15,8 +15,7 @@ import com.yonaxtics.gymwer.set.person.logic.PersonLogic;
 import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.set.user.logic.UserLogic;
 import static com.yonaxtics.gymwer.util.Constant.*;
-
-import com.yonaxtics.security.cryptography.aes.*;
+import static com.yonaxtics.gymwer.sec.Sec.*;
 /**
  * 
  * @author yonatan quintero
@@ -29,8 +28,6 @@ public class UserControl extends Controller {
 	
 	
 	public static  Result  login() {
-
-		
 		
 		return ok(login.render());   
 	}
@@ -114,16 +111,16 @@ public class UserControl extends Controller {
 
 	}
     
-
+	
 	
 	public static Result signIn(){
 		
 		final Map<String, String[]> data = request().body().asFormUrlEncoded();				
 		
 		String result = null;
-		User user = new User(data.get("txtPassword")[0]);
-		Person  contact = new Person(data.get("txtEmail")[0], user);
-		Gym gym = new Gym(data.get("txtName")[0], contact);				
+		User user = new User(data.get("?")[2]);
+		Person  contact = new Person(dec(data.get("?")[1]), user);
+		Gym gym = new Gym(dec(data.get("?")[0]), contact);				
 	
 
 		if(GymLogic.signIn(gym)){

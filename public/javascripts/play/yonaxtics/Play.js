@@ -82,13 +82,12 @@ define(['./Constants'], function(Constants) {
 
 		var elems = form.elements;
 
-		var serialized = [], i, len = elems.length, str = '';
+		var serialized = [], i, len = elems.length;
 
 		for (i = 0; i < len; i += 1) {
 
 			var element = elems[i];
-			var type = element.type;
-			var name = element.name;
+			var type = element.type;			
 			var value = element.value;
 
 			switch (type) {
@@ -98,11 +97,9 @@ define(['./Constants'], function(Constants) {
 			case 'checkbox':
 			case 'textarea':
 			case 'select-one':
-			case 'password':
+			case 'password':				
 
-				str =  name + '=' + value;
-
-				serialized.push(str);
+				serialized.push(Play.encd(value));
 
 				break;
 
@@ -114,6 +111,60 @@ define(['./Constants'], function(Constants) {
 
 		return serialized.join('&');
 	}
+	
+	
+	
+	Play.padString = function(source){
+		
+	    var paddingChar = ' ';
+	    var size = 16;
+	    var x = source.length % size;
+	    var padLength = size - x;
+	    
+	    for (var i = 0; i < padLength; i++) source += paddingChar;
+	    
+	    return source;
+	}
+	
+	
+
+	Play.enc = function(plainText){
+		
+		var key = CryptoJS.enc.Latin1.parse(Constants.KEY);
+		var iv  = CryptoJS.enc.Latin1.parse(Constants.IV);		
+		
+		var padMsg = Play.padString(plainText);
+
+		return CryptoJS.AES.encrypt(padMsg, key, { iv: iv, padding: CryptoJS.pad.NoPadding, mode: CryptoJS.mode.CBC});
+		
+	}
+	
+	
+	
+	Play.dec = function(cipher){
+		
+		var key = CryptoJS.enc.Latin1.parse(Constants.KEY);
+		var iv  = CryptoJS.enc.Latin1.parse(Constants.IV);		
+		
+		var decryptedData = CryptoJS.AES.decrypt( cipher, key, {iv: iv,mode: CryptoJS.mode.CBC,padding: CryptoJS.pad.NoPadding} );
+		
+		return decryptedData.toString( CryptoJS.enc.Utf8 );
+		
+	}
+	
+	
+	
+	Play.encd = function(value){
+		
+		var str = ''+Play.enc(value);		
+		str = str.replace(/=/g,'?');		
+		return '?='+ str;
+	}
+	
+	
+	
+
+	
 
 	return Play;
 
