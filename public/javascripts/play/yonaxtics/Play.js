@@ -24,13 +24,10 @@
  * ========================================================================
  */
 
-define(['./Constants','./Ctr'], function(Constants,Ctr) {
+define(['./Constants'], function(Constants) {
 
-	function Play() {
-		
+	function Play() {}
 	
-	}
-	console.log(Ctr.encrypt("yonatan", '12345678', 128));
 	/**
 	 * @param element
 	 * @return element id
@@ -103,7 +100,7 @@ define(['./Constants','./Ctr'], function(Constants,Ctr) {
 			case 'select-one':
 			case 'password':
 
-				str =  name + '=' + Ctr.encrypt(value, '12345678123456781234567812345678', 256);
+				str =  name + '=' + value;
 
 				serialized.push(str);
 

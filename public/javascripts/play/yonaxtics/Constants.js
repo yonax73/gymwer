@@ -66,8 +66,8 @@ define([], function() {
 	/**
 	 * #
 	 */
-	Constants.DS_STYLE_KEY = '#Y4F53DBX-*12.!7'	
-	Constants.NM_STYLE_KEY = 256;	
+	Constants.KEY = '0123456789abcdef'	
+	Constants.IV = 'fedcba9876543210';	
 
 	return Constants;
 
