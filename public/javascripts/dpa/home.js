@@ -52,45 +52,98 @@ require.config({
 requirejs(['Aes', 'Constants', 'Play','Json'],function(Aes,Constants, Play, Json ) {
 
 	
+	
+	
+/* ==================================================================================================================
+ * REGION ATTRIBUTES
+ * ===================================================================================================================
+ */
+		
+	var mnuAccount = Play.getId('mnuAccount');
+	var mnuAccountOpen  = false;
+	
+	
+	
+	load();
+	init();
+	
+/* ==================================================================================================================
+ * REGION LOAD
+ * ===================================================================================================================
+ */	
+	
+	function load(){
+		
+		var xhr = new XMLHttpRequest();
+		
+		xhr.onreadystatechange = function () {		
+		       
+			  if (this.readyState === 4) {
+				  						
+				  if(this.status === 200){				 
+					  
+					  var gym = Json.parse(this.responseText);				  
+					  
+				  }else {
+					  
+		               //error message   									  
+				  }
+			  }
+		}
+		xhr.open('GET','/load');
+		xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
+		xhr.send();		
+		//set time out	
+     }
+	
 
-//	  var password = '123';
-//	  var plaintext = 'Hello word!!';
-//	  var ciphertext = Ctr.encrypt(plaintext, password, 256);
-//	  var origtext = Ctr.decrypt(ciphertext, password, 256);
-//	  
-//	  console.log('ciphertext' +ciphertext)
-//	  console.log('text plain '+origtext);
+/* ==================================================================================================================
+ * REGION INIT
+ * ===================================================================================================================
+ */	
+	
+	  function init(){
+		
+		  loadNavBar();
+	}
+	
+	
+	
+/* ==================================================================================================================
+ * REGION NAVBAR
+ * ===================================================================================================================
+ */	
+	 
+	  
+	  function loadNavBar(){
+		
+		mnuAccount.onclick = function(){
+			
+			if(mnuAccountOpen){			        
+				
+				Play.addClass(this,Constants.DROP_DOWN);
+				mnuAccountOpen = false;
+				
+			} else {
+				
+				Play.addClass(this,Constants.DROP_DOWN_OPEN);
+				mnuAccountOpen = true;
+			}
+						
+			
+		}
+		
 
-	var xhr = new XMLHttpRequest();
-
+		
+		
+		
+	
+	}		
+	
 
 	
-	xhr.onreadystatechange = function () {	
-		 
-		
-	       
-		  if (this.readyState === 4) {
-			  						
-			  if(this.status === 200){
-				  
-				
-				 console.log(this.responseText);
-				  
-				  var gym = Json.parse(this.responseText);
-				  console.log(gym.id);
-				  
-			  }else {
-				  
-	                  									  
-			  }
-		  }
-	}
-	xhr.open('GET','/load');
-	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-	 xhr.send();		
-			
-			
-			
+	
+	
 });
 
 

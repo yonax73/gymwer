@@ -12,8 +12,8 @@ public class Constant {
 	/**
 	 * SEX
 	 */
-	public final static int FEMALE = 0;
-	public final static int  MALE = 1;
+	public final static byte FEMALE = 0;
+	public final static byte  MALE = 1;
 	
 	/**
 	 * CLIENT
@@ -37,18 +37,16 @@ public class Constant {
 	
 	
 	
-	/**
-	 * #
-	 */
-	public final static String KEY = "#Y4F53DBX";
-	public final static int  KEY_SIZE = 256;
-	
-	
 	
 	/**
 	 * STATES SESSION
 	 */
 	public final static String SESSION_OK = "11508891";
+	
+	
+	
+
+
 	
 	
 }

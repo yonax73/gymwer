@@ -1,9 +1,18 @@
 require.config({
-	baseUrl : 'assets/javascripts',
+	
+	
+	baseUrl :       'assets/javascripts',
+		
+	
 	paths : {
-		Constants : 'play/yonaxtics/Constants',
-		Play : 'play/yonaxtics/Play',
-		Validate: 'play/yonaxtics/Validate' 
+			
+		
+		Aes :       'play/yonaxtics/google/aes',		
+		Constants : 'play/yonaxtics/Constants',    	
+		Play :      'play/yonaxtics/Play',
+		Validate:   'play/yonaxtics/Validate' 
+				
+				
 	}
 });
 
@@ -41,7 +50,7 @@ require.config({
 
 
 
-requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate) {
+requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Validate) {
 
 /* ==================================================================================================================
  * REGION ATRIBUTOS
@@ -183,7 +192,16 @@ requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate)
 								 
 								 xhr.open('POST','/createAccount');
 								 xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-								 xhr.send(Play.serialize(e.target));								
+								 xhr.send(Play.serialize(e.target));			
+								 xhr.timeout = 10000;
+								 xhr.ontimeout = function () {
+									 
+									msgSignUp.textContent = "Timed Out!!!";
+									Play.addClass(icoSignUp, Constants.ICO_ERROR);
+									Play.addClass(altSignUp, Constants.ALERT_DANGER);
+									btnSignUp.disabled = false;
+									
+								}
 						
 						}
 					}					
@@ -192,7 +210,7 @@ requirejs([ 'Constants', 'Play','Validate' ],function(Constants, Play, Validate)
 	    }   
 	} else {
 		
-		msgSignUp.textContent = 'All fields are required and can\'t be empty';
+		msgSignUp.textContent = 'All fields are required and can\'t be empty!!!';
 		Play.addClass(icoSignUp, Constants.ICO_ERROR);
 		Play.addClass(altSignUp, Constants.ALERT_DANGER);
 	}

@@ -129,13 +129,8 @@ define(['./Constants'], function(Constants) {
 	
 
 	Play.enc = function(plainText){
-		
-		var key = CryptoJS.enc.Latin1.parse(Constants.KEY);
-		var iv  = CryptoJS.enc.Latin1.parse(Constants.IV);		
-		
-		var padMsg = Play.padString(plainText);
 
-		return CryptoJS.AES.encrypt(padMsg, key, { iv: iv, padding: CryptoJS.pad.NoPadding, mode: CryptoJS.mode.CBC});
+		return CryptoJS.AES.encrypt(Play.padString(plainText), CryptoJS.enc.Latin1.parse(Constants.KEY), { iv:  CryptoJS.enc.Latin1.parse(Constants.IV), padding: CryptoJS.pad.NoPadding, mode: CryptoJS.mode.CBC});
 		
 	}
 	
@@ -143,22 +138,14 @@ define(['./Constants'], function(Constants) {
 	
 	Play.dec = function(cipher){
 		
-		var key = CryptoJS.enc.Latin1.parse(Constants.KEY);
-		var iv  = CryptoJS.enc.Latin1.parse(Constants.IV);		
-		
-		var decryptedData = CryptoJS.AES.decrypt( cipher, key, {iv: iv,mode: CryptoJS.mode.CBC,padding: CryptoJS.pad.NoPadding} );
-		
-		return decryptedData.toString( CryptoJS.enc.Utf8 );
-		
+		return CryptoJS.AES.decrypt( cipher, CryptoJS.enc.Latin1.parse(Constants.KEY), {iv: CryptoJS.enc.Latin1.parse(Constants.IV),mode: CryptoJS.mode.CBC,padding: CryptoJS.pad.NoPadding} ).toString( CryptoJS.enc.Utf8 );		
 	}
 	
 	
 	
-	Play.encd = function(value){
-		
-		var str = ''+Play.enc(value);		
-		str = str.replace(/=/g,'?');		
-		return '?='+ str;
+	Play.encd = function(value){		
+			
+		return '?='+(''+Play.enc(value)).replace(/=/g,'?');
 	}
 	
 	

@@ -4,9 +4,11 @@ import play.GlobalSettings;
 import play.Logger;
 
 
+
 public class Global extends GlobalSettings {
 
-
+    
+	
 	
     public void onStart(Application app) {
   
@@ -23,12 +25,13 @@ public class Global extends GlobalSettings {
     
     
     
+
     
-//    public Promise<Result> onError(RequestHeader request, Throwable t) {
-//        return Promise.<Result>pure(internalServerError(
-//            
-//        		
-//        ));
-//    }
+    
+
+    
+    
+    
+
 	
 }

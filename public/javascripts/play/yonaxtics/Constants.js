@@ -42,8 +42,14 @@ define([], function() {
 	Constants.ICO_SUCCESS = 'fa fa-check fa-lg pull-left';
 	Constants.ICO_WARNING = 'fa fa-exclamation-triangle fa-lg pull-left';
 	Constants.ICO_ERROR = 'fa fa-hand-o-right fa-lg pull-left';
-	
 
+	/**
+	 * DROP DOWN CLASSES
+	 */
+   
+     Constants.DROP_DOWN_OPEN = 'dropdown open';
+     Constants.DROP_DOWN = 'dropdown';
+	
 	/**
 	 * UTILS CLASSES
 	 */

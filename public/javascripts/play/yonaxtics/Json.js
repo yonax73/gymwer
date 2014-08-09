@@ -36,12 +36,9 @@ define(['./Constants','./Play'], function(Constants,Play) {
 	
 	
 	
-	Json.parse = function(strJson){
-	
-		console.log(strJson.length)
-		var str = Play.dec(String(strJson));
+	Json.parse = function(strJson){		 
 		
-		return JSON.parse(str);
+		return JSON.parse(Play.dec(strJson.replace(/\s/g, '')));
 	}
 	
 	

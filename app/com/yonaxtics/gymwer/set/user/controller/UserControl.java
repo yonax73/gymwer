@@ -1,7 +1,9 @@
 package com.yonaxtics.gymwer.set.user.controller;
 
+
 import java.util.Map;
 
+import static play.cache.Cache.*;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.set.login.login;
@@ -14,6 +16,7 @@ import com.yonaxtics.gymwer.set.person.entity.Person;
 import com.yonaxtics.gymwer.set.person.logic.PersonLogic;
 import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.set.user.logic.UserLogic;
+
 import static com.yonaxtics.gymwer.util.Constant.*;
 import static com.yonaxtics.gymwer.sec.Sec.*;
 /**
@@ -28,6 +31,11 @@ public class UserControl extends Controller {
 	
 	
 	public static  Result  login() {
+
+		if(session(SESSION_OK)!= null){
+			
+			session().remove(SESSION_OK);
+		}
 		
 		return ok(login.render());   
 	}
@@ -52,15 +60,15 @@ public class UserControl extends Controller {
 		
 		final Map<String, String[]> data = request().body().asFormUrlEncoded();		
 		
-		if (data.get("cbxTerms")[0].equals(CHECKED)) {
+		if (dec(data.get("?")[4]).equals(CHECKED)) {
 
-			if (data.get("txtPassword")[0].equals(data.get("txtConfirmPassword")[0])) {
+			if (data.get("?")[2].equals(data.get("?")[3])) {
 
-				contact = new Person(data.get("txtEmail")[0]);
+				contact = new Person(dec(data.get("?")[1]));
 
 				if(!PersonLogic.exists(contact)){
 				
-					user = new User(USER_ADMIN,data.get("txtPassword")[0]);				
+					user = new User(USER_ADMIN,data.get("?")[2]);				
 					
 			        if(UserLogic.create(user)){
 			        	
@@ -69,7 +77,8 @@ public class UserControl extends Controller {
 			        	
 			        	if(PersonLogic.create(contact)){
 			        		
-			        		gym = new Gym(data.get("txtName")[0], contact);
+			        		gym = new Gym(dec(data.get("?")[0]), contact);
+			        		data.clear();
 			        		
 			        		if(GymLogic.create(gym)){
 			        			
@@ -120,18 +129,19 @@ public class UserControl extends Controller {
 		String result = null;
 		User user = new User(data.get("?")[2]);
 		Person  contact = new Person(dec(data.get("?")[1]), user);
-		Gym gym = new Gym(dec(data.get("?")[0]), contact);				
-	
-
-		if(GymLogic.signIn(gym)){
+		Gym gym = new Gym(dec(data.get("?")[0]), contact);			
 			
-			session(SESSION_OK, String.valueOf(gym.getId()));			
-			return ok(REQUEST_SUCCESS);
-			
-		} else {
-			
-			result = "The name, password or user are incorrect!";
-		}        
+			if(GymLogic.signIn(gym)){
+				
+				session(SESSION_OK, String.valueOf(gym.getId()));
+					
+				return ok(REQUEST_SUCCESS);
+				
+			} else {
+				
+				result = "The name, password or user are incorrect!!!";
+			}			
+		
 		
 		return ok(result);
 		

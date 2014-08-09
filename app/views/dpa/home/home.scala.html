@@ -1,3 +1,5 @@
+@import templates._
+@main(title = "Sign Up GymWer"){
 <!-- /*! -->
 <!--  * home gymwer -->
 <!--  * Copyright 2014 YonaxTics, Inc. -->
@@ -5,7 +7,82 @@
 <!--  * Author Yonatan Alexis Quintero Rodriguez -->
 <!--  * Created on : 1. Aug 2014 -->
 <!--  */ -->
-Welcome
+
+
+
+<!------------------------------------------>
+<!--            NAV                       -->
+<!------------------------------------------>
+<div class="navbar navbar-default navbar-fixed-top" id="head-nav">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button  class="navbar-toggle collapsed" type="button">
+          <span class="fa fa-gear"></span>
+        </button>
+        <a href="#" class="navbar-brand"><span id="nameGym">Forma</span></a>
+      </div>
+      <div class="navbar-collapse collapse" >
+	<!------------------------------------------>
+	<!--            DATA ACCOUNT              -->
+	<!------------------------------------------>
+    <ul class="nav navbar-nav navbar-right user-nav">
+      <li id="mnuAccount" tabindex="0" class="dropdown">
+        <a href="#"><i class="fa fa-user">&nbsp;&nbsp;&nbsp;<span id="nameContact">Yonatan Quintero</span></i>  <b class="caret"></b></a>
+        <ul id="lstAccount"  class="dropdown-menu">
+          <li><a  href="/login">My Account</a></li>
+          <li><a href="#">Profile</a></li>          
+          <li class="divider"></li>
+          <li><a href="#">Sign Out</a></li>
+        </ul>
+      </li>
+    </ul>			
+    <ul class="nav navbar-nav navbar-right not-nav">
+    <!------------------------------------------>
+    <!--            NOTIFICATION              -->
+    <!------------------------------------------>
+      <li class="button dropdown">
+        <a    href="#"><i class="fa fa-bell"></i></a>
+        <ul class="dropdown-menu messages">
+          <li>
+            <div class="nano nscroller has-scrollbar">
+              <div class="content" tabindex="1" style="right: -17px;">
+                <ul>
+                  <li>
+                    <a href="#">
+                     <span class="date pull-right">13 Sept.</span> <span class="name">Daniel</span> I'm following you, and I want your money! 
+                    </a>
+                  </li>                  
+                </ul>
+              </div>
+            <div class="pane" style="display: none;"><div class="slider" style="height: 20px; top: 0px;"></div></div></div>
+            <ul class="foot"><li><a href="#">View all messages </a></li></ul>           
+          </li>
+        </ul>
+      </li>
+		<!------------------------------------------>
+		<!--            EVENTS                    -->
+		<!------------------------------------------>
+      <li class="button dropdown">
+        <a    href="#"><i class="fa fa-globe"></i><span class="bubble">2</span></a>
+        <ul class="dropdown-menu">
+          <li>
+            <div class="nano nscroller has-scrollbar">
+              <div class="content" tabindex="2" style="right: -17px;">
+                <ul>
+                  <li><a href="#"><i class="fa fa-cloud-upload info"></i><b>Daniel</b> is now following you <span class="date">2 minutes ago.</span></a></li>
+                </ul>
+              </div>
+            <div class="pane" style="display: none;"><div class="slider" style="height: 20px; top: 0px;"></div></div></div>
+            <ul class="foot"><li><a href="#">View all activity </a></li></ul>           
+          </li>
+        </ul>
+      </li>
+      				
+    </ul>
+      </div>
+    </div>
+  </div>
 
 
         <script type="text/javascript" data-main="@routes.Assets.at("javascripts/dpa/home.js")" src="@routes.Assets.at("javascripts/require.js")"></script>
+}

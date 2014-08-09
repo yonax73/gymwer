@@ -1,6 +1,4 @@
-require.config({
-	
-	
+require.config({	
 	
 	
 	baseUrl :       'assets/javascripts',
@@ -55,9 +53,12 @@ require.config({
 requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Validate) {
 
 /* ==================================================================================================================
- * REGION ATRIBUTOS
+ * REGION ATTRIBUTES
  * ===================================================================================================================
  */
+	
+		
+	
 	var altLogin = Play.getId('altLogin');
 	var icoLogin = Play.getId('icoLogin');
 	var msgLogin = Play.getId('msgLogin');
@@ -76,7 +77,7 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
 	
 	var btnLogin = Play.getId('btnSignin');    
 	
-	var txtEmptyMessage = "All fileds are required and can\'t be empty";
+	var txtEmptyMessage = "All fileds are required and can\'t be empty!!!";
 	var valid = false;
 	
 	init();
@@ -91,7 +92,7 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
 	
 	
 	
-	function init(){
+	 function init() {
 				
 	    btnClose.onclick = function (){Play.addClass(altLogin, Constants.HIDDEN);};    				
 				
@@ -110,25 +111,17 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
 		}
 				
 	}
-	
 			
 	
 	
-/* ==================================================================================================================
- * END REGION INIT
- * ===================================================================================================================
- */
-				
-	
-	
-	
+
 /* ==================================================================================================================
  * REGION FORM
  * ===================================================================================================================
  */
 
 	
-	function formLoginAction(){
+	 function formLoginAction(){
 		
 		/**
 		 * Reset messages input form
@@ -170,12 +163,10 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
 										 btnLogin.disabled = true;
 									        
 										  if (this.readyState === 4) {
-											  
-											  console.log(this.responseText);
-											  
+											  											  											  
 											  if(this.status === 200 && this.responseText === Constants.REQUEST_SUCCESS){
-												 
-												  
+																				
+												  btnLogin.disabled = false;												  
 												  window.location = '/home';
 												  
 											  }else {
@@ -190,6 +181,15 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
 									 xhr.open('POST','/signIn');
 									 xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
 									 xhr.send(Play.serialize(e.target));	
+									 xhr.timeout = 10000;
+									 xhr.ontimeout = function () {
+										 
+										msgLogin.textContent = "Timed Out!!!";
+										Play.addClass(icoLogin, Constants.ICO_ERROR);
+										Play.addClass(altLogin, Constants.ALERT_DANGER);
+										btnLogin.disabled = false;
+										
+									}
 						}
 					}
 				}
@@ -207,10 +207,7 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
 	
 	
 	
-/* ==================================================================================================================
- * END REGION FORM
- * ===================================================================================================================
- */
+
 
 	
 	
