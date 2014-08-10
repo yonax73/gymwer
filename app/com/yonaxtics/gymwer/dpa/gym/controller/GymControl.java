@@ -6,6 +6,7 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.dpa.home.home;
+import views.html.set.login.login;
 
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 /**
@@ -26,7 +27,7 @@ public class GymControl extends Controller {
 	    	
 	    } else {
 	    	
-	        return unauthorized("Oops, you are not connected");
+	    	return ok(login.render());  
 	    }		
 		
 	}

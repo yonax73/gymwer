@@ -116,6 +116,28 @@ requirejs(['Aes', 'Constants', 'Play','Json'],function(Aes,Constants, Play, Json
 	  
    function loadNavBar(){		
 		
+	   var menuToggle = Play.getId('menu-toggle');
+	   
+	   menuToggle.onclick = function(){
+		   
+		   var wrapper = Play.getId('wrapper');
+		   
+		   
+		   var active = true;
+		   
+		   if(active){
+			   
+			   Play.addClass(wrapper,'');
+			   active = false;
+			   
+		   } else {
+			   
+			   Play.addClass(wrapper,'active');
+			   active = true;
+		   }
+		   
+		   
+	   }
 	
 	}		
 	
