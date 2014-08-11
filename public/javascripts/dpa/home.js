@@ -59,8 +59,7 @@ requirejs(['Aes', 'Constants', 'Play','Json'],function(Aes,Constants, Play, Json
  * ===================================================================================================================
  */
 		
-	var mnuAccount = Play.getId('mnuAccount');
-	var mnuAccountOpen  = false;
+
 	
 	
 	
@@ -115,27 +114,7 @@ requirejs(['Aes', 'Constants', 'Play','Json'],function(Aes,Constants, Play, Json
  */	
 	 
 	  
-	  function loadNavBar(){
-		
-		mnuAccount.onclick = function(){
-			
-			if(mnuAccountOpen){			        
-				
-				Play.addClass(this,Constants.DROP_DOWN);
-				mnuAccountOpen = false;
-				
-			} else {
-				
-				Play.addClass(this,Constants.DROP_DOWN_OPEN);
-				mnuAccountOpen = true;
-			}
-						
-			
-		}
-		
-
-		
-		
+   function loadNavBar(){		
 		
 	
 	}		
