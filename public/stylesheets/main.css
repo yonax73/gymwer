@@ -24,7 +24,7 @@
  * ======================================================================== */
  
  
- 
+
 /*  Class Style */
  
 	.vertical-offset-5{
@@ -87,37 +87,27 @@
 **/
 
 
-#wrapper {
-    padding-left: 165px;
-    transition: all .4s ease 0s;
-   
-}
 
-#sidebar-wrapper {
-    background: none repeat scroll 0 0 #f5f5f5;
+
+nav {
+    background: none repeat scroll 0 0 #282828;
     height: 100%;
     left: 0;
+    overflow: auto;
     position: fixed;
 }
 
-#sidebar-wrapper .divider{
+nav .divider{
 
 border: solid transparent;
 border-width: 1px 0;
 box-shadow: inset 1px 1px 0 rgba(0,0,0,.1),inset 0 -1px 0 rgba(0,0,0,.07);
 width: 100%;
 margin: 0!important;
-border-bottom: 1px solid #dddddd;
+border-bottom: 1px solid #1a1c20;
 	
 }
 
-
-#page-content-wrapper {
-    padding-left: 0;
-    margin-left: 0;
-    width: 100%;
-    height: auto;
-}
 
 
 

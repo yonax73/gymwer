@@ -117,25 +117,33 @@ requirejs(['Aes', 'Constants', 'Play','Json'],function(Aes,Constants, Play, Json
    function loadNavBar(){		
 		
 	   var menuToggle = Play.getId('menu-toggle');
-	   var descriptionMenuHide =  'description-menu hidden';
-	   var descriptionMenuShow =  'description-menu show';
+	   var descriptionMenuHide =  'description-menu hidden-xs hidden';
+	   var descriptionMenuShow =  'description-menu hidden-xs';
 	   var descriptionMenu = Play.getClasses('description-menu');
+	   var nav = Play.getId('nav');
+	   var content = Play.getId('content');
+	   var clsFullNav = 'col-xs-3 col-sm-3 col-md-2';
+	   var clsFullContent = 'col-xs-9 col-sm-9 col-md-10';
+	   var clsMinNav = 'col-xs-2 col-sm-1 col-md-1';
+	   var clsMinContent = 'col-xs-10 col-sm-11 col-md-11';
 	   
 	    var n = descriptionMenu.length;
 	 
-	    var active = true;
+	    var open = true;
 	   
 	   menuToggle.onclick = function(){
 		   
 		   var wrapper = Play.getId('wrapper');		   
 		   
-		   if(active){
+		   if(open){
 			   
 			    for ( var i = n-1; i > -1; i--) {			
 			    	
 			    	Play.addClass(descriptionMenu[i],descriptionMenuHide);
 				}
-			   active = false;
+			    Play.addClass(nav,clsMinNav);
+			    Play.addClass(content,clsMinContent);
+			   open = false;
 			   
 		   } else {
 			   
@@ -143,7 +151,11 @@ requirejs(['Aes', 'Constants', 'Play','Json'],function(Aes,Constants, Play, Json
 			    	
 			    	Play.addClass(descriptionMenu[i],descriptionMenuShow);
 				}
-			   active = true;
+
+			    
+			    Play.addClass(nav,clsFullNav);
+			    Play.addClass(content,clsFullContent);
+			   open = true;
 		   }
 		   
 		   
