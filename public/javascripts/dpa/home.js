@@ -117,22 +117,35 @@ requirejs(['Aes', 'Constants', 'Play','Json'],function(Aes,Constants, Play, Json
    function loadNavBar(){		
 		
 	   var menuToggle = Play.getId('menu-toggle');
+	   var descriptionMenuHide =  'description-menu hidden';
+	   var descriptionMenuShow =  'description-menu show';
+	   var descriptionMenu = Play.getClasses('description-menu');
+	   
+	    var n = descriptionMenu.length;
+	 
+	    var active = true;
 	   
 	   menuToggle.onclick = function(){
 		   
 		   var wrapper = Play.getId('wrapper');
 		   
 		   
-		   var active = true;
+		   
 		   
 		   if(active){
 			   
-			   Play.addClass(wrapper,'');
+			    for ( var i = n-1; i > -1; i--) {			
+			    	
+			    	Play.addClass(descriptionMenu[i],descriptionMenuHide);
+				}
 			   active = false;
 			   
 		   } else {
 			   
-			   Play.addClass(wrapper,'active');
+			    for ( var i = n-1; i > -1; i--) {			
+			    	console.log(descriptionMenu[i]);
+			    	Play.addClass(descriptionMenu[i],descriptionMenuShow);
+				}
 			   active = true;
 		   }
 		   

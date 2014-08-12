@@ -64,6 +64,17 @@ define(['./Constants'], function(Constants) {
 
 		return document.getElementsByClassName(className)[0];
 	}
+	
+	/**
+	 * 
+	 * @param className
+	 * @returns array de element of class
+	 */
+	Play.getClasses = function(className) {
+
+		return document.getElementsByClassName(className);
+	}
+	
 
 	/**
 	 * @param element
