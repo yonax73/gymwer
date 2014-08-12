@@ -127,10 +127,7 @@ requirejs(['Aes', 'Constants', 'Play','Json'],function(Aes,Constants, Play, Json
 	   
 	   menuToggle.onclick = function(){
 		   
-		   var wrapper = Play.getId('wrapper');
-		   
-		   
-		   
+		   var wrapper = Play.getId('wrapper');		   
 		   
 		   if(active){
 			   
@@ -143,7 +140,7 @@ requirejs(['Aes', 'Constants', 'Play','Json'],function(Aes,Constants, Play, Json
 		   } else {
 			   
 			    for ( var i = n-1; i > -1; i--) {			
-			    	console.log(descriptionMenu[i]);
+			    	
 			    	Play.addClass(descriptionMenu[i],descriptionMenuShow);
 				}
 			   active = true;
