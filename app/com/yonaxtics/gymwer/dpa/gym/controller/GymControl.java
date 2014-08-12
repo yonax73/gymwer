@@ -1,4 +1,4 @@
-package com.yonaxtics.gymwer.dpa.gym.controller;
+	package com.yonaxtics.gymwer.dpa.gym.controller;
 
 import static com.yonaxtics.gymwer.sec.Sec.enc;
 import static com.yonaxtics.gymwer.util.Constant.SESSION_OK;

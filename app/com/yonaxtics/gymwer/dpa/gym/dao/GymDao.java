@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Types;
 
+import play.Logger;
 import play.db.DB;
 
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
@@ -42,7 +43,7 @@ public class GymDao extends Dao{
 			
 		} catch (Exception e) {
 			
-			e.printStackTrace();
+			Logger.error(e.getMessage());
 			
 		} finally{
 			
