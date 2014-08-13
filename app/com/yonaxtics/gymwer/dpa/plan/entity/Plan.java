@@ -1,5 +1,7 @@
 package com.yonaxtics.gymwer.dpa.plan.entity;
 
+import java.util.List;
+
 import com.yonaxtics.gymwer.util.base.entity.Entity;
 /**
  * 

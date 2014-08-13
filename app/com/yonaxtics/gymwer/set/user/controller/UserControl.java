@@ -75,17 +75,17 @@ public class UserControl extends Controller {
 		if (dec(data.get("?")[4]).equals(CHECKED)) {
 
 			if (data.get("?")[2].equals(data.get("?")[3])) {
-
-				contact = new Person(dec(data.get("?")[1]));
-
-				if(!PersonLogic.exists(contact)){
 				
-					user = new User(USER_ADMIN,data.get("?")[2]);				
+				user = new User(USER_ADMIN, dec(data.get("?")[1]), data.get("?")[2], new Role(ROL_ADMIN));
+
+				if(!UserLogic.exists(user)){
+				
+					//user = new User(USER_ADMIN,data.get("?")[2]);				
 					
 			        if(UserLogic.create(user)){
 			        	
 			        	contact.setUser(user);
-			        	contact.setRole(new Role(ROL_ADMIN));
+			        	//contact.setRole(new Role(ROL_ADMIN));
 			        	
 			        	if(PersonLogic.create(contact)){
 			        		
@@ -140,20 +140,20 @@ public class UserControl extends Controller {
 		final Map<String, String[]> data = request().body().asFormUrlEncoded();				
 		
 		String result = null;
-		User user = new User(data.get("?")[2]);
-		Person  contact = new Person(dec(data.get("?")[1]), user);
-		Gym gym = new Gym(dec(data.get("?")[0]), contact);			
+		//User user = new User(data.get("?")[2]);
+		//Person  contact = new Person(dec(data.get("?")[1]), user);
+		//Gym gym = new Gym(dec(data.get("?")[0]), contact);			
 			
-			if(GymLogic.signIn(gym)){
-				
-				session(SESSION_OK, String.valueOf(gym.getId()));
-					
-				return ok(REQUEST_SUCCESS);
-				
-			} else {
-				
-				result = "The name, password or user are incorrect!!!";
-			}			
+//			if(GymLogic.signIn(gym)){
+//				
+//				session(SESSION_OK, String.valueOf(gym.getId()));
+//					
+//				return ok(REQUEST_SUCCESS);
+//				
+//			} else {
+//				
+//				result = "The name, password or user are incorrect!!!";
+//			}			
 		
 		
 		return ok(result);

@@ -71,8 +71,7 @@ public class GymDao extends Dao{
 			String sql = "CALL sp_set_user_LOGIN(?,?,?);";
 			cst = conn.prepareCall(sql);
 			
-			cst.setString(1, gym.getName());
-			cst.setString(2, gym.getContact().getEmail());
+			cst.setString(1, gym.getName());			
 			cst.setString(3, gym.getContact().getUser().getPassword());
 			
 			rs  = cst.executeQuery();	

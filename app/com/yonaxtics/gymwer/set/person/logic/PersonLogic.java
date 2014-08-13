@@ -11,7 +11,7 @@ public class PersonLogic {
 		
 		boolean result = false;			
 		 
-		if(person != null && !person.exists() && !person.getEmail().isEmpty()){	 		    	  
+		if(person != null && !person.exists()){	 		    	  
 		    		  
               result = PersonDao.create(person);
 		}
@@ -22,17 +22,7 @@ public class PersonLogic {
 
 	
 	
-	public static boolean exists(Person person){		
-		
-		boolean result = false;
-		
-		if(person != null && !person.exists() && !person.getEmail().isEmpty()){	 
-			
-			result = PersonDao.exists(person);
-		}
-		
-		return result;
-	}
+
 
 
 

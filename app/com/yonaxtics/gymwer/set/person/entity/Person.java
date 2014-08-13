@@ -1,9 +1,8 @@
 package com.yonaxtics.gymwer.set.person.entity;
 
-import com.yonaxtics.gymwer.set.master.entity.*;
-import com.yonaxtics.gymwer.set.location.entity.*;
-import com.yonaxtics.gymwer.util.base.entity.Entity;
+import com.yonaxtics.gymwer.set.location.entity.Location;
 import com.yonaxtics.gymwer.set.user.entity.User;
+import com.yonaxtics.gymwer.util.base.entity.Entity;
 
 /**
  * 
@@ -14,11 +13,10 @@ import com.yonaxtics.gymwer.set.user.entity.User;
 public class Person extends Entity {
 
 	private User user;
-	private Location location;
-	private Role role;
+	private Location location;	
 	private String document;
 	private String name;
-	private String email;
+	
 
 	
 	public Person(int id) {
@@ -26,16 +24,14 @@ public class Person extends Entity {
 		super(id);		
 	}
 	
-	public Person(String email){
+	
+	
+	
+
 		
-		super(0);
-		this.email = email;		
-	}	
+	public Person(User user){
 		
-	public Person(String email, User user){
-		
-		super(0);
-		this.email = email;
+		super(0);		
 		this.user = user;
 	}	
 
@@ -46,16 +42,6 @@ public class Person extends Entity {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
 	}
 
 	public String getDocument() {
@@ -74,13 +60,6 @@ public class Person extends Entity {
 		this.name = name;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
 
 	public Location getLocation() {
 		return location;

@@ -27,6 +27,19 @@ public  class   UserLogic  {
 	}
 	
 	
+	public static boolean exists(User user){		
+		
+		boolean result = false;
+		
+		if(user != null && !user.exists() && !user.getEmail().isEmpty()){	 
+			
+			result = UserDao.exists(user);
+		}
+		
+		return result;
+	}
+	
+	
 	
 	
 

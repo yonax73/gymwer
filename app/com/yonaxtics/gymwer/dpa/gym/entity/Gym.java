@@ -2,11 +2,11 @@ package com.yonaxtics.gymwer.dpa.gym.entity;
 
 import java.util.List;
 
-import com.yonaxtics.gymwer.set.person.entity.*;
+import com.yonaxtics.gymwer.dpa.client.entity.Client;
+import com.yonaxtics.gymwer.dpa.plan.entity.Plan;
 import com.yonaxtics.gymwer.set.location.entity.Location;
+import com.yonaxtics.gymwer.set.person.entity.Person;
 import com.yonaxtics.gymwer.util.base.entity.Entity;
-import com.yonaxtics.gymwer.dpa.client.entity.*;
-import com.yonaxtics.gymwer.dpa.site.entity.*;
 /**
  * 
  * @author yonatan quintero
@@ -18,9 +18,9 @@ public class Gym extends Entity {
 	private String nit;
 	private String name;
 	private Person contact;
-	private Location location;
-	private List<Site> siteList;
+	private Location location;	
 	private List<Client> clientList;
+	private List<Plan> planList;
 	
 	public Gym(int id) {
 		
@@ -80,13 +80,7 @@ public class Gym extends Entity {
 		this.location = location;
 	}
 
-	public List<Site> getSiteList() {
-		return siteList;
-	}
 
-	public void setSiteList(List<Site> siteList) {
-		this.siteList = siteList;
-	}
 
 	public List<Client> getClientList() {
 		return clientList;
@@ -94,6 +88,14 @@ public class Gym extends Entity {
 
 	public void setClientList(List<Client> clientList) {
 		this.clientList = clientList;
+	}
+
+	public List<Plan> getPlanList() {
+		return planList;
+	}
+
+	public void setPlanList(List<Plan> planList) {
+		this.planList = planList;
 	}
 
 

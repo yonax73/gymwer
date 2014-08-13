@@ -3,6 +3,7 @@ package com.yonaxtics.gymwer.set.user.dao;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.Types;
 
 import play.db.DB;
@@ -51,6 +52,41 @@ public class UserDao extends Dao{
 		
 		return result;
 		
+	}
+	
+	public static boolean exists(User user){
+		
+		boolean result = false;		
+		CallableStatement cst = null;
+		ResultSet rs  = null;
+		Connection conn = null;
+		
+		try {
+			
+			conn = DB.getConnection();
+			String sql = "CALL sp_set_user_EXISTS(?);";
+			cst = conn.prepareCall(sql);
+			
+			cst.setString(1, user.getEmail());			
+			
+			rs  = cst.executeQuery();	
+			
+			if(rs.next()){
+				
+				result = rs.getInt(1) > 0;							
+			}			
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+		} finally{
+			
+			if(cst != null) cst = null;
+			close(conn);
+		}
+		
+		return result;		
 	}
 	
 	

@@ -1,5 +1,8 @@
 package com.yonaxtics.gymwer.set.master.entity;
 
+import java.util.List;
+
+import com.yonaxtics.gymwer.set.permission.entity.*;
 
 /**
  * 
@@ -9,6 +12,9 @@ package com.yonaxtics.gymwer.set.master.entity;
  */
 public class Role extends MasterValue {
 
+	
+	private List<Permission> permissionList;
+	
 	public Role(int id) {
 		
 		super(id);
@@ -29,6 +35,14 @@ public class Role extends MasterValue {
 	public void setName(String name){
 		
 		setValue1(name);
+	}
+
+	public List<Permission> getPermissionList() {
+		return permissionList;
+	}
+
+	public void setPermissionList(List<Permission> permissionList) {
+		this.permissionList = permissionList;
 	}
 
 	

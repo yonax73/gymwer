@@ -2,7 +2,6 @@ package com.yonaxtics.gymwer.dpa.ticketDetail.entity;
 
 import java.time.LocalDateTime;
 
-import com.yonaxtics.gymwer.dpa.site.entity.Site;
 import com.yonaxtics.gymwer.util.base.entity.Entity;
 /**
  * 
@@ -12,7 +11,7 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
  */
 public class TicketDetail extends Entity {
 
-	private Site site;
+
 	private int item;
 	private LocalDateTime finished;
 	
@@ -22,9 +21,7 @@ public class TicketDetail extends Entity {
 		
 	}
 
-	public Site getSite() {
-		return site;
-	}
+
 
 	public int getItem() {
 		return item;
@@ -34,9 +31,7 @@ public class TicketDetail extends Entity {
 		return finished;
 	}
 
-	public void setSite(Site site) {
-		this.site = site;
-	}
+
 
 	public void setItem(int item) {
 		this.item = item;

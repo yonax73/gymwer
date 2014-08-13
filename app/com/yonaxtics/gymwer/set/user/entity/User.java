@@ -1,6 +1,7 @@
 package com.yonaxtics.gymwer.set.user.entity;
 
-import com.yonaxtics.gymwer.set.master.entity.*;
+import com.yonaxtics.gymwer.set.master.entity.MasterValue;
+import com.yonaxtics.gymwer.set.master.entity.Role;
 
 /**
  * 
@@ -10,41 +11,26 @@ import com.yonaxtics.gymwer.set.master.entity.*;
  */
 public class User extends MasterValue {
 
+	
+	private Role role;
+	
+	
 	public User(int id) {
 		
-		super(id);
-		
+		super(id);		
 	}
 	
-	public User(int id, String user){
-		
-		super(id);
-		setValue1(user);
-		
-		
-	}
-	
-	public User(String user, String password){
+	public User(String name,String email,String password,Role role){
 		
 		super(0);
-		setValue1(user);
+		setValue1(name);
 		setValue2(password);
+		setValue3(email);
+		this.role = role;
 		
 	}
 	
-	public User(int id, String user, String password){
-		
-		super(id);
-		setValue1(user);
-		setValue2(password);
-		
-	}
-	
-	public User(String password){
-		
-		super(0);
-		setValue2(password);
-	}
+
 	
 	
 	
@@ -66,6 +52,35 @@ public class User extends MasterValue {
 	public void setPassword(String password){
 		
 		setValue2(password);
+	}	
+	
+	
+	public String getEmail(){
+		
+		return getValue3();
 	}
+	
+	
+	public void setEmail(String email){
+	    
+		setValue3(email);
+	}
+
+	/**
+	 * @return the role
+	 */
+	public Role getRole() {
+		return role;
+	}
+
+	/**
+	 * @param role the role to set
+	 */
+	public void setRole(Role role) {
+		this.role = role;
+	}
+	
+	
+
 
 }

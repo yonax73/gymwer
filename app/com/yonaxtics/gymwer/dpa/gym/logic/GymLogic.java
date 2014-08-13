@@ -31,12 +31,12 @@ public class GymLogic {
 		
 		boolean result = false;
 		
-		if(gym != null && !gym.exists() && !gym.getName().isEmpty() && 
-		  !gym.getContact().getEmail().isEmpty() && 
-		  !gym.getContact().getUser().getPassword().isEmpty()){
-			
-			    result = GymDao.signIn(gym);			
-		}
+//		if(gym != null && !gym.exists() && !gym.getName().isEmpty() && 
+//		  !gym.getContact().getEmail().isEmpty() && 
+//		  !gym.getContact().getUser().getPassword().isEmpty()){
+//			
+//			    result = GymDao.signIn(gym);			
+//		}
 		
 		return result;		
 	}
