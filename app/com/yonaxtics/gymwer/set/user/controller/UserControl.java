@@ -1,9 +1,15 @@
 package com.yonaxtics.gymwer.set.user.controller;
 
 
+import static com.yonaxtics.gymwer.sec.Sec.dec;
+import static com.yonaxtics.gymwer.util.Constant.CHECKED;
+import static com.yonaxtics.gymwer.util.Constant.REQUEST_SUCCESS;
+import static com.yonaxtics.gymwer.util.Constant.ROL_ADMIN;
+import static com.yonaxtics.gymwer.util.Constant.SESSION_OK;
+import static com.yonaxtics.gymwer.util.Constant.USER_ADMIN;
+
 import java.util.Map;
 
-import static play.cache.Cache.*;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.set.login.login;
@@ -16,9 +22,6 @@ import com.yonaxtics.gymwer.set.person.entity.Person;
 import com.yonaxtics.gymwer.set.person.logic.PersonLogic;
 import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.set.user.logic.UserLogic;
-
-import static com.yonaxtics.gymwer.util.Constant.*;
-import static com.yonaxtics.gymwer.sec.Sec.*;
 /**
  * 
  * @author yonatan quintero
@@ -46,6 +49,15 @@ public class UserControl extends Controller {
 	public static Result signUp() {
 
 		return ok(signup.render());   
+	}
+	
+	
+	
+	public static Result signOut(){
+		
+		session().remove(SESSION_OK);
+		
+		return redirect("/login");
 	}
 
 	
@@ -120,6 +132,7 @@ public class UserControl extends Controller {
 
 	}
     
+	
 	
 	
 	public static Result signIn(){

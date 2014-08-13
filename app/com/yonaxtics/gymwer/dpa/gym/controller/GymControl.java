@@ -5,7 +5,7 @@ import static com.yonaxtics.gymwer.util.Constant.SESSION_OK;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.dpa.home.home;
+import views.html.dpa.dashboard.dashboard;
 import views.html.set.login.login;
 
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
@@ -18,12 +18,12 @@ import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 public class GymControl extends Controller {
 
 	
-	public static Result home(){
+	public static Result dashboard(){
 		
 				
 	    if(session(SESSION_OK)!= null && Integer.parseInt(session(SESSION_OK)) > 0) {	    	
 	    	
-	    	return ok(home.render());
+	    	return ok(dashboard.render());
 	    	
 	    } else {
 	    	

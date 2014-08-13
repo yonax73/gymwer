@@ -9,7 +9,8 @@ require.config({
 	    Aes :       'play/yonaxtics/google/aes',	
 		Constants : 'play/yonaxtics/Constants',
 		Play :      'play/yonaxtics/Play',		
-		Json :      'play/yonaxtics/Json'
+		Json :      'play/yonaxtics/Json',
+		Nav :      'play/yonaxtics/Nav'	
 
 			
 	}
@@ -49,15 +50,14 @@ require.config({
 
 
 
-requirejs(['Aes', 'Constants', 'Play','Json'],function(Aes,Constants, Play, Json ) {
+requirejs(['Aes', 'Constants', 'Play','Json','Nav'],function(Aes,Constants, Play, Json,Nav ) {
 
 	
 	
 	
 /* ==================================================================================================================
  * REGION ATTRIBUTES
- * ===================================================================================================================
- */
+ * ===================================================================================================================*/
 		
 
 	
@@ -114,53 +114,11 @@ requirejs(['Aes', 'Constants', 'Play','Json'],function(Aes,Constants, Play, Json
  */	
 	 
 	  
-   function loadNavBar(){		
-		
-	   var menuToggle = Play.getId('menu-toggle');
-	   var descriptionMenuHide =  'description-menu hidden-xs hidden';
-	   var descriptionMenuShow =  'description-menu hidden-xs';
-	   var descriptionMenu = Play.getClasses('description-menu');
-	   var nav = Play.getId('nav');
-	   var content = Play.getId('content');
-	   var clsFullNav = 'col-xs-3 col-sm-3 col-md-2';
-	   var clsFullContent = 'col-xs-9 col-sm-9 col-md-10';
-	   var clsMinNav = 'col-xs-2 col-sm-1 col-md-1';
-	   var clsMinContent = 'col-xs-10 col-sm-11 col-md-11';
-	   
-	    var n = descriptionMenu.length;
+   function loadNavBar(){		   
 	 
-	    var open = true;
-	   
-	   menuToggle.onclick = function(){
-		   
-		   var wrapper = Play.getId('wrapper');		   
-		   
-		   if(open){
-			   
-			    for ( var i = n-1; i > -1; i--) {			
-			    	
-			    	Play.addClass(descriptionMenu[i],descriptionMenuHide);
-				}
-			    Play.addClass(nav,clsMinNav);
-			    Play.addClass(content,clsMinContent);
-			   open = false;
-			   
-		   } else {
-			   
-			    for ( var i = n-1; i > -1; i--) {			
-			    	
-			    	Play.addClass(descriptionMenu[i],descriptionMenuShow);
-				}
-
-			    
-			    Play.addClass(nav,clsFullNav);
-			    Play.addClass(content,clsFullContent);
-			   open = true;
-		   }
-		   
-		   
-	   }
-	
+	   Nav.toogle();
+	   Nav.toogleResources();
+	    
 	}		
 	
 

@@ -167,7 +167,7 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
 											  if(this.status === 200 && this.responseText === Constants.REQUEST_SUCCESS){
 																				
 												  btnLogin.disabled = false;												  
-												  window.location = '/home';
+												  window.location = '/dashboard';
 												  
 											  }else {
 												  

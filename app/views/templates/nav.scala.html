@@ -1,11 +1,13 @@
+@(titlePage: String)(content: Html)
 @import templates._
-@main(title = "Sign Up GymWer"){
+@main(title = titlePage){
+
 <!-- /*! -->
-<!--  * home gymwer -->
+<!--  * nav gymwer -->
 <!--  * Copyright 2014 YonaxTics, Inc. -->
 <!--  * Licensed under http://www.apache.org/licenses/LICENSE-2.0 -->
 <!--  * Author Yonatan Alexis Quintero Rodriguez -->
-<!--  * Created on : 1. Aug 2014 -->
+<!--  * Created on : 13. Aug 2014 -->
 <!--  */ -->
 
 
@@ -33,9 +35,9 @@
 	     <li>
 	        <a href="#"><i class="fa fa-ticket fa-fw"></i><span class="description-menu hidden-xs">&nbsp;Plans</span></a>
 	    </li>
-	     <li>
-	       <a href="#"><i class="fa fa-anchor fa-fw"></i><span class="description-menu hidden-xs">&nbsp;Resources</span></a>
-	        <ul>
+	     <li >
+	       <a id="lstResources" href="#"><i class="fa fa-anchor fa-fw"></i><span class="description-menu hidden-xs">&nbsp;Resources</span></a>
+	        <ul  class="sub-list hidden">
 	           <li><a href="#"><i class="fa fa-users fa-fw"></i><span class="description-menu hidden-xs">&nbsp;Users</span></a></li>
 	           <li><a href="#"><i class="fa fa-puzzle-piece fa-fw"></i><span class="description-menu hidden-xs">&nbsp;Rols</span></a></li>
 	        </ul>
@@ -49,19 +51,16 @@
 		    <a href="#"><i class="fa fa-cog fa-fw"></i><span class="description-menu hidden-xs">&nbsp;Settings</span></a>
 		</li>
 		<li >
-		    <a href="#"><i class="fa fa-sign-out fa-fw"></i><span class="description-menu hidden-xs">&nbsp;Sign Out</span></a>
+		    <a href="/signOut"><i class="fa fa-sign-out fa-fw"></i><span class="description-menu hidden-xs">&nbsp;Sign Out</span></a>
 		</li>
 	</ul>
       </nav>
    </div>
    <div id="content" class="col-xs-9 col-sm-9 col-md-10">
-   <h1>Welcome</h1>
+     @content
    </div>
 </div>
 
 
-
-
-
-        <script type="text/javascript" data-main="@routes.Assets.at("javascripts/dpa/home.js")" src="@routes.Assets.at("javascripts/require.js")"></script>
+        
 }

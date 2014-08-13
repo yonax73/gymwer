@@ -108,7 +108,13 @@ border-bottom: 1px solid #1a1c20;
 	
 }
 
-
+.sub-list{
+   background: none repeat scroll 0 0 #090909;
+    border-top: 1px solid #424242;
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1) inset, 0 -1px 0 rgba(0, 0, 0, 0.07) inset;
+    list-style: none outside none;
+    padding: 0 0 0 20px;
+}
 
 
 

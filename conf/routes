@@ -5,12 +5,14 @@
 
 GET      /login                           com.yonaxtics.gymwer.set.user.controller.UserControl.login()
 GET      /signup                          com.yonaxtics.gymwer.set.user.controller.UserControl.signUp()
+POST      /signIn                          com.yonaxtics.gymwer.set.user.controller.UserControl.signIn()
+GET    /signOut                           com.yonaxtics.gymwer.set.user.controller.UserControl.signOut()
 POST    /createAccount                    com.yonaxtics.gymwer.set.user.controller.UserControl.createAccount()
-POST    /signIn                           com.yonaxtics.gymwer.set.user.controller.UserControl.signIn()
+
 
 #GymControl
 
-GET     /home                              com.yonaxtics.gymwer.dpa.gym.controller.GymControl.home()
+GET     /dashboard                         com.yonaxtics.gymwer.dpa.gym.controller.GymControl.dashboard()
 GET     /load                              com.yonaxtics.gymwer.dpa.gym.controller.GymControl.load()
 
 # Map static resources from the /public folder to the /assets URL path
