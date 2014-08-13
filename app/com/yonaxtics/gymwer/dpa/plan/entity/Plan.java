@@ -12,6 +12,7 @@ public class Plan extends Entity {
 	private String code;
 	private String name;
 	private double price;
+	private int daysExpire;
 	private String notes;
 	
 	
@@ -77,6 +78,20 @@ public class Plan extends Entity {
 
 	public void setNotes(String notes) {
 		this.notes = notes;
+	}
+
+
+
+
+	public int getDaysExpire() {
+		return daysExpire;
+	}
+
+
+
+
+	public void setDaysExpire(int daysExpire) {
+		this.daysExpire = daysExpire;
 	}
 	
 	

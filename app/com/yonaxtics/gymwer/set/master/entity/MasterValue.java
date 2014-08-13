@@ -15,6 +15,8 @@ public class MasterValue  extends Entity{
 	private int masterId;
 	private String value1;
 	private String value2;
+	private String value3;
+	private int data1;
 	private int keyId;
 	
 	
@@ -37,42 +39,62 @@ public class MasterValue  extends Entity{
 	}
 
 
-	public int getMasterId() {
+	protected int getMasterId() {
 		return masterId;
 	}
 
 
-	public void setMasterId(int masterId) {
+	protected void setMasterId(int masterId) {
 		this.masterId = masterId;
 	}
 
 
-	public String getValue1() {
+	protected String getValue1() {
 		return value1;
 	}
 
 
-	public void setValue1(String value1) {
+	protected void setValue1(String value1) {
 		this.value1 = value1;
 	}
 
 
-	public String getValue2() {
+	protected String getValue2() {
 		return value2;
 	}
 
-
-	public void setValue2(String value2) {
+	
+	protected void setValue2(String value2) {
 		this.value2 = value2;
+	}
+	
+	
+	protected String getValue3() {
+		return value3;
 	}
 
 
-	public int getKeyId() {
+	protected void setValue3(String value3) {
+		this.value3 = value3;
+	}
+
+
+	protected int getData1() {
+		return data1;
+	}
+
+
+	protected void setData1(int data1) {
+		this.data1 = data1;
+	}
+
+
+	protected int getKeyId() {
 		return keyId;
 	}
 
 
-	public void setKeyId(int keyId) {
+	protected void setKeyId(int keyId) {
 		this.keyId = keyId;
 	}
 

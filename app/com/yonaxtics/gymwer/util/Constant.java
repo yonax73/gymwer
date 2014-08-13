@@ -25,7 +25,8 @@ public class Constant {
 	 * ROLES
 	 */
 	public final static String USER_ADMIN = "ADMIN";
-	public final static int ROL_ADMIN = 2;
+	
+	public final static int ROL_ADMIN = 4;
 	
 	
 	
@@ -45,8 +46,10 @@ public class Constant {
 	
 	
 	
-
-
+	/**
+	 * MASTER VALUES
+	 */
+     public final static int MASTER_VALUE_ID_PATH = 7;
 	
 	
 }
