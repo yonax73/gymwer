@@ -3,7 +3,7 @@ package com.yonaxtics.gymwer.set.module.entity;
 import java.util.List;
 
 import com.yonaxtics.gymwer.set.master.entity.MasterValue;
-import com.yonaxtics.gymwer.set.action.entity.*;
+import static com.yonaxtics.gymwer.util.Constant.MODULE_CHILD;
 
 /** 
  * Clase     : Module.java<br/>
@@ -17,8 +17,8 @@ import com.yonaxtics.gymwer.set.action.entity.*;
 public class Module extends MasterValue {
 
 	
+	private List<Module> childrens;
 	private Module parent;
-	private List<Action> actionList;
 	
 	/**
 	 * @param id
@@ -28,6 +28,25 @@ public class Module extends MasterValue {
 		
 	}
 	
+	public Module(int id, String description, int state) {
+		super(id);
+		setDescription(description);
+		setState(state);
+	}
+	
+	
+	public Module(int id, String description) {
+		super(id);
+		setDescription(description);
+	
+	}
+	
+	
+	public boolean isChild(){
+		
+		return getState() == MODULE_CHILD;
+		
+	}
 	
 	
 	public String getDescription(){
@@ -39,29 +58,39 @@ public class Module extends MasterValue {
 		
 		setValue1(description);
 	}
+	
+	
+	public int getState(){
+		
+		return getData1();
+	}
+	
+	public void setState(int state){
+		
+		setData1(state);
+	}
 
+	public List<Module> getChildrens() {
+		return childrens;
+	}
 
+	public void setChildrens(List<Module> childrens) {
+		this.childrens = childrens;
+	}
 
 	public Module getParent() {
 		return parent;
 	}
 
-
 	public void setParent(Module parent) {
 		this.parent = parent;
 	}
+	
+	
 
 
 
-	public List<Action> getActionList() {
-		return actionList;
-	}
 
-
-
-	public void setActionList(List<Action> actionList) {
-		this.actionList = actionList;
-	}
 	
 	
 

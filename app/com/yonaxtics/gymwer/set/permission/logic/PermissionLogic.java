@@ -1,5 +1,8 @@
 package com.yonaxtics.gymwer.set.permission.logic;
 
+import com.yonaxtics.gymwer.set.permission.dao.PermissionDao;
+import com.yonaxtics.gymwer.set.person.entity.Person;
+
 /** 
  * Class     : PermissionLogic.java.java<br/>
  * Copyright : (c) 2014<br/>
@@ -10,5 +13,24 @@ package com.yonaxtics.gymwer.set.permission.logic;
  */
 
 public class PermissionLogic {
+
+
+
+
+
+	/**
+	 * @param contact
+	 */
+	public static boolean loadNav(Person contact) {
+		
+		boolean result = false;
+		if(contact != null && contact.exists()){
+			
+		  result = 	PermissionDao.loadNav(contact);
+		  
+		}
+		return result;
+		
+	}
 
 }

@@ -2,10 +2,9 @@ package com.yonaxtics.gymwer.set.user.controller;
 
 
 import static com.yonaxtics.gymwer.sec.Sec.dec;
-import static com.yonaxtics.gymwer.util.Constant.CHECKED;
-import static com.yonaxtics.gymwer.util.Constant.REQUEST_SUCCESS;
-import static com.yonaxtics.gymwer.util.Constant.ROL_SUPER_ADMIN;
-import static com.yonaxtics.gymwer.util.Constant.SESSION_OK;
+import static com.yonaxtics.gymwer.util.Constant.*;
+
+
 
 
 import java.util.Map;
@@ -33,11 +32,16 @@ public class UserControl extends Controller {
 	
 	
 	
+	
+
+
+
+
 	public static  Result  login() {
 
 		if(session(SESSION_OK)!= null){
 			
-			session().remove(SESSION_OK);
+			session().clear();
 		}
 		
 		return ok(login.render());   
@@ -55,7 +59,7 @@ public class UserControl extends Controller {
 	
 	public static Result signOut(){
 		
-		session().remove(SESSION_OK);
+		session().clear();
 		
 		return redirect("/login");
 	}
@@ -94,17 +98,17 @@ public class UserControl extends Controller {
 			        			
 			        		}else {
 			        		   
-			        			result = "2001 - Server Internal Error";
+			        			result = "Internal Error 2001";
 			        		}		        		
 			        		
 			        	}else {
 			        		
-			        		result = "3001 - Server Internal Error";
+			        		result = "Internal Error 3001";
 			        	}
 			        	
 			        } else {
 			        	
-			        	result = "1001 - Server Internal Error";
+			        	result = "Internal Error 1001";
 			        }	
 					
 				} else {
@@ -141,6 +145,8 @@ public class UserControl extends Controller {
 		if(UserLogic.signIn(contact)){
 				
 				session(SESSION_OK, String.valueOf(contact.getId()));
+				session(SESSION_USER_NAME,contact.getUser().getName());
+				session(SESSION_GYM_NAME,contact.getGym().getName());
 				
 				return ok(REQUEST_SUCCESS);
 				

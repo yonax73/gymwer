@@ -1,7 +1,5 @@
 package com.yonaxtics.gymwer.set.permission.entity;
 
-import java.util.List;
-
 import com.yonaxtics.gymwer.util.base.entity.Entity;
 import com.yonaxtics.gymwer.set.action.entity.*;
 
@@ -18,22 +16,31 @@ public class Permission extends Entity {
 
 	
 	
-	private List<Action> actionList;
+	private Action action;
+	
+	
 	/**
 	 * @param id
 	 */
 	public Permission(int id) {
-		super(id);
-		
+		super(id);		
 	}
 	
-	public List<Action> getActionList() {
-		return actionList;
+	public Permission(Action action){
+		super(0);
+		this.action = action;
 	}
 	
-	public void setActionList(List<Action> actionList) {
-		this.actionList = actionList;
+	public Action getAction() {
+		return action;
 	}
+	
+	
+	public void setAction(Action action) {
+		this.action = action;
+	}
+	
+	
 	
 	
 

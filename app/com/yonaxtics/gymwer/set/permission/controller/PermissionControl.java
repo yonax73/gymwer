@@ -1,13 +1,15 @@
 package com.yonaxtics.gymwer.set.permission.controller;
 
 import static com.yonaxtics.gymwer.sec.Sec.enc;
-import static com.yonaxtics.gymwer.util.Constant.SESSION_OK;
-
-import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
-
+import static com.yonaxtics.gymwer.util.Constant.*;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+
+import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
+import com.yonaxtics.gymwer.set.permission.logic.PermissionLogic;
+import com.yonaxtics.gymwer.set.person.entity.Person;
+import com.yonaxtics.gymwer.set.user.entity.User;
 
 /** 
  * Class     : PermissionControl.java.java<br/>
@@ -22,11 +24,18 @@ public class PermissionControl extends Controller {
 	
 	
 	
-	public static Result load(){
+	public static Result loadNav(){
 		
-		Gym gym = new Gym((Integer.parseInt(session(SESSION_OK))));
-    	gym.setName("Prueba");    	
-    	return ok(enc(Json.toJson(gym).toString()));
+		Person contact = new Person(Integer.parseInt(session(SESSION_OK)));
+		contact.setUser(new User(session(SESSION_USER_NAME)));
+		contact.setGym(new Gym(SESSION_GYM_NAME));
+		
+    	if(PermissionLogic.loadNav(contact)){
+    	    
+    		return ok(enc(Json.toJson(contact).toString()));
+    	}		
+		
+    	return ok("Internal Error 4001");
 		
 	}
 }

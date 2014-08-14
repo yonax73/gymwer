@@ -33,7 +33,7 @@ public class Constant {
 	/**
 	 * STATES REQUEST
 	 */
-	public final static String REQUEST_SUCCESS = "19880511";
+	public final static String REQUEST_SUCCESS = "19880511Y";
 	
 	
 	
@@ -41,7 +41,10 @@ public class Constant {
 	/**
 	 * STATES SESSION
 	 */
-	public final static String SESSION_OK = "11508891";
+	public final static String SESSION_OK = "11508891Y";
+	public static final String SESSION_USER_NAME = "11508892Y";
+	public static final String SESSION_GYM_NAME = "11508893Y";
+	
 	
 	
 	
@@ -49,6 +52,14 @@ public class Constant {
 	 * MASTER VALUES
 	 */
      public final static int MASTER_VALUE_ID_PATH = 7;
+     
+     
+     
+     /**
+      * STATES MODULES
+      */
+     public final static int MODULE_PARENT =1;
+     public final static int MODULE_CHILD =2;
 	
 	
 }

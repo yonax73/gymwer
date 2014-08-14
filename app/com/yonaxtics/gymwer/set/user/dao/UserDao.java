@@ -119,7 +119,12 @@ public class UserDao extends Dao{
 				
 				result = rs.getInt(1) == 1;
 				
-				if(result) person.setId(rs.getInt(2));
+				if(result) {
+					
+					person.setId(rs.getInt(2));
+					person.getUser().setName(rs.getString(3));
+					
+				}
 			}			
 			
 		} catch (Exception e) {

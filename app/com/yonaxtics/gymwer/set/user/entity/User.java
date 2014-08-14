@@ -40,9 +40,17 @@ public class User extends MasterValue {
 	
 		
 	}
-	
-	
-	
+
+
+	/**
+	 * @param session
+	 */
+	public User(String name) {
+          
+		super(0);
+		setName(name);
+	}
+
 	private void extractNameFromEmail(){		
 		
 	    setName(getEmail().split("@")[0]);

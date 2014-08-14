@@ -1,8 +1,11 @@
-#Server Internal Error User - 10
+#Internal Error User - 10
 1001 = Error creating user From UserControl - createAcount
 
-#Server Internal Error Person- 20
+#Internal Error Person- 20
 2001 = Error creating person From UserControl - createAcount
 
-#Server Internal Error Gym- 20
+#Internal Error Gym- 30
 3001 = Error creating gym From UserControl - createAcount
+
+#Internal Error Permission- 40
+4001 = Error tryning Load Nav per Contact - loadNav

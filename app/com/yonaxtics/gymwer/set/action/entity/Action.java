@@ -1,6 +1,7 @@
 package com.yonaxtics.gymwer.set.action.entity;
 
-import com.yonaxtics.gymwer.set.master.entity.MasterValue;
+import com.yonaxtics.gymwer.set.module.entity.Module;
+import com.yonaxtics.gymwer.util.base.entity.Entity;
 
 /** 
  * Clase     : Action.java<br/>
@@ -11,10 +12,13 @@ import com.yonaxtics.gymwer.set.master.entity.MasterValue;
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
 
-public class Action extends MasterValue {
+public class Action extends Entity {
 
 	
-	
+	private String description;
+	private String url;
+	private String ico;
+	private Module module;	
 	
 	
 	/**
@@ -25,41 +29,70 @@ public class Action extends MasterValue {
 		super(id);
 		
 	}
-	
-	
-	public String getDescription(){
-		
-		return getValue1();
+
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
 	}
-	
-	
-	public void setDescription(String description){
-		
-		setValue1(description);
+
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
 	}
-	
-	public String getUrl(){
-		
-		return getValue2();
+
+
+	/**
+	 * @return the url
+	 */
+	public String getUrl() {
+		return url;
 	}
-	
-	
-	public void setUrl(String url){
-		
-		setValue2(url);
-		
+
+
+	/**
+	 * @param url the url to set
+	 */
+	public void setUrl(String url) {
+		this.url = url;
 	}
-	
-	
-    public String getIcon(){
-    	
-    	return getValue3();
-    }
-    
-    
-    public void setIcon(String icon){
-    	
-    	setValue3(icon);
-    }
+
+
+	/**
+	 * @return the ico
+	 */
+	public String getIco() {
+		return ico;
+	}
+
+
+	/**
+	 * @param ico the ico to set
+	 */
+	public void setIco(String ico) {
+		this.ico = ico;
+	}
+
+
+	/**
+	 * @return the module
+	 */
+	public Module getModule() {
+		return module;
+	}
+
+
+	/**
+	 * @param module the module to set
+	 */
+	public void setModule(Module module) {
+		this.module = module;
+	}
+
 	
 }

@@ -19,6 +19,7 @@ public class Person  extends Entity {
 	private String name;
 	private Gym gym;
 	
+	
 
 	
 	public Person(int id) {
@@ -73,22 +74,20 @@ public class Person  extends Entity {
 	}
 
 
-
-
-
-
 	public Gym getGym() {
 		return gym;
 	}
 
 
-
-
-
-
 	public void setGym(Gym gym) {
 		this.gym = gym;
 	}
+
+
+
+
+
+
 
 
 	
