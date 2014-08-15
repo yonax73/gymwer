@@ -116,6 +116,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav'],function(Aes,Constants, Play
 	  
    function loadNavBar(){		   
 	 
+	   Nav.load():
 	   Nav.toogle();
 	   Nav.toogleResources();
 	    

@@ -117,6 +117,15 @@ define(['./Play'], function(Play) {
  		 }	    		 
  	 }
   }	
+   
+   
+   /**
+    * Load data Nav
+    */
+   Nav.load() = function(){
+	   
+	   
+   }
 	
 	
 	return Nav;

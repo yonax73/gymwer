@@ -8,7 +8,7 @@ import play.mvc.Result;
 import views.html.dpa.dashboard.dashboard;
 import views.html.set.login.login;
 
-import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
+import com.yonaxtics.gymwer.set.person.entity.Person;
 /**
  * 
  * @author yonatan quintero
@@ -36,9 +36,9 @@ public class GymControl extends Controller {
 	
 	public static Result load(){
 		
-		Gym gym = new Gym((Integer.parseInt(session(SESSION_OK))));
-    	gym.setName("Prueba");    	
-    	return ok(enc(Json.toJson(gym).toString()));
+		Person contact = new Person((Integer.parseInt(session(SESSION_OK))));
+		contact.setName("Prueba");    	
+    	return ok(enc(Json.toJson(contact).toString()));
 		
 	}
 	

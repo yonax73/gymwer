@@ -136,8 +136,7 @@ public class UserControl extends Controller {
 		final Map<String, String[]> data = request().body().asFormUrlEncoded();				
 		
 		String result = null;			
-		Person contact = new Person(new User(dec(data.get("?")[1]),data.get("?")[2]), new Gym(dec(data.get("?")[0])));
-			
+		Person contact = new Person(new User(dec(data.get("?")[1]),data.get("?")[2]), new Gym(dec(data.get("?")[0])));			
 		
 		if(UserLogic.signIn(contact)){
 				

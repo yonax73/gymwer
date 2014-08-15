@@ -14,7 +14,7 @@ import com.yonaxtics.gymwer.set.master.entity.MasterValue;
 import com.yonaxtics.gymwer.util.base.dao.Dao;
 
 /** 
- * Clase     : MasterValueDao.java<br/>
+ * Class     : MasterValueDao.java<br/>
  * Copyright : (c) 2014<br/>
  * Company   : yonaxtics<br/>
  * date      : Aug 12, 2014<br/> 
