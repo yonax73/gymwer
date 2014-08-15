@@ -4,9 +4,9 @@ package com.yonaxtics.gymwer.set.user.controller;
 import static com.yonaxtics.gymwer.sec.Sec.dec;
 import static com.yonaxtics.gymwer.util.Constant.CHECKED;
 import static com.yonaxtics.gymwer.util.Constant.REQUEST_SUCCESS;
-import static com.yonaxtics.gymwer.util.Constant.ROL_ADMIN;
+import static com.yonaxtics.gymwer.util.Constant.ROL_SUPER_ADMIN;
 import static com.yonaxtics.gymwer.util.Constant.SESSION_OK;
-import static com.yonaxtics.gymwer.util.Constant.USER_ADMIN;
+
 
 import java.util.Map;
 
@@ -76,34 +76,30 @@ public class UserControl extends Controller {
 
 			if (data.get("?")[2].equals(data.get("?")[3])) {
 				
-				user = new User(USER_ADMIN, dec(data.get("?")[1]), data.get("?")[2], new Role(ROL_ADMIN));
+				user = new User(dec(data.get("?")[1]), data.get("?")[2], new Role(ROL_SUPER_ADMIN));
 
-				if(!UserLogic.exists(user)){
-				
-					//user = new User(USER_ADMIN,data.get("?")[2]);				
+				if(!UserLogic.exists(user)){							
 					
 			        if(UserLogic.create(user)){
 			        	
-			        	contact.setUser(user);
-			        	//contact.setRole(new Role(ROL_ADMIN));
+			        	gym = new Gym(dec(data.get("?")[0]));			        		
+		        		
+		        		if(GymLogic.create(gym)){
 			        	
-			        	if(PersonLogic.create(contact)){
-			        		
-			        		gym = new Gym(dec(data.get("?")[0]), contact);
-			        		data.clear();
-			        		
-			        		if(GymLogic.create(gym)){
+		        			contact = new Person(user,gym);	
+		        			
+			        	if(PersonLogic.create(contact)){			        	
 			        			
 			        			return ok(REQUEST_SUCCESS);
 			        			
 			        		}else {
 			        		   
-			        			result = "3001 - Server Internal Error";
+			        			result = "2001 - Server Internal Error";
 			        		}		        		
 			        		
 			        	}else {
 			        		
-			        		result = "2001 - Server Internal Error";
+			        		result = "3001 - Server Internal Error";
 			        	}
 			        	
 			        } else {
@@ -139,22 +135,20 @@ public class UserControl extends Controller {
 		
 		final Map<String, String[]> data = request().body().asFormUrlEncoded();				
 		
-		String result = null;
-		//User user = new User(data.get("?")[2]);
-		//Person  contact = new Person(dec(data.get("?")[1]), user);
-		//Gym gym = new Gym(dec(data.get("?")[0]), contact);			
+		String result = null;			
+		Person contact = new Person(new User(dec(data.get("?")[1]),data.get("?")[2]), new Gym(dec(data.get("?")[0])));
 			
-//			if(GymLogic.signIn(gym)){
-//				
-//				session(SESSION_OK, String.valueOf(gym.getId()));
-//					
-//				return ok(REQUEST_SUCCESS);
-//				
-//			} else {
-//				
-//				result = "The name, password or user are incorrect!!!";
-//			}			
 		
+		if(UserLogic.signIn(contact)){
+				
+				session(SESSION_OK, String.valueOf(contact.getId()));
+				
+				return ok(REQUEST_SUCCESS);
+				
+			} else {
+				
+				result = "The name, password or user are incorrect!!!";
+		 }			
 		
 		return ok(result);
 		

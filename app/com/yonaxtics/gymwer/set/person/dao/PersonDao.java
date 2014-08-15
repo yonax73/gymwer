@@ -4,11 +4,11 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Types;
 
+import play.Logger;
 import play.db.DB;
 
 import com.yonaxtics.gymwer.set.location.entity.Location;
 import com.yonaxtics.gymwer.set.person.entity.Person;
-import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.util.base.dao.Dao;
 /**
  * 
@@ -30,14 +30,10 @@ public class PersonDao extends Dao{
 		try {
 			
 			conn = DB.getConnection();
-			String sql = "CALL sp_set_person_CREATE(?, ?, ?, ?, ?, ?, ?);";
+			String sql = "CALL sp_set_person_CREATE(?, ?, ?, ?, ?, ?);";
 			cst = conn.prepareCall(sql);
-			cst.registerOutParameter(1, Types.INTEGER);
-			
-			if(person.getUser() == null){
-				
-				person.setUser(new User(0));
-			}			
+			cst.registerOutParameter(1, Types.INTEGER);			
+
 			cst.setInt(2, person.getUser().getId());
 			
 			if(person.getLocation() == null){
@@ -46,8 +42,10 @@ public class PersonDao extends Dao{
 			}
 			cst.setInt(3, person.getLocation().getId());			
 			
-			cst.setString(5, person.getDocument());
-			cst.setString(6, person.getName());				
+			cst.setString(4, person.getDocument());
+			cst.setString(5, person.getName());	
+			
+			cst.setInt(6, person.getGym().getId());			
 			
 			result = cst.executeUpdate() > 0;
 			
@@ -55,7 +53,7 @@ public class PersonDao extends Dao{
 			
 		} catch (Exception e) {
 			
-			e.printStackTrace();
+			Logger.error(e.getMessage());
 			
 		} finally{
 			

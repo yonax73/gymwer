@@ -2,6 +2,7 @@ package com.yonaxtics.gymwer.set.user.logic;
 
 
 
+import com.yonaxtics.gymwer.set.person.entity.Person;
 import com.yonaxtics.gymwer.set.user.dao.UserDao;
 import com.yonaxtics.gymwer.set.user.entity.User;
 /**
@@ -37,6 +38,21 @@ public  class   UserLogic  {
 		}
 		
 		return result;
+	}
+	
+	
+	public static boolean signIn(Person person){
+		
+		boolean result = false;
+		
+		if(person != null && !person.exists() && !person.getGym().getName().isEmpty() && 
+		  !person.getUser().getEmail().isEmpty() && 
+		  !person.getUser().getPassword().isEmpty()){
+			
+			    result = UserDao.signIn(person);			
+		}
+		
+		return result;		
 	}
 	
 	

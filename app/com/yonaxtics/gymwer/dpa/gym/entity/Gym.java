@@ -5,7 +5,6 @@ import java.util.List;
 import com.yonaxtics.gymwer.dpa.client.entity.Client;
 import com.yonaxtics.gymwer.dpa.plan.entity.Plan;
 import com.yonaxtics.gymwer.set.location.entity.Location;
-import com.yonaxtics.gymwer.set.person.entity.Person;
 import com.yonaxtics.gymwer.util.base.entity.Entity;
 /**
  * 
@@ -16,8 +15,7 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
 public class Gym extends Entity {
 
 	private String nit;
-	private String name;
-	private Person contact;
+	private String name;	
 	private Location location;	
 	private List<Client> clientList;
 	private List<Plan> planList;
@@ -28,11 +26,11 @@ public class Gym extends Entity {
 		
 	}
 	
-	public Gym(String name, Person contact){
+	public Gym(String name){
 		
 		super(0);
 		this.name = name;
-		this.contact = contact;
+		
 	}
 	
 	public String getNit() {
@@ -56,20 +54,6 @@ public class Gym extends Entity {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
-
-	public Person getContact() {
-		return contact;
-	}
-
-
-
-	public void setContact(Person contact) {
-		this.contact = contact;
-	}
-
-
 
 
 	public Location getLocation() {

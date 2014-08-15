@@ -6,8 +6,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Types;
 
+import play.Logger;
 import play.db.DB;
 
+import com.yonaxtics.gymwer.set.person.entity.Person;
 import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.util.base.dao.Dao;
 /**
@@ -19,7 +21,7 @@ import com.yonaxtics.gymwer.util.base.dao.Dao;
 public class UserDao extends Dao{
 
 	
-	public static boolean create(User user){		
+	public static boolean create(User user){	
 		
 		boolean result = false;
 		
@@ -29,11 +31,13 @@ public class UserDao extends Dao{
 		try {
 			 
 			 conn = DB.getConnection();			 
-			 String sql = "CALL sp_set_user_CREATE(?,?,?);";			 
+			 String sql = "CALL sp_set_user_CREATE(?,?,?,?,?);";			 
 			 cst = conn.prepareCall(sql);
 			 cst.registerOutParameter(1, Types.INTEGER);
 			 cst.setString(2, user.getName());
 			 cst.setString(3, user.getPassword());			 
+			 cst.setString(4, user.getEmail());
+			 cst.setInt(5, user.getRole().getId());
 			 
 			 result = cst.executeUpdate() > 0;
 			 
@@ -41,7 +45,7 @@ public class UserDao extends Dao{
 			 
 		} catch (Exception e) {
               
-			e.printStackTrace();
+			Logger.error(e.getMessage());
 			
 		} finally{
 			
@@ -53,6 +57,7 @@ public class UserDao extends Dao{
 		return result;
 		
 	}
+	
 	
 	public static boolean exists(User user){
 		
@@ -78,7 +83,7 @@ public class UserDao extends Dao{
 			
 		} catch (Exception e) {
 			
-			e.printStackTrace();
+			Logger.error(e.getMessage());
 			
 		} finally{
 			
@@ -90,4 +95,43 @@ public class UserDao extends Dao{
 	}
 	
 	
+	
+	public static boolean signIn(Person person) {
+		
+		boolean result = false;		
+		CallableStatement cst = null;
+		ResultSet rs  = null;
+		Connection conn = null;
+		
+		try {
+			
+			conn = DB.getConnection();
+			String sql = "CALL sp_set_user_LOGIN(?,?,?);";
+			cst = conn.prepareCall(sql);
+			
+			cst.setString(1, person.getGym().getName());
+			cst.setString(2, person.getUser().getEmail());
+			cst.setString(3, person.getUser().getPassword());
+			
+			rs  = cst.executeQuery();	
+			
+			if(rs.next()){
+				
+				result = rs.getInt(1) == 1;
+				
+				if(result) person.setId(rs.getInt(2));
+			}			
+			
+		} catch (Exception e) {
+			
+			Logger.error(e.getMessage());
+			
+		} finally{
+			
+			if(cst != null) cst = null;
+			close(conn);
+		}
+		
+		return result;		
+	}
 }

@@ -193,7 +193,7 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
 								 xhr.open('POST','/createAccount');
 								 xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
 								 xhr.send(Play.serialize(e.target));			
-								 xhr.timeout = 10000;
+								 xhr.timeout = 10000000;
 								 xhr.ontimeout = function () {
 									 
 									msgSignUp.textContent = "Timed Out!!!";

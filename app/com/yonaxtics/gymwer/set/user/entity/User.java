@@ -20,16 +20,33 @@ public class User extends MasterValue {
 		super(id);		
 	}
 	
-	public User(String name,String email,String password,Role role){
+	public User(String email,String password,Role role){
 		
-		super(0);
-		setValue1(name);
+		super(0);		
 		setValue2(password);
 		setValue3(email);
 		this.role = role;
 		
+		extractNameFromEmail();
+		
 	}
 	
+	
+	public User(String email,String password){
+		
+		super(0);	
+		setValue2(password);
+		setValue3(email);
+	
+		
+	}
+	
+	
+	
+	private void extractNameFromEmail(){		
+		
+	    setName(getEmail().split("@")[0]);
+	}
 
 	
 	

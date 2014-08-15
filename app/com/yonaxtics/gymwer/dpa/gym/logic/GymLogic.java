@@ -27,19 +27,7 @@ public class GymLogic {
 	
 	
 	
-	public static boolean signIn(Gym gym){
-		
-		boolean result = false;
-		
-//		if(gym != null && !gym.exists() && !gym.getName().isEmpty() && 
-//		  !gym.getContact().getEmail().isEmpty() && 
-//		  !gym.getContact().getUser().getPassword().isEmpty()){
-//			
-//			    result = GymDao.signIn(gym);			
-//		}
-		
-		return result;		
-	}
+
 	
 	  
 

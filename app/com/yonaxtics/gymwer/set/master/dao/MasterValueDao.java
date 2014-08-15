@@ -5,16 +5,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 import play.Logger;
 import play.db.DB;
-
-
-
-
-
 
 import com.yonaxtics.gymwer.set.master.entity.MasterValue;
 import com.yonaxtics.gymwer.util.base.dao.Dao;

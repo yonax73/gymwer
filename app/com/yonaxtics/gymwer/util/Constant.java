@@ -23,10 +23,9 @@ public class Constant {
 	
 	/**
 	 * ROLES
-	 */
-	public final static String USER_ADMIN = "ADMIN";
-	
-	public final static int ROL_ADMIN = 4;
+	 */	
+	public final static int ROL_SUPER_ADMIN = 4;
+	public final static int ROL_ADMIN = 33;
 	
 	
 	

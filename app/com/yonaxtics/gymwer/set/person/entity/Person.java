@@ -1,5 +1,6 @@
 package com.yonaxtics.gymwer.set.person.entity;
 
+import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 import com.yonaxtics.gymwer.set.location.entity.Location;
 import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.util.base.entity.Entity;
@@ -10,12 +11,13 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
  * @version 0.1 (7/16/2014)
  *
  */
-public class Person extends Entity {
-
+public class Person  extends Entity {
+	
 	private User user;
 	private Location location;	
 	private String document;
 	private String name;
+	private Gym gym;
 	
 
 	
@@ -29,10 +31,11 @@ public class Person extends Entity {
 	
 
 		
-	public Person(User user){
+	public Person(User user,Gym gym){
 		
 		super(0);		
 		this.user = user;
+		this.gym = gym;
 	}	
 
 	
@@ -67,6 +70,24 @@ public class Person extends Entity {
 
 	public void setLocation(Location location) {
 		this.location = location;
+	}
+
+
+
+
+
+
+	public Gym getGym() {
+		return gym;
+	}
+
+
+
+
+
+
+	public void setGym(Gym gym) {
+		this.gym = gym;
 	}
 
 
