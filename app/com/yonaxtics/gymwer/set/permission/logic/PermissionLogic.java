@@ -24,13 +24,16 @@ public class PermissionLogic {
 	public static boolean loadNav(Person contact) {
 		
 		boolean result = false;
-		if(contact != null && contact.exists()){
-			
-		  result = 	PermissionDao.loadNav(contact);
-		  
+		if(contact != null && contact.exists()){			
+		  result = 	PermissionDao.loadNav(contact);		  
+		  if(result){		 			  
+			  contact.getUser().getRole().arrange();
+		  }		  
 		}
 		return result;
 		
 	}
+	
+
 
 }

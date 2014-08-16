@@ -84,6 +84,16 @@ define(['./Constants'], function(Constants) {
 
 		element.innerHTML = html;
 	}
+	
+	
+	/**
+	 * @param element
+	 * @param html
+	 */
+	Play.addText = function(element, text) {
+
+		document.getElementById(element).textContent = text;
+	}
 
 	/**
 	 * @param form
@@ -157,6 +167,36 @@ define(['./Constants'], function(Constants) {
 	Play.encd = function(value){		
 			
 		return '?='+(''+Play.enc(value)).replace(/=/g,'?');
+	}
+	
+	
+	
+	Play.ready = function(){
+		
+		var result = false;
+		
+		if(sessionStorage.getItem(Constants.SESSIONSTORAGE_OK) === null){
+			
+			sessionStorage.setItem(Constants.SESSIONSTORAGE_MESSAGE, 'Hi, please sign in!');
+			window.location = '/signOut';
+		
+		} else if(sessionStorage.getItem(Constants.SESSIONSTORAGE_OK) == Constants.OK){
+			
+			result = true
+		}
+		
+		return result;
+			 
+	}
+	
+	
+	
+	Play.getHeightPx = function(){
+		
+		var body = document.body
+		var html = document.documentElement;
+		
+		return  (Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight) +'px');
 	}
 	
 	

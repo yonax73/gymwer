@@ -173,11 +173,11 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
 									 
 									 btnSignUp.disabled = true;
 								        
-									  if (this.readyState === 4) {
+									  if (this.readyState === Constants.READYSTATE_COMPLETE) {
 										  						
-										  if(this.status === 200 && this.responseText === Constants.REQUEST_SUCCESS){
+										  if(this.status === Constants.STATUS_OK && this.responseText === Constants.REQUEST_SUCCESS){
 											  
-											  sessionStorage.setItem("msgLoginSession", "Your account has been created successfully");
+											  sessionStorage.setItem(Constants.SESSIONSTORAGE_MESSAGE, 'Your account has been created successfully');
 											  window.location = '/login';
 											  
 										  }else {
@@ -193,7 +193,7 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
 								 xhr.open('POST','/createAccount');
 								 xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
 								 xhr.send(Play.serialize(e.target));			
-								 xhr.timeout = 10000;
+								 xhr.timeout = Constants.TIME_OUT;
 								 xhr.ontimeout = function () {
 									 
 									msgSignUp.textContent = "Timed Out!!!";

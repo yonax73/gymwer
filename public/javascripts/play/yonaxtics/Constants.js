@@ -67,7 +67,7 @@ define([], function() {
 	/**
 	 * STATES REQUEST
 	 */
-	Constants.REQUEST_SUCCESS = '19880511';
+	Constants.REQUEST_SUCCESS = '19880511Y';
 	
 	/**
 	 * #7h32k132
@@ -75,6 +75,73 @@ define([], function() {
 	 */
 	Constants.KEY = '376833326b313332'	
 	Constants.IV = '336c206331336c30';	
+	
+	
+	
+    /**
+     * STATES MODULES
+     */
+	Constants.MODULE_PARENT =1;
+	Constants.MODULE_CHILD =2;
+
+	
+	
+	
+	/**
+	 * STATUS PLAY
+	 */
+	Constants.OK = 1;
+	
+	
+	
+	/**
+	 * NAV LOCAL STORAGE
+	 */
+	Constants.LOCALSTORAGE_NAV_CONTACT = 'NAV_CONTACT';
+	
+	
+	
+	/**
+	 * SESSIONSTORAGE
+	 */
+	Constants.SESSIONSTORAGE_OK = 'SESSIONSTORAGE_OK';
+
+	Constants.SESSIONSTORAGE_MESSAGE = 'SESSIONSTORAGE_MESSAGE';
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * XMLHTTPREQUEST READYSTATE
+	 */
+	Constants.READYSTATE_COMPLETE  = 4;
+	
+	
+	/**
+	 * XMLHTTPREQUEST STATUS
+	 */
+	Constants.STATUS_OK  = 200;	
+	
+	
+	/**
+	 * XMLHTTPREQUEST READY STATE
+	 */
+	Constants.TIME_OUT = 10000;		
+	
 
 	return Constants;
 

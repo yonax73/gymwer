@@ -29,10 +29,28 @@
  * ========================================================================
  */
 
-define(['./Play'], function(Play) {
+define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
 	
 	
 	function Nav(){}
+	
+	
+	
+	
+	Nav.init = function(){
+		
+		
+		
+		if(localStorage.getItem(Constants.LOCALSTORAGE_NAV_CONTACT) === null){
+			
+			 Nav.load();
+			 
+		} else {			
+			  
+			  Nav.create(JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_NAV_CONTACT)));		
+		}
+		
+	}
 	
 	
 	
@@ -57,7 +75,9 @@ define(['./Play'], function(Play) {
 		   var n = descriptionMenu.length;	
 		   
 		   var open = true;
- 	  
+		   
+		   nav.style.height = Play.getHeightPx();
+		   
 		   menuToggle.onclick = function(){	  
 			   
 			   if(open){
@@ -88,44 +108,220 @@ define(['./Play'], function(Play) {
 
 
 
-
- /**
-  * Toogle Resources
-  */
-   Nav.toogleResources = function(){
- 	 
- 	  var lstResources = Play.getId('lstResources');
- 	  
- 	  var clsSubListHidden = 'sub-list hidden';
- 	  var clsSubList = 'sub-list';
- 	  
- 	  var open = false;	    	  
- 	 
- 	 lstResources.onclick = function(){
- 		 
- 		 var subList =  this.parentNode.childNodes[3];
- 		 
- 		 if(open){
- 			 
- 			 Play.addClass(subList,clsSubListHidden);
- 			 open = false;
- 			 
- 		 } else {
- 			 
- 			 Play.addClass(subList,clsSubList);
- 			 open = true;	    			 
- 		 }	    		 
- 	 }
-  }	
-   
    
    /**
     * Load data Nav
     */
-   Nav.load() = function(){
+   Nav.load = function(){
 	   
+		var xhr = new XMLHttpRequest();
+		
+		xhr.onreadystatechange = function () {		
+		       
+			  if (this.readyState === Constants.READYSTATE_COMPLETE) {
+				  						
+				  if(this.status === Constants.STATUS_OK){				 
+					  
+					  var contact = Json.parse(this.responseText);
+					  localStorage.setItem(Constants.LOCALSTORAGE_NAV_CONTACT,JSON.stringify(contact));
+					  Nav.create(contact);					   
+					  
+				  }else {
+					  
+		               //error message   									  
+				  }
+			  }
+		}
+		xhr.open('GET','/loadNav');
+		xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
+		xhr.send();		
+		//set time out	
+   }
+   
+   
+   
+   
+   Nav.create = function(contact){
+	   
+	   var gym = contact.gym;
+		  var user = contact.user;
+		  var permissions = user.role.permissions;
+		  var n = permissions.length;
+		  var i = 0;
+		  var action = Play.getId('actions');		  
+		  
+		  action.appendChild(Nav.item('fa fa-university fa-fw',gym.name,'/gym'));
+		  action.appendChild(Nav.item('fa fa-user fa-fw',user.name,'/profile'));
+		  
+		  if(n > 0){
+			  
+			  var act = permissions[i++].action;
+			  action.appendChild(Nav.itemActive(act.ico,act.module.description,act.url));
+			  
+			  do{
+				  
+				  act = permissions[i++].action;
+				  
+				  if(act.module.state === Constants.MODULE_PARENT){								  
+					  
+					  action.appendChild(Nav.itemParent(act));								  
+					  
+				  }else {								
+					  
+					  action.appendChild(Nav.item(act.ico,act.module.description,act.url));
+					  
+				  }
+				  
+			  }while(i < n)
+		  }
+		  
+		  action.appendChild(Nav.divider());
+		  action.appendChild(Nav.itemLogOut('fa fa-sign-out fa-fw','Sign Out','/signOut'));
+		  
+		   Nav.toogle();	   
+   }
+   
+   
+   
+   Nav.item = function(ico,description,url){
+	   
+		  var i = document.createElement('i');
+		  var span = document.createElement('span');
+		  var a = document.createElement('a');
+		  var li = document.createElement('li');
+		  
+		  i.className = ico;		  
+		  
+		  span.className = 'description-menu hidden-xs';
+		  span.textContent = description;
+		  
+		  a.href = url;		  
+		  a.target ='_blank';
+		  a.appendChild(i);
+		  a.appendChild(span);		  
+		  		  	  
+		  li.appendChild(a);
+		  
+		  return li	   
+   }
+   
+   
+   
+   
+   Nav.itemActive = function(ico,description,url){
+	   
+		  var i = document.createElement('i');
+		  var span = document.createElement('span');
+		  var a = document.createElement('a');
+		  var li = document.createElement('li');
+		  
+		  i.className = ico;		  
+		  
+		  span.className = 'description-menu hidden-xs';
+		  span.textContent = description;
+		  
+		  a.href = url;		  
+		  a.target ='_blank';
+		  a.appendChild(i);
+		  a.appendChild(span);		  
+		  		  
+		  li.className = 'active';		  
+		  li.appendChild(a);
+		  
+		  return li	   
+}
+   
+   
+   
+   
+   Nav.divider = function(){
+	   
+	   var li = document.createElement('li'); 
+	   li.className = 'divider';
+	   
+	   return li;
+   }
+   
+   Nav.itemLogOut = function(ico,description,url){
+	   
+		  var i = document.createElement('i');
+		  var span = document.createElement('span');
+		  var a = document.createElement('a');
+		  var li = document.createElement('li');
+		  
+		  i.className = ico;		  
+		  
+		  span.className = 'description-menu hidden-xs';
+		  span.textContent = description;
+		  
+		  a.href = url;		  
+		  a.appendChild(i);
+		  a.appendChild(span);		  
+		  
+		  a.onclick = function(){
+			  
+			  localStorage.clear();		
+			  sessionStorage.clear();
+		  }
+		  
+		  li.appendChild(a);
+		  
+		  return li	   
+}
+   
+   
+   Nav.itemParent =  function(action){
+	   
+	  var li  = document.createElement('li');
+	  var a = document.createElement('a');	  
+	  var ul =  document.createElement('ul');
+	  var i = document.createElement('i');
+	  var span = document.createElement('span');
+	  var n = action.module.children.length;
+ 	  var clsSubListHidden = 'sub-list hidden';
+ 	  var clsSubList = 'sub-list'; 	  
+ 	  var open = false;	 
+	  	  
+	  i.className = action.ico;		  
+	  
+	  span.className = 'description-menu hidden-xs';
+	  span.textContent = action.module.description;
+	  
+	  a.href = '#';		  
+	  a.appendChild(i);
+	  a.appendChild(span);
+	  
+	 	 a.onclick = function(){
+	 		
+
+	 		 if(open){
+	 			 
+	 			 Play.addClass(ul,clsSubListHidden);
+	 			 open = false;
+	 			 
+	 		 } else {
+	 			 
+	 			 Play.addClass(ul,clsSubList);
+	 			 open = true;	    			 
+	 		 }	    		 
+	 	 }	  
+	  
+	  ul.className = clsSubListHidden;
+	  
+	  for(var i = 0; i < n; i++){
+		  
+		  var act =  action.module.children[i];		  
+		  ul.appendChild(Nav.item(act.ico,act.module.description,act.url));		  
+	  }
+	  
+	  li.appendChild(a);
+	  li.appendChild(ul);
+	  
+
+	  return li;
 	   
    }
+   
 	
 	
 	return Nav;

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import play.Logger;
 import play.db.DB;
 
+import com.yonaxtics.gymwer.dpa.role.entity.Role;
 import com.yonaxtics.gymwer.set.action.entity.Action;
 import com.yonaxtics.gymwer.set.module.entity.Module;
 import com.yonaxtics.gymwer.set.permission.entity.Permission;
@@ -30,6 +31,7 @@ public class PermissionDao extends Dao {
 	 * @return
 	 */
 	public static boolean loadNav(Person contact) {
+		
 		boolean result = false;		
 		CallableStatement cst = null;
 		ResultSet rs  = null;
@@ -47,7 +49,8 @@ public class PermissionDao extends Dao {
 			if(rs.next()){
 				
 			      result = true;
-			      contact.getUser().getRole().setPermissionList(new ArrayList<Permission>());
+			      contact.getUser().setRole(new Role(0));
+			      contact.getUser().getRole().setPermissions(new ArrayList<Permission>());
 			      
 			      do{			    	  
 			    	  
@@ -61,7 +64,7 @@ public class PermissionDao extends Dao {
 			    		action.getModule().setParent(new Module(rs.getInt(7),rs.getString(8)));			    		
 			    	}
 			    	
-					contact.getUser().getRole().getPermissionList().add(new Permission(action));			    	  
+					contact.getUser().getRole().getPermissions().add(new Permission(action));			    	  
 			    	  
 			      }while(rs.next());				
 			}			

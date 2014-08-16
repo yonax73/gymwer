@@ -5,8 +5,7 @@ import static com.yonaxtics.gymwer.util.Constant.SESSION_OK;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.dpa.dashboard.dashboard;
-import views.html.set.login.login;
+import views.html.set.gym.*;
 
 import com.yonaxtics.gymwer.set.person.entity.Person;
 /**
@@ -18,8 +17,7 @@ import com.yonaxtics.gymwer.set.person.entity.Person;
 public class GymControl extends Controller {
 
 	
-	public static Result dashboard(){
-		
+	public static Result dashboard(){		
 				
 	    if(session(SESSION_OK)!= null && Integer.parseInt(session(SESSION_OK)) > 0) {	    	
 	    	
@@ -27,18 +25,26 @@ public class GymControl extends Controller {
 	    	
 	    } else {
 	    	
-	    	return ok(login.render());  
+	    	session().clear();			
+			return redirect("/login");
 	    }		
 		
 	}
 	
 	
 	
-	public static Result load(){
+	public static Result gym(){
 		
-		Person contact = new Person((Integer.parseInt(session(SESSION_OK))));
-		contact.setName("Prueba");    	
-    	return ok(enc(Json.toJson(contact).toString()));
+		return ok(gym.render());
+	}
+	
+	
+	
+	public static Result load(){			
+			
+			Person contact = new Person((Integer.parseInt(session(SESSION_OK))));
+			contact.setName("Prueba");    	
+	    	return ok(enc(Json.toJson(contact).toString()));	
 		
 	}
 	

@@ -82,19 +82,17 @@
 
 
 
-/***
-*prueba nav
-**/
-
-
-
+#actions{
+	
+	margin: 0 -15px 0 0;
+    
+}
 
 nav {
     background: none repeat scroll 0 0 #282828;
     height: 100%;
-    left: 0;
     overflow: auto;
-    position: fixed;
+    margin:0 0 0 -15px;
 }
 
 nav .divider{
@@ -116,7 +114,15 @@ border-bottom: 1px solid #1a1c20;
     padding: 0 0 0 20px;
 }
 
+.sub-list i{
+      padding: 10px 5px 0 0;
+}
 
+.description-menu{
+	
+	padding-left: 7px;
+	text-transform: capitalize;
+}
 
 
 

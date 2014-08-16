@@ -4,19 +4,17 @@ package com.yonaxtics.gymwer.set.user.controller;
 import static com.yonaxtics.gymwer.sec.Sec.dec;
 import static com.yonaxtics.gymwer.util.Constant.*;
 
-
-
-
 import java.util.Map;
 
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.dpa.user.user;
 import views.html.set.login.login;
 import views.html.set.login.signup;
 
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 import com.yonaxtics.gymwer.dpa.gym.logic.GymLogic;
-import com.yonaxtics.gymwer.set.master.entity.Role;
+import com.yonaxtics.gymwer.dpa.role.entity.Role;
 import com.yonaxtics.gymwer.set.person.entity.Person;
 import com.yonaxtics.gymwer.set.person.logic.PersonLogic;
 import com.yonaxtics.gymwer.set.user.entity.User;
@@ -29,19 +27,14 @@ import com.yonaxtics.gymwer.set.user.logic.UserLogic;
  */
 public class UserControl extends Controller {
 
+
 	
 	
-	
-	
-
-
-
-
 	public static  Result  login() {
 
-		if(session(SESSION_OK)!= null){
+		if(session(SESSION_OK)!= null){			
 			
-			session().clear();
+			return redirect("/dashboard");
 		}
 		
 		return ok(login.render());   
@@ -50,10 +43,12 @@ public class UserControl extends Controller {
 	
 	
 	
+	
 	public static Result signUp() {
 
 		return ok(signup.render());   
 	}
+	
 	
 	
 	
@@ -156,6 +151,16 @@ public class UserControl extends Controller {
 		 }			
 		
 		return ok(result);
+		
+	}
+
+	
+	
+	
+	public static Result users(){
+		
+		
+		return ok(user.render());
 		
 	}
 }

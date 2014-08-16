@@ -28,7 +28,7 @@ public class PermissionControl extends Controller {
 		
 		Person contact = new Person(Integer.parseInt(session(SESSION_OK)));
 		contact.setUser(new User(session(SESSION_USER_NAME)));
-		contact.setGym(new Gym(SESSION_GYM_NAME));
+		contact.setGym(new Gym(session(SESSION_GYM_NAME)));
 		
     	if(PermissionLogic.loadNav(contact)){
     	    

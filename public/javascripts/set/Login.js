@@ -92,16 +92,16 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
 	
 	
 	
-	 function init() {
+	 function init() {		
 				
 	    btnClose.onclick = function (){Play.addClass(altLogin, Constants.HIDDEN);};    				
 				
 		if(sessionStorage.length > 0){
 			
-			var message = sessionStorage.getItem("msgLoginSession");
+			var message = sessionStorage.getItem(Constants.SESSIONSTORAGE_MESSAGE);
 			sessionStorage.clear();
 			
-		    msgLogin.textContent  = message;
+		    msgLogin.textContent  = message == null ? 'Hi, please sign in!' : message;
 		    Play.addClass(icoLogin, Constants.ICO_SUCCESS);
 			Play.addClass(altLogin, Constants.ALERT_SUCCESS);			
 				
@@ -162,12 +162,16 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
 										 
 										 btnLogin.disabled = true;
 									        
-										  if (this.readyState === 4) {
+										  if (this.readyState === Constants.READYSTATE_COMPLETE) {
 											  											  											  
-											  if(this.status === 200 && this.responseText === Constants.REQUEST_SUCCESS){
+											  if(this.status === Constants.STATUS_OK && this.responseText === Constants.REQUEST_SUCCESS){
 																				
-												  btnLogin.disabled = false;												  
-												  window.location = '/dashboard';
+												  	
+												  localStorage.clear();		
+												  sessionStorage.clear();
+												  btnLogin.disabled = false;
+												  sessionStorage.setItem(Constants.SESSIONSTORAGE_OK,Constants.OK);
+												  window.location = '/user';												  
 												  
 											  }else {
 												  
@@ -181,7 +185,7 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
 									 xhr.open('POST','/signIn');
 									 xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
 									 xhr.send(Play.serialize(e.target));	
-									 xhr.timeout = 10000;
+									 xhr.timeout = Constants.TIME_OUT;
 									 xhr.ontimeout = function () {
 										 
 										msgLogin.textContent = "Timed Out!!!";

@@ -1,9 +1,13 @@
 package com.yonaxtics.gymwer.set.module.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.yonaxtics.gymwer.set.action.entity.Action;
 import com.yonaxtics.gymwer.set.master.entity.MasterValue;
+
 import static com.yonaxtics.gymwer.util.Constant.MODULE_CHILD;
+import static com.yonaxtics.gymwer.util.Constant.MODULE_PARENT;
 
 /** 
  * Clase     : Module.java<br/>
@@ -17,7 +21,7 @@ import static com.yonaxtics.gymwer.util.Constant.MODULE_CHILD;
 public class Module extends MasterValue {
 
 	
-	private List<Module> childrens;
+	private List<Action> children;
 	private Module parent;
 	
 	/**
@@ -32,7 +36,14 @@ public class Module extends MasterValue {
 		super(id);
 		setDescription(description);
 		setState(state);
-	}
+		
+		if(isParent()){
+			
+			children = new ArrayList<Action>();
+			
+		}
+		
+	}	
 	
 	
 	public Module(int id, String description) {
@@ -46,6 +57,20 @@ public class Module extends MasterValue {
 		
 		return getState() == MODULE_CHILD;
 		
+	}
+	
+	
+	public boolean isParent(){
+		
+		return getState() == MODULE_PARENT;
+		
+	}
+	
+	
+	
+	public void releaseParent(){
+		
+		setParent(null);
 	}
 	
 	
@@ -70,12 +95,12 @@ public class Module extends MasterValue {
 		setData1(state);
 	}
 
-	public List<Module> getChildrens() {
-		return childrens;
+	public List<Action> getChildren() {
+		return children;
 	}
 
-	public void setChildrens(List<Module> childrens) {
-		this.childrens = childrens;
+	public void setChildren(List<Action> children) {
+		this.children = children;
 	}
 
 	public Module getParent() {

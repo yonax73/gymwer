@@ -1,7 +1,7 @@
 package com.yonaxtics.gymwer.set.user.entity;
 
 import com.yonaxtics.gymwer.set.master.entity.MasterValue;
-import com.yonaxtics.gymwer.set.master.entity.Role;
+import com.yonaxtics.gymwer.dpa.role.entity.Role;
 
 /**
  * 

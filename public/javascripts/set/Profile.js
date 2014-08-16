@@ -17,13 +17,13 @@ require.config({
 });
 
 /*
- * ! home Copyright 2014 YonaxTics, Inc. Licensed under
+ * ! Profile.js Copyright 2014 YonaxTics, Inc. Licensed under
  * http://www.apache.org/licenses/LICENSE-2.0
  */
 
 /*
  * ========================================================================
- * home yonax73@gmail.com
+ * Profile.js yonax73@gmail.com
  * ========================================================================
  * Copyright 2014 yonaxTics, Inc.
  * 
@@ -42,7 +42,7 @@ require.config({
  */
 /*
  * ========================================================================
- * Version 0.1: 1-August-2014 Created on : 1-August-2014 Author : Yonatan Alexis
+ * Version 0.1: 17-August-2014 Created on : 17-August-2014 Author : Yonatan Alexis
  * Quintero Rodriguez
  * ========================================================================
  */
@@ -58,13 +58,15 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav'],function(Aes,Constants, Play
 /* ==================================================================================================================
  * REGION ATTRIBUTES
  * ===================================================================================================================*/
-		
 
 	
+	if(Play.ready()){ 	
 	
-	
-	load();
-	init();
+		load();
+		init();
+		
+	}
+
 	
 /* ==================================================================================================================
  * REGION LOAD
@@ -77,9 +79,9 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav'],function(Aes,Constants, Play
 		
 		xhr.onreadystatechange = function () {		
 		       
-			  if (this.readyState === 4) {
+			  if (this.readyState === Constants.READYSTATE_COMPLETE) {
 				  						
-				  if(this.status === 200){				 
+				  if(this.status === Constants.STATUS_OK){				 
 					  
 					  var gym = Json.parse(this.responseText);				  
 					  
@@ -103,24 +105,12 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav'],function(Aes,Constants, Play
 	
 	  function init(){
 		
-		  loadNavBar();
+		  Nav.init();
 	}
 	
 	
 	
-/* ==================================================================================================================
- * REGION NAVBAR
- * ===================================================================================================================
- */	
-	 
-	  
-   function loadNavBar(){		   
-	 
-	   Nav.load():
-	   Nav.toogle();
-	   Nav.toogleResources();
-	    
-	}		
+	
 	
 
 	
