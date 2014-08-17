@@ -171,7 +171,7 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
 												  sessionStorage.clear();
 												  btnLogin.disabled = false;
 												  sessionStorage.setItem(Constants.SESSIONSTORAGE_OK,Constants.OK);
-												  window.location = '/user';												  
+												  window.location = '/users';												  
 												  
 											  }else {
 												  

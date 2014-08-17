@@ -1,6 +1,6 @@
 package com.yonaxtics.gymwer.set.user.entity;
 
-import com.yonaxtics.gymwer.set.master.entity.MasterValue;
+import com.yonaxtics.gymwer.util.base.entity.Entity;
 import com.yonaxtics.gymwer.dpa.role.entity.Role;
 
 /**
@@ -9,10 +9,13 @@ import com.yonaxtics.gymwer.dpa.role.entity.Role;
  * @version 0.1 (7/16/2014)
  *
  */
-public class User extends MasterValue {
+public class User extends Entity {
 
 	
 	private Role role;
+	private String name;
+	private String password;
+	private String email;
 	
 	
 	public User(int id) {
@@ -22,11 +25,10 @@ public class User extends MasterValue {
 	
 	public User(String email,String password,Role role){
 		
-		super(0);		
-		setValue2(password);
-		setValue3(email);
+		super(0);				
 		this.role = role;
-		
+		this.email = email;
+		this.password = password;			
 		extractNameFromEmail();
 		
 	}
@@ -35,60 +37,20 @@ public class User extends MasterValue {
 	public User(String email,String password){
 		
 		super(0);	
-		setValue2(password);
-		setValue3(email);
-	
+		this.email =email;
+		this.password = password;
 		
 	}
 
-
-	/**
-	 * @param session
-	 */
 	public User(String name) {
           
 		super(0);
-		setName(name);
+		this.name = name;
 	}
 
 	private void extractNameFromEmail(){		
 		
 	    setName(getEmail().split("@")[0]);
-	}
-
-	
-	
-	
-	public String getName(){
-		
-		return getValue1();
-	}
-	
-	public void setName(String name){
-		
-		setValue1(name);
-	}
-	
-	public String getPassword(){
-		
-		return getValue2();
-	}
-	
-	public void setPassword(String password){
-		
-		setValue2(password);
-	}	
-	
-	
-	public String getEmail(){
-		
-		return getValue3();
-	}
-	
-	
-	public void setEmail(String email){
-	    
-		setValue3(email);
 	}
 
 	/**
@@ -104,6 +66,51 @@ public class User extends MasterValue {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	
+	
 	
 	
 
