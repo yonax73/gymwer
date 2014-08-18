@@ -194,7 +194,7 @@ define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
 		  span.textContent = description;
 		  
 		  a.href = url;		  
-		  a.target ='_blank';
+		  a.target ='_parent';
 		  a.appendChild(i);
 		  a.appendChild(span);	
 		  
@@ -202,19 +202,8 @@ define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
 			  
 			  e.preventDefault();
 			  li.className = 'active';
-			  
-			  if(localStorage.getItem(this.href)!= null){
-				  
-				  var win = JSON.parse(localStorage.getItem(this.href));
-				  win.focus();
-				  alert('this window is open');
-				  
-			  }else {
-				  
-				  var win = window.open(this.href, this.target);
-				  localStorage.setItem(this.href,JSON.stringify(win));
-				  win.focus();
-			  }
+			  window.open(this.href, this.target);
+
 			
 		  }
 		  	  
@@ -223,9 +212,7 @@ define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
 		  return li	   
    }
    
-   
-   
-   
+  
    Nav.itemActive = function(ico,description,url){//quitar
 	   
 		  var i = document.createElement('i');
