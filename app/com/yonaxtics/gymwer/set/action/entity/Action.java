@@ -21,6 +21,8 @@ public class Action extends Entity {
 	private Module module;	
 	
 	
+	
+
 	/**
 	 * @param id
 	 */
@@ -28,6 +30,23 @@ public class Action extends Entity {
 		
 		super(id);
 		
+	}
+	
+	
+	public Action(String url,String ico, Module module) {
+		
+		super(0);
+		this.url = url;
+		this.ico = ico;
+		this.module = module;
+	}
+	
+	
+	
+	public Action(String url) {
+		
+		super(0);
+		this.url = url;
 	}
 
 

@@ -24,8 +24,8 @@ public class Constant {
 	/**
 	 * ROLES
 	 */	
-	public final static int ROL_SUPER_ADMIN = 4;
-	public final static int ROL_ADMIN = 33;
+	public final static int MASTER_VALUE_ROL_SUPER_ADMIN = 4;
+	public final static int MASTER_VALUE_ROL_ADMIN = 33;
 	
 	
 	
@@ -44,22 +44,28 @@ public class Constant {
 	public final static String SESSION_OK = "11508891Y";
 	public static final String SESSION_USER_NAME = "11508892Y";
 	public static final String SESSION_GYM_NAME = "11508893Y";
+	public static final String SESSION_DEFAULT_ACTION_URL = "11508894Y";
 	
 	
 	
 	
-	/**
-	 * MASTER VALUES
-	 */
-     public final static int MASTER_VALUE_ID_PATH = 7;
+	
+
      
      
      
      /**
       * STATES MODULES
       */
-     public final static int MODULE_PARENT =1;
-     public final static int MODULE_CHILD =2;
-	
+     public final static int MASTER_VALUE_MODULE_PARENT =1;
+     public final static int MASTER_VALUE_MODULE_CHILD =2;
+     
+     
+     
+     /**
+      * ACTIONS ID
+      */
+     public final static int ACTION_ID_LOAD_PROFILE = 25;
+     public final static int ACTION_ID_LOAD_GYM = 26;
 	
 }

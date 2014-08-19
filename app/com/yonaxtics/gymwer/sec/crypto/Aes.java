@@ -1,11 +1,12 @@
 package com.yonaxtics.gymwer.sec.crypto;
 
+import java.util.Base64;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+
 /**
  * 
  * @author yonatan quintero
@@ -27,8 +28,8 @@ public class Aes {
 	protected static String encrypt(String Data) throws Exception {
 		Cipher c = Cipher.getInstance(algorithm);
 		c.init(Cipher.ENCRYPT_MODE, keyspec, ivspec);
-		byte[] encVal = c.doFinal(Data.getBytes());
-		String encryptedValue = new BASE64Encoder().encode(encVal);
+		byte[] encVal = c.doFinal(Data.getBytes());	
+		String encryptedValue = Base64.getEncoder().encodeToString(encVal);
 		return encryptedValue;
 	}
 
@@ -36,9 +37,9 @@ public class Aes {
 		
 		Cipher c = Cipher.getInstance(algorithm);
 		
-		c.init(Cipher.DECRYPT_MODE, keyspec, ivspec);		
-		
-		return new String(c.doFinal( new BASE64Decoder().decodeBuffer(encryptedData))).trim();		
+		c.init(Cipher.DECRYPT_MODE, keyspec, ivspec);				
+	
+		return new String(c.doFinal(Base64.getDecoder().decode(encryptedData) )).trim();		
 		
 	}
 

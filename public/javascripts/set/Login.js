@@ -164,14 +164,14 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
 									        
 										  if (this.readyState === Constants.READYSTATE_COMPLETE) {
 											  											  											  
-											  if(this.status === Constants.STATUS_OK && this.responseText === Constants.REQUEST_SUCCESS){
+											  if(this.status === Constants.STATUS_OK){
 																				
 												  	
 												  localStorage.clear();		
 												  sessionStorage.clear();
 												  btnLogin.disabled = false;
 												  sessionStorage.setItem(Constants.SESSIONSTORAGE_OK,Constants.OK);
-												  window.location = '/users';												  
+												  window.location = this.responseText;												  
 												  
 											  }else {
 												  

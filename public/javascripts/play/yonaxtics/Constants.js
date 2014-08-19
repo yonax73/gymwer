@@ -81,9 +81,7 @@ define([], function() {
     /**
      * STATES MODULES
      */
-	Constants.MODULE_PARENT =1;
-	Constants.MODULE_CHILD =2;
-
+	Constants.MASTER_VALUE_MODULE_PARENT =1;
 	
 	
 	

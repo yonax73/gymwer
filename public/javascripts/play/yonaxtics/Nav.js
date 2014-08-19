@@ -148,21 +148,18 @@ define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
 		  var permissions = user.role.permissions;
 		  var n = permissions.length;
 		  var i = 0;
-		  var action = Play.getId('actions');		  
-		  
-		  action.appendChild(Nav.item('fa fa-university fa-fw',gym.name,'/gym'));
-		  action.appendChild(Nav.item('fa fa-user fa-fw',user.name,'/profile'));
+		  var action = Play.getId('actions');	
 		  
 		  if(n > 0){
 			  
 			  var act = permissions[i++].action;
-			  action.appendChild(Nav.itemActive(act.ico,act.module.description,act.url));
+			  action.appendChild(Nav.item(act.ico,act.module.description,act.url));
 			  
 			  do{
 				  
 				  act = permissions[i++].action;
 				  
-				  if(act.module.state === Constants.MODULE_PARENT){								  
+				  if(act.module.rolId === Constants.MASTER_VALUE_MODULE_PARENT){								  
 					  
 					  action.appendChild(Nav.itemParent(act));								  
 					  
@@ -183,6 +180,7 @@ define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
    
    
    
+   
    Nav.item = function(ico,description,url){
 	   
 		  var i = document.createElement('i');
@@ -198,8 +196,28 @@ define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
 		  a.href = url;		  
 		  a.target ='_blank';
 		  a.appendChild(i);
-		  a.appendChild(span);		  
-		  		  	  
+		  a.appendChild(span);	
+		  
+		  a.onclick = function(e){
+			  
+			  e.preventDefault();
+			  li.className = 'active';
+			  
+			  if(localStorage.getItem(this.href)!= null){
+				  
+				  var win = JSON.parse(localStorage.getItem(this.href));
+				  win.focus();
+				  alert('this window is open');
+				  
+			  }else {
+				  
+				  var win = window.open(this.href, this.target);
+				  localStorage.setItem(this.href,JSON.stringify(win));
+				  win.focus();
+			  }
+			
+		  }
+		  	  
 		  li.appendChild(a);
 		  
 		  return li	   
@@ -208,7 +226,7 @@ define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
    
    
    
-   Nav.itemActive = function(ico,description,url){
+   Nav.itemActive = function(ico,description,url){//quitar
 	   
 		  var i = document.createElement('i');
 		  var span = document.createElement('span');
@@ -223,7 +241,7 @@ define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
 		  a.href = url;		  
 		  a.target ='_blank';
 		  a.appendChild(i);
-		  a.appendChild(span);		  
+		  a.appendChild(span);
 		  		  
 		  li.className = 'active';		  
 		  li.appendChild(a);
@@ -232,15 +250,7 @@ define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
 }
    
    
-   
-   
-   Nav.divider = function(){
-	   
-	   var li = document.createElement('li'); 
-	   li.className = 'divider';
-	   
-	   return li;
-   }
+
    
    Nav.itemLogOut = function(ico,description,url){
 	   
@@ -268,6 +278,8 @@ define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
 		  
 		  return li	   
 }
+   
+   
    
    
    Nav.itemParent =  function(action){
@@ -320,6 +332,17 @@ define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
 
 	  return li;
 	   
+   }
+   
+   
+   
+   
+   Nav.divider = function(){
+	   
+	   var li = document.createElement('li'); 
+	   li.className = 'divider';
+	   
+	   return li;
    }
    
 	

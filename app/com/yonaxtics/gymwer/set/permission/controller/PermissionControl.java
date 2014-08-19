@@ -1,7 +1,10 @@
 package com.yonaxtics.gymwer.set.permission.controller;
 
+import static com.yonaxtics.gymwer.sec.Sec.dec;
 import static com.yonaxtics.gymwer.sec.Sec.enc;
-import static com.yonaxtics.gymwer.util.Constant.*;
+import static com.yonaxtics.gymwer.util.Constant.SESSION_GYM_NAME;
+import static com.yonaxtics.gymwer.util.Constant.SESSION_OK;
+import static com.yonaxtics.gymwer.util.Constant.SESSION_USER_NAME;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -26,7 +29,7 @@ public class PermissionControl extends Controller {
 	
 	public static Result loadNav(){
 		
-		Person contact = new Person(Integer.parseInt(session(SESSION_OK)));
+		Person contact = new Person(Integer.parseInt(dec(session(SESSION_OK))));
 		contact.setUser(new User(session(SESSION_USER_NAME)));
 		contact.setGym(new Gym(session(SESSION_GYM_NAME)));
 		

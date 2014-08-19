@@ -9,6 +9,7 @@ import java.sql.Types;
 import play.Logger;
 import play.db.DB;
 
+import com.yonaxtics.gymwer.set.action.entity.Action;
 import com.yonaxtics.gymwer.set.person.entity.Person;
 import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.util.base.dao.Dao;
@@ -123,6 +124,7 @@ public class UserDao extends Dao{
 					
 					person.setId(rs.getInt(2));
 					person.getUser().setName(rs.getString(3));
+					person.getUser().setDefaultAction(new Action(rs.getString(4)));
 					
 				}
 			}			

@@ -52,7 +52,7 @@ define(['./Constants'], function(Constants) {
 	 */
 	Play.appendClass = function(element, className) {
 
-		element.className += ' ' + className;
+		element.classList.add(className);
 	}
 
 	/**
@@ -61,8 +61,11 @@ define(['./Constants'], function(Constants) {
 	 * @returns element of class
 	 */
 	Play.getClass = function(className) {
-
-		return document.getElementsByClassName(className)[0];
+		
+	        
+			return document.getElementsByClassName(className)[0];			
+	
+	
 	}
 	
 	/**
@@ -201,7 +204,7 @@ define(['./Constants'], function(Constants) {
 	
 	
 	
-
+    
 	
 
 	return Play;

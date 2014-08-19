@@ -16,8 +16,7 @@ public  class   UserLogic  {
 
 	public static boolean create(User user) {
 		
-		boolean result = false;	
-		
+		boolean result = false;			
 		 
 		if(user != null && !user.exists() && !user.isEmpty()){	 		    	  
 		    		  

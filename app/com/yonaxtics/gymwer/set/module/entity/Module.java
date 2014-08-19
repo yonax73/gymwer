@@ -1,13 +1,13 @@
 package com.yonaxtics.gymwer.set.module.entity;
 
+import static com.yonaxtics.gymwer.util.Constant.MASTER_VALUE_MODULE_CHILD;
+import static com.yonaxtics.gymwer.util.Constant.MASTER_VALUE_MODULE_PARENT;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import com.yonaxtics.gymwer.set.action.entity.Action;
-import com.yonaxtics.gymwer.set.master.entity.MasterValue;
-
-import static com.yonaxtics.gymwer.util.Constant.MODULE_CHILD;
-import static com.yonaxtics.gymwer.util.Constant.MODULE_PARENT;
+import com.yonaxtics.gymwer.util.base.entity.Entity;
 
 /** 
  * Clase     : Module.java<br/>
@@ -18,9 +18,11 @@ import static com.yonaxtics.gymwer.util.Constant.MODULE_PARENT;
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
 
-public class Module extends MasterValue {
+public class Module extends Entity {
 
 	
+	private String description;
+	private int rolId;
 	private List<Action> children;
 	private Module parent;
 	
@@ -32,10 +34,10 @@ public class Module extends MasterValue {
 		
 	}
 	
-	public Module(int id, String description, int state) {
+	public Module(int id, String description, int rolId) {
 		super(id);
-		setDescription(description);
-		setState(state);
+		this.description = description;
+		this.rolId = rolId;
 		
 		if(isParent()){
 			
@@ -53,16 +55,21 @@ public class Module extends MasterValue {
 	}
 	
 	
+	public Module(String description) {
+		super(0);
+		setDescription(description);
+	}
+
 	public boolean isChild(){
 		
-		return getState() == MODULE_CHILD;
+		return rolId == MASTER_VALUE_MODULE_CHILD;
 		
 	}
 	
 	
 	public boolean isParent(){
 		
-		return getState() == MODULE_PARENT;
+		return rolId == MASTER_VALUE_MODULE_PARENT;
 		
 	}
 	
@@ -76,24 +83,14 @@ public class Module extends MasterValue {
 	
 	public String getDescription(){
 		
-		return getValue1();
+		return description;
 	}	
 	
 	public void setDescription(String description){
 		
-		setValue1(description);
+		this.description = description;
 	}
 	
-	
-	public int getState(){
-		
-		return getData1();
-	}
-	
-	public void setState(int state){
-		
-		setData1(state);
-	}
 
 	public List<Action> getChildren() {
 		return children;
@@ -109,6 +106,14 @@ public class Module extends MasterValue {
 
 	public void setParent(Module parent) {
 		this.parent = parent;
+	}
+
+	public int getRolId() {
+		return rolId;
+	}
+
+	public void setRolId(int rolId) {
+		this.rolId = rolId;
 	}
 	
 	

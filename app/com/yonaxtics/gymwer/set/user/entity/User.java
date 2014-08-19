@@ -1,5 +1,6 @@
 package com.yonaxtics.gymwer.set.user.entity;
 
+import com.yonaxtics.gymwer.set.action.entity.Action;
 import com.yonaxtics.gymwer.util.base.entity.Entity;
 import com.yonaxtics.gymwer.dpa.role.entity.Role;
 
@@ -16,6 +17,7 @@ public class User extends Entity {
 	private String name;
 	private String password;
 	private String email;
+	private Action defaultAction;
 	
 	
 	public User(int id) {
@@ -47,10 +49,23 @@ public class User extends Entity {
 		super(0);
 		this.name = name;
 	}
+	
+
 
 	private void extractNameFromEmail(){		
 		
 	    setName(getEmail().split("@")[0]);
+	}
+	
+	
+	public boolean isEmpty() {
+		
+		return name == null
+		   || name == ""	
+		   || email == null 
+           || email == "" 
+		   || password == null
+		   || password == "";
 	}
 
 	/**
@@ -108,6 +123,16 @@ public class User extends Entity {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public Action getDefaultAction() {
+		return defaultAction;
+	}
+
+	public void setDefaultAction(Action defaultAction) {
+		this.defaultAction = defaultAction;
+	}
+
+
 
 	
 	

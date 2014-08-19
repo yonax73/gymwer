@@ -15,6 +15,9 @@ import com.yonaxtics.gymwer.set.permission.entity.Permission;
 import com.yonaxtics.gymwer.set.person.entity.Person;
 import com.yonaxtics.gymwer.util.base.dao.Dao;
 
+import static com.yonaxtics.gymwer.util.Constant.ACTION_ID_LOAD_GYM;
+import static com.yonaxtics.gymwer.util.Constant.ACTION_ID_LOAD_PROFILE;;
+
 /** 
  * Class     : PermissionDao.java.java<br/>
  * Copyright : (c) 2014<br/>
@@ -48,7 +51,7 @@ public class PermissionDao extends Dao {
 			
 			if(rs.next()){
 				
-			      result = true;
+			      result = true;	
 			      contact.getUser().setRole(new Role(0));
 			      contact.getUser().getRole().setPermissions(new ArrayList<Permission>());
 			      
@@ -58,6 +61,16 @@ public class PermissionDao extends Dao {
 			    	action.setUrl(rs.getString(2));
 			    	action.setIco(rs.getString(3));
 			    	action.setModule(new Module(rs.getInt(4),rs.getString(5),rs.getInt(6)));
+			    	
+			    	if(action.getId() == ACTION_ID_LOAD_PROFILE){
+			    		
+			    		action.getModule().setDescription(contact.getUser().getName());
+			    		
+			    	} else if (action.getId() == ACTION_ID_LOAD_GYM){
+			    		
+			    		action.getModule().setDescription(contact.getGym().getName());
+			    		
+			    	}
 			    	
 			    	if(action.getModule().isChild()){
 			    		

@@ -2,7 +2,14 @@ package com.yonaxtics.gymwer.set.user.controller;
 
 
 import static com.yonaxtics.gymwer.sec.Sec.dec;
-import static com.yonaxtics.gymwer.util.Constant.*;
+import static com.yonaxtics.gymwer.sec.Sec.enc;
+import static com.yonaxtics.gymwer.util.Constant.CHECKED;
+import static com.yonaxtics.gymwer.util.Constant.MASTER_VALUE_ROL_SUPER_ADMIN;
+import static com.yonaxtics.gymwer.util.Constant.REQUEST_SUCCESS;
+import static com.yonaxtics.gymwer.util.Constant.SESSION_GYM_NAME;
+import static com.yonaxtics.gymwer.util.Constant.SESSION_OK;
+import static com.yonaxtics.gymwer.util.Constant.SESSION_USER_NAME;
+import static com.yonaxtics.gymwer.util.Constant.SESSION_DEFAULT_ACTION_URL;
 
 import java.util.Map;
 
@@ -34,7 +41,7 @@ public class UserControl extends Controller {
 
 		if(session(SESSION_OK)!= null){			
 			
-			return redirect("/dashboard");
+			return redirect(SESSION_DEFAULT_ACTION_URL);
 		}
 		
 		return ok(login.render());   
@@ -75,7 +82,7 @@ public class UserControl extends Controller {
 
 			if (data.get("?")[2].equals(data.get("?")[3])) {
 				
-				user = new User(dec(data.get("?")[1]), data.get("?")[2], new Role(ROL_SUPER_ADMIN));
+				user = new User(dec(data.get("?")[1]), data.get("?")[2], new Role(MASTER_VALUE_ROL_SUPER_ADMIN));
 
 				if(!UserLogic.exists(user)){							
 					
@@ -139,11 +146,12 @@ public class UserControl extends Controller {
 		
 		if(UserLogic.signIn(contact)){
 				
-				session(SESSION_OK, String.valueOf(contact.getId()));
+				session(SESSION_OK, enc(String.valueOf(contact.getId())));
 				session(SESSION_USER_NAME,contact.getUser().getName());
 				session(SESSION_GYM_NAME,contact.getGym().getName());
+				session(SESSION_DEFAULT_ACTION_URL,contact.getUser().getDefaultAction().getUrl());				
 				
-				return ok(REQUEST_SUCCESS);
+				return ok(contact.getUser().getDefaultAction().getUrl());
 				
 			} else {
 				
@@ -163,4 +171,9 @@ public class UserControl extends Controller {
 		return ok(user.render());
 		
 	}
+
+	
+	
+	
+
 }
