@@ -93,7 +93,64 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select'],function(Aes,Consta
 					  Play.getId('txtPhone').value = profile.location.phone.phone;
 					  Play.getId('txtNameUser').value = profile.user.name;
 					  Play.getId('txtRole').value = profile.user.role.name;
-					  Play.getId('txtHomePage').value = profile.user.defaultAction.url;					  
+					  Play.getId('txtHomePage').value = profile.user.defaultAction.url;	
+					  
+					  var ul =Play.getId('list');
+					  ul.className = 'bg-primary';
+					  var open = false;
+					  ul.onclick = function(){						
+						 
+						  
+						  var lis = this.getElementsByTagName("li");
+						  if(open){							  
+							  var i = 0;
+							  while (i < 10) {								  
+									  if(i === 0){
+										  lis[i].className = 'show';										
+									  } else {
+										  lis[i].className = 'hidden';
+									  }
+									  i++;
+								  }							  
+							  open = false;								  
+							} else {								
+								  var i = 0;
+								  while (i < 10) {
+										 
+											  lis[i++].className = 'show';										  
+									  }								  
+								  open = true;
+							}
+							  
+				     }
+	
+					  
+					  
+					  for (var int = 0; int < 10; int++) {
+						
+						  var li = document.createElement('li');
+						  li.textContent= int;
+						  if(int === 0){
+							  li.className = 'show';
+							  li.id = 'result';
+						  } else {
+							  li.className = 'hidden';  
+							  
+							  li.onclick = function(){
+								  
+								  Play.getId('result').textContent = this.textContent;
+								  this.className += ' bg-success';
+								  
+							  }
+						  }
+						  
+						  
+							  
+						  
+						  ul.appendChild(li);
+					}
+					  
+					  
 					  
 				  }else {
 					  
