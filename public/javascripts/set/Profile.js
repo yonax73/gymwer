@@ -99,57 +99,89 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select'],function(Aes,Consta
 					  var span =   div.getElementsByTagName('span')[0];
 					  var input =  div.getElementsByTagName('input')[0];
 					  var ul =  div.getElementsByTagName('ul')[0];
-					  var open = false;
 					  
-					  span.onclick = function(){
-						  
-						  var liList = ul.getElementsByTagName("li");
-						  var n = liList.length
-						  
-						  for (var i = 0; i < n; i++) {
-							
-							  liList[i].classList.toggle('hidden');  
+					 var permissions =  JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_NAV_CONTACT)).user.role.permissions;
+					 
+					 console.log(permissions);					
+					 
+					 function hasUrl(element) { console.log(element)
+						  return element.action.url != null;
 						}
-					  }
-					  
-
-	
-					  
-					  
-					  for (var int = 0; int < 10; int++) {
+					 
+					 permissions =  permissions.filter(hasUrl);
+					 var n = permissions.length;
+					  for (var i = 0; i < n; i++) {
 						
+						  var action = permissions[i].action;
 						  var li = document.createElement('li');
-						  li.textContent= int;
-							
-							  li.classList.add('hidden');  
-							  
-							  li.onclick = function(){
-								  
+						  li.textContent= action.url;							
+						  li.classList.add('hidden');  
+						  li.tabIndex = i;
+						  li.dataset.option = action.id;
+						  li.onclick = function(){				
+							  	
+							      oldLi = currentLi;
+							      currentLi = this;
 								  input.value = this.textContent;
-								  var liList = ul.getElementsByTagName("li");
-								  var n = liList.length
-								  
-								  for (var i = 0; i < n; i++) {
-									
-									  liList[i].classList.toggle('hidden');  
-								}
-								  
-							  }
-							  ul.appendChild(li);
-						  }
+								  input.dataset.option = this.dataset.option;
+								  toggleSelect();	
+								  this.classList.add('selected');	
+								  oldLi.classList.remove('selected');	
+								 
+					     }
 						  
-						  
-							  
-						  
-						
+					     ul.appendChild(li);
 					}
 					  
 					  
 					  
-				  }else {
 					  
-		               //error message   									  
-				  }
+					  
+					  var currentLi = null;
+					  var oldLi = null;
+					  var option = 18;
+					  var liList = ul.getElementsByTagName('li');
+					  for (var i = 0; i < n; i++) {
+						
+						  if(liList[i].dataset.option == option){
+							  
+							  currentLi = liList[i];							  
+							  
+						  }
+					}
+					  
+					  
+					  input.value =  currentLi.textContent;
+					  currentLi.focus();
+					currentLi.classList.add('selected');
+					  
+					  span.onclick = function(){
+						  
+						 
+						  toggleSelect();
+						  currentLi.focus();
+					  }					  
+						  
+	                  function toggleSelect(){
+	                    	 
+	                	 
+							  var liList = ul.getElementsByTagName('li');
+							  var n = liList.length
+							  
+							  for (var i = 0; i < n; i++) {
+								
+								  liList[i].classList.toggle('hidden');  
+								 
+								  
+							}
+	                    	 
+	                     }						
+				}					  
+					  
+		  }else {
+			  
+               //error message   									  
+		  }
 			  
 		}
 		xhr.open('GET','/loadProfile');

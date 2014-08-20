@@ -171,10 +171,13 @@ nav .divider {
 	padding: 0;
 }
 
-.select input {
-	border: medium none;
-	width: 100%;
-	cursor: default;
+.select input[type="button"] {
+  border: medium none;
+    cursor: default;
+    margin: 0;
+    
+    text-align: left;
+    width: 100%;
 }
 
 .select i {
@@ -189,6 +192,7 @@ nav .divider {
 	width: auto;
 	height:auto;
 	max-height: 50px;
+	box-shadow: 0 1px 2px gray;
 }
 
 .select-list {
@@ -197,11 +201,15 @@ nav .divider {
 	padding: 0;
 }
 
+.select-list  li:before {
+    content: "\00a0  ";
+}
 .select-list  li {
 	cursor: default;
 }
 
-.select-list li:hover {
+.select-list li:hover,.select-list .selected {
 	background-color: #7bb9f5;
 	color: #fff;
 }
+
