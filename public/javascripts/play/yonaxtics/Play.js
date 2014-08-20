@@ -178,9 +178,8 @@ define(['./Constants'], function(Constants) {
 		
 		var result = false;
 		
-		if(sessionStorage.getItem(Constants.SESSIONSTORAGE_OK) === null){
+		if(sessionStorage.getItem(Constants.SESSIONSTORAGE_OK) === null){			
 			
-			sessionStorage.setItem(Constants.SESSIONSTORAGE_MESSAGE, 'Hi, please sign in!');
 			window.location = '/signOut';
 		
 		} else if(sessionStorage.getItem(Constants.SESSIONSTORAGE_OK) == Constants.OK){

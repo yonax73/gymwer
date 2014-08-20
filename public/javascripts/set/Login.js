@@ -101,9 +101,18 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
 			var message = sessionStorage.getItem(Constants.SESSIONSTORAGE_MESSAGE);
 			sessionStorage.clear();
 			
-		    msgLogin.textContent  = message == null ? 'Hi, please sign in!' : message;
-		    Play.addClass(icoLogin, Constants.ICO_SUCCESS);
-			Play.addClass(altLogin, Constants.ALERT_SUCCESS);			
+			if( message === null){
+				
+				Play.addClass(altLogin, Constants.HIDDEN);
+				
+			}else {
+				
+			    msgLogin.textContent  = message;
+			    Play.addClass(icoLogin, Constants.ICO_SUCCESS);
+				Play.addClass(altLogin, Constants.ALERT_SUCCESS);	
+				
+			}
+		
 				
 		} else {
 			

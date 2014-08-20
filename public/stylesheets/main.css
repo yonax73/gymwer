@@ -3,8 +3,8 @@
  * Copyright 2014 YonaxTics, Inc.
  * Licensed under http://www.apache.org/licenses/LICENSE-2.0
  */
- 
- /* ========================================================================
+
+/* ========================================================================
  * main.css
  * yonax73@gmail.com
  * ========================================================================
@@ -22,109 +22,137 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * ======================================================================== */
- 
- 
 
-/*  Class Style */
- 
-	.vertical-offset-5{
-		
-		padding-top: 5%;
-		
-	}
-	
-	
-	
-	.vertical-onset-5{
-		
-		margin-top: 5%;
-		
-	}
+/*************************************************************************
+*                                                                        *
+*                               UTILS                                    * 
+*                                                                        * 
+***************************************************************************/
+.vertical-offset-5 {
+	padding-top: 5%;
+}
 
+.vertical-onset-5 {
+	margin-top: 5%;
+}
 
-/* Elements Style */
-	img{
-	
-		margin: auto;
-	}
-	
-	
-	
-		
-	footer{
-	
-	   
-	   bottom: 0;
-	    font-size: 10px;
-	    height: 25px;
-	    line-height: 0.5;
-	    position: fixed;
-	    text-align: right;
-	    width: 100%;
-	}
-	
-	
-	
-	
-	footer a{
-		color:#FFF;
-	}
-	
-	
-	
-	
-	
-	footer a:hover{
-		color:#FFF;
-	}
+img {
+	margin: auto;
+}
 
+/*************************************************************************
+*                                                                        *
+*                               FOOTER                                   * 
+*                                                                        * 
+***************************************************************************/
+footer {
+	bottom: 0;
+	font-size: 10px;
+	height: 25px;
+	line-height: 0.5;
+	position: fixed;
+	text-align: right;
+	width: 100%;
+}
 
+footer a {
+	color: #FFF;
+}
 
+footer a:hover {
+	color: #FFF;
+}
 
-
-#actions{
-	
+/*************************************************************************
+*                                                                        *
+*                               NAV                                      * 
+*                                                                        * 
+***************************************************************************/
+#actions {
 	margin: 0 -15px 0 0;
-    
 }
 
 nav {
-    background: none repeat scroll 0 0 #282828;
-    height: 100%;
-    overflow: auto;
-    margin:0 0 0 -15px;
+	border-right: 1px solid #e3e3e3;
+	height: 100%;
+	overflow: auto;
+	margin: 0 0 0 -15px;
+	height: 100%;
 }
 
-nav .divider{
-
-border: solid transparent;
-border-width: 1px 0;
-box-shadow: inset 1px 1px 0 rgba(0,0,0,.1),inset 0 -1px 0 rgba(0,0,0,.07);
-width: 100%;
-margin: 0!important;
-border-bottom: 1px solid #1a1c20;
-	
+nav .divider {
+	border: solid transparent;
+	border-width: 1px 0;
+	box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1), inset 0 -1px 0
+		rgba(0, 0, 0, .07);
+	width: 100%;
+	margin: 0 !important;
+	border-bottom: 1px solid #e3e3e3;
 }
 
-.sub-list{
-   background: none repeat scroll 0 0 #090909;
-    border-top: 1px solid #424242;
-    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1) inset, 0 -1px 0 rgba(0, 0, 0, 0.07) inset;
-    list-style: none outside none;
-    padding: 0 0 0 20px;
+.sub-list {
+	border-top: 1px solid #e3e3e3;
+	box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1) inset, 0 -1px 0
+		rgba(0, 0, 0, 0.07) inset;
+	list-style: none outside none;
+	padding: 0 0 0 20px;
 }
 
-.sub-list i{
-      padding: 10px 5px 0 0;
+.sub-list i {
+	padding: 10px 5px 0 0;
 }
 
-.description-menu{
-	
+.description-menu {
 	padding-left: 7px;
 	text-transform: capitalize;
 }
 
+#actions .sub-list  a {
+	padding-left: 30px;
+}
 
+/*************************************************************************
+*                                                                        *
+*                               PROFILE                                  * 
+*                                                                        * 
+***************************************************************************/
+.user-row {
+	margin-bottom: 14px;
+}
 
+.user-row:last-child {
+	margin-bottom: 0;
+}
 
+.dropdown-user {
+	margin: 13px 0;
+	padding: 5px;
+	height: 100%;
+}
 
+.dropdown-user:hover {
+	cursor: pointer;
+}
+
+.table-user-information>tbody>tr {
+	border-top: 1px solid rgb(221, 221, 221);
+}
+
+.table-user-information>tbody>tr:first-child {
+	border-top: 0;
+}
+
+.table-user-information>tbody>tr>td {
+	border-top: 0;
+	
+}
+
+.table-user-information>tbody>tr>td:first-child {
+      font-weight: bold;
+}
+
+ 
+
+.toppad {
+	margin-top: 20px;
+}
