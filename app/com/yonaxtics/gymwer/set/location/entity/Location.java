@@ -26,6 +26,14 @@ public class Location extends Entity {
 	}
 	
 	
+	public Location (Phone phone, Address address){
+		
+		super(0);
+		this.phone = phone;
+		this.address = address;
+	}
+	
+	
 	public Phone getPhone() {
 		return phone;
 	}

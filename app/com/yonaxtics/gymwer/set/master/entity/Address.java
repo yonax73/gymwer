@@ -19,9 +19,9 @@ public class Address extends MasterValue {
 		
 	}
 	
-	public Address(int id, String address){
+	public Address(String address){
 		
-		super(id);
+		super(0);
 		setValue1(address);
 	}
 	

@@ -10,7 +10,8 @@ require.config({
 		Constants : 'play/yonaxtics/Constants',
 		Play :      'play/yonaxtics/Play',		
 		Json :      'play/yonaxtics/Json',
-		Nav :      'play/yonaxtics/Nav'	
+		Nav :      'play/yonaxtics/Nav'	,
+		Select :      'play/yonaxtics/Select'	,
 
 			
 	}
@@ -50,7 +51,7 @@ require.config({
 
 
 
-requirejs(['Aes', 'Constants', 'Play','Json','Nav'],function(Aes,Constants, Play, Json,Nav ) {
+requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select'],function(Aes,Constants, Play, Json,Nav,Select ) {
 
 	
 	
@@ -83,7 +84,16 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav'],function(Aes,Constants, Play
 				  						
 				  if(this.status === Constants.STATUS_OK){				 
 					  
-					  var gym = Json.parse(this.responseText);				  
+					  var profile = Json.parse(this.responseText);					  				  
+					  Play.getId('nameUser').textContent = profile.user.name;
+					  Play.getId('txtFullName').value = profile.name;
+					  Play.getId('txtDocument').value = profile.document;
+					  Play.getId('txtAddress').value = profile.location.address.address;
+					  Play.getId('txtEmail').value = profile.user.email;
+					  Play.getId('txtPhone').value = profile.location.phone.phone;
+					  Play.getId('txtNameUser').value = profile.user.name;
+					  Play.getId('txtRole').value = profile.user.role.name;
+					  Play.getId('txtHomePage').value = profile.user.defaultAction.url;					  
 					  
 				  }else {
 					  
@@ -91,7 +101,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav'],function(Aes,Constants, Play
 				  }
 			  }
 		}
-		xhr.open('GET','/load');
+		xhr.open('GET','/loadProfile');
 		xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
 		xhr.send();		
 		//set time out	

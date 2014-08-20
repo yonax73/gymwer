@@ -19,6 +19,21 @@ public class PersonLogic {
 	    return result;
 	}
 	
+	
+	
+	public static boolean loadProfile(Person contact){
+		
+		boolean result = false;
+		
+		if(contact != null && contact.exists()){
+			
+			result = PersonDao.loadProfile(contact);
+			contact.setId(0);
+		}
+		
+		return result;
+	}
+	
 
 	
 	

@@ -32,6 +32,12 @@ public class Role extends MasterValue {
 	
 	
 	
+	public Role(String name) {
+		
+		super(0);
+		setValue1(name);
+	}
+
 	public void arrange(){			
 		
 	  List<Action> actParents = getPermissions().stream().map(Permission::getAction).filter(act->act.getModule().isParent()).collect(Collectors.toList()); 	  

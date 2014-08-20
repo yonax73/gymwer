@@ -3,6 +3,7 @@
 
 #Internal Error Person- 20
 2001 = Error creating person From UserControl - createAcount
+2002 = Error loading profile From personControl - loadProfile
 
 #Internal Error Gym- 30
 3001 = Error creating gym From UserControl - createAcount

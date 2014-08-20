@@ -16,9 +16,9 @@ public class Phone extends MasterValue {
 	
 	}
 	
-	public Phone(int id, String phone){
+	public Phone(String phone){
 		
-		super(id);
+		super(0);
 		setValue1(phone);
 	}
 	

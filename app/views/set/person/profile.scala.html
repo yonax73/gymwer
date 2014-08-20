@@ -16,7 +16,7 @@
    
           <div class="panel panel-primary">
             <div class="panel-heading">
-              <h3 class="panel-title">Sheena Kristin A.Eschor</h3>
+              <h3 class="panel-title" id="nameUser"></h3>
             </div>
             <div class="panel-body">
               <div class="row">
@@ -25,49 +25,60 @@
                  </div>
                 
 
-                <div class=" col-md-9 col-lg-9  col-sm-9 col-xs-12"> 
+                <form class=" col-md-9 col-lg-9  col-sm-9 col-xs-12"> 
                   <table class="table table-user-information">
                     <tbody>
                       <tr>
-                        <td>Department:</td>
-                        <td>Programming</td>
+                        <td>Full Name</td>
+                        <td><input id="txtFullName" class="input-table" type="text" tabindex="1" autofocus /></td>
                       </tr>
                       <tr>
-                        <td>Hire date:</td>
-                        <td>06/23/2013</td>
-                      </tr>
-                      <tr>
-                        <td>Date of Birth</td>
-                        <td>01/24/1988</td>
-                      </tr>
-                   
-                         <tr>
-                             
-                        <td>Gender</td>
-                        <td>Male</td>
-                      </tr>
+                        <td>Document</td>
+                        <td><input id="txtDocument" class="input-table" type="text" tabindex="2" autofocus /></td>
+                      </tr>                      
                         <tr>
                         <td>Home Address</td>
-                        <td>Metro Manila,Philippines</td>
+                        <td><input id="txtAddress" class="input-table" type="text" tabindex="3" autofocus /></td>
                       </tr>
                       <tr>
                         <td>Email</td>
-                        <td><a href="mailto:@@infosupport.com">@@infosupport.com</a></td>
+                        <td><input id="txtEmail" class="input-table" type="text" tabindex="4" autofocus /></td>
                       </tr>
                       <tr>
                         <td>Phone Number</td>
-                        <td>123-4567-890(Landline)</td>                           
+                        <td><input id="txtPhone" class="input-table" type="text" tabindex="5" autofocus /></td>                        
+                      </tr>
+                      <tr>
+                        <td>User</td>
+                        <td><input id="txtNameUser" class="input-table" type="text" tabindex="6" autofocus /></td>                        
+                      </tr>
+                      <tr>
+                        <td>Role</td>
+                        <td><input id="txtRole" class="input-table" type="text" tabindex="7" autofocus /></td>                        
+                      </tr>
+                      <tr>
+                        <td>Page Home</td>
+                        <td><input id="txtHomePage" class="input-table" type="text" tabindex="8" autofocus />
+        <label class="label">Countries of the United Kingdom:</label>
+        <select class="turnintodropdown">
+            <option>Please select a country:</option>
+                <option>England</option>
+                <option>Northern Ireland</option>
+                <option>Scotland</option>
+                <option>Wales</option>
+        </select>
+                        </td>                        
                       </tr>
                      
                     </tbody>
                   </table>                  
                       
-                </div>
+                </form>
               </div>
             </div>
                  <div class="panel-footer">                 
-                   <span class="pull-right"><a class="btn  btn-lg btn-success ">Save</a></span>
-                   <span class="clearfix"></span>                   
+                   <span class="pull-right"><a class="btn  btn-success">Save</a></span>
+                   <span><a class="btn btn-warning">Change Password</a></span>                   
                   </div>            
           </div>
         </div>
