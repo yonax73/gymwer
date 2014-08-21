@@ -93,89 +93,37 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select'],function(Aes,Consta
 					  Play.getId('txtPhone').value = profile.location.phone.phone;
 					  Play.getId('txtNameUser').value = profile.user.name;
 					  Play.getId('txtRole').value = profile.user.role.name;
-					  Play.getId('txtHomePage').value = profile.user.defaultAction.url;	
+					 // Play.getId('txtHomePage').value = profile.user.defaultAction.url;	
 					  
 					  var div = Play.getId('selectPageHome');
-					  var span =   div.getElementsByTagName('span')[0];
-					  var input =  div.getElementsByTagName('input')[0];
-					  var ul =  div.getElementsByTagName('ul')[0];
+
 					  
 					 var permissions =  JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_NAV_CONTACT)).user.role.permissions;
 					 
-					 console.log(permissions);					
+										
 					 
-					 function hasUrl(element) { console.log(element)
+					 function hasUrl(element) {
 						  return element.action.url != null;
 						}
 					 
-					 permissions =  permissions.filter(hasUrl);
+					 permissions =  permissions.filter(hasUrl);					 
 					 var n = permissions.length;
-					  for (var i = 0; i < n; i++) {
-						
-						  var action = permissions[i].action;
-						  var li = document.createElement('li');
-						  li.textContent= action.url;							
-						  li.classList.add('hidden');  
-						  li.tabIndex = i;
-						  li.dataset.option = action.id;
-						  li.onclick = function(){				
-							  	
-							      oldLi = currentLi;
-							      currentLi = this;
-								  input.value = this.textContent;
-								  input.dataset.option = this.dataset.option;
-								  toggleSelect();	
-								  this.classList.add('selected');	
-								  oldLi.classList.remove('selected');	
-								 
-					     }
-						  
-					     ul.appendChild(li);
-					}
-					  
-					  
-					  
-					  
-					  
-					  var currentLi = null;
-					  var oldLi = null;
-					  var option = 18;
-					  var liList = ul.getElementsByTagName('li');
-					  for (var i = 0; i < n; i++) {
-						
-						  if(liList[i].dataset.option == option){
-							  
-							  currentLi = liList[i];							  
-							  
-						  }
-					}
-					  
-					  
-					  input.value =  currentLi.textContent;
-					  currentLi.focus();
-					currentLi.classList.add('selected');
-					  
-					  span.onclick = function(){
-						  
+					 var items = new Array();
+					
+					 for (var i = 0; i < n; i++) {
 						 
-						  toggleSelect();
-						  currentLi.focus();
-					  }					  
-						  
-	                  function toggleSelect(){
-	                    	 
-	                	 
-							  var liList = ul.getElementsByTagName('li');
-							  var n = liList.length
-							  
-							  for (var i = 0; i < n; i++) {
-								
-								  liList[i].classList.toggle('hidden');  
-								 
-								  
-							}
-	                    	 
-	                     }						
+						 var action = permissions[i].action;
+						 var item = {};
+						 item.value = action.url;						 
+						 item.option = action.id;
+						 items.push(item);
+					 }
+					 
+				var urlSelect = new Select(div,items,'bg-primary');
+				urlSelect.init(18);
+				//urlSelect.setDisabled(true);
+				console.log(urlSelect.getOption());
+				
 				}					  
 					  
 		  }else {

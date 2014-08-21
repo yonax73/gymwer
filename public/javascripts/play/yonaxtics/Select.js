@@ -1,120 +1,203 @@
-/*REF:http://www.scribbletribe.com/how-to-style-the-select-dropdown/*/
-function tamingselect()
-{
-	if(!document.getElementById && !document.createTextNode){return;}
-	
-// Classes for the link and the visible dropdown
-	var ts_selectclass='turnintodropdown'; 	// class to identify selects
-	var ts_listclass='turnintoselect';		// class to identify ULs
-	var ts_boxclass='dropcontainer'; 		// parent element
-	var ts_triggeron='activetrigger fa fa-caret-down'; 		// class for the active trigger link
-	var ts_triggeroff='trigger fa fa-caret-up';			// class for the inactive trigger link
-	var ts_dropdownclosed='dropdownhidden'; // closed dropdown
-	var ts_dropdownopen='dropdownvisible';	// open dropdown
 /*
-	Turn all selects into DOM dropdowns
-*/
-	var count=0;
-	var toreplace=new Array();
-	var sels=document.getElementsByTagName('select');
-	for(var i=0;i<sels.length;i++){
-		if (ts_check(sels[i],ts_selectclass))
-		{
-			var hiddenfield=document.createElement('input');
-			hiddenfield.name=sels[i].name;
-			hiddenfield.type='hidden';
-			hiddenfield.id=sels[i].id;
-			hiddenfield.value=sels[i].options[0].value;
-			sels[i].parentNode.insertBefore(hiddenfield,sels[i])
-			var trigger=document.createElement('a');
-			ts_addclass(trigger,ts_triggeroff);
-			trigger.href='#';
-			trigger.onclick=function(){
-				ts_swapclass(this,ts_triggeroff,ts_triggeron)
-				ts_swapclass(this.parentNode.getElementsByTagName('ul')[0],ts_dropdownclosed,ts_dropdownopen);
-				return false;
-			}
-			trigger.appendChild(document.createTextNode(sels[i].options[0].text));
-			sels[i].parentNode.insertBefore(trigger,sels[i]);
-			var replaceUL=document.createElement('ul');
-			for(var j=0;j<sels[i].getElementsByTagName('option').length;j++)
-			{
-				var newli=document.createElement('li');
-				var newa=document.createElement('a');
-				newli.v=sels[i].getElementsByTagName('option')[j].value;
-				newli.elm=hiddenfield;
-				newli.istrigger=trigger;
-				newa.href='#';
-				newa.appendChild(document.createTextNode(
-				sels[i].getElementsByTagName('option')[j].text));
-				newli.onclick=function(){ 
-					this.elm.value=this.v;
-					ts_swapclass(this.istrigger,ts_triggeron,ts_triggeroff);
-					ts_swapclass(this.parentNode,ts_dropdownopen,ts_dropdownclosed)
-					this.istrigger.firstChild.nodeValue=this.firstChild.firstChild.nodeValue;
-					return false;
-				}
-				newli.appendChild(newa);
-				replaceUL.appendChild(newli);
-			}
-			ts_addclass(replaceUL,ts_dropdownclosed);
-			var div=document.createElement('div');
-			div.appendChild(replaceUL);
-			ts_addclass(div,ts_boxclass);
-			sels[i].parentNode.insertBefore(div,sels[i])
-			toreplace[count]=sels[i];
-			count++;
-		}
+ * ! Play Select Copyright 2014 YonaxTics, Inc. Licensed under
+ * http://www.apache.org/licenses/LICENSE-2.0
+ */
+
+/*
+ * ========================================================================
+ * Play Select yonax73@gmail.com
+ * ========================================================================
+ * Copyright 2014 yonaxTics, Inc.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the 'License'); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an 'AS IS' BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ * ========================================================================
+ */
+/*
+ * ========================================================================
+ * Version 0.1: 21-August-2014 Created on : 21-August-2014 Author : Yonatan Alexis
+ * Quintero Rodriguez
+ * ========================================================================
+ */
+
+define([], function() {
+	
+	
+	 Select.element;
+	 Select.items;
+	 Select.classBackground;
+     Select.span;    
+     Select.input;
+     Select.i;
+     Select.classIco;
+     Select.ul;
+     Select.oldItemLi;
+     Select.currentItemLi;
+     Select.classSelected;
+     Select.classDisabled;
+     Select.disabled;
+    
+	
+	function Select(element,items){
+		
+		Select.element = element;
+		Select.items = items;
+		
+		Select.classBackground = 'background';
+		Select.classIco = 'fa fa-chevron-circle-down';
+		Select.classSelected = 'selected';
+		Select.classDisabled = 'disabled';
+		
+		Select.element.classList.add('select');
+		Select.element.classList.add(Select.classBackground);
+		
+		Select.disabled = false;
+		
+		return Select;
 	}
 	
-/*
-	Turn all ULs with the class defined above into dropdown navigations
-*/	
-
-	var uls=document.getElementsByTagName('ul');
-	for(var i=0;i<uls.length;i++)
-	{
-		if(ts_check(uls[i],ts_listclass))
-		{
-			var newform=document.createElement('form');
-			var newselect=document.createElement('select');
-			for(j=0;j<uls[i].getElementsByTagName('a').length;j++)
-			{
-				var newopt=document.createElement('option');
-				newopt.value=uls[i].getElementsByTagName('a')[j].href;	
-				newopt.appendChild(document.createTextNode(uls[i].getElementsByTagName('a')[j].innerHTML));	
-				newselect.appendChild(newopt);
-			}
-			newselect.onchange=function()
-			{
-				window.location=this.options[this.selectedIndex].value;
-			}
-			newform.appendChild(newselect);
-			uls[i].parentNode.insertBefore(newform,uls[i]);
-			toreplace[count]=uls[i];
-			count++;
+	
+	
+	
+	Select.init = function(option){
+	     
+		Select.create();
+		Select.fill();
+		Select.selectItem(option);		
+	}
+	
+	
+	Select.create =function(){
+		
+	     Select.span = 	document.createElement('span');
+	     Select.input = document.createElement('input');
+	     Select.ul=  document.createElement('ul');	
+	     Select.i = document.createElement('i');	     
+	     Select.input.type = 'button';	     
+	     Select.i.className = Select.classIco;	     
+	     
+	     Select.span.appendChild(Select.input);
+	     Select.span.appendChild(Select.i);	  
+	     Select.span.onclick = function(){				 
+	    	  Select.toggle();
+	    	  Select.currentItemLi.focus();
+		 }
+	     Select.ul.classList.add('select-list');	          
+	     Select.element.appendChild(Select.span);
+	     Select.element.appendChild(Select.ul);	  	
+		
+	}
+	
+	
+	
+	Select.fill = function(){
+		
+		var n = Select.items.length;
+		
+		for (var i = 0; i < n; i++) {
+			
+			  var item = Select.items[i];
+			  var li = document.createElement('li');
+			  li.textContent= item.value;							
+			  li.classList.add('hidden');  
+			  li.tabIndex = i;
+			  li.dataset.option = item.option;
+			  li.onclick = function(){				
+				  	
+				  Select.oldItemLi = Select.currentItemLi;
+				  Select.currentItemLi = this;
+				  Select.input.value = this.textContent;
+				  Select.input.dataset.option = this.dataset.option;
+				  Select.toggle();	
+				  this.classList.add(Select.classSelected);	
+				  Select.oldItemLi.classList.remove(Select.classSelected);	
+					 
+		     }
+			  
+			  Select.ul.appendChild(li);
+			
 		}
+		
 	}
-	for(i=0;i<count;i++){
-		toreplace[i].parentNode.removeChild(toreplace[i]);
+	
+	
+	Select.selectItem = function(option){
+		
+		  var itemsLi = Select.ul.getElementsByTagName('li');
+		  var n = itemsLi.length;		  
+		  
+		  if(n > 0){			 
+			  var flag = true;
+			  var i = 0;	
+			  do{				  
+				  var item = itemsLi[i++];			  
+				  if(item.dataset.option == option){					  
+					  Select.currentItemLi = item;
+					  flag = false;					  
+				  }				  
+			  }while(flag || i < n);			  
+		  }
+		  
+		 Select.input.value =  Select.currentItemLi.textContent;
+		 Select.input.dataset.option = Select.currentItemLi.dataset.option;
+		 Select.currentItemLi.focus();
+		 Select.currentItemLi.classList.add(Select.classSelected);
 	}
-	function ts_check(o,c)
-	{
-	 	return new RegExp('\\b'+c+'\\b').test(o.className);
-	}
-	function ts_swapclass(o,c1,c2)
-	{
-		var cn=o.className
-		o.className=!ts_check(o,c1)?cn.replace(c2,c1):cn.replace(c1,c2);
-	}
-	function ts_addclass(o,c)
-	{
-		if(!ts_check(o,c)){o.className+=o.className==''?c:' '+c;}
-	}
-}
+	
+	
+	
+    Select.toggle = function(){   	 
+   	 
+    	 if(!Select.disabled){	    		 
+	   		  var itemsLi = Select.ul.getElementsByTagName('li');
+			  var n = itemsLi.length;				  
+			  for (var i = 0; i < n; i++) itemsLi[i].classList.toggle('hidden');				  
+	    }  	 
+   }
+    
+    
+    
+   Select.getItem = function(){
+	   
+	   return {value:Select.input.value, option:Select.input.dataset.option};
+   } 
 
-window.onload=function()
-{
-	tamingselect();
-	// add more functions if necessary
-}
+   
+   Select.getValue = function(){
+	   
+	   return Select.input.value;
+   }
+   
+   
+   Select.getOption = function(){
+	   
+	   return  Select.input.dataset.option;
+   } 
+	
+   Select.setDisabled = function(disabled){
+	   Select.disabled = disabled;
+	   
+	   if(Select.disabled){
+		   Select.element.classList.remove(Select.classBackground);		
+		   Select.element.classList.add(Select.classDisabled);	
+	   }else {
+		   Select.element.classList.remove(Select.classDisabled);		   	
+		   Select.element.classList.add(Select.classBackground);	
+	   }
+   }
+	
+	
+	
+	
+	return Select;
+	
+});

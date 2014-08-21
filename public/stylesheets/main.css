@@ -165,10 +165,10 @@ nav .divider {
 *                                                                        * 
 ***************************************************************************/
 .select span {
-	border-bottom: 1px solid;
-	display: flex;
-	margin: 0;
-	padding: 0;
+    border-bottom: 1px solid;
+    display: flex;
+    margin: 0;
+    padding: 3px 0;
 }
 
 .select input[type="button"] {
@@ -208,8 +208,20 @@ nav .divider {
 	cursor: default;
 }
 
-.select-list li:hover,.select-list .selected {
+.select.background span,.select.background input[type="button"],.select-list li {
+	
+	background-color: #4385f5;
+    color: #fff;
+}
+
+.select.disabled span,.select.disabled input[type="button"] {
+	
+	background-color: #dadada;
+	color: #767676;
+    cursor: not-allowed
+}
+
+.select-list  li:hover,.select-list .selected {
 	background-color: #7bb9f5;
 	color: #fff;
 }
-
