@@ -95,34 +95,24 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select'],function(Aes,Consta
 					  Play.getId('txtRole').value = profile.user.role.name;
 					  Play.getId('txtHomePage').value = profile.user.defaultAction.url;	
 					  
-					  var ul =Play.getId('list');
-					  ul.className = 'bg-primary';
+					  var div = Play.getId('selectPageHome');
+					  var span =   div.getElementsByTagName('span')[0];
+					  var input =  div.getElementsByTagName('input')[0];
+					  var ul =  div.getElementsByTagName('ul')[0];
 					  var open = false;
-					  ul.onclick = function(){						
-						 
+					  
+					  span.onclick = function(){
 						  
-						  var lis = this.getElementsByTagName("li");
-						  if(open){							  
-							  var i = 0;
-							  while (i < 10) {								  
-									  if(i === 0){
-										  lis[i].className = 'show';										
-									  } else {
-										  lis[i].className = 'hidden';
-									  }
-									  i++;
-								  }							  
-							  open = false;								  
-							} else {								
-								  var i = 0;
-								  while (i < 10) {
-										 
-											  lis[i++].className = 'show';										  
-									  }								  
-								  open = true;
-							}
-							  
-				     }
+						  var liList = ul.getElementsByTagName("li");
+						  var n = liList.length
+						  
+						  for (var i = 0; i < n; i++) {
+							
+							  liList[i].classList.toggle('hidden');  
+						}
+					  }
+					  
+
 	
 					  
 					  
@@ -130,24 +120,28 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select'],function(Aes,Consta
 						
 						  var li = document.createElement('li');
 						  li.textContent= int;
-						  if(int === 0){
-							  li.className = 'show';
-							  li.id = 'result';
-						  } else {
-							  li.className = 'hidden';  
+							
+							  li.classList.add('hidden');  
 							  
 							  li.onclick = function(){
 								  
-								  Play.getId('result').textContent = this.textContent;
-								  this.className += ' bg-success';
+								  input.value = this.textContent;
+								  var liList = ul.getElementsByTagName("li");
+								  var n = liList.length
+								  
+								  for (var i = 0; i < n; i++) {
+									
+									  liList[i].classList.toggle('hidden');  
+								}
 								  
 							  }
+							  ul.appendChild(li);
 						  }
 						  
 						  
 							  
 						  
-						  ul.appendChild(li);
+						
 					}
 					  
 					  
@@ -156,7 +150,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select'],function(Aes,Consta
 					  
 		               //error message   									  
 				  }
-			  }
+			  
 		}
 		xhr.open('GET','/loadProfile');
 		xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");

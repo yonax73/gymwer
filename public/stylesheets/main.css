@@ -28,7 +28,6 @@
 *                               UTILS                                    * 
 *                                                                        * 
 ***************************************************************************/
-
 .vertical-offset-5 {
 	padding-top: 5%;
 }
@@ -41,10 +40,9 @@ img {
 	margin: auto;
 }
 
-.input-table{
-	
+.input-table {
 	border: medium none;
-    width: 100%;
+	width: 100%;
 }
 
 /*************************************************************************
@@ -151,15 +149,59 @@ nav .divider {
 
 .table-user-information>tbody>tr>td {
 	border-top: 0;
-	
 }
 
 .table-user-information>tbody>tr>td:first-child {
-      font-weight: bold;
+	font-weight: bold;
 }
-
- 
 
 .toppad {
 	margin-top: 20px;
+}
+
+/*************************************************************************
+*                                                                        *
+*                               SELECT                                   * 
+*                                                                        * 
+***************************************************************************/
+.select span {
+	border-bottom: 1px solid;
+	display: flex;
+	margin: 0;
+	padding: 0;
+}
+
+.select input {
+	border: medium none;
+	width: 100%;
+	cursor: default;
+}
+
+.select i {
+	margin: 4px 0 0;
+	padding: 0 5px 0 0;
+	cursor: default;
+}
+
+.select ul {
+	margin: 0;
+	overflow: auto;
+	width: auto;
+	height:auto;
+	max-height: 50px;
+}
+
+.select-list {
+	list-style: none outside none;
+	margin: 0;
+	padding: 0;
+}
+
+.select-list  li {
+	cursor: default;
+}
+
+.select-list li:hover {
+	background-color: #7bb9f5;
+	color: #fff;
 }
