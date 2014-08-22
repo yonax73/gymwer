@@ -47,6 +47,21 @@ img {
 
 /*************************************************************************
 *                                                                        *
+*                               CONTENT MAIN                             * 
+*                                                                        * 
+***************************************************************************/
+#content .col-xs-12.col-sm-12.col-md-12.col-lg-12 {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.tab-content {
+    padding-top: 5px;
+}
+/*************************************************************************
+*                                                                        *
 *                               FOOTER                                   * 
 *                                                                        * 
 ***************************************************************************/
@@ -121,107 +136,26 @@ nav .divider {
 *                               PROFILE                                  * 
 *                                                                        * 
 ***************************************************************************/
-.user-row {
-	margin-bottom: 14px;
-}
 
-.user-row:last-child {
-	margin-bottom: 0;
-}
 
-.dropdown-user {
-	margin: 13px 0;
-	padding: 5px;
-	height: 100%;
-}
-
-.dropdown-user:hover {
-	cursor: pointer;
-}
 
 .table-user-information>tbody>tr {
-	border-top: 1px solid rgb(221, 221, 221);
+	border-bottom: 1px solid rgb(221, 221, 221);
 }
 
 .table-user-information>tbody>tr:first-child {
-	border-top: 0;
+	border-bottom: 0;
+	
 }
 
 .table-user-information>tbody>tr>td {
-	border-top: 0;
+	border-bottom: 0;
+	
 }
 
 .table-user-information>tbody>tr>td:first-child {
 	font-weight: bold;
 }
 
-.toppad {
-	margin-top: 20px;
-}
 
-/*************************************************************************
-*                                                                        *
-*                               SELECT                                   * 
-*                                                                        * 
-***************************************************************************/
-.select span {
-    border-bottom: 1px solid;
-    display: flex;
-    margin: 0;
-    padding: 3px 0;
-}
 
-.select input[type="button"] {
-  border: medium none;
-    cursor: default;
-    margin: 0;
-    
-    text-align: left;
-    width: 100%;
-}
-
-.select i {
-	margin: 4px 0 0;
-	padding: 0 5px 0 0;
-	cursor: default;
-}
-
-.select ul {
-	margin: 0;
-	overflow: auto;
-	width: auto;
-	height:auto;
-	max-height: 50px;
-	box-shadow: 0 1px 2px gray;
-}
-
-.select-list {
-	list-style: none outside none;
-	margin: 0;
-	padding: 0;
-}
-
-.select-list  li:before {
-    content: "\00a0  ";
-}
-.select-list  li {
-	cursor: default;
-}
-
-.select.background span,.select.background input[type="button"],.select-list li {
-	
-	background-color: #4385f5;
-    color: #fff;
-}
-
-.select.disabled span,.select.disabled input[type="button"] {
-	
-	background-color: #dadada;
-	color: #767676;
-    cursor: not-allowed
-}
-
-.select-list  li:hover,.select-list .selected {
-	background-color: #7bb9f5;
-	color: #fff;
-}

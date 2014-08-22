@@ -7,75 +7,73 @@
 <!--  * Author Yonatan Alexis Quintero Rodriguez -->
 <!--  * Created on : 15, Aug 2014 -->
 <!--  */ -->
-
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/select.css")">
 
 <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<!--       		   tabs  -->
+		<ul class="nav nav-tabs" role="tablist">
+		  <li class="active"><a href="#user" id="nameUser" role="tab" data-toggle="tab">User</a></li>
+		  <li><a href="#profile" role="tab" data-toggle="tab">Profile</a></li>  
+		</ul>
+<!--       		   tabs  content -->
+		<div class="tab-content">
+		
+<!--       		   tabs  user -->		
+		  <div class="tab-pane active" id="user">
+		
+		              <div class="row">
+		                <div class="col-md-2 col-lg-2  col-sm-3 col-xs-0" align="center">
+		                   <img alt="User Pic" class="img-circle" src=@routes.Assets.at("images/defaultProfile.png")/> 
+		                </div>		
+		                <form class=" col-md-10 col-lg-10  col-sm-9 col-xs-12"> 
+		                  <table class="table table-user-information">
+		                    <tbody>
+		                     <tr>
+		                        <td>User</td>
+		                        <td><input id="txtNameUser" class="input-table" type="text"  autofocus /></td>                        
+		                      </tr>
+		                      <tr>
+		                        <td>Email</td>
+		                        <td><input id="txtEmail" class="input-table" type="text"  autofocus /></td>
+		                      </tr>
+		                      <tr>
+		                        <td>Role</td>
+		                        <td><input id="txtRole" class="input-table" type="text"  autofocus /></td>                        
+		                      </tr>
+		                      <tr>
+		                        <td>Page Home</td>
+		                        <td><span id="selectPageHome"></span></td>                        
+		                      </tr>  
+		                      <tr>
+		                        <td>Full Name</td>
+		                        <td><input id="txtFullName" class="input-table" type="text"  autofocus /></td>
+		                      </tr>
+		                      <tr>
+		                        <td>Document</td>
+		                        <td><input id="txtDocument" class="input-table" type="text"  autofocus /></td>
+		                      </tr>                      
+		                        <tr>
+		                        <td>Home Address</td>
+		                        <td><input id="txtAddress" class="input-table" type="text"  autofocus /></td>
+		                      </tr>
+		                      <tr>
+		                        <td>Phone Number</td>
+		                        <td><input id="txtPhone" class="input-table" type="text"  autofocus /></td>                        
+		                      </tr>    
+		                   
+		                    </tbody>
+		                  </table>	                      
+		                </form>
+		              </div>		     
+		  </div>
+		  
+<!--       		   tabs  user -->
+		  <div class="tab-pane" id="profile">Profile</div>
+		  
+		  </div>   
 
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 toppad" >
-   
-   
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title" id="nameUser"></h3>
-            </div>
-            <div class="panel-body">
-              <div class="row">
-                <div class="col-md-3 col-lg-3  col-sm-3 col-xs-0" align="center">
-                 <img alt="User Pic" class="img-circle" src=@routes.Assets.at("images/defaultProfile.png")/> 
-                 </div>
-                
-
-                <form class=" col-md-9 col-lg-9  col-sm-9 col-xs-12"> 
-                  <table class="table table-user-information">
-                    <tbody>
-                      <tr>
-                        <td>Full Name</td>
-                        <td><input id="txtFullName" class="input-table" type="text" tabindex="1" autofocus /></td>
-                      </tr>
-                      <tr>
-                        <td>Document</td>
-                        <td><input id="txtDocument" class="input-table" type="text" tabindex="2" autofocus /></td>
-                      </tr>                      
-                        <tr>
-                        <td>Home Address</td>
-                        <td><input id="txtAddress" class="input-table" type="text" tabindex="3" autofocus /></td>
-                      </tr>
-                      <tr>
-                        <td>Email</td>
-                        <td><input id="txtEmail" class="input-table" type="text" tabindex="4" autofocus /></td>
-                      </tr>
-                      <tr>
-                        <td>Phone Number</td>
-                        <td><input id="txtPhone" class="input-table" type="text" tabindex="5" autofocus /></td>                        
-                      </tr>
-                      <tr>
-                        <td>User</td>
-                        <td><input id="txtNameUser" class="input-table" type="text" tabindex="6" autofocus /></td>                        
-                      </tr>
-                      <tr>
-                        <td>Role</td>
-                        <td><input id="txtRole" class="input-table" type="text" tabindex="7" autofocus /></td>                        
-                      </tr>
-                      <tr>
-                        <td>Page Home</td>
-                        <td><span id="selectPageHome"></span></td>                        
-                      </tr>                     
-                    </tbody>
-                  </table>                  
-                      
-                </form>
-              </div>
-            </div>
-                 <div class="panel-footer">                 
-                   <span class="pull-right"><a class="btn  btn-success">Save</a></span>
-                   <span><a class="btn btn-warning">Change Password</a></span>                   
-                  </div>            
-          </div>
-        </div>
-      </div>
-
-
-
-
-        <script type="text/javascript" data-main="@routes.Assets.at("javascripts/set/Profile.js")" src="@routes.Assets.at("javascripts/require.js")"></script>
+     </div>
+   </div>
+   <script type="text/javascript" data-main="@routes.Assets.at("javascripts/set/Profile.js")" src="@routes.Assets.at("javascripts/require.js")"></script>
 }

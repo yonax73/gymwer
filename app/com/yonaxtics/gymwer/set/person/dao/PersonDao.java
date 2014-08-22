@@ -102,7 +102,7 @@ public class PersonDao extends Dao{
 	    	        contact.setUser(new User(rs.getString(5)));
 	    	        contact.getUser().setEmail(rs.getString(6));
 	    	        contact.getUser().setRole( new Role(rs.getString(7)));
-	    	        contact.getUser().setDefaultAction(new Action(rs.getString(8)));
+	    	        contact.getUser().setDefaultAction(new Action(rs.getInt(8)));
 	    	        
 			    	  
 			      }while(rs.next());				

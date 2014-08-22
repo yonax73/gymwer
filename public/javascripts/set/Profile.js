@@ -10,8 +10,9 @@ require.config({
 		Constants : 'play/yonaxtics/Constants',
 		Play :      'play/yonaxtics/Play',		
 		Json :      'play/yonaxtics/Json',
-		Nav :      'play/yonaxtics/Nav'	,
-		Select :      'play/yonaxtics/Select'	,
+		Nav :       'play/yonaxtics/Nav'	,
+		Select :    'play/yonaxtics/Select',
+		List :      'set/List'
 
 			
 	}
@@ -51,7 +52,7 @@ require.config({
 
 
 
-requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select'],function(Aes,Constants, Play, Json,Nav,Select ) {
+requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List'],function(Aes,Constants, Play, Json,Nav,Select,List ) {
 
 	
 	
@@ -61,9 +62,9 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select'],function(Aes,Consta
  * ===================================================================================================================*/
 
 	
-	if(Play.ready()){ 	
-	
-		load();
+	if(Play.ready()){		
+		
+		
 		init();
 		
 	}
@@ -84,45 +85,10 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select'],function(Aes,Consta
 				  						
 				  if(this.status === Constants.STATUS_OK){				 
 					  
-					  var profile = Json.parse(this.responseText);					  				  
-					  Play.getId('nameUser').textContent = profile.user.name;
-					  Play.getId('txtFullName').value = profile.name;
-					  Play.getId('txtDocument').value = profile.document;
-					  Play.getId('txtAddress').value = profile.location.address.address;
-					  Play.getId('txtEmail').value = profile.user.email;
-					  Play.getId('txtPhone').value = profile.location.phone.phone;
-					  Play.getId('txtNameUser').value = profile.user.name;
-					  Play.getId('txtRole').value = profile.user.role.name;
-					 // Play.getId('txtHomePage').value = profile.user.defaultAction.url;	
 					  
-					  var div = Play.getId('selectPageHome');
-
-					  
-					 var permissions =  JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_NAV_CONTACT)).user.role.permissions;
-					 
-										
-					 
-					 function hasUrl(element) {
-						  return element.action.url != null;
-						}
-					 
-					 permissions =  permissions.filter(hasUrl);					 
-					 var n = permissions.length;
-					 var items = new Array();
-					
-					 for (var i = 0; i < n; i++) {
-						 
-						 var action = permissions[i].action;
-						 var item = {};
-						 item.value = action.url;						 
-						 item.option = action.id;
-						 items.push(item);
-					 }
-					 
-				var urlSelect = new Select(div,items,'bg-primary');
-				urlSelect.init(18);
-				//urlSelect.setDisabled(true);
-				console.log(urlSelect.getOption());
+					  var profile = Json.parse(this.responseText);
+					  localStorage.setItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE,JSON.stringify(profile));
+					  fill(profile);		
 				
 				}					  
 					  
@@ -138,15 +104,39 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select'],function(Aes,Consta
 		//set time out	
      }
 	
+	
+	
+	function fill(profile){
+		
+		  Play.getId('txtNameUser').value = profile.user.name;
+		  Play.getId('txtRole').value = profile.user.role.name;					 
+	      var selectPageHome = new Select(Play.getId('selectPageHome'),List.url());
+	      selectPageHome.init(profile.user.defaultAction.id);	
+		  Play.getId('txtEmail').value = profile.user.email;
+		  Play.getId('nameUser').textContent = profile.user.name;
+		  Play.getId('txtFullName').value = profile.name;
+		  Play.getId('txtDocument').value = profile.document;
+		  Play.getId('txtAddress').value = profile.location.address.address;
+		  Play.getId('txtPhone').value = profile.location.phone.phone;	
+		
+	}
+	
 
 /* ==================================================================================================================
  * REGION INIT
  * ===================================================================================================================
  */	
 	
-	  function init(){
+	function init(){	
 		
 		  Nav.init();
+		
+		  if(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE) == null){			  
+			  load();
+		  }else {
+			  fill(JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE)));
+		  }		  
+		;
 	}
 	
 	

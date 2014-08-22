@@ -41,13 +41,13 @@ define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
 		
 		
 		
-		if(localStorage.getItem(Constants.LOCALSTORAGE_NAV_CONTACT) === null){
+		if(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_NAV) === null){
 			
 			 Nav.load();
 			 
 		} else {			
 			  
-			  Nav.create(JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_NAV_CONTACT)));		
+			  Nav.create(JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_NAV)));		
 		}
 		
 	}
@@ -136,7 +136,7 @@ define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
 				  if(this.status === Constants.STATUS_OK){				 
 					  
 					  var contact = Json.parse(this.responseText);
-					  localStorage.setItem(Constants.LOCALSTORAGE_NAV_CONTACT,JSON.stringify(contact));
+					  localStorage.setItem(Constants.LOCALSTORAGE_REQUEST_LOAD_NAV,JSON.stringify(contact));
 					  Nav.create(contact);					   
 					  
 				  }else {

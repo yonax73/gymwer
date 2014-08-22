@@ -33,35 +33,23 @@ define([], function() {
 	
 	
 	 Select.element;
-	 Select.items;
-	 Select.classBackground;
+	 Select.items;	 
      Select.span;    
      Select.input;
-     Select.i;
-     Select.classIco;
+     Select.i;     
      Select.ul;
      Select.oldItemLi;
-     Select.currentItemLi;
-     Select.classSelected;
-     Select.classDisabled;
+     Select.currentItemLi;     
      Select.disabled;
     
 	
 	function Select(element,items){
 		
 		Select.element = element;
-		Select.items = items;
-		
-		Select.classBackground = 'background';
-		Select.classIco = 'fa fa-chevron-circle-down';
-		Select.classSelected = 'selected';
-		Select.classDisabled = 'disabled';
-		
+		Select.items = items;				
 		Select.element.classList.add('select');
-		Select.element.classList.add(Select.classBackground);
-		
-		Select.disabled = false;
-		
+		Select.element.classList.add('background');		
+		Select.disabled = false;		
 		return Select;
 	}
 	
@@ -83,7 +71,7 @@ define([], function() {
 	     Select.ul=  document.createElement('ul');	
 	     Select.i = document.createElement('i');	     
 	     Select.input.type = 'button';	     
-	     Select.i.className = Select.classIco;	     
+	     Select.i.className = 'fa fa-chevron-circle-down';	     
 	     
 	     Select.span.appendChild(Select.input);
 	     Select.span.appendChild(Select.i);	  
@@ -118,8 +106,8 @@ define([], function() {
 				  Select.input.value = this.textContent;
 				  Select.input.dataset.option = this.dataset.option;
 				  Select.toggle();	
-				  this.classList.add(Select.classSelected);	
-				  Select.oldItemLi.classList.remove(Select.classSelected);	
+				  this.classList.add('selected');	
+				  Select.oldItemLi.classList.remove('selected');	
 					 
 		     }
 			  
@@ -150,7 +138,7 @@ define([], function() {
 		 Select.input.value =  Select.currentItemLi.textContent;
 		 Select.input.dataset.option = Select.currentItemLi.dataset.option;
 		 Select.currentItemLi.focus();
-		 Select.currentItemLi.classList.add(Select.classSelected);
+		 Select.currentItemLi.classList.add('selected');
 	}
 	
 	
@@ -187,11 +175,11 @@ define([], function() {
 	   Select.disabled = disabled;
 	   
 	   if(Select.disabled){
-		   Select.element.classList.remove(Select.classBackground);		
-		   Select.element.classList.add(Select.classDisabled);	
+		   Select.element.classList.remove('background');		
+		   Select.element.classList.add('disabled');	
 	   }else {
-		   Select.element.classList.remove(Select.classDisabled);		   	
-		   Select.element.classList.add(Select.classBackground);	
+		   Select.element.classList.remove('disabled');		   	
+		   Select.element.classList.add('background');	
 	   }
    }
 	
