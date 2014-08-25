@@ -1,6 +1,7 @@
 package com.yonaxtics.gymwer.set.person.entity;
 
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
+import com.yonaxtics.gymwer.set.file.entity.File;
 import com.yonaxtics.gymwer.set.location.entity.Location;
 import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.util.base.entity.Entity;
@@ -18,7 +19,7 @@ public class Person  extends Entity {
 	private String document;
 	private String name;
 	private Gym gym;
-	
+    private File image;	
 	
 
 	
@@ -82,6 +83,30 @@ public class Person  extends Entity {
 	public void setGym(Gym gym) {
 		this.gym = gym;
 	}
+
+
+
+
+
+
+	public File getImage() {
+		return image;
+	}
+
+
+
+
+
+
+	public void setImage(File image) {
+		this.image = image;
+	}
+
+
+
+
+
+
 
 
 

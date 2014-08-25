@@ -108,8 +108,9 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List'],function(Aes
 	
 	function fill(profile){
 		
+	      Play.getId('userPicture').src = profile.image; 	
 		  Play.getId('txtNameUser').value = profile.user.name;
-		  Play.getId('txtRole').value = profile.user.role.name;					 
+		  Play.getId('txtRole').textContent = profile.user.role.name;					 
 	      var selectPageHome = new Select(Play.getId('selectPageHome'),List.url());
 	      selectPageHome.init(profile.user.defaultAction.id);	
 		  Play.getId('txtEmail').value = profile.user.email;
@@ -136,18 +137,59 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List'],function(Aes
 		  }else {
 			  fill(JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE)));
 		  }		  
-		;
+		
+		  Play.getId('uploadImage').onclick = function(){
+			  
+			  Play.getId('fileselect').click();
+		  }
+		  
+		  Play.getId('userPicture').onclick = function(){
+			  
+			  Play.getId('fileselect').click();
+		  }
+		  
+		  Play.getId('fileselect').onchange = function(e){ 
+			  
+			  handleFileSelect(e);
+		  }
+	
 	}
 	
-	
-	
-	
-	
+	  function handleFileSelect(evt) {
+		    var files = evt.target.files; // FileList object
 
-	
-	
-	
-});
+		    // Loop through the FileList and render image files as thumbnails.
+		    for (var i = 0, f; f = files[i]; i++) {
+
+		      // Only process image files.
+		      if (!f.type.match('image.*')) {
+		        continue;
+		      }
+
+		      var reader = new FileReader();
+
+		      // Closure to capture the file information.
+		      reader.onload = (function(theFile) {
+		        return function(e) {
+//		          // Render thumbnail.
+//		          var span = document.createElement('span');
+//		          span.innerHTML = ['<img  src="', e.target.result,
+//		                            '" title="', escape(theFile.name), '"/>'].join('');
+		          Play.getId('userPicture').src =  e.target.result; 
+		         // Play.getId('userPicture').insertBefore(span, null);
+		        };
+		      })(f);
+
+		      // Read in the image file as a data URL.
+		      reader.readAsDataURL(f);
+		    }
+	  }
+	  
+	  
+})
+		  
+
+
 
 
 

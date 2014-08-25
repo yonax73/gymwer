@@ -1,5 +1,6 @@
 package com.yonaxtics.gymwer.set.person.dao;
 
+import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,6 +11,7 @@ import play.db.DB;
 
 import com.yonaxtics.gymwer.dpa.role.entity.Role;
 import com.yonaxtics.gymwer.set.action.entity.Action;
+import com.yonaxtics.gymwer.set.file.entity.File;
 import com.yonaxtics.gymwer.set.location.entity.Location;
 import com.yonaxtics.gymwer.set.master.entity.Address;
 import com.yonaxtics.gymwer.set.master.entity.Phone;
@@ -91,8 +93,7 @@ public class PersonDao extends Dao{
 			
 			if(rs.next()){
 				
-			      result = true;	
-			     
+			      result = true;
 			      
 			      do{			    	  
 			    	  
@@ -103,7 +104,9 @@ public class PersonDao extends Dao{
 	    	        contact.getUser().setEmail(rs.getString(6));
 	    	        contact.getUser().setRole( new Role(rs.getString(7)));
 	    	        contact.getUser().setDefaultAction(new Action(rs.getInt(8)));
-	    	        
+	    	        contact.setImage(new File(rs.getInt(9)));	    	        
+	    	        Blob img = rs.getBlob(10);	    	     	    	        
+	    	        contact.getImage().setData(img.getBytes(1, (int) img.length()));	    	        
 			    	  
 			      }while(rs.next());				
 			}			

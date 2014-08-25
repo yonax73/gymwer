@@ -28,6 +28,7 @@
 *                               UTILS                                    * 
 *                                                                        * 
 ***************************************************************************/
+
 .vertical-offset-5 {
 	padding-top: 5%;
 }
@@ -139,22 +140,14 @@ nav .divider {
 
 
 
-.table-user-information>tbody>tr {
-	border-bottom: 1px solid rgb(221, 221, 221);
+#formUploadImage{
+	padding-left: 2em;
 }
 
-.table-user-information>tbody>tr:first-child {
-	border-bottom: 0;
-	
-}
-
-.table-user-information>tbody>tr>td {
-	border-bottom: 0;
-	
-}
-
-.table-user-information>tbody>tr>td:first-child {
-	font-weight: bold;
+#userPicture {
+    height: 7em;
+    margin-bottom: 0.5em;
+    width: 7em;
 }
 
 

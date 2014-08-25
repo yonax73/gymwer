@@ -306,6 +306,7 @@ textarea {
 }
 a {
   color: #4385f5;
+  cursor: pointer;
   text-decoration: none;
 }
 a:hover,
