@@ -5,17 +5,18 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Types;
+import java.util.Base64;
 
 import play.Logger;
 import play.db.DB;
 
 import com.yonaxtics.gymwer.dpa.role.entity.Role;
 import com.yonaxtics.gymwer.set.action.entity.Action;
-import com.yonaxtics.gymwer.set.file.entity.File;
 import com.yonaxtics.gymwer.set.location.entity.Location;
 import com.yonaxtics.gymwer.set.master.entity.Address;
 import com.yonaxtics.gymwer.set.master.entity.Phone;
 import com.yonaxtics.gymwer.set.person.entity.Person;
+import com.yonaxtics.gymwer.set.picture.entity.Picture;
 import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.util.base.dao.Dao;
 /**
@@ -103,12 +104,10 @@ public class PersonDao extends Dao{
 	    	        contact.setUser(new User(rs.getString(5)));
 	    	        contact.getUser().setEmail(rs.getString(6));
 	    	        contact.getUser().setRole( new Role(rs.getString(7)));
-	    	        contact.getUser().setDefaultAction(new Action(rs.getInt(8)));
-	    	        contact.setPicture(new File(rs.getInt(9)));	    	        
-	    	        Blob img = rs.getBlob(10);	    	     	    	        
-	    	        contact.getPicture().setData(img.getBytes(1, (int) img.length()));	
-	    	       
-			    	  
+	    	        contact.getUser().setDefaultAction(new Action(rs.getInt(8)));	    	       	        
+	    	        Blob blob = rs.getBlob(9);	    	     	    	        
+	    	        contact.setPicture(new Picture(Base64.getEncoder().encodeToString(blob.getBytes(1, (int) blob.length()))));
+			    	 
 			      }while(rs.next());				
 			}			
 			

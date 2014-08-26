@@ -108,7 +108,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List'],function(Aes
 	
 	function fill(profile){
 		
-	      Play.getId('userPicture').src = profile.picture.strData 	
+	      Play.getId('userPicture').src =  Play.base64Blob(profile.picture.mime, profile.picture.src);	 	
 		  Play.getId('txtNameUser').value = profile.user.name;
 		  Play.getId('txtRole').textContent = profile.user.role.name;					 
 	      var selectPageHome = new Select(Play.getId('selectPageHome'),List.url());

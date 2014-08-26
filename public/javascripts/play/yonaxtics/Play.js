@@ -201,7 +201,10 @@ define(['./Constants'], function(Constants) {
 		return  (Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight) +'px');
 	}
 	
-	
+	Play.base64Blob = function(mime,src){
+		
+		return 'data:'+mime+';base64,'+ src;
+	}
 	
     
 	

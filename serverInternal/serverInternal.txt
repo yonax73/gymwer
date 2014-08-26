@@ -4,10 +4,13 @@
 #Internal Error Person- 20
 2001 = Error creating person From UserControl - createAcount
 2002 = Error loading profile From personControl - loadProfile
-2003 = Error loading picture From personControl - uploadPicture
+
 
 #Internal Error Gym- 30
 3001 = Error creating gym From UserControl - createAcount
 
 #Internal Error Permission- 40
 4001 = Error tryning Load Nav per Contact - loadNav
+
+#Internal Error Picture -50
+5001 = Error loading picture From pictureControl - uploadPicture

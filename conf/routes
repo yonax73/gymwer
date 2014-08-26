@@ -64,10 +64,10 @@ GET /roles                             com.yonaxtics.gymwer.dpa.role.controller.
 
 GET /profile                       com.yonaxtics.gymwer.set.person.controller.PersonControl.profile()
 GET /loadProfile                   com.yonaxtics.gymwer.set.person.controller.PersonControl.loadProfile()
-POST /uploadPicture                com.yonaxtics.gymwer.set.person.controller.PersonControl.uploadPicture()
 
 
-
+#PictureControl                   
+POST /uploadPicture                com.yonaxtics.gymwer.set.picture.controller.PictureControl.uploadPicture()   
 
 
 
