@@ -20,51 +20,62 @@
 		<div class="tab-content">
 		
 <!--       		   tabs  user -->		
-		  <div class="tab-pane active" id="user">
-		
-		              <div class="row">
-		              <form class="col-md-2 col-lg-2  col-sm-3 col-xs-0" align="center">
-		                    <img alt="User Pic" class="img-circle" src=@routes.Assets.at("images/defaultProfile.png")/>
-		              </form>
-
-		                <form class=" col-md-10 col-lg-10  col-sm-9 col-xs-12"> 		                  
-		                        <div>
-		                        <label>User</label>
-		                        <input id="txtNameUser" class="input-table" type="text"  autofocus />                    
-		                      </div>
-		                      <div>
-		                        <label>Email</label>
-		                        <input id="txtEmail" class="input-table" type="text"  autofocus />
-		                      </div>
-		                      <div>
-		                        <label>Role</label>
-		                        <input id="txtRole" class="input-table" type="text"  autofocus />                        
-		                      </div>
-		                      <div>
-		                        <label>Page Home</label>
-		                        <span id="selectPageHome"></span>                        
-		                      </div>  
-		                      <div>
-		                        <label>Full Name</label>
-		                        <input id="txtFullName" class="input-table" type="text"  autofocus />
-		                      </div>
-		                      <div>
-		                        <label>Document</label>
-		                        <input id="txtDocument" class="input-table" type="text"  autofocus />
-		                      </div>                      
-		                        <div>
-		                        <label>Home Address</label>
-		                        <input id="txtAddress" class="input-table" type="text"  autofocus />
-		                      </div>
-		                      <div>
-		                        <label>Phone Number</label>
-		                        <input id="txtPhone" class="input-table" type="text"  autofocus />                        
-		                      </div>    
-		                   
-		                    </tbody>
-		                  </table>	                      
-		                </form>
-		              </div>		     
+		  <div class="tab-pane active" id="user">		
+              <div class="row">
+	              <form class="col-md-2 col-lg-2  col-sm-3 col-xs-0" align="center">
+	                    <img alt="User Pic" class="img-circle" src=@routes.Assets.at("images/defaultProfile.png")/>
+	              </form>	              
+                  <form class="form-horizontal  col-md-10 col-lg-10  col-sm-9 col-xs-12">
+                    <div class="form-group">
+                      <label for="txtNameUser" class="col-sm-2 control-label">User</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtNameUser" placeholder="User">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="txtEmail" class="col-sm-2 control-label">Email</label>
+                      <div class="col-sm-10">
+                        <input type="email" class="form-control" id="txtEmail" placeholder="E-mail">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="txtRole" class="col-sm-2 control-label">Role</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtRole" placeholder="Role">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="selectPageHome" class="col-sm-2 control-label">Page Home</label>
+                      <div class="col-sm-10">
+                        <span id="selectPageHome"></span>    
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="txtFullName" class="col-sm-2 control-label">Full Name</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtFullName" placeholder="Full Name">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="txtDocument" class="col-sm-2 control-label">Document</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtDocument" placeholder="Document">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="txtAddress" class="col-sm-2 control-label">Home Address</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtAddress" placeholder="Home Address">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="txtPhone" class="col-sm-2 control-label">Phone Number</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtPhone" placeholder="Phone Number">
+                      </div>
+                    </div>
+                  </form>
+              </div>		     
 		  </div>
 		  
 <!--       		   tabs  user -->

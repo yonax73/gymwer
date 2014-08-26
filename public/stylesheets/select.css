@@ -48,9 +48,10 @@
 }
 
 .select i {
-	margin: 4px 0 0;
-	padding: 0 5px 0 0;
-	cursor: default;
+   cursor: default;
+    font-size: 1.5em;
+    margin: 8px 0 0;
+    padding: 0 5px 0 0;
 }
 
 .select ul {
