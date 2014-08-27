@@ -24,6 +24,8 @@ public class File extends Entity {
 		super(id);		
 	}
 	
+	
+	
 	public String toSring(){
 		
 		return new String(data);

@@ -65,8 +65,11 @@ public class PersonControl extends Controller {
 		    String fileName = picture.getFilename();
 		    String contentType = picture.getContentType(); 
 		    File file = picture.getFile();
+		    
+		    
+		    return ok(REQUEST_SUCCESS);
 		}
-		return ok(REQUEST_SUCCESS);
+		return ok("Internal Error 2003");	
 	}
 	
 }
