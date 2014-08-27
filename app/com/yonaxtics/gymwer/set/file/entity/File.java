@@ -15,12 +15,18 @@ public class File extends Entity {
 
 	private String mime;
 	private byte[] data;
+	private String strData;
 	
 	/**
 	 * @param id
 	 */
 	public File(int id) {
 		super(id);		
+	}
+	
+	public String toSring(){
+		
+		return new String(data);
 	}
 
 	public String getMime() {
@@ -37,6 +43,15 @@ public class File extends Entity {
 
 	public void setData(byte[] data) {
 		this.data = data;
+	}
+
+	public String getStrData() {
+		setStrData(toSring());
+		return strData;
+	}
+
+	public void setStrData(String strData) {
+		this.strData = strData;
 	}
 
 

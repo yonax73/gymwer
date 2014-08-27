@@ -104,9 +104,10 @@ public class PersonDao extends Dao{
 	    	        contact.getUser().setEmail(rs.getString(6));
 	    	        contact.getUser().setRole( new Role(rs.getString(7)));
 	    	        contact.getUser().setDefaultAction(new Action(rs.getInt(8)));
-	    	        contact.setImage(new File(rs.getInt(9)));	    	        
+	    	        contact.setPicture(new File(rs.getInt(9)));	    	        
 	    	        Blob img = rs.getBlob(10);	    	     	    	        
-	    	        contact.getImage().setData(img.getBytes(1, (int) img.length()));	    	        
+	    	        contact.getPicture().setData(img.getBytes(1, (int) img.length()));	
+	    	       
 			    	  
 			      }while(rs.next());				
 			}			

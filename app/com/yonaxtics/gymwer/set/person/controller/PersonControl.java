@@ -3,8 +3,14 @@ package com.yonaxtics.gymwer.set.person.controller;
 import static com.yonaxtics.gymwer.sec.Sec.dec;
 import static com.yonaxtics.gymwer.sec.Sec.enc;
 import static com.yonaxtics.gymwer.util.Constant.SESSION_OK;
+import static com.yonaxtics.gymwer.util.Constant.REQUEST_SUCCESS;
+
+import java.io.File;
+
 import play.libs.Json;
 import play.mvc.Controller;
+import play.mvc.Http.MultipartFormData;
+import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import views.html.set.person.profile;
 
@@ -43,19 +49,24 @@ public class PersonControl extends Controller {
 	
 	public static Result loadProfile(){
 		
-		Person contact = new  Person(Integer.parseInt(dec(session(SESSION_OK))));
-		
-		if(PersonLogic.loadProfile(contact)){			
-			
-			return ok(enc(Json.toJson(contact).toString()));
-			
-		} else {
-		     
-			return ok("Internal Error 2002");
-			
+		Person contact = new  Person(Integer.parseInt(dec(session(SESSION_OK))));		
+		if(PersonLogic.loadProfile(contact)){						
+			return ok(enc(Json.toJson(contact).toString()));			
+		} else {		     
+			return ok("Internal Error 2002");			
+		}		
+	}
+	
+	
+	public static Result uploadPicture(){
+		MultipartFormData body = request().body().asMultipartFormData();
+		FilePart picture = body.getFile("picture");
+		if (picture != null) {
+		    String fileName = picture.getFilename();
+		    String contentType = picture.getContentType(); 
+		    File file = picture.getFile();
 		}
-		
-		
+		return ok(REQUEST_SUCCESS);
 	}
 	
 }

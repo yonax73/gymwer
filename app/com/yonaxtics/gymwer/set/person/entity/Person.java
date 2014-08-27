@@ -19,7 +19,7 @@ public class Person  extends Entity {
 	private String document;
 	private String name;
 	private Gym gym;
-    private File image;	
+    private File picture;	
 	
 
 	
@@ -89,8 +89,8 @@ public class Person  extends Entity {
 
 
 
-	public File getImage() {
-		return image;
+	public File getPicture() {
+		return picture;
 	}
 
 
@@ -98,8 +98,8 @@ public class Person  extends Entity {
 
 
 
-	public void setImage(File image) {
-		this.image = image;
+	public void setPicture(File picture) {
+		this.picture = picture;
 	}
 
 
