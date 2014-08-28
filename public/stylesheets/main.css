@@ -41,10 +41,10 @@ img {
 	margin: auto;
 }
 
-.input-table {
-	border: medium none;
-	width: 100%;
-}
+/* .input-table { */
+/* 	border: medium none; */
+/* 	width: 100%; */
+/* } */
 
 /*************************************************************************
 *                                                                        *
@@ -140,10 +140,17 @@ nav .divider {
 
 
 
-#formUploadImage{
-	padding-left: 2em;
+#formUploadImage > ul {
+    list-style: none outside none;
+    text-align: center;
 }
 
+#formUploadImage li {
+    width: 7em;
+}
+#formUploadImage a {
+    font-size: 0.8em;
+}
 #userPicture {
     height: 7em;
     margin-bottom: 0.5em;

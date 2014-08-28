@@ -34,6 +34,7 @@ public class Constant {
 	 * STATES REQUEST
 	 */
 	public final static String REQUEST_SUCCESS = "19880511Y";
+	public final static String REQUEST_BAD = "19880512Y";
 	
 	
 	

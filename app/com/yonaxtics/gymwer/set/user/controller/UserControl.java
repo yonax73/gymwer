@@ -2,6 +2,7 @@ package com.yonaxtics.gymwer.set.user.controller;
 
 
 import static com.yonaxtics.gymwer.sec.Sec.dec;
+
 import static com.yonaxtics.gymwer.sec.Sec.enc;
 import static com.yonaxtics.gymwer.util.Constant.CHECKED;
 import static com.yonaxtics.gymwer.util.Constant.MASTER_VALUE_ROL_SUPER_ADMIN;
@@ -10,6 +11,7 @@ import static com.yonaxtics.gymwer.util.Constant.SESSION_GYM_NAME;
 import static com.yonaxtics.gymwer.util.Constant.SESSION_OK;
 import static com.yonaxtics.gymwer.util.Constant.SESSION_USER_NAME;
 import static com.yonaxtics.gymwer.util.Constant.SESSION_DEFAULT_ACTION_URL;
+import static com.yonaxtics.gymwer.util.Constant.REQUEST_BAD;
 
 import java.util.Map;
 
@@ -139,9 +141,8 @@ public class UserControl extends Controller {
 	
 	public static Result signIn(){
 		
-		final Map<String, String[]> data = request().body().asFormUrlEncoded();				
-		
-		String result = null;			
+		final Map<String, String[]> data = request().body().asFormUrlEncoded();			
+			
 		Person contact = new Person(new User(dec(data.get("?")[1]),data.get("?")[2]), new Gym(dec(data.get("?")[0])));			
 		
 		if(UserLogic.signIn(contact)){
@@ -155,10 +156,8 @@ public class UserControl extends Controller {
 				
 			} else {
 				
-				result = "The name, password or user are incorrect!!!";
-		 }			
-		
-		return ok(result);
+				return ok(REQUEST_BAD);
+		 }					
 		
 	}
 

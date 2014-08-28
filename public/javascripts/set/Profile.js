@@ -56,18 +56,15 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List'],function(Aes
 
 	
 	
+	if(Play.ready()){		
+		init();		
+	}
+
 	
 /* ==================================================================================================================
  * REGION ATTRIBUTES
  * ===================================================================================================================*/
 
-	
-	if(Play.ready()){		
-		
-		
-		init();
-		
-	}
 
 	
 /* ==================================================================================================================
@@ -77,26 +74,18 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List'],function(Aes
 	
 	function load(){
 		
-		var xhr = new XMLHttpRequest();
-		
-		xhr.onreadystatechange = function () {		
-		       
-			  if (this.readyState === Constants.READYSTATE_COMPLETE) {
-				  						
-				  if(this.status === Constants.STATUS_OK){				 
-					  
-					  
+		var xhr = new XMLHttpRequest();		
+		xhr.onreadystatechange = function () {		       
+			  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
+				  if(this.status === Constants.STATUS_OK){									  
 					  var profile = Json.parse(this.responseText);
 					  localStorage.setItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE,JSON.stringify(profile));
-					  fill(profile);		
-				
-				}					  
-					  
-		  }else {
-			  
-               //error message   									  
-		  }
-			  
+					  fill(profile);						
+				   } 					  
+			  }else {
+				  
+	               //error message   									  
+			  }			  
 		}
 		xhr.open('GET','/loadProfile');
 		xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
@@ -121,23 +110,13 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List'],function(Aes
 		  Play.getId('txtPhone').value = profile.location.phone.phone;	
 		
 	}
-	
-
 /* ==================================================================================================================
- * REGION INIT
+ * REGION UPLOAD PICTURE
  * ===================================================================================================================
  */	
 	
-	function init(){	
-		
-		  Nav.init();
-		
-		  if(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE) == null){			  
-			  load();
-		  }else {
-			  fill(JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE)));
-		  }		  
-		
+   function uploadPicture(){
+	   
 		  Play.getId('uploadImage').onclick = function(){
 			  
 			  Play.getId('fileselect').click();
@@ -152,9 +131,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List'],function(Aes
 			  
 			  handleFileSelect(e);
 		  }
-	
-	}
-	
+   }	
 	  function handleFileSelect(evt) {
 		  
 		    var picture = evt.target.files[0];
@@ -163,47 +140,71 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List'],function(Aes
 		    
 		    if(picture.type.match('image.*')){                     
 		    	
-				 xhr = new XMLHttpRequest();
-				
-				xhr.onreadystatechange = function () {		
-				       
-					  if (this.readyState === Constants.READYSTATE_COMPLETE) {
-						  						
-						  if(this.status === Constants.STATUS_OK && this.responseText === Constants.REQUEST_SUCCESS){							  
-							  
-						    	reader = new FileReader();
-							    reader.onload = (function(theFile) {
-						        return function(e) {
-						          Play.getId('userPicture').src =  e.target.result;		         
-						        };
-						      })(picture);		      
-						      reader.readAsDataURL(picture);
+		    	if(picture.size <= 65535){
+		    		
+					 xhr = new XMLHttpRequest();
 						
-						}					  
+						xhr.onreadystatechange = function () {		
+						       
+							  if (this.readyState === Constants.READYSTATE_COMPLETE) {
+								  						
+								  if(this.status === Constants.STATUS_OK && this.responseText === Constants.REQUEST_SUCCESS){							  
+									  
+								    	reader = new FileReader();
+									    reader.onload = (function(theFile) {
+								        return function(e) {
+								          Play.getId('userPicture').src =  e.target.result;		         
+								        };
+								      })(picture);		      
+								      reader.readAsDataURL(picture);
+								      localStorage.removeItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE);						
+								}					  
+									  
+						  }else {
 							  
-				  }else {
-					  
-		               //error message   									  
-				  }
-					  
-				}
-				xhr.open('POST','/uploadPicture');				
-				var formData = new FormData();
-				formData.append('picture', picture);
-				xhr.send(formData);	
+				               //error message   									  
+						  }
+							  
+						}
+						xhr.open('POST','/uploadPicture');				
+						var formData = new FormData();
+						formData.append('picture', picture);
+						xhr.send(formData);		
+		    		
+		    	} else {
+		    		
+		    		alert('the image can be maximun of 64 KB');
+		    	}
 		    	
+	    	
 		    	
 		    } else {
 		    	
 		    	alert('the file not is a image valid!');
-		    }
-		    
-		    
-	
-		
-		    
+		    }		    
 		    
 	  }
+
+/* ==================================================================================================================
+ * REGION INIT
+ * ===================================================================================================================
+ */	
+	
+	function init(){	
+		
+		  Nav.init();
+		
+		  if(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE) == null){			  
+			  load();
+		  }else {
+			  fill(JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE)));
+		  }
+		  
+		  uploadPicture();
+	
+	}
+	
+
 	  
 	  
 	  

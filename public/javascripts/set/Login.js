@@ -174,13 +174,18 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
 										  if (this.readyState === Constants.READYSTATE_COMPLETE) {
 											  											  											  
 											  if(this.status === Constants.STATUS_OK){
-																				
 												  	
 												  localStorage.clear();		
 												  sessionStorage.clear();
 												  btnLogin.disabled = false;
-												  sessionStorage.setItem(Constants.SESSIONSTORAGE_OK,Constants.OK);
-												  window.location = this.responseText;												  
+												  if(Constants.REQUEST_BAD === this.responseText){													  
+													    msgLogin.textContent  = "The name, password or user are incorrect!!!";
+													    Play.addClass(icoLogin, Constants.ICO_ERROR);
+														Play.addClass(altLogin, Constants.ALERT_DANGER);
+												  }else {
+													  sessionStorage.setItem(Constants.SESSIONSTORAGE_OK,Constants.OK);
+													  window.location = this.responseText;																		  
+												  }							  
 												  
 											  }else {
 												  

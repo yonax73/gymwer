@@ -68,6 +68,7 @@ define([], function() {
 	 * STATES REQUEST
 	 */
 	Constants.REQUEST_SUCCESS = '19880511Y';
+	Constants.REQUEST_BAD = '19880512Y'
 	
 	/**
 	 * #7h32k132
