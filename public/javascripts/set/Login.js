@@ -10,7 +10,8 @@ require.config({
 		Aes :       'play/yonaxtics/google/aes',		
 		Constants : 'play/yonaxtics/Constants',    	
 		Play :      'play/yonaxtics/Play',
-		Validate:   'play/yonaxtics/Validate' 
+		Validate:   'play/yonaxtics/Validate',
+		Notify:     'play/yonaxtics/Notify' 
 				
 				
 	}
@@ -50,190 +51,111 @@ require.config({
 
 
 
-requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Validate) {
+requirejs(['Aes','Constants','Play','Validate','Notify'],function(Aes,Constants, Play, Validate,Notify) {
 
 /* ==================================================================================================================
  * REGION ATTRIBUTES
+ * ===================================================================================================================*/	
+	var notify = null;	
+	var frmLogin = Play.getId('frmLogin');	
+	var txtName = Play.getId('txtName');
+	var msgName = Play.getId('msgName');	
+	var txtEmail = Play.getId('txtEmail');
+	var msgEmail = Play.getId('msgEmail');	
+	var txtPassword = Play.getId('txtPassword');
+	var msgPassword = Play.getId('msgPassword');	
+	var btnLogin = Play.getId('btnSignin');	
+	var txtEmptyMessage = "All fileds are required and can\'t be empty!!!";
+	var valid = false;	
+	init();		
+	
+	
+/* ==================================================================================================================
+ * REGION pruebas
  * ===================================================================================================================
  */
 	
-		
 	
-	var altLogin = Play.getId('altLogin');
-	var icoLogin = Play.getId('icoLogin');
-	var msgLogin = Play.getId('msgLogin');
-	var btnClose = Play.getClass('close');	
-	
-	var frmLogin = Play.getId('frmLogin');
-	
-	var txtName = Play.getId('txtName');
-	var msgName = Play.getId('msgName');
-	
-	var txtEmail = Play.getId('txtEmail');
-	var msgEmail = Play.getId('msgEmail');
-	
-	var txtPassword = Play.getId('txtPassword');
-	var msgPassword = Play.getId('msgPassword');
-	
-	var btnLogin = Play.getId('btnSignin');    
-	
-	var txtEmptyMessage = "All fileds are required and can\'t be empty!!!";
-	var valid = false;
-	
-	init();
-	
-	formLoginAction();
-			
 /* ==================================================================================================================
  * REGION INIT
  * ===================================================================================================================
- */
-	
-	
-	
-	
-	 function init() {		
-				
-	    btnClose.onclick = function (){Play.addClass(altLogin, Constants.HIDDEN);};    				
-				
-		if(sessionStorage.length > 0){
-			
+ */	
+	 function init() {	  
+	    notify = new Notify(Play.getId('altLogin'));				
+		if(sessionStorage.length > 0){			
 			var message = sessionStorage.getItem(Constants.SESSIONSTORAGE_MESSAGE);
-			sessionStorage.clear();
-			
+			sessionStorage.clear();			
 			if( message === null){
-				
-				Play.addClass(altLogin, Constants.HIDDEN);
-				
+				notify.close();				
 			}else {
-				
-			    msgLogin.textContent  = message;
-			    Play.addClass(icoLogin, Constants.ICO_SUCCESS);
-				Play.addClass(altLogin, Constants.ALERT_SUCCESS);	
-				
-			}
-		
-				
-		} else {
-			
-			Play.addClass(altLogin, Constants.HIDDEN);
+				notify.success(message);				
+			}				
+		} else {	
+			notify.close();
 		}
-				
+		formLoginAction();	
 	}
-			
-	
-	
-
 /* ==================================================================================================================
  * REGION FORM
  * ===================================================================================================================
  */
-
-	
-	 function formLoginAction(){
-		
+	 function formLoginAction(){		
 		/**
 		 * Reset messages input form
 		 */
 		Play.addClass(msgName, Constants.HIDDEN);
 		Play.addClass(msgEmail, Constants.HIDDEN);
-		Play.addClass(msgPassword, Constants.HIDDEN);
-		
+		Play.addClass(msgPassword, Constants.HIDDEN);		
 		/**
 		 * Validate inputs
 		 */		
 		txtName.onblur = function(){ valid =	Validate.empty(this,msgName,txtEmptyMessage); }
 		txtEmail.onblur = function(){ valid =	Validate.empty(this,msgEmail,txtEmptyMessage); }
-		txtPassword.onblur = function(){ valid =	Validate.empty(this,msgPassword,txtEmptyMessage); }		
-				
-		
-		frmLogin.onsubmit = function(e) {
-			
-			e.preventDefault();
-			
-			if(valid){
-				
-				if(Validate.empty(txtName,msgName,txtEmptyMessage)){
-					
-					if(Validate.empty(txtEmail,msgEmail,txtEmptyMessage)){
-						
-						if(Validate.empty(txtPassword,msgPassword,txtEmptyMessage)){
-							
-							
-									 var xhr = new XMLHttpRequest();
-									 
-									 xhr.onreadystatechange = function () {	
-										 
-										 msgLogin.textContent = "Loading...";			
-										 Play.addClass(icoLogin, Constants.ICO_COG_SPIN);
-										 Play.addClass(altLogin, Constants.ALERT_INFO);
-										 Play.appendClass(altLogin, Constants.SHOW);
-										 
-										 btnLogin.disabled = true;
-									        
-										  if (this.readyState === Constants.READYSTATE_COMPLETE) {
-											  											  											  
-											  if(this.status === Constants.STATUS_OK){
-												  	
-												  localStorage.clear();		
-												  sessionStorage.clear();
-												  btnLogin.disabled = false;
-												  if(Constants.REQUEST_BAD === this.responseText){													  
-													    msgLogin.textContent  = "The name, password or user are incorrect!!!";
-													    Play.addClass(icoLogin, Constants.ICO_ERROR);
-														Play.addClass(altLogin, Constants.ALERT_DANGER);
-												  }else {
-													  sessionStorage.setItem(Constants.SESSIONSTORAGE_OK,Constants.OK);
-													  window.location = this.responseText;																		  
-												  }							  
-												  
-											  }else {
-												  
-												    msgLogin.textContent  = this.responseText;
-												    Play.addClass(icoLogin, Constants.ICO_ERROR);
-													Play.addClass(altLogin, Constants.ALERT_DANGER);
-													btnLogin.disabled = false;											  
-											  }
-										  }
-									 }
-									 xhr.open('POST','/signIn');
-									 xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-									 xhr.send(Play.serialize(e.target));	
-									 xhr.timeout = Constants.TIME_OUT;
-									 xhr.ontimeout = function () {
-										 
-										msgLogin.textContent = "Timed Out!!!";
-										Play.addClass(icoLogin, Constants.ICO_ERROR);
-										Play.addClass(altLogin, Constants.ALERT_DANGER);
-										btnLogin.disabled = false;
-										
-									}
+		txtPassword.onblur = function(){ valid =	Validate.empty(this,msgPassword,txtEmptyMessage); }			
+		frmLogin.onsubmit = function(e) {	
+			console.log(e.target.elements);
+			e.preventDefault();			
+			if(valid){				
+				if(Validate.empty(txtName,msgName,txtEmptyMessage)){					
+					if(Validate.empty(txtEmail,msgEmail,txtEmptyMessage)){						
+						if(Validate.empty(txtPassword,msgPassword,txtEmptyMessage)){							
+							 var xhr = new XMLHttpRequest();									 
+							 xhr.onreadystatechange = function () {
+								 notify.wait('Loading...');										 
+								 btnLogin.disabled = true;									        
+								  if (this.readyState === Constants.READYSTATE_COMPLETE) {											  											  											  
+									  if(this.status === Constants.STATUS_OK){												  	
+										  localStorage.clear();		
+										  sessionStorage.clear();
+										  btnLogin.disabled = false;
+										  if(Constants.REQUEST_BAD === this.responseText){	
+											  notify.danger('The name, password or user are incorrect!!!');
+										  }else {
+											  sessionStorage.setItem(Constants.SESSIONSTORAGE_OK,Constants.OK);
+											  window.location = this.responseText;																		  
+										  }												  
+									  }else {
+										    notify.danger(this.responseText);
+											btnLogin.disabled = false;											  
+									  }
+								  }
+							 }
+							 xhr.open('POST','/signIn');
+							 xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
+							 xhr.send(Play.serialize(e.target));	
+							 xhr.timeout = Constants.TIME_OUT;
+							 xhr.ontimeout = function () {
+								notify.danger('Timed Out!!!');
+								btnLogin.disabled = false;										
+							}
 						}
 					}
 				}
-				
 			} else {
-								
-				msgLogin.textContent = txtEmptyMessage;
-				Play.addClass(icoLogin, Constants.ICO_ERROR);
-				Play.addClass(altLogin, Constants.ALERT_DANGER);
-					
+				notify.danger(txtEmptyMessage);					
 			}
-		}
-		
-	}
-	
-	
-	
-
-
-	
-	
-	
-	
-	
-
-	
+		}		
+	}	
 });
 
 

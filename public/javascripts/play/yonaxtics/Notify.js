@@ -29,35 +29,82 @@
  * ========================================================================
  */
 
-define([], function() {
-	
-	
+define([], function() {	
 
+    Notify.element;
+    Notify.button;
+    Notify.span;
+    Notify.p;
+    Notify.i;
+    Notify.strong;
     
-	
-	function Notify(){}
-	
-	
-	
-	
-	Notify.init = function(option){
-	     
-				
+	function Notify(element){
+		
+		Notify.element = element;	
+		Notify.create();
+		return Notify;
 	}
 	
 	
-	Notify.create =function(){
-		
-	    	
-		
-	}
+    Notify.create = function(){
+    	
+    	Notify.close();
+    	Notify.button = document.createElement('button');
+    	Notify.button.className = 'close';
+    	Notify.button.type = 'button'; 
+    	Notify.button.onclick = function(){Notify.close();}
+    	Notify.span = document.createElement('span');
+    	Notify.span.textContent ='×';    	
+    	Notify.button.appendChild(Notify.span);    	
+    	Notify.element.appendChild(Notify.button);
+    	Notify.p = document.createElement('p');
+    	Notify.p.className = 'text-center';
+    	Notify.i = document.createElement('i');    	
+    	Notify.p.appendChild(Notify.i);
+    	Notify.strong = document.createElement('strong');    	
+    	Notify.p.appendChild(Notify.strong);
+    	Notify.element.appendChild(Notify.p);
+    }
+    
+    
+    Notify.close = function(){    	
+    	Notify.element.className = 'hidden';
+    }
 	
 	
-	
-
-	
-	
-	
+    Notify.success = function(message){    	
+    	Notify.i.className = 'fa fa-smile-o fa-lg pull-left';
+    	Notify.element.className = 'alert alert-success alert-dismissible';
+    	Notify.strong.textContent = message;    	
+    }
+    
+    
+    Notify.info = function(message){    	
+    	Notify.i.className = 'fa fa-info fa-lg pull-left';
+    	Notify.element.className = 'alert alert-info alert-dismissible';
+    	Notify.strong.textContent = message;  
+    } 
+    
+    
+    Notify.warning = function(message){
+    	Notify.i.className = 'fa fa-exclamation-triangle fa-lg pull-left';
+    	Notify.element.className = 'alert alert-warning alert-dismissible';
+    	Notify.strong.textContent = message;  
+    }
+    
+    
+    Notify.danger = function(message){
+    	Notify.i.className = 'fa fa-frown-o fa-lg pull-left';
+    	Notify.element.className = 'alert alert-danger alert-dismissible';
+    	Notify.strong.textContent = message; 
+    }
+    
+    
+    Notify.wait = function(message){
+    	Notify.i.className = 'fa fa-circle-o-notch fa-spin fa-lg pull-left';
+    	Notify.element.className = 'alert alert-info alert-dismissible';
+    	Notify.strong.textContent = message;  
+    }	
 	
 	return Notify;
 	

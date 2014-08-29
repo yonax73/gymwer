@@ -10,7 +10,8 @@ require.config({
 		Aes :       'play/yonaxtics/google/aes',		
 		Constants : 'play/yonaxtics/Constants',    	
 		Play :      'play/yonaxtics/Play',
-		Validate:   'play/yonaxtics/Validate' 
+		Validate:   'play/yonaxtics/Validate',
+		Notify:     'play/yonaxtics/Notify' 
 				
 				
 	}
@@ -50,17 +51,14 @@ require.config({
 
 
 
-requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Validate) {
+requirejs(['Aes','Constants','Play','Validate','Notify'],function(Aes,Constants, Play, Validate,Notify) {
 
 /* ==================================================================================================================
  * REGION ATRIBUTOS
  * ===================================================================================================================
  */
-	var altSignUp = Play.getId('altSignUp');
-	var icoSignUp = Play.getId('icoSignUp');
-	var msgSignUp = Play.getId('msgSignUp');
-	var btnClose = Play.getClass('close');
-	
+
+	var notify = null;	
 	
 	var txtName = Play.getId('txtName');
 	var msgName = Play.getId('msgName');	
@@ -101,9 +99,8 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
  * ===================================================================================================================
  */
 			
+	notify = new Notify(Play.getId('altSignUp'));
 
-	Play.addClass(altSignUp, Constants.HIDDEN);
-	btnClose.onclick = function (){Play.addClass(altSignUp, Constants.HIDDEN);};
 	
 	
 /* ==================================================================================================================
@@ -166,10 +163,7 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
 								 
 								 xhr.onreadystatechange = function () {	
 									 
-									 msgSignUp.textContent = "Loading...";			
-									 Play.addClass(icoSignUp, Constants.ICO_COG_SPIN);
-									 Play.addClass(altSignUp, Constants.ALERT_INFO);
-									 Play.appendClass(altSignUp, Constants.SHOW);
+									 notify.wait('Loading...');	
 									 
 									 btnSignUp.disabled = true;
 								        
@@ -182,9 +176,8 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
 											  
 										  }else {
 											  
-											    msgSignUp.textContent  = this.responseText;
-											    Play.addClass(icoSignUp, Constants.ICO_ERROR);
-												Play.addClass(altSignUp, Constants.ALERT_DANGER);
+											    notify.danger(this.responseText);
+
 												btnSignUp.disabled = false;											  
 										  }
 									  }
@@ -195,10 +188,7 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
 								 xhr.send(Play.serialize(e.target));			
 								 xhr.timeout = Constants.TIME_OUT;
 								 xhr.ontimeout = function () {
-									 
-									msgSignUp.textContent = "Timed Out!!!";
-									Play.addClass(icoSignUp, Constants.ICO_ERROR);
-									Play.addClass(altSignUp, Constants.ALERT_DANGER);
+									 notify.danger('Timed Out!!!');
 									btnSignUp.disabled = false;
 									
 								}
@@ -208,11 +198,8 @@ requirejs(['Aes','Constants','Play','Validate'],function(Aes,Constants, Play, Va
 				}				
 			}	
 	    }   
-	} else {
-		
-		msgSignUp.textContent = 'All fields are required and can\'t be empty!!!';
-		Play.addClass(icoSignUp, Constants.ICO_ERROR);
-		Play.addClass(altSignUp, Constants.ALERT_DANGER);
+	} else {		
+		notify.danger('All fields are required and can\'t be empty!!!');
 	}
 }
 	

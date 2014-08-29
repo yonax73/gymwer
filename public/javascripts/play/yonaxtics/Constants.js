@@ -30,18 +30,7 @@ define([], function() {
 	}
 	
 
-	/**
-	 * ALERTS CLASSES
-	 */
-	Constants.ALERT_SUCCESS = 'alert alert-success alert-dismissible';
-	Constants.ALERT_INFO = 'alert alert-info alert-dismissible';
-	Constants.ALERT_WARNING = 'alert alert-warning alert-dismissible';
-	Constants.ALERT_DANGER = 'alert alert-danger alert-dismissible';
-	
-	Constants.ICO_COG_SPIN = 'fa fa-cog fa-spin fa-lg pull-left';
-	Constants.ICO_SUCCESS = 'fa fa-check fa-lg pull-left';
-	Constants.ICO_WARNING = 'fa fa-exclamation-triangle fa-lg pull-left';
-	Constants.ICO_ERROR = 'fa fa-hand-o-right fa-lg pull-left';
+
 
 	/**
 	 * DROP DOWN CLASSES

@@ -70,7 +70,7 @@ define([], function() {
 	     Select.input = document.createElement('input');
 	     Select.ul=  document.createElement('ul');	
 	     Select.i = document.createElement('i');	     
-	     Select.input.type = 'button';	 
+	     Select.input.type = 'select';	 
 	     Select.input.className = 'form-control'
 	     Select.i.className = 'fa fa-chevron-circle-down';	     
 	     

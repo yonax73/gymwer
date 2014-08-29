@@ -38,7 +38,7 @@
     padding: 3px 0;
 }
 
-.select input[type="button"] {
+.select input[type="select"] {
   border: medium none;
     cursor: default;
     margin: 0;
@@ -79,7 +79,7 @@
 /**
 * Use for edit color and background style.
 */
-.select.background span,.select.background input[type="button"],.select-list li {
+.select.background span,.select.background input[type="select"],.select-list li {
 	
 	background-color: #4385f5;
     color: #fff;
@@ -87,7 +87,7 @@
 /**
 * Use for edit color and background style when is disabled.
 */
-.select.disabled span,.select.disabled input[type="button"] {
+.select.disabled span,.select.disabled input[type="select"] {
 	
 	background-color: #dadada;
 	color: #767676;
