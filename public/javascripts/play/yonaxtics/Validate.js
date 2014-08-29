@@ -139,9 +139,7 @@ define(['./Play','./Constants'], function(Play,Constants) {
 	 */
 	Validate.isChecked = function (input,message,value) {
 
-		if (input.checked) {
-
-			
+		if (input.checked) {			
 			Play.addClass(message, Constants.HIDDEN);
 			return true;
 

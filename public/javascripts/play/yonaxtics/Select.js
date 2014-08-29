@@ -71,6 +71,7 @@ define([], function() {
 	     Select.ul=  document.createElement('ul');	
 	     Select.i = document.createElement('i');	     
 	     Select.input.type = 'select';	 
+	     Select.input.readOnly  = true;	 
 	     Select.input.className = 'form-control'
 	     Select.i.className = 'fa fa-chevron-circle-down';	     
 	     

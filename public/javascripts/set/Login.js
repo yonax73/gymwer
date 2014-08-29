@@ -113,8 +113,31 @@ requirejs(['Aes','Constants','Play','Validate','Notify'],function(Aes,Constants,
 		txtEmail.onblur = function(){ valid =	Validate.empty(this,msgEmail,txtEmptyMessage); }
 		txtPassword.onblur = function(){ valid =	Validate.empty(this,msgPassword,txtEmptyMessage); }			
 		frmLogin.onsubmit = function(e) {	
-			console.log(e.target.elements);
-			e.preventDefault();			
+			
+			e.preventDefault();		
+			
+			var inputs = e.target.getElementsByTagName('input');
+			var size = inputs.length;
+			for (var i = 0; i < size; i++) {
+				
+				var inp = inputs[i]; 
+				
+				if(inp.dataset.empty === 'false'){
+					
+					if(!inp.value.match(/^\S+$|[^\s]+$/)){
+						
+						alert('the input is empty');
+					}
+					
+				};
+				
+				
+			}
+			
+			
+			
+			
+			
 			if(valid){				
 				if(Validate.empty(txtName,msgName,txtEmptyMessage)){					
 					if(Validate.empty(txtEmail,msgEmail,txtEmptyMessage)){						
