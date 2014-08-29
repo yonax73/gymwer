@@ -11,7 +11,8 @@ require.config({
 		Constants : 'play/yonaxtics/Constants',    	
 		Play :      'play/yonaxtics/Play',
 		Validate:   'play/yonaxtics/Validate',
-		Notify:     'play/yonaxtics/Notify' 
+		Notify:     'play/yonaxtics/Notify',
+		FormOk:     'play/yonaxtics/FormOk'
 				
 				
 	}
@@ -51,7 +52,7 @@ require.config({
 
 
 
-requirejs(['Aes','Constants','Play','Validate','Notify'],function(Aes,Constants, Play, Validate,Notify) {
+requirejs(['Aes','Constants','Play','Validate','Notify','FormOk'],function(Aes,Constants, Play, Validate,Notify,FormOk) {
 
 /* ==================================================================================================================
  * REGION ATRIBUTOS
@@ -59,26 +60,27 @@ requirejs(['Aes','Constants','Play','Validate','Notify'],function(Aes,Constants,
  */
 
 	var notify = null;	
+	var form = null;
 	
-	var txtName = Play.getId('txtName');
-	var msgName = Play.getId('msgName');	
-	var txtNameMessage = 'The name can only consist of alphabetical,dot andunderscore';
+	//var txtName = Play.getId('txtName');
+//	var msgName = Play.getId('msgName');	
+	//var txtNameMessage = 'The name can only consist of alphabetical,dot andunderscore';
 	
-	var txtEmail = Play.getId('txtEmail');
-	var msgEmail = Play.getId('msgEmail');
-	var txtEmailMessage = 'The input is not a valid email address';
+	//var txtEmail = Play.getId('txtEmail');
+	//var msgEmail = Play.getId('msgEmail');
+	//var txtEmailMessage = 'The input is not a valid email address';
 	
-	var txtPassword = Play.getId('txtPassword');
-	var msgPassword = Play.getId('msgPassword');
-	var txtPasswordMessage = 'The confirm password is required and can\'t be empty';
+	//var txtPassword = Play.getId('txtPassword');
+	//var msgPassword = Play.getId('msgPassword');
+	//var txtPasswordMessage = 'The confirm password is required and can\'t be empty';
 	
-	var txtConfirmPassword = Play.getId('txtConfirmPassword');
-	var msgConfirmPassword = Play.getId('msgConfirmPassword');
-	var txtConfirmPasswordMessage = 'The password and its confirm are not the same';
+	//var txtConfirmPassword = Play.getId('txtConfirmPassword');
+	//var msgConfirmPassword = Play.getId('msgConfirmPassword');
+	//var txtConfirmPasswordMessage = 'The password and its confirm are not the same';
 	
-	var cbxTerms = Play.getId('cbxTerms');
-	var msgTerms  = Play.getId('msgTerms');
-	var txtTermsMessage = 'Please choose Terms and Conditions.';
+	//var cbxTerms = Play.getId('cbxTerms');
+	//var msgTerms  = Play.getId('msgTerms');
+	//var txtTermsMessage = 'Please choose Terms and Conditions.';
 	
 	var btnSignUp = Play.getId('btnSignUp');
 	
@@ -113,95 +115,107 @@ requirejs(['Aes','Constants','Play','Validate','Notify'],function(Aes,Constants,
  * REGION FORM
  * ===================================================================================================================
  */
-		
+		form = new FormOk(frmSingUp);
 
 	/**
 	 * Reset messages input form
 	 */
-	Play.addClass(msgName, Constants.HIDDEN);
-	Play.addClass(msgEmail, Constants.HIDDEN);
-	Play.addClass(msgPassword, Constants.HIDDEN);
-	Play.addClass(msgConfirmPassword, Constants.HIDDEN);
-	Play.addClass(msgTerms, Constants.HIDDEN);
+//	Play.addClass(msgName, Constants.HIDDEN);
+//	Play.addClass(msgEmail, Constants.HIDDEN);
+//	Play.addClass(msgPassword, Constants.HIDDEN);
+//	Play.addClass(msgConfirmPassword, Constants.HIDDEN);
+//	Play.addClass(msgTerms, Constants.HIDDEN);
 	
 	/**
 	 * Validate inputs
 	 */
 	
-	txtName.onblur = function(){ valid =	Validate.fullName(this,msgName,txtNameMessage); }	
-	txtName.onkeyup = function() { valid =	Validate.fullName(this,msgName,txtNameMessage); }
+//	txtName.onblur = function(){ valid =	Validate.fullName(this,msgName,txtNameMessage); }	
+//	txtName.onkeyup = function() { valid =	Validate.fullName(this,msgName,txtNameMessage); }
+//	
+//	txtEmail.onblur = function(){ valid =	Validate.email(this,msgEmail,txtEmailMessage); }	
+//	txtEmail.onkeyup = function() { valid =	Validate.email(this,msgEmail,txtEmailMessage); }
+//	
+//	txtPassword.onblur = function(){ valid =	Validate.empty(this,msgPassword,txtPasswordMessage); }
+//	txtPassword.onkeyup = function(){ valid =	Validate.empty(this,msgPassword,txtPasswordMessage); }
+//	
+//	txtConfirmPassword.onblur = function(){ valid =  Validate.equals(this,txtPassword,msgConfirmPassword,txtConfirmPasswordMessage) }
+//	txtConfirmPassword.onkeyup = function(){ valid = Validate.equals(this,txtPassword,msgConfirmPassword,txtConfirmPasswordMessage) }
 	
-	txtEmail.onblur = function(){ valid =	Validate.email(this,msgEmail,txtEmailMessage); }	
-	txtEmail.onkeyup = function() { valid =	Validate.email(this,msgEmail,txtEmailMessage); }
 	
-	txtPassword.onblur = function(){ valid =	Validate.empty(this,msgPassword,txtPasswordMessage); }
-	txtPassword.onkeyup = function(){ valid =	Validate.empty(this,msgPassword,txtPasswordMessage); }
-	
-	txtConfirmPassword.onblur = function(){ valid =  Validate.equals(this,txtPassword,msgConfirmPassword,txtConfirmPasswordMessage) }
-	txtConfirmPassword.onkeyup = function(){ valid = Validate.equals(this,txtPassword,msgConfirmPassword,txtConfirmPasswordMessage) }
-	
-	
-	
-			
-	frmSignUp.onsubmit = function(e) {
+	frmSingUp.onsubmit = function(e){
 		
 		e.preventDefault();
 		
-		if(valid){
-			
-			if(Validate.fullName(txtName,msgName,txtNameMessage)){
-				
-				if(Validate.email(txtEmail,msgEmail,txtEmailMessage)){
-					
-					if(Validate.empty(txtPassword,msgPassword,txtPasswordMessage)){
-						
-						if(Validate.equals(txtConfirmPassword,txtPassword,msgConfirmPassword,txtConfirmPasswordMessage)){
-			              
-							if(Validate.isChecked(cbxTerms,msgTerms,txtTermsMessage)){
-							     
-								 var xhr = new XMLHttpRequest();
-								 
-								 xhr.onreadystatechange = function () {	
-									 
-									 notify.wait('Loading...');	
-									 
-									 btnSignUp.disabled = true;
-								        
-									  if (this.readyState === Constants.READYSTATE_COMPLETE) {
-										  						
-										  if(this.status === Constants.STATUS_OK && this.responseText === Constants.REQUEST_SUCCESS){
-											  
-											  sessionStorage.setItem(Constants.SESSIONSTORAGE_MESSAGE, 'Your account has been created successfully');
-											  window.location = '/login';
-											  
-										  }else {
-											  
-											    notify.danger(this.responseText);
-
-												btnSignUp.disabled = false;											  
-										  }
-									  }
-								 }
-								 
-								 xhr.open('POST','/createAccount');
-								 xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-								 xhr.send(Play.serialize(e.target));			
-								 xhr.timeout = Constants.TIME_OUT;
-								 xhr.ontimeout = function () {
-									 notify.danger('Timed Out!!!');
-									btnSignUp.disabled = false;
-									
-								}
-						
-						}
-					}					
-				}				
-			}	
-	    }   
-	} else {		
-		notify.danger('All fields are required and can\'t be empty!!!');
+		if(form.isValid()){
+		      
+			alert('do request');
+		}else {
+			alert('error');
+		}
+		
+		
 	}
-}
+			
+//	frmSignUp.onsubmit = function(e) {
+//		
+//		e.preventDefault();
+//		
+//		if(valid){
+//			
+//			if(Validate.fullName(txtName,msgName,txtNameMessage)){
+//				
+//				if(Validate.email(txtEmail,msgEmail,txtEmailMessage)){
+//					
+//					if(Validate.empty(txtPassword,msgPassword,txtPasswordMessage)){
+//						
+//						if(Validate.equals(txtConfirmPassword,txtPassword,msgConfirmPassword,txtConfirmPasswordMessage)){
+//			              
+//							if(Validate.isChecked(cbxTerms,msgTerms,txtTermsMessage)){
+//							     
+//								 var xhr = new XMLHttpRequest();
+//								 
+//								 xhr.onreadystatechange = function () {	
+//									 
+//									 notify.wait('Loading...');	
+//									 
+//									 btnSignUp.disabled = true;
+//								        
+//									  if (this.readyState === Constants.READYSTATE_COMPLETE) {
+//										  						
+//										  if(this.status === Constants.STATUS_OK && this.responseText === Constants.REQUEST_SUCCESS){
+//											  
+//											  sessionStorage.setItem(Constants.SESSIONSTORAGE_MESSAGE, 'Your account has been created successfully');
+//											  window.location = '/login';
+//											  
+//										  }else {
+//											  
+//											    notify.danger(this.responseText);
+//
+//												btnSignUp.disabled = false;											  
+//										  }
+//									  }
+//								 }
+//								 
+//								 xhr.open('POST','/createAccount');
+//								 xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
+//								 xhr.send(Play.serialize(e.target));			
+//								 xhr.timeout = Constants.TIME_OUT;
+//								 xhr.ontimeout = function () {
+//									 notify.danger('Timed Out!!!');
+//									btnSignUp.disabled = false;
+//									
+//								}
+//						
+//						}
+//					}					
+//				}				
+//			}	
+//	    }   
+//	} else {		
+//		notify.danger('All fields are required and can\'t be empty!!!');
+//	}
+//}
 	
 
 /* ==================================================================================================================

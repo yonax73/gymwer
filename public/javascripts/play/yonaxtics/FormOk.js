@@ -32,8 +32,7 @@
 define([], function() {	
 
     FormOk.element;
-    FormOk.inputs;
-    FormOk.length;
+    FormOk.inputs;    
     FormOk.msgRequired;
     FormOk.msgFullName;
     FormOk.msgEmail;
@@ -47,8 +46,7 @@ define([], function() {
 	function FormOk(element){
 		
 		FormOk.element = element;
-		FormOk.inputs = element.getElementsByTagName('input');
-		FormOk.length = FormOk.inputs.length;
+		FormOk.inputs = element.getElementsByTagName('input');		
 		FormOk.result = false;
 		FormOk.msgRequired = 'This field is required and can\'t be empty!!!';
 		FormOk.msgFullName = 'This field is not a valid name!!!';
@@ -58,7 +56,7 @@ define([], function() {
 		FormOk.msgAccept = 'Please accept!!!'
 		FormOk.hasSuccess = 'has-success';
 		FormOk.hasError = 'has-error';
-	
+		FormOk.init();
 		return FormOk;
 	}
 	
@@ -66,64 +64,70 @@ define([], function() {
 	
 	
 	FormOk.init = function(){
-		
-		for (var i = 0; i < FormOk.length; i++) {			
+		var n =FormOk.inputs.length;
+		for (var i = 0; i < n; i++) {			
 			var input = FormOk.inputs[i];		
 			var small = document.createElement('small');
 			small.className='hidden';        	
         	input.parentNode.appendChild(small);   
 			if(input.dataset.blur ==='true'){				
 				input.onblur = function(){					
-					FormOk.validate(this);
+				  return FormOk.validate(this);
 				}
 			}			
 			if(input.dataset.keyup ==='true'){				
-				input.onblur = function(){					
-					FormOk.validate(this);
+				input.onkeyup = function(){			
+					return FormOk.validate(this);
 				}
-			}			
-		}		
+			}
+		}
+		
 	}
 	
-	FormOk.validate = function(input){
-		
-      switch (input.type) {
-      
-          case 'text':
-    	  case 'search':
-    	  case 'email':
-    	  case 'url':
-    	  case 'tel':
-    	  case 'number':
-    	  case 'range':
-    	  case 'date':
-    	  case 'month':
-    	  case 'week':
-    	  case 'time':
-    	  case 'datetime':
-    	  case 'datetime-local':
-    	  case 'color':
-    	  case 'textarea':
-    	  case 'password':
-    	  case 'select':
-    		  
-    		  if(input.dataset.required==='true') return  FormOk.isEmpty(input);
-    		  if(input.dataset.fullName==='true') return  FormOk.isFullName(input);
-    		  if(input.dataset.email==='true')    return  FormOk.isEmail(input);
-    		  //pdte is equals
-    		  
-		
-		               break;
-		
-		 case 'radio':
-		 case 'checkbox':			
-			
-                       break;
-
-		default:
-			break;
+	FormOk.isValid = function(){
+		var n =FormOk.inputs.length;
+		var i = 0;
+		FormOk.result = true;
+		while(i < n && FormOk.result)FormOk.validate(FormOk.inputs[i++]);		
+		return FormOk.result;
 	}
-		
+	
+	FormOk.validate = function(input){	
+	      switch (input.type) {      
+	          case 'text':
+	    	  case 'search':
+	    	  case 'email':
+	    	  case 'url':
+	    	  case 'tel':
+	    	  case 'number':
+	    	  case 'range':
+	    	  case 'date':
+	    	  case 'month':
+	    	  case 'week':
+	    	  case 'time':
+	    	  case 'datetime':
+	    	  case 'datetime-local':
+	    	  case 'color':
+	    	  case 'textarea':
+	    	  case 'password':
+	    	  case 'select':    		  
+	    		  if(input.dataset.required==='true'){
+	    			  FormOk.result = FormOk.isNotEmpty(input);
+	    			  if(FormOk.result){
+	            		  if(input.dataset.fullname==='true') FormOk.result =  FormOk.isFullName(input);
+	            		  if(input.dataset.email==='true') FormOk.result =  FormOk.isEmail(input);    				  
+	    			  }
+	    		  }else{
+	        		  if(input.dataset.fullname==='true') FormOk.result =  FormOk.isFullName(input);
+	        		  if(input.dataset.email==='true') FormOk.result =  FormOk.isEmail(input);    			  
+	    		  }    				
+			  break;		
+			 case 'radio':
+			 case 'checkbox':			
+	                       break;
+			default:
+				break;
+		}		
 	}
 	
 	FormOk.isFullName = function(input){		
@@ -136,9 +140,9 @@ define([], function() {
 		return FormOk.error(input, FormOk.msgEmail);			
 	}
 	
-	FormOk.isEmpty = function(input){
-		if (input.value.match(/^\S+$|[^\s]+$/))return FormOk.error(input, FormOk.msgRequired);
-		return FormOk.success(input);
+	FormOk.isNotEmpty = function(input){
+		if (input.value.match(/^\S+$|[^\s]+$/))return FormOk.success(input);		
+		return FormOk.error(input, FormOk.msgRequired);
 	}
 	
 	
@@ -158,14 +162,14 @@ define([], function() {
 	
 	
     FormOk.showMessage = function(input,message){    	
-        var small = input.nextSibling;
+        var small = input.parentNode.getElementsByTagName('small')[0];
         small.textContent = message;       
         small.className = 'show text-danger';
     }    
     
     
     FormOk.hiddeMessage = function(input){    	
-           input.nextSibling.className='hidden';        
+    	input.parentNode.getElementsByTagName('small')[0].className='hidden';        
     }
     
     
