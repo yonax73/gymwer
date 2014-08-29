@@ -12,7 +12,9 @@ require.config({
 		Json :      'play/yonaxtics/Json',
 		Nav :       'play/yonaxtics/Nav'	,
 		Select :    'play/yonaxtics/Select',
-		List :      'set/List'
+		List :      'set/List',
+		Notify:     'play/yonaxtics/Notify',
+		FormOk:     'play/yonaxtics/FormOk'
 
 			
 	}
@@ -52,20 +54,24 @@ require.config({
 
 
 
-requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List'],function(Aes,Constants, Play, Json,Nav,Select,List ) {
+requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','FormOk'],function(Aes,Constants, Play, Json,Nav,Select,List,Notify,FormOk ) {
 
 	
-	
-	if(Play.ready()){		
-		init();		
-	}
-
 	
 /* ==================================================================================================================
  * REGION ATTRIBUTES
  * ===================================================================================================================*/
-
-
+	var btnSave = Play.getId('btnSave');	
+	var frmProfile = Play.getId('frmProfile');	
+	var notify = new Notify(Play.getId('notify'));	
+	var frmProfileOk = new FormOk(frmProfile);	
+/* ==================================================================================================================
+ * REGION READY
+ * ===================================================================================================================
+ */	
+	if(Play.ready()){		
+		init();		
+	}
 	
 /* ==================================================================================================================
  * REGION LOAD
@@ -82,25 +88,32 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List'],function(Aes
 					  localStorage.setItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE,JSON.stringify(profile));
 					  fill(profile);						
 				   } 					  
-			  }else {
-				  
-	               //error message   									  
-			  }			  
+			  }		  
 		}
 		xhr.open('GET','/loadProfile');
 		xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
 		xhr.send();		
-		//set time out	
+		xhr.timeout = Constants.TIME_OUT;
+		 xhr.ontimeout = function () {
+			 console.error('Time out!!!');										
+		}	
      }
 	
 	
 	
-	function fill(profile){
-		
-	      Play.getId('userPicture').src =  Play.base64Blob(profile.picture.mime, profile.picture.src);	 	
+	function loadList(){
+		List.url();	
+	}
+	
+	
+	
+	function fill(profile){          
+		  if(profile.picture != null){
+			Play.getId('userPicture').src =  Play.base64Blob(profile.picture.mime, profile.picture.src);
+		  }	      	 	
 		  Play.getId('txtNameUser').value = profile.user.name;
-		  Play.getId('txtRole').textContent = profile.user.role.name;					 
-	      var selectPageHome = new Select(Play.getId('selectPageHome'),List.url());
+		  Play.getId('txtRole').textContent = profile.user.role.name;	
+		  var selectPageHome = new Select(Play.getId('selectPageHome'),List.url());
 	      selectPageHome.init(profile.user.defaultAction.id);	
 		  Play.getId('txtEmail').value = profile.user.email;
 		  Play.getId('nameUser').textContent = profile.user.name;
@@ -136,20 +149,13 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List'],function(Aes
 		  
 		    var picture = evt.target.files[0];
 		    var xhr = null;
-		    var reader = null;
-		    
-		    if(picture.type.match('image.*')){                     
-		    	
-		    	if(picture.size <= 65535){
-		    		
-					 xhr = new XMLHttpRequest();
-						
-						xhr.onreadystatechange = function () {		
-						       
-							  if (this.readyState === Constants.READYSTATE_COMPLETE) {
-								  						
-								  if(this.status === Constants.STATUS_OK && this.responseText === Constants.REQUEST_SUCCESS){							  
-									  
+		    var reader = null;		    
+		    if(picture.type.match('image.*')){		    	
+		    	if(picture.size <= 65535){		    		
+					 xhr = new XMLHttpRequest();						
+						xhr.onreadystatechange = function () {						       
+							  if (this.readyState === Constants.READYSTATE_COMPLETE) {								  						
+								  if(this.status === Constants.STATUS_OK && this.responseText === Constants.REQUEST_SUCCESS){									  
 								    	reader = new FileReader();
 									    reader.onload = (function(theFile) {
 								        return function(e) {
@@ -158,50 +164,56 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List'],function(Aes
 								      })(picture);		      
 								      reader.readAsDataURL(picture);
 								      localStorage.removeItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE);						
-								}					  
-									  
-						  }else {
-							  
-				               //error message   									  
-						  }
-							  
+								}									  
+						  }							  
 						}
 						xhr.open('POST','/uploadPicture');				
 						var formData = new FormData();
 						formData.append('picture', picture);
-						xhr.send(formData);		
-		    		
-		    	} else {
-		    		
+						xhr.send(formData);
+						xhr.timeout = Constants.TIME_OUT;
+						xhr.ontimeout = function () {
+							 console.error('Time out!!!');										
+						}		    		
+		    	} else {		    		
 		    		alert('the image can be maximun of 64 KB');
-		    	}
-		    	
-	    	
-		    	
-		    } else {
-		    	
+		    	}		    	
+		    } else {		    	
 		    	alert('the file not is a image valid!');
-		    }		    
-		    
+		    }			    
 	  }
+	  
+ /* ==================================================================================================================
+ * REGION SAVE
+ * ===================================================================================================================
+ */	
+	  
+	 function save(){		 
+		 frmProfile.onsubmit = function(e){
+			 e.preventDefault();
+			 if(frmProfileOk.isValid()){
+				 notify.success('ok');
+			 }			 
+		 }			 
+	}
+	 
 
 /* ==================================================================================================================
  * REGION INIT
  * ===================================================================================================================
  */	
 	
-	function init(){	
+	function init(){
 		
-		  Nav.init();
-		
+		  loadList();
+		  Nav.init();		
 		  if(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE) == null){			  
 			  load();
 		  }else {
 			  fill(JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE)));
-		  }
-		  
-		  uploadPicture();
-	
+		  }		  
+		  uploadPicture();	
+		  save();
 	}
 	
 

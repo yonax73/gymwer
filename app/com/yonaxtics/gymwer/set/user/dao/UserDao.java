@@ -32,7 +32,7 @@ public class UserDao extends Dao{
 		try {
 			 
 			 conn = DB.getConnection();			 
-			 String sql = "CALL sp_set_user_CREATE(?,?,?,?,?);";			 
+			 String sql = "CALL sp_set_users_CREATE(?,?,?,?,?);";			 
 			 cst = conn.prepareCall(sql);
 			 cst.registerOutParameter(1, Types.INTEGER);
 			 cst.setString(2, user.getName());
@@ -70,7 +70,7 @@ public class UserDao extends Dao{
 		try {
 			
 			conn = DB.getConnection();
-			String sql = "CALL sp_set_user_EXISTS(?);";
+			String sql = "CALL sp_set_users_EXISTS(?);";
 			cst = conn.prepareCall(sql);
 			
 			cst.setString(1, user.getEmail());			
@@ -107,7 +107,7 @@ public class UserDao extends Dao{
 		try {
 			
 			conn = DB.getConnection();
-			String sql = "CALL sp_set_user_LOGIN(?,?,?);";
+			String sql = "CALL sp_set_users_LOGIN(?,?,?);";
 			cst = conn.prepareCall(sql);
 			
 			cst.setString(1, person.getGym().getName());

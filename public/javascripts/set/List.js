@@ -29,7 +29,7 @@
  * ========================================================================
  */
 
-define(['./Constants',], function(Constants) {
+define(['./Constants','./Json'], function(Constants,Json) {
 	
 	/**
 	 * The lists are loaded in local storage, but when this  changed is necessary reload the list again.
@@ -42,31 +42,27 @@ define(['./Constants',], function(Constants) {
 	 */
 	List.url = function(){		
 		
-		if(localStorage.getItem(Constants.LOCALSTORAGE_LIST_URL) == null){
-			
-			 var permissions =  JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_NAV)).user.role.permissions;   //get permission of nav		 
-			 permissions =  permissions.filter( function (e) { return e.action.url != null;}  );                              //filter only the actions with url		 					 
-			 var n = permissions.length;
-			 var items = new Array();		
-			 for (var i = 0; i < n; i++) {			 
-				 var action = permissions[i].action;
-				 var item = {};
-				 item.value = action.url;						 
-				 item.option = action.id;
-				 items.push(item);
-			 }
-			 localStorage.setItem(Constants.LOCALSTORAGE_LIST_URL,JSON.stringify(items));
-			 
-			 return items;
-			 
-		} else {
-			
-			
-			return JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_LIST_URL));
-			
+		if(localStorage.getItem(Constants.LOCALSTORAGE_LIST_URL) == null){				
+			var xhr = new XMLHttpRequest();		
+			xhr.onreadystatechange = function () {		       
+				  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
+					  if(this.status === Constants.STATUS_OK){									  
+						     var items = Json.parse(this.responseText);						
+							 localStorage.setItem(Constants.LOCALSTORAGE_LIST_URL,JSON.stringify(items));							 
+							 return items;					
+					   } 					  
+				  }		  
+			}
+			xhr.open('GET','/personUrls');
+			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded;charset=UTF-8');
+			xhr.send();
+			xhr.timeout = Constants.TIME_OUT;
+			 xhr.ontimeout = function () {
+				 console.error('Time out!!!');										
+			}			 
+		} else {			
+			return JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_LIST_URL));			
 		}
-		
-
 		 
 	}
 	

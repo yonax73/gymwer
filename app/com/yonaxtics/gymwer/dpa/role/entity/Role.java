@@ -3,6 +3,8 @@ package com.yonaxtics.gymwer.dpa.role.entity;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import play.Logger;
+
 import com.yonaxtics.gymwer.set.action.entity.Action;
 import com.yonaxtics.gymwer.set.master.entity.MasterValue;
 import com.yonaxtics.gymwer.set.permission.entity.*;
@@ -39,20 +41,23 @@ public class Role extends MasterValue {
 	}
 
 	public void arrange(){			
-		
-	  List<Action> actParents = getPermissions().stream().map(Permission::getAction).filter(act->act.getModule().isParent()).collect(Collectors.toList()); 	  
-      if(actParents.size() > 0){				
-		List<Action> actChildren = getPermissions().stream().map(Permission::getAction).filter(act->act.getModule().isChild()).collect(Collectors.toList());				
-		actChildren.stream().parallel().forEach(child -> {			
-	      actParents.stream().parallel().forEach(parent->{				
-		    if(child.getModule().getParent().equals(parent.getModule())){					
-				child.getModule().releaseParent();				    		
-				parent.getModule().getChildren().add(child);				    		
-			} 
-		  });
-		});
-	  }		    
-      getPermissions().removeIf(p -> p.getAction().getModule().isChild());	
+		try{	
+			  List<Action> actParents = getPermissions().stream().map(Permission::getAction).filter(act->act.getModule().isParent()).collect(Collectors.toList()); 	  
+		      if(actParents.size() > 0){				
+				List<Action> actChildren = getPermissions().stream().map(Permission::getAction).filter(act->act.getModule().isChild()).collect(Collectors.toList());				
+				actChildren.stream().parallel().forEach(child -> {			
+			      actParents.stream().parallel().forEach(parent->{				
+				    if(child.getModule().getParent().equals(parent.getModule())){					
+						child.getModule().releaseParent();				    		
+						parent.getModule().getChildren().add(child);				    		
+					} 
+				  });
+				});
+			  }		    
+		      getPermissions().removeIf(p -> p.getAction().getModule().isChild());	
+		}catch(Exception e){
+			Logger.error(e.getMessage());
+		}
       
 	}
 	

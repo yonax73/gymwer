@@ -66,8 +66,12 @@ GET /profile                       com.yonaxtics.gymwer.set.person.controller.Pe
 GET /loadProfile                   com.yonaxtics.gymwer.set.person.controller.PersonControl.loadProfile()
 
 
-#PictureControl                   
-POST /uploadPicture                com.yonaxtics.gymwer.set.picture.controller.PictureControl.uploadPicture()   
+#PictureControl        
+           
+POST /uploadPicture                com.yonaxtics.gymwer.set.picture.controller.PictureControl.uploadPicture()
+
+#ListControl
+GET /personUrls                              com.yonaxtics.gymwer.util.list.controller.ListControl.personUrls()   
 
 
 

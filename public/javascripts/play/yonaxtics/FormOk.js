@@ -51,7 +51,7 @@ define([], function() {
 		FormOk.msgRequired = 'This field is required and can\'t be empty!!!';
 		FormOk.msgFullName = 'This field is not a valid name!!!';
 		FormOk.msgEmail = 'This field is not a valid email address!!!';
-		FormOk.msgEquals = 'This field and field confirm are not the same!!!';
+		FormOk.msgEquals = 'This field and the field to confirm are not the same!!!';
 		FormOk.msgCheck = 'Plase check!!!;'
 		FormOk.msgAccept = 'Please accept!!!'
 		FormOk.hasSuccess = 'has-success';
@@ -115,16 +115,20 @@ define([], function() {
 	    			  FormOk.result = FormOk.isNotEmpty(input);
 	    			  if(FormOk.result){
 	            		  if(input.dataset.fullname==='true') FormOk.result =  FormOk.isFullName(input);
-	            		  if(input.dataset.email==='true') FormOk.result =  FormOk.isEmail(input);    				  
+	            		  if(input.dataset.email==='true') FormOk.result =  FormOk.isEmail(input); 
+	            		  if(input.dataset.match!== undefined) FormOk.result = FormOk.isEquals(document.getElementById(input.dataset.match),input);
 	    			  }
 	    		  }else{
 	        		  if(input.dataset.fullname==='true') FormOk.result =  FormOk.isFullName(input);
-	        		  if(input.dataset.email==='true') FormOk.result =  FormOk.isEmail(input);    			  
+	        		  if(input.dataset.email==='true') FormOk.result =  FormOk.isEmail(input);
+	        		  if(input.dataset.match!== undefined) FormOk.result = FormOk.isEquals(input, document.getElementById(input.dataset.match));
 	    		  }    				
 			  break;		
 			 case 'radio':
-			 case 'checkbox':			
-	                       break;
+				 break;
+			 case 'checkbox':	
+				 if(input.dataset.required==='true') FormOk.result =  FormOk.isChecked(input);
+	        break;
 			default:
 				break;
 		}		
@@ -197,7 +201,7 @@ define([], function() {
    }
 	
 	
-	
+		
 	
 
 	

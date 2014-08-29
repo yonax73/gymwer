@@ -80,7 +80,15 @@ define([], function() {
 	     Select.span.onclick = function(){				 
 	    	  Select.toggle();
 	    	  Select.currentItemLi.focus();
-		 }
+		 }	     
+	     Select.span.onkeydown = function checkKey(e) {
+	         e = e || window.event;
+	         if (e.keyCode === 9) {
+	        	  e.preventDefault();
+		    	  Select.toggle();
+		    	  Select.currentItemLi.focus();
+	         }
+	     }
 	     Select.ul.classList.add('select-list');	          
 	     Select.element.appendChild(Select.span);
 	     Select.element.appendChild(Select.ul);	  	
@@ -91,32 +99,38 @@ define([], function() {
 	
 	Select.fill = function(){
 		
-		var n = Select.items.length;
-		
-		for (var i = 0; i < n; i++) {
-			
+		var n = Select.items.length;		
+		for (var i = 0; i < n; i++) {			
 			  var item = Select.items[i];
 			  var li = document.createElement('li');
 			  li.textContent= item.value;							
 			  li.classList.add('hidden');  
 			  li.tabIndex = i;
 			  li.dataset.option = item.option;
-			  li.onclick = function(){				
-				  	
+			  li.onclick = function(){					  	
 				  Select.oldItemLi = Select.currentItemLi;
 				  Select.currentItemLi = this;
 				  Select.input.value = this.textContent;
 				  Select.input.dataset.option = this.dataset.option;
 				  Select.toggle();	
 				  this.classList.add('selected');	
-				  Select.oldItemLi.classList.remove('selected');	
-					 
+				  Select.oldItemLi.classList.remove('selected');					 
 		     }
-			  
-			  Select.ul.appendChild(li);
-			
-		}
-		
+			 li.onkeydown = function checkKey(e) {
+		         e = e || window.event;
+		         if (e.keyCode === 13) {
+		        	  e.preventDefault();
+					  Select.oldItemLi = Select.currentItemLi;
+					  Select.currentItemLi = this;
+					  Select.input.value = this.textContent;
+					  Select.input.dataset.option = this.dataset.option;
+					  Select.toggle();	
+					  this.classList.add('selected');	
+					  Select.oldItemLi.classList.remove('selected');	
+		         }
+		     }			  
+			  Select.ul.appendChild(li);			
+		}		
 	}
 	
 	

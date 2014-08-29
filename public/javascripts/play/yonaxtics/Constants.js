@@ -45,13 +45,7 @@ define([], function() {
 	Constants.HIDDEN = 'hidden';
 	Constants.SHOW = 'show';
 
-	/**
-	 * FORM CLASSES
-	 */
-	Constants.FORM_GROUP = 'form-group';
-	Constants.HAS_SUCCESS = 'form-group has-success';
-	Constants.HAS_ERROR = 'form-group has-error';
-	Constants.TEXT_DANGER = 'show text-danger';
+
 	
 	/**
 	 * STATES REQUEST

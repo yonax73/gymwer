@@ -27,7 +27,7 @@ public class GymDao extends Dao{
 		try {
 			
 			conn = DB.getConnection();
-			String sql = "CALL sp_dpa_gym_CREATE(?, ?);";
+			String sql = "CALL sp_dpa_gyms_CREATE(?, ?);";
 			cst = conn.prepareCall(sql);
 			cst.registerOutParameter(1, Types.INTEGER);			
 			

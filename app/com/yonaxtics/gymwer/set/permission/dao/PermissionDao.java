@@ -43,7 +43,7 @@ public class PermissionDao extends Dao {
 		try {
 			
 			conn = DB.getConnection();
-			String sql = "CALL sp_set_permission_LOAD_NAV(?);";
+			String sql = "CALL sp_set_permissions_LOAD_NAV(?);";
 			cst = conn.prepareCall(sql);
 			cst.setInt(1, contact.getId());
 			

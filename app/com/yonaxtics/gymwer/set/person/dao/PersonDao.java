@@ -39,7 +39,7 @@ public class PersonDao extends Dao{
 		try {
 			
 			conn = DB.getConnection();
-			String sql = "CALL sp_set_person_CREATE(?, ?, ?, ?, ?, ?);";
+			String sql = "CALL sp_set_persons_CREATE(?, ?, ?, ?, ?, ?);";
 			cst = conn.prepareCall(sql);
 			cst.registerOutParameter(1, Types.INTEGER);			
 
@@ -86,7 +86,7 @@ public class PersonDao extends Dao{
 		try {
 			
 			conn = DB.getConnection();
-			String sql = "CALL sp_set_person_LOAD_PROFILE(?);";
+			String sql = "CALL sp_set_persons_LOAD_PROFILE(?);";
 			cst = conn.prepareCall(sql);
 			cst.setInt(1, contact.getId());
 			
@@ -104,9 +104,12 @@ public class PersonDao extends Dao{
 	    	        contact.setUser(new User(rs.getString(5)));
 	    	        contact.getUser().setEmail(rs.getString(6));
 	    	        contact.getUser().setRole( new Role(rs.getString(7)));
-	    	        contact.getUser().setDefaultAction(new Action(rs.getInt(8)));	    	       	        
-	    	        Blob blob = rs.getBlob(9);	    	     	    	        
-	    	        contact.setPicture(new Picture(Base64.getEncoder().encodeToString(blob.getBytes(1, (int) blob.length()))));
+	    	        contact.getUser().setDefaultAction(new Action(rs.getInt(8)));
+	    	        if(rs.getBlob(9) != null){
+		    	        Blob blob = rs.getBlob(9);	    	     	    	        
+		    	        contact.setPicture(new Picture(Base64.getEncoder().encodeToString(blob.getBytes(1, (int) blob.length()))));
+	    	        }
+
 			    	 
 			      }while(rs.next());				
 			}			
