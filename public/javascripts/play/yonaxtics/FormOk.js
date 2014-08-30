@@ -87,9 +87,17 @@ define([], function() {
 	FormOk.isValid = function(){
 		var n =FormOk.inputs.length;
 		var i = 0;
-		FormOk.result = true;
-		while(i < n && FormOk.result)FormOk.validate(FormOk.inputs[i++]);		
-		return FormOk.result;
+		var multiples = new Array();
+		var totalMultiple = 1;
+		while(i < n ){
+			FormOk.validate(FormOk.inputs[i++]);
+			multiples.push(FormOk.result ? 1 : 0);
+		}
+		i = 0;
+		while(i < n ){			
+			totalMultiple *=multiples[i++];
+		}
+		return totalMultiple > 0;
 	}
 	
 	FormOk.validate = function(input){	

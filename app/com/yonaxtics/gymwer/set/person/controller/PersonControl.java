@@ -24,31 +24,29 @@ public class PersonControl extends Controller {
 
 	
 	
-	public static Result profile(){
-		
+	public static Result profile(){		
 	    if(session(SESSION_OK)!= null && Integer.parseInt(dec(session(SESSION_OK))) > 0) {	    	
-	    	
-	    	return ok(profile.render());
-	    	
-	    } else {
-	    	
+	    	return ok(profile.render());	    	
+	    } else {	    	
 	    	session().clear();			
 			return redirect("/login");
-	    }	
-		
-	
+	    }		
 	}
 	
 	
 	
-	public static Result loadProfile(){
-		
+	public static Result loadProfile(){		
 		Person contact = new  Person(Integer.parseInt(dec(session(SESSION_OK))));		
 		if(PersonLogic.loadProfile(contact)){						
 			return ok(enc(Json.toJson(contact).toString()));			
 		} else {		     
 			return ok("Internal Error 2002");			
 		}		
+	}
+	
+	public static Result savePerson(){
+		
+		return ok();
 	}
 	
 	

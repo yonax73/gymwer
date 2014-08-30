@@ -95,7 +95,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 		xhr.send();		
 		xhr.timeout = Constants.TIME_OUT;
 		 xhr.ontimeout = function () {
-			 console.error('Time out!!!');										
+			 notify.danger('Time out!!!');									
 		}	
      }
 	
@@ -110,7 +110,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 	function fill(profile){          
 		  if(profile.picture != null){
 			Play.getId('userPicture').src =  Play.base64Blob(profile.picture.mime, profile.picture.src);
-		  }	      	 	
+		  }
 		  Play.getId('txtNameUser').value = profile.user.name;
 		  Play.getId('txtRole').textContent = profile.user.role.name;	
 		  var selectPageHome = new Select(Play.getId('selectPageHome'),List.url());
@@ -130,29 +130,24 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 	
    function uploadPicture(){
 	   
-		  Play.getId('uploadImage').onclick = function(){
-			  
+		  Play.getId('uploadImage').onclick = function(){			  
 			  Play.getId('fileselect').click();
-		  }
-		  
-		  Play.getId('userPicture').onclick = function(){
-			  
+		  }		  
+		  Play.getId('userPicture').onclick = function(){			  
 			  Play.getId('fileselect').click();
-		  }
-		  
-		  Play.getId('fileselect').onchange = function(e){ 
-			  
+		  }		  
+		  Play.getId('fileselect').onchange = function(e){			  
 			  handleFileSelect(e);
 		  }
    }	
-	  function handleFileSelect(evt) {
+   function handleFileSelect(evt) {
 		  
 		    var picture = evt.target.files[0];
 		    var xhr = null;
 		    var reader = null;		    
 		    if(picture.type.match('image.*')){		    	
 		    	if(picture.size <= 65535){		    		
-					 xhr = new XMLHttpRequest();						
+					    xhr = new XMLHttpRequest();						
 						xhr.onreadystatechange = function () {						       
 							  if (this.readyState === Constants.READYSTATE_COMPLETE) {								  						
 								  if(this.status === Constants.STATUS_OK && this.responseText === Constants.REQUEST_SUCCESS){									  
@@ -173,13 +168,13 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 						xhr.send(formData);
 						xhr.timeout = Constants.TIME_OUT;
 						xhr.ontimeout = function () {
-							 console.error('Time out!!!');										
+							notify.danger('Time out!!!');										
 						}		    		
 		    	} else {		    		
-		    		alert('the image can be maximun of 64 KB');
+		    		 notify.danger('the image can be maximun of 64 KB');
 		    	}		    	
 		    } else {		    	
-		    	alert('the file not is a image valid!');
+		    	notify.danger('the file not is a image valid!');
 		    }			    
 	  }
 	  
@@ -192,7 +187,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 		 frmProfile.onsubmit = function(e){
 			 e.preventDefault();
 			 if(frmProfileOk.isValid()){
-				 notify.success('ok');
+				 
 			 }			 
 		 }			 
 	}

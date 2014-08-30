@@ -41,10 +41,7 @@ img {
 	margin: auto;
 }
 
-/* .input-table { */
-/* 	border: medium none; */
-/* 	width: 100%; */
-/* } */
+
 
 /*************************************************************************
 *                                                                        *
@@ -138,7 +135,9 @@ nav .divider {
 *                                                                        * 
 ***************************************************************************/
 
-
+#formUploadImage{
+	z-index: 9999;
+}
 
 #formUploadImage > ul {
     list-style: none outside none;

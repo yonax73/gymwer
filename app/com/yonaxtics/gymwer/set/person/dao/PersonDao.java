@@ -86,7 +86,7 @@ public class PersonDao extends Dao{
 		try {
 			
 			conn = DB.getConnection();
-			String sql = "CALL sp_set_persons_LOAD_PROFILE(?);";
+			String sql = "CALL sp_set_persons_LOAD_PROFILE(?)";
 			cst = conn.prepareCall(sql);
 			cst.setInt(1, contact.getId());
 			
@@ -100,13 +100,13 @@ public class PersonDao extends Dao{
 			    	  
 	    	        contact.setDocument(rs.getString(1));
 	    	        contact.setName(rs.getString(2));
-	    	        contact.setLocation(new Location(new Phone(rs.getString(3)), new Address(4)));
-	    	        contact.setUser(new User(rs.getString(5)));
-	    	        contact.getUser().setEmail(rs.getString(6));
-	    	        contact.getUser().setRole( new Role(rs.getString(7)));
-	    	        contact.getUser().setDefaultAction(new Action(rs.getInt(8)));
-	    	        if(rs.getBlob(9) != null){
-		    	        Blob blob = rs.getBlob(9);	    	     	    	        
+	    	        contact.setLocation(new Location(rs.getInt(3),new Phone(rs.getString(4)), new Address(5)));
+	    	        contact.setUser(new User(rs.getInt(6),rs.getString(7)));
+	    	        contact.getUser().setEmail(rs.getString(8));
+	    	        contact.getUser().setRole( new Role(rs.getString(9)));
+	    	        contact.getUser().setDefaultAction(new Action(rs.getInt(10)));
+	    	        if(rs.getBlob(11) != null){
+		    	        Blob blob = rs.getBlob(11);	    	     	    	        
 		    	        contact.setPicture(new Picture(Base64.getEncoder().encodeToString(blob.getBytes(1, (int) blob.length()))));
 	    	        }
 

@@ -44,9 +44,9 @@ public class User extends Entity {
 		
 	}
 
-	public User(String name) {
+	public User(int id,String name) {
           
-		super(0);
+		super(id);
 		this.name = name;
 	}
 	
