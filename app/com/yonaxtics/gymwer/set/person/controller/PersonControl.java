@@ -44,7 +44,7 @@ public class PersonControl extends Controller {
 		}		
 	}
 	
-	public static Result savePerson(){
+	public static Result saveProfile(){
 		
 		return ok();
 	}

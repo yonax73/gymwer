@@ -72,68 +72,40 @@ public class UserControl extends Controller {
 	
 	
 	public static Result createAccount() {
-
 		String result = null;
 		User user = null;
 		Person contact = null;
-		Gym gym = null;		
-		
+		Gym gym = null;				
 		final Map<String, String[]> data = request().body().asFormUrlEncoded();		
-		
 		if (dec(data.get("?")[4]).equals(CHECKED)) {
-
-			if (data.get("?")[2].equals(data.get("?")[3])) {
-				
+			if (data.get("?")[2].equals(data.get("?")[3])) {				
 				user = new User(dec(data.get("?")[1]), data.get("?")[2], new Role(MASTER_VALUE_ROL_SUPER_ADMIN));
-
-				if(!UserLogic.exists(user)){							
-					
-			        if(UserLogic.create(user)){
-			        	
-			        	gym = new Gym(dec(data.get("?")[0]));			        		
-		        		
-		        		if(GymLogic.create(gym)){
-			        	
-		        			contact = new Person(user,gym);	
-		        			
-			        	if(PersonLogic.create(contact)){			        	
-			        			
-			        			return ok(REQUEST_SUCCESS);
-			        			
-			        		}else {
-			        		   
+				if(!UserLogic.exists(user)){												
+			        if(UserLogic.create(user)){			        	
+			        	gym = new Gym(dec(data.get("?")[0]));		        		
+		        		if(GymLogic.create(gym)){			        	
+		        			contact = new Person(user,gym);			        			
+			        	if(PersonLogic.create(contact)){				        			
+			        			return ok(REQUEST_SUCCESS);			        			
+			        		}else {			        		   
 			        			result = "Internal Error 2001";
-			        		}		        		
-			        		
-			        	}else {
-			        		
+			        		}			        		
+			        	}else {			        		
 			        		result = "Internal Error 3001";
-			        	}
-			        	
-			        } else {
-			        	
+			        	}			        	
+			        } else {			        	
 			        	result = "Internal Error 1001";
-			        }	
-					
-				} else {
-					
-					result = "This user already exists";
-					
-				}
-				
-					
-			} else { 
-				
+			        }						
+				} else {					
+					result = "This user already exists";					
+				}					
+			} else { 				
 				result = "The password and its confirm are not the same."; 
-		 	}
-			
-		} else {
-			
+		 	}			
+		} else {			
 			result = "Please choose Terms and Conditions."; 
 		}
-
 		return ok(result);
-
 	}
     
 	

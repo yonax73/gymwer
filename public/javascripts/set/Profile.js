@@ -64,7 +64,9 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 	var btnSave = Play.getId('btnSave');	
 	var frmProfile = Play.getId('frmProfile');	
 	var notify = new Notify(Play.getId('notify'));	
-	var frmProfileOk = new FormOk(frmProfile);	
+	var frmProfileOk = new FormOk(frmProfile);
+	  var selectPageHome= null;
+
 /* ==================================================================================================================
  * REGION READY
  * ===================================================================================================================
@@ -84,7 +86,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 		xhr.onreadystatechange = function () {		       
 			  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
 				  if(this.status === Constants.STATUS_OK){									  
-					  var profile = Json.parse(this.responseText);
+					var  profile = Json.parse(this.responseText);
 					  localStorage.setItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE,JSON.stringify(profile));
 					  fill(profile);						
 				   } 					  
@@ -94,7 +96,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 		xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
 		xhr.send();		
 		xhr.timeout = Constants.TIME_OUT;
-		 xhr.ontimeout = function () {
+		xhr.ontimeout = function () {
 			 notify.danger('Time out!!!');									
 		}	
      }
@@ -113,7 +115,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 		  }
 		  Play.getId('txtNameUser').value = profile.user.name;
 		  Play.getId('txtRole').textContent = profile.user.role.name;	
-		  var selectPageHome = new Select(Play.getId('selectPageHome'),List.url());
+		  selectPageHome = new Select(Play.getId('selectPageHome'),List.url());
 	      selectPageHome.init(profile.user.defaultAction.id);	
 		  Play.getId('txtEmail').value = profile.user.email;
 		  Play.getId('nameUser').textContent = profile.user.name;
@@ -186,8 +188,29 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 	 function save(){		 
 		 frmProfile.onsubmit = function(e){
 			 e.preventDefault();
-			 if(frmProfileOk.isValid()){
-				 
+			 if(frmProfileOk.isValid()){					
+					var profile = JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE));					
+					var inputs = Play.appendInputHidden([profile.location.id, profile.user.id, selectPageHome.getOption()],e.target);
+					Play.printForm(e.target);
+					Play.removeInputHidden(inputs);
+					
+					
+//					var xhr = new XMLHttpRequest();		
+//					xhr.onreadystatechange = function () {		       
+//						  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
+//							  if(this.status === Constants.STATUS_OK){									  
+//								  //limpiar form of localstorage
+//								  notify.success('Your profile has been saved successfully!');								  		
+//							   } 					  
+//						  }		  
+//					}
+//					xhr.open('GET','/saveProfile');
+//					xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
+//					xhr.send();		
+//					xhr.timeout = Constants.TIME_OUT;
+//					xhr.ontimeout = function () {
+//						 notify.danger('Time out!!!');									
+//					}					 
 			 }			 
 		 }			 
 	}

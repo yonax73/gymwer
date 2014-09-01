@@ -121,7 +121,8 @@ define(['./Constants'], function(Constants) {
 			case 'checkbox':
 			case 'textarea':
 			case 'select-one':
-			case 'password':				
+			case 'password':
+			case 'hidden':	
 
 				serialized.push(Play.encd(value));
 
@@ -206,7 +207,38 @@ define(['./Constants'], function(Constants) {
 		return 'data:'+mime+';base64,'+ src;
 	}
 	
+    Play.appendInputHidden = function(values,form){    	
+    	var inputs = new Array();
+    	for (var i = 0; i < values.length; i++) {			
+			var input =  document.createElement('input');
+			input.type = 'hidden';
+			input.value =  values[i];
+			inputs.push(input);			
+			form.appendChild(input);
+		}
+    	return inputs
+    }
     
+    Play.removeInputHidden = function(inputs){    	
+    	for (var i = 0; i < inputs.length; i++) {			
+    		inputs[i].parentNode.removeChild(inputs[i]);
+		}
+    }
+    
+    Play.printForm = function(form){
+    	var elems = form.elements;
+		var  i, len = elems.length;
+		for (i = 0; i < len; i += 1) {		
+			var element = elems[i];
+			console.log('element:')
+			console.log(element);
+			console.log('type:');
+			console.log(element.type);
+			console.log('value:');
+			console.log(element.value);
+			console.log('------*-------');
+       }
+    }
 	
 
 	return Play;

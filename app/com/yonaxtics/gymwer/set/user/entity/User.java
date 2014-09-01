@@ -50,6 +50,12 @@ public class User extends Entity {
 		this.name = name;
 	}
 	
+	public User(String name) {
+        
+		super(0);
+		this.name = name;
+	}
+	
 
 
 	private void extractNameFromEmail(){		
