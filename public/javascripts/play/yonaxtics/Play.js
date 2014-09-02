@@ -24,7 +24,7 @@
  * ========================================================================
  */
 
-define(['./Constants'], function(Constants) {
+	define(['./Constants'], function(Constants) {
 
 	function Play() {}
 	
@@ -103,37 +103,29 @@ define(['./Constants'], function(Constants) {
 	 * @returns serialize data form
 	 */
 	Play.serialize = function(form) {
-
 		var elems = form.elements;
-
 		var serialized = [], i, len = elems.length;
-
 		for (i = 0; i < len; i += 1) {
-
 			var element = elems[i];
 			var type = element.type;			
 			var value = element.value;
-
-			switch (type) {
-
-			case 'text':
-			case 'radio':
-			case 'checkbox':
-			case 'textarea':
-			case 'select-one':
-			case 'password':
-			case 'hidden':	
-
-				serialized.push(Play.encd(value));
-
-				break;
-
-			default:
-				break;
-
+			var name = element.name;			
+			if(name !== null || name !== undefined || name !== ''){
+				switch (type) {
+				case 'text':
+				case 'radio':
+				case 'checkbox':
+				case 'textarea':
+				case 'select-one':
+				case 'password':
+				case 'hidden':	
+					serialized.push(Play.encd(name,value));
+					break;
+				default:
+					break;
+				}
 			}
 		}
-
 		return serialized.join('&');
 	}
 	
@@ -168,9 +160,9 @@ define(['./Constants'], function(Constants) {
 	
 	
 	
-	Play.encd = function(value){		
+	Play.encd = function(name,value){		
 			
-		return '?='+(''+Play.enc(value)).replace(/=/g,'?');
+		return name+'='+(''+Play.enc(value)).replace(/=/g,'?');
 	}
 	
 	
@@ -207,16 +199,17 @@ define(['./Constants'], function(Constants) {
 		return 'data:'+mime+';base64,'+ src;
 	}
 	
-    Play.appendInputHidden = function(values,form){    	
+    Play.appendInputHidden = function(data,form){    	
     	var inputs = new Array();
-    	for (var i = 0; i < values.length; i++) {			
+    	for (var i = 0; i < data.length; i++) {			
 			var input =  document.createElement('input');
 			input.type = 'hidden';
-			input.value =  values[i];
+			input.value =  data[i].value;
+			input.name = data[i].name;
 			inputs.push(input);			
 			form.appendChild(input);
 		}
-    	return inputs
+    	return inputs;
     }
     
     Play.removeInputHidden = function(inputs){    	
@@ -230,12 +223,10 @@ define(['./Constants'], function(Constants) {
 		var  i, len = elems.length;
 		for (i = 0; i < len; i += 1) {		
 			var element = elems[i];
-			console.log('element:')
-			console.log(element);
-			console.log('type:');
-			console.log(element.type);
-			console.log('value:');
-			console.log(element.value);
+			console.info('element:');
+			console.info(element);
+			console.info('type: '+element.type);			
+			console.info('value: '+element.value);			
 			console.log('------*-------');
        }
     }

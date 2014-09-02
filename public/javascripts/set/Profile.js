@@ -65,28 +65,25 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 	var frmProfile = Play.getId('frmProfile');	
 	var notify = new Notify(Play.getId('notify'));	
 	var frmProfileOk = new FormOk(frmProfile);
-	  var selectPageHome= null;
-
+	var selectPageHome= null;
+	var  profile = null;
 /* ==================================================================================================================
  * REGION READY
  * ===================================================================================================================
  */	
 	if(Play.ready()){		
 		init();		
-	}
-	
+	}	
 /* ==================================================================================================================
  * REGION LOAD
  * ===================================================================================================================
- */	
-	
-	function load(){
-		
+ */		
+	function load(){		
 		var xhr = new XMLHttpRequest();		
 		xhr.onreadystatechange = function () {		       
 			  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
 				  if(this.status === Constants.STATUS_OK){									  
-					var  profile = Json.parse(this.responseText);
+					  profile = Json.parse(this.responseText);
 					  localStorage.setItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE,JSON.stringify(profile));
 					  fill(profile);						
 				   } 					  
@@ -99,16 +96,10 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 		xhr.ontimeout = function () {
 			 notify.danger('Time out!!!');									
 		}	
-     }
-	
-	
-	
+     }	
 	function loadList(){
 		List.url();	
-	}
-	
-	
-	
+	}	
 	function fill(profile){          
 		  if(profile.picture != null){
 			Play.getId('userPicture').src =  Play.base64Blob(profile.picture.mime, profile.picture.src);
@@ -122,16 +113,13 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 		  Play.getId('txtFullName').value = profile.name;
 		  Play.getId('txtDocument').value = profile.document;
 		  Play.getId('txtAddress').value = profile.location.address.address;
-		  Play.getId('txtPhone').value = profile.location.phone.phone;	
-		
+		  Play.getId('txtPhone').value = profile.location.phone.phone;		
 	}
 /* ==================================================================================================================
  * REGION UPLOAD PICTURE
  * ===================================================================================================================
- */	
-	
-   function uploadPicture(){
-	   
+ */		
+   function uploadPicture(){	   
 		  Play.getId('uploadImage').onclick = function(){			  
 			  Play.getId('fileselect').click();
 		  }		  
@@ -142,16 +130,18 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 			  handleFileSelect(e);
 		  }
    }	
-   function handleFileSelect(evt) {
-		  
+   function handleFileSelect(evt) {		  
 		    var picture = evt.target.files[0];
 		    var xhr = null;
 		    var reader = null;		    
 		    if(picture.type.match('image.*')){		    	
 		    	if(picture.size <= 65535){		    		
 					    xhr = new XMLHttpRequest();						
-						xhr.onreadystatechange = function () {						       
-							  if (this.readyState === Constants.READYSTATE_COMPLETE) {								  						
+						xhr.onreadystatechange = function () {	
+							  notify.wait('Upload picture	...');	
+							  Play.getId('fileselect').disabled = true;
+							  if (this.readyState === Constants.READYSTATE_COMPLETE) {	
+								  Play.getId('fileselect').disabled = false;
 								  if(this.status === Constants.STATUS_OK && this.responseText === Constants.REQUEST_SUCCESS){									  
 								    	reader = new FileReader();
 									    reader.onload = (function(theFile) {
@@ -160,7 +150,8 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 								        };
 								      })(picture);		      
 								      reader.readAsDataURL(picture);
-								      localStorage.removeItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE);						
+								      localStorage.removeItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE);	
+								      notify.success('The picture has been changed successfully!!!');	
 								}									  
 						  }							  
 						}
@@ -170,57 +161,55 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 						xhr.send(formData);
 						xhr.timeout = Constants.TIME_OUT;
 						xhr.ontimeout = function () {
-							notify.danger('Time out!!!');										
+							notify.danger('Time out!!!');	
+							Play.getId('fileselect').disabled = false;
 						}		    		
 		    	} else {		    		
-		    		 notify.danger('the image can be maximun of 64 KB');
+		    		 notify.danger('The image can be maximun of 64 KB');
 		    	}		    	
 		    } else {		    	
-		    	notify.danger('the file not is a image valid!');
+		    	notify.danger('The file not is a image valid!');
 		    }			    
-	  }
-	  
+	  }	  
  /* ==================================================================================================================
  * REGION SAVE
  * ===================================================================================================================
- */	
-	  
+ */		  
 	 function save(){		 
 		 frmProfile.onsubmit = function(e){
 			 e.preventDefault();
-			 if(frmProfileOk.isValid()){					
-					var profile = JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE));					
-					var inputs = Play.appendInputHidden([profile.location.id, profile.user.id, selectPageHome.getOption()],e.target);
-					Play.printForm(e.target);
-					Play.removeInputHidden(inputs);
-					
-					
-//					var xhr = new XMLHttpRequest();		
-//					xhr.onreadystatechange = function () {		       
-//						  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
-//							  if(this.status === Constants.STATUS_OK){									  
-//								  //limpiar form of localstorage
-//								  notify.success('Your profile has been saved successfully!');								  		
-//							   } 					  
-//						  }		  
-//					}
-//					xhr.open('GET','/saveProfile');
-//					xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-//					xhr.send();		
-//					xhr.timeout = Constants.TIME_OUT;
-//					xhr.ontimeout = function () {
-//						 notify.danger('Time out!!!');									
-//					}					 
+			 if(frmProfileOk.isValid()){	
+				    var data = [{name:'txtLocationId',value:profile.location.id},{name:'txtUserId',value:profile.user.id},{name:'txtDefaultActionId',value:selectPageHome.getOption()}];				    
+					var inputs = Play.appendInputHidden(data,e.target);
+					Play.removeInputHidden(inputs);					
+					var xhr = new XMLHttpRequest();		
+					xhr.onreadystatechange = function () {	
+						  notify.wait('Loading...');	
+						  btnSave.disabled = true;
+						  if (this.readyState === Constants.READYSTATE_COMPLETE) {	
+							  btnSave.disabled = false;
+							  if(this.status === Constants.STATUS_OK){									  
+								  //limpiar form of localstorage
+								  notify.success('Your profile has been saved successfully!');
+								  
+							   } 					  
+						  }		  
+					}
+					xhr.open('GET','/saveProfile');
+					xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
+					xhr.send();		
+					xhr.timeout = Constants.TIME_OUT;
+					xhr.ontimeout = function () {
+						 notify.danger('Time out!!!');
+						 btnSave.disabled = false;
+					}					 
 			 }			 
 		 }			 
 	}
-	 
-
 /* ==================================================================================================================
  * REGION INIT
  * ===================================================================================================================
- */	
-	
+ */		
 	function init(){
 		
 		  loadList();
@@ -228,7 +217,8 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 		  if(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE) == null){			  
 			  load();
 		  }else {
-			  fill(JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE)));
+			  profile = JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE)); 
+			  fill(profile);
 		  }		  
 		  uploadPicture();	
 		  save();

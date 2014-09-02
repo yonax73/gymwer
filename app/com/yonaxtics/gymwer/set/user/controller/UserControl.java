@@ -77,12 +77,12 @@ public class UserControl extends Controller {
 		Person contact = null;
 		Gym gym = null;				
 		final Map<String, String[]> data = request().body().asFormUrlEncoded();		
-		if (dec(data.get("?")[4]).equals(CHECKED)) {
-			if (data.get("?")[2].equals(data.get("?")[3])) {				
-				user = new User(dec(data.get("?")[1]), data.get("?")[2], new Role(MASTER_VALUE_ROL_SUPER_ADMIN));
+		if (dec(data.get("cbxTerms")[0]).equals(CHECKED)) {
+			if (data.get("txtPassword")[0].equals(data.get("txtPasswordConfirm")[0])) {				
+				user = new User(dec(data.get("txtEmail")[0]), data.get("txtPassword")[0], new Role(MASTER_VALUE_ROL_SUPER_ADMIN));
 				if(!UserLogic.exists(user)){												
 			        if(UserLogic.create(user)){			        	
-			        	gym = new Gym(dec(data.get("?")[0]));		        		
+			        	gym = new Gym(dec(data.get("txtNameGym")[0]));		        		
 		        		if(GymLogic.create(gym)){			        	
 		        			contact = new Person(user,gym);			        			
 			        	if(PersonLogic.create(contact)){				        			
@@ -115,7 +115,7 @@ public class UserControl extends Controller {
 		
 		final Map<String, String[]> data = request().body().asFormUrlEncoded();			
 			
-		Person contact = new Person(new User(dec(data.get("?")[1]),data.get("?")[2]), new Gym(dec(data.get("?")[0])));			
+		Person contact = new Person(new User(dec(data.get("txtEmail")[0]),data.get("txtPassword")[0]), new Gym(dec(data.get("txtSiteName")[0])));			
 		
 		if(UserLogic.signIn(contact)){
 				
