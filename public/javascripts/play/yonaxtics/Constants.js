@@ -132,7 +132,7 @@ define([], function() {
 	/**
 	 * XMLHTTPREQUEST READY STATE
 	 */
-	Constants.TIME_OUT = 10000;		
+	Constants.TIME_OUT = 10000000;		
 	
 
 	return Constants;

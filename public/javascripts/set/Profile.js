@@ -179,25 +179,33 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 		 frmProfile.onsubmit = function(e){
 			 e.preventDefault();
 			 if(frmProfileOk.isValid()){	
-				    var data = [{name:'txtLocationId',value:profile.location.id},{name:'txtUserId',value:profile.user.id},{name:'txtDefaultActionId',value:selectPageHome.getOption()}];				    
-					var inputs = Play.appendInputHidden(data,e.target);
-					Play.removeInputHidden(inputs);					
+				    var data = [
+				        {name:'txtLocationId',value:profile.location.id},
+				        {name:'txtUserId',value:profile.user.id},
+				        {name:'txtDefaultActionId',value:selectPageHome.getOption()},
+				        {name:'txtRoleId',value:profile.user.role.id},
+				        {name:'txtPhoneId',value:profile.location.phone.id},
+				        {name:'txtAddressId',value:profile.location.address.id}
+				    ];				    
+					var inputs = Play.appendInputHidden(data,e.target);					
 					var xhr = new XMLHttpRequest();		
 					xhr.onreadystatechange = function () {	
 						  notify.wait('Loading...');	
 						  btnSave.disabled = true;
-						  if (this.readyState === Constants.READYSTATE_COMPLETE) {	
+						  if (this.readyState === Constants.READYSTATE_COMPLETE) {
+							  Play.removeInputHidden(inputs);					
 							  btnSave.disabled = false;
-							  if(this.status === Constants.STATUS_OK){									  
-								  //limpiar form of localstorage
-								  notify.success('Your profile has been saved successfully!');
-								  
+							  if(this.status === Constants.STATUS_OK  && this.responseText === Constants.REQUEST_SUCCESS){									  
+								  localStorage.removeItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE);
+								  notify.success('Your profile has been saved successfully!');								  
+							   }else{
+								   notify.danger(this.responseText); 
 							   } 					  
 						  }		  
 					}
-					xhr.open('GET','/saveProfile');
+					xhr.open('POST','/saveProfile');
 					xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-					xhr.send();		
+					xhr.send(Play.serialize(e.target));		
 					xhr.timeout = Constants.TIME_OUT;
 					xhr.ontimeout = function () {
 						 notify.danger('Time out!!!');
@@ -222,6 +230,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 		  }		  
 		  uploadPicture();	
 		  save();
+		  
 	}
 	
 

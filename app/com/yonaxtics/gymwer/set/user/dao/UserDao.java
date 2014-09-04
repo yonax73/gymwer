@@ -22,15 +22,11 @@ import com.yonaxtics.gymwer.util.base.dao.Dao;
 public class UserDao extends Dao{
 
 	
-	public static boolean create(User user){	
-		
-		boolean result = false;
-		
+	public static boolean create(User user){		
+		boolean result = false;		
 		CallableStatement cst = null;
-		Connection conn = null;
-		
-		try {
-			 
+		Connection conn = null;		
+		try {			 
 			 conn = DB.getConnection();			 
 			 String sql = "CALL sp_set_users_CREATE(?,?,?,?,?);";			 
 			 cst = conn.prepareCall(sql);
@@ -38,25 +34,16 @@ public class UserDao extends Dao{
 			 cst.setString(2, user.getName());
 			 cst.setString(3, user.getPassword());			 
 			 cst.setString(4, user.getEmail());
-			 cst.setInt(5, user.getRole().getId());
-			 
-			 result = cst.executeUpdate() > 0;
-			 
-			 if(result) user.setId(cst.getInt(1));
-			 
-		} catch (Exception e) {
-              
-			Logger.error(e.getMessage());
-			
-		} finally{
-			
+			 cst.setInt(5, user.getRole().getId());			 
+			 result = cst.executeUpdate() > 0;			 
+			 if(result) user.setId(cst.getInt(1));			 
+		} catch (Exception e) {              
+			Logger.error(e.getMessage());			
+		} finally{			
 			if(cst != null) cst = null;
-			close(conn);
-			
-		}
-		
-		return result;
-		
+			close(conn);			
+		}		
+		return result;		
 	}
 	
 	
@@ -97,48 +84,55 @@ public class UserDao extends Dao{
 	
 	
 	
-	public static boolean signIn(Person person) {
-		
+	public static boolean signIn(Person person) {		
 		boolean result = false;		
 		CallableStatement cst = null;
 		ResultSet rs  = null;
-		Connection conn = null;
-		
-		try {
-			
+		Connection conn = null;		
+		try {			
 			conn = DB.getConnection();
 			String sql = "CALL sp_set_users_LOGIN(?,?,?);";
-			cst = conn.prepareCall(sql);
-			
+			cst = conn.prepareCall(sql);			
 			cst.setString(1, person.getGym().getName());
 			cst.setString(2, person.getUser().getEmail());
-			cst.setString(3, person.getUser().getPassword());
-			
-			rs  = cst.executeQuery();	
-			
-			if(rs.next()){
-				
-				result = rs.getInt(1) == 1;
-				
-				if(result) {
-					
+			cst.setString(3, person.getUser().getPassword());			
+			rs  = cst.executeQuery();				
+			if(rs.next()){				
+				result = rs.getInt(1) == 1;				
+				if(result) {					
 					person.setId(rs.getInt(2));
 					person.getUser().setName(rs.getString(3));
-					person.getUser().setDefaultAction(new Action(rs.getString(4)));
-					
+					person.getUser().setDefaultAction(new Action(rs.getString(4)));					
 				}
 			}			
-			
-		} catch (Exception e) {
-			
-			Logger.error(e.getMessage());
-			
-		} finally{
-			
+		} catch (Exception e) {			
+			Logger.error(e.getMessage());			
+		} finally{			
 			if(cst != null) cst = null;
 			close(conn);
-		}
-		
+		}		
 		return result;		
+	}
+	
+	public static boolean update(User user){
+		boolean result = false;
+		CallableStatement cst = null;		
+		Connection conn = null;
+		try {
+			conn = DB.getConnection();
+			cst = conn.prepareCall("CALL sp_set_users_UPDATE(?,?,?,?,?)");
+			cst.setInt(1,user.getId());
+			cst.setInt(2,user.getRole().getId());
+			cst.setInt(3, user.getDefaultAction().getId());
+			cst.setString(4, user.getName());
+			cst.setString(5, user.getEmail());
+			result = cst.executeUpdate() > 0;
+		} catch (Exception e) {
+            Logger.error(e.getMessage());
+		}finally{
+			if(cst!=null) cst = null;
+			close(conn);
+		}
+		return result;
 	}
 }

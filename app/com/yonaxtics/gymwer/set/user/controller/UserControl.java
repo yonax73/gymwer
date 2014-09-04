@@ -111,26 +111,18 @@ public class UserControl extends Controller {
 	
 	
 	
-	public static Result signIn(){
-		
+	public static Result signIn(){		
 		final Map<String, String[]> data = request().body().asFormUrlEncoded();			
-			
-		Person contact = new Person(new User(dec(data.get("txtEmail")[0]),data.get("txtPassword")[0]), new Gym(dec(data.get("txtSiteName")[0])));			
-		
-		if(UserLogic.signIn(contact)){
-				
+		Person contact = new Person(new User(dec(data.get("txtEmail")[0]),data.get("txtPassword")[0]), new Gym(dec(data.get("txtSiteName")[0])));		
+		if(UserLogic.signIn(contact)){				
 				session(SESSION_OK, enc(String.valueOf(contact.getId())));
 				session(SESSION_USER_NAME,contact.getUser().getName());
 				session(SESSION_GYM_NAME,contact.getGym().getName());
 				session(SESSION_DEFAULT_ACTION_URL,contact.getUser().getDefaultAction().getUrl());				
-				
-				return ok(contact.getUser().getDefaultAction().getUrl());
-				
-			} else {
-				
+				return ok(contact.getUser().getDefaultAction().getUrl());				
+			} else {				
 				return ok(REQUEST_BAD);
-		 }					
-		
+		 }							
 	}
 
 	

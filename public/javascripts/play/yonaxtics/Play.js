@@ -110,14 +110,27 @@
 			var type = element.type;			
 			var value = element.value;
 			var name = element.name;			
-			if(name !== null || name !== undefined || name !== ''){
+			if(name !== null || name !== undefined || name !== ""){
 				switch (type) {
 				case 'text':
 				case 'radio':
-				case 'checkbox':
-				case 'textarea':
-				case 'select-one':
-				case 'password':
+				case 'checkbox':					            
+	    	    case 'search':
+	    	    case 'email':
+	    	    case 'url':
+	    	    case 'tel':
+	    	    case 'number':
+	    	    case 'range':
+	    	    case 'date':
+	    	    case 'month':
+	    	    case 'week':
+	    	    case 'time':
+	    	    case 'datetime':
+	    	    case 'datetime-local':
+	    	    case 'color':
+	    	    case 'textarea':
+	    	    case 'password':
+	    	    case 'select':   
 				case 'hidden':	
 					serialized.push(Play.encd(name,value));
 					break;

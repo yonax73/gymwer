@@ -68,5 +68,11 @@ public class Constant {
       */
      public final static int ACTION_ID_LOAD_PROFILE = 25;
      public final static int ACTION_ID_LOAD_GYM = 26;
+     
+     /*
+      * MASTERS ID
+      */
+     public final static int MASTER_PHONE_ID = 3;
+     public final static int MASTER_ADDRESS_ID = 4;
 	
 }

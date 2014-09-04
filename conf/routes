@@ -72,6 +72,7 @@ POST /saveProfile                  com.yonaxtics.gymwer.set.person.controller.Pe
 POST /uploadPicture                com.yonaxtics.gymwer.set.picture.controller.PictureControl.uploadPicture()
 
 #ListControl
+
 GET /personUrls                              com.yonaxtics.gymwer.util.list.controller.ListControl.personUrls()   
 
 

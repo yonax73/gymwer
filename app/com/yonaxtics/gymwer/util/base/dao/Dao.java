@@ -14,14 +14,10 @@ public class Dao {
 	
 	
 
-	public static  void close(Connection connection){
-		
-	    try {
-	    	
-			connection.close();
-			
-		} catch (SQLException e) {
-			
+	public static  void close(Connection connection){		
+	    try {	    	
+			connection.close();			
+		} catch (SQLException e) {			
 			e.printStackTrace();
 		}
 	}

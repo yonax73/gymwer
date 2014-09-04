@@ -55,6 +55,17 @@ public  class   UserLogic  {
 	}
 	
 	
+	public static boolean update(User user){
+		boolean result = false;
+		if(user != null && user.getId() > 0){
+			if(user.getRole().getId() > 0 && user.getDefaultAction().getId() > 0){
+				result = UserDao.update(user);	
+			}			
+		}
+		return result;
+	}
+	
+	
 	
 	
 
