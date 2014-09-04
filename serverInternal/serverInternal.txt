@@ -9,6 +9,7 @@
 
 #Internal Error Gyms- 30
 3001 = Error creating gym From UserControl - createAcount
+3002 = Error Load gym From GymControl - load
 
 #Internal Error Permissions- 40
 4001 = Error tryning Load Nav per Contact - loadNav

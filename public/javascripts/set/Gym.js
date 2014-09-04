@@ -10,7 +10,9 @@ require.config({
 		Constants : 'play/yonaxtics/Constants',
 		Play :      'play/yonaxtics/Play',		
 		Json :      'play/yonaxtics/Json',
-		Nav :      'play/yonaxtics/Nav'	
+		Nav :      'play/yonaxtics/Nav',
+		Notify:     'play/yonaxtics/Notify',
+		FormOk:     'play/yonaxtics/FormOk'
 
 			
 	}
@@ -50,62 +52,110 @@ require.config({
 
 
 
-requirejs(['Aes', 'Constants', 'Play','Json','Nav'],function(Aes,Constants, Play, Json,Nav ) {
-
-	
-	
+requirejs(['Aes', 'Constants', 'Play','Json','Nav','Notify','FormOk'],function(Aes,Constants, Play, Json,Nav,Notify,FormOk  ) {	
 	
 /* ==================================================================================================================
  * REGION ATTRIBUTES
  * ===================================================================================================================*/
-
-	
-	if(Play.ready()){ 	
-	
-		load();
-		init();
-		
-	}
-
-	
+	var btnSave = Play.getId('btnSave');	
+	var frmGym = Play.getId('frmGym');	
+	var notify = new Notify(Play.getId('notify'));	
+	var frmGymOk = new FormOk(frmGym);	
+	var gym = null;
+/* ==================================================================================================================
+ * REGION READY
+ * ===================================================================================================================
+ */	
+		if(Play.ready()){		
+			init();		
+		}	
 /* ==================================================================================================================
  * REGION LOAD
  * ===================================================================================================================
- */	
-	
+ */		
 	function load(){
-		
-		var xhr = new XMLHttpRequest();
-		
-		xhr.onreadystatechange = function () {		
-		       
-			  if (this.readyState === Constants.READYSTATE_COMPLETE) {
-				  						
-				  if(this.status === Constants.STATUS_OK){				 
-					  
-					  var gym = Json.parse(this.responseText);				  
-					  
-				  }else {
-					  
-		               //error message   									  
-				  }
-			  }
+		var xhr = new XMLHttpRequest();		
+		xhr.onreadystatechange = function () {		       
+			  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
+				  if(this.status === Constants.STATUS_OK){									  
+					  gym = Json.parse(this.responseText);
+					  localStorage.setItem(Constants.LOCALSTORAGE_REQUEST_LOAD_GYM,JSON.stringify(gym));
+					  fill(gym);						
+				   } 					  
+			  }		  
 		}
-		xhr.open('GET','/load');
+		xhr.open('GET','/loadGym');
 		xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
 		xhr.send();		
-		//set time out	
-     }
+		xhr.timeout = Constants.TIME_OUT;
+		xhr.ontimeout = function () {
+			 notify.danger('Time out!!!');									
+		}
+     }	
+	function fill(gym){
+	      Play.getId('nameGym').textContent =gym.name;
+		  Play.getId('txtNit').value = gym.nit;
+		  Play.getId('txtName').value = gym.name;
+		  Play.getId('txtAddress').value = gym.location.address.address;
+		  Play.getId('txtPhone').value = gym.location.phone.phone;		
+	}
+ /* ==================================================================================================================
+ * REGION SAVE
+ * ===================================================================================================================
+ */		  
+	 function save(){		 
+		 frmProfile.onsubmit = function(e){
+			 e.preventDefault();
+			 if(frmProfileOk.isValid()){	
+				    var data = [
+				        {name:'txtLocationId',value:profile.location.id},
+				        {name:'txtUserId',value:profile.user.id},
+				        {name:'txtDefaultActionId',value:selectPageHome.getOption()},
+				        {name:'txtRoleId',value:profile.user.role.id},
+				        {name:'txtPhoneId',value:profile.location.phone.id},
+				        {name:'txtAddressId',value:profile.location.address.id}
+				    ];				    
+					var inputs = Play.appendInputHidden(data,e.target);					
+					var xhr = new XMLHttpRequest();		
+					xhr.onreadystatechange = function () {	
+						  notify.wait('Loading...');	
+						  btnSave.disabled = true;
+						  if (this.readyState === Constants.READYSTATE_COMPLETE) {
+							  Play.removeInputHidden(inputs);					
+							  btnSave.disabled = false;
+							  if(this.status === Constants.STATUS_OK  && this.responseText === Constants.REQUEST_SUCCESS){									  
+								  localStorage.removeItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE);
+								  notify.success('Your profile has been saved successfully!');								  
+							   }else{
+								   notify.danger(this.responseText); 
+							   } 					  
+						  }		  
+					}
+					xhr.open('POST','/saveProfile');
+					xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
+					xhr.send(Play.serialize(e.target));		
+					xhr.timeout = Constants.TIME_OUT;
+					xhr.ontimeout = function () {
+						 notify.danger('Time out!!!');
+						 btnSave.disabled = false;
+					}					 
+			 }			 
+		 }			 
+	}
 	
 
 /* ==================================================================================================================
  * REGION INIT
- * ===================================================================================================================
- */	
+ * ===================================================================================================================*/	
 	
-	  function init(){
-		
+	  function init(){		
 		  Nav.init();
+		  if(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_GYM) == null){			  
+			  load();
+		  }else {
+			  gym = JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_GYM)); 
+			  fill(gym);
+		  }		
 	}
 	
 	

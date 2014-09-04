@@ -3,6 +3,7 @@ package com.yonaxtics.gymwer.set.user.controller;
 
 import static com.yonaxtics.gymwer.sec.Sec.dec;
 
+
 import static com.yonaxtics.gymwer.sec.Sec.enc;
 import static com.yonaxtics.gymwer.util.Constant.CHECKED;
 import static com.yonaxtics.gymwer.util.Constant.MASTER_VALUE_ROL_SUPER_ADMIN;
@@ -11,6 +12,7 @@ import static com.yonaxtics.gymwer.util.Constant.SESSION_GYM_NAME;
 import static com.yonaxtics.gymwer.util.Constant.SESSION_OK;
 import static com.yonaxtics.gymwer.util.Constant.SESSION_USER_NAME;
 import static com.yonaxtics.gymwer.util.Constant.SESSION_DEFAULT_ACTION_URL;
+import static com.yonaxtics.gymwer.util.Constant.SESSION_GYM_ID;
 import static com.yonaxtics.gymwer.util.Constant.REQUEST_BAD;
 
 import java.util.Map;
@@ -34,42 +36,23 @@ import com.yonaxtics.gymwer.set.user.logic.UserLogic;
  * @version 0.1 (7/16/2014)
  *
  */
-public class UserControl extends Controller {
-
-
-	
+public class UserControl extends Controller {	
 	
 	public static  Result  login() {
-
-		if(session(SESSION_OK)!= null){			
-			
+		if(session(SESSION_OK)!= null){					
 			return redirect(SESSION_DEFAULT_ACTION_URL);
-		}
-		
+		}		
 		return ok(login.render());   
-	}
-
-	
-	
-	
+	}	
 	
 	public static Result signUp() {
-
 		return ok(signup.render());   
-	}
+	}	
 	
-	
-	
-	
-	public static Result signOut(){
-		
-		session().clear();
-		
+	public static Result signOut(){		
+		session().clear();		
 		return redirect("/login");
-	}
-
-	
-	
+	}	
 	
 	public static Result createAccount() {
 		String result = null;
@@ -106,10 +89,7 @@ public class UserControl extends Controller {
 			result = "Please choose Terms and Conditions."; 
 		}
 		return ok(result);
-	}
-    
-	
-	
+	}	
 	
 	public static Result signIn(){		
 		final Map<String, String[]> data = request().body().asFormUrlEncoded();			
@@ -118,21 +98,17 @@ public class UserControl extends Controller {
 				session(SESSION_OK, enc(String.valueOf(contact.getId())));
 				session(SESSION_USER_NAME,contact.getUser().getName());
 				session(SESSION_GYM_NAME,contact.getGym().getName());
-				session(SESSION_DEFAULT_ACTION_URL,contact.getUser().getDefaultAction().getUrl());				
+				session(SESSION_DEFAULT_ACTION_URL,contact.getUser().getDefaultAction().getUrl());		
+				session(SESSION_GYM_ID,enc(String.valueOf(contact.getGym().getId())));		
 				return ok(contact.getUser().getDefaultAction().getUrl());				
 			} else {				
 				return ok(REQUEST_BAD);
 		 }							
-	}
-
+	}	
 	
 	
-	
-	public static Result users(){
-		
-		
-		return ok(user.render());
-		
+	public static Result users(){		
+		return ok(user.render());		
 	}
 
 	

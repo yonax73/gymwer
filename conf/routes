@@ -23,7 +23,7 @@ GET    /users                   com.yonaxtics.gymwer.set.user.controller.UserCon
 
 GET     /dashboard                         com.yonaxtics.gymwer.dpa.gym.controller.GymControl.dashboard()
 GET     /gym                               com.yonaxtics.gymwer.dpa.gym.controller.GymControl.gym()
-GET     /load                              com.yonaxtics.gymwer.dpa.gym.controller.GymControl.load()
+GET     /loadGym                              com.yonaxtics.gymwer.dpa.gym.controller.GymControl.load()
 
 
 

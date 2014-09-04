@@ -102,7 +102,8 @@ public class UserDao extends Dao{
 				if(result) {					
 					person.setId(rs.getInt(2));
 					person.getUser().setName(rs.getString(3));
-					person.getUser().setDefaultAction(new Action(rs.getString(4)));					
+					person.getUser().setDefaultAction(new Action(rs.getString(4)));		
+					person.getGym().setId(rs.getInt(5));
 				}
 			}			
 		} catch (Exception e) {			

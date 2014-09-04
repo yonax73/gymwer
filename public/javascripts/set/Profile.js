@@ -218,19 +218,17 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
  * REGION INIT
  * ===================================================================================================================
  */		
-	function init(){
-		
-		  loadList();
-		  Nav.init();		
-		  if(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE) == null){			  
-			  load();
-		  }else {
-			  profile = JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE)); 
-			  fill(profile);
-		  }		  
-		  uploadPicture();	
-		  save();
-		  
+	function init(){		
+	  loadList();
+	  Nav.init();		
+	  if(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE) == null){			  
+		  load();
+	  }else {
+		  profile = JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE)); 
+		  fill(profile);
+	  }		  
+	  uploadPicture();	
+	  save();		  
 	}
 	
 

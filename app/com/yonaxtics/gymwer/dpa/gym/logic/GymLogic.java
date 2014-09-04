@@ -23,6 +23,18 @@ public class GymLogic {
 	      
 	    return result;
 	}
+
+	/**
+	 * @param gym
+	 * @return
+	 */
+	public static boolean load(Gym gym) {
+		boolean result = false;
+		if(gym != null && gym.getId() > 0){
+			result = GymDao.load(gym);
+		}
+		return result;
+	}
 	
 	
 	
