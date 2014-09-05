@@ -1,7 +1,7 @@
 package com.yonaxtics.gymwer.util.list.controller;
 
-import static com.yonaxtics.gymwer.sec.Sec.dec;
-import static com.yonaxtics.gymwer.sec.Sec.enc;
+import static com.yonaxtics.gymwer.sec.crypto.aes.Sec.dec;
+import static com.yonaxtics.gymwer.sec.crypto.aes.Sec.enc;
 import static com.yonaxtics.gymwer.util.Constant.SESSION_OK;
 
 import com.yonaxtics.gymwer.set.person.entity.Person;

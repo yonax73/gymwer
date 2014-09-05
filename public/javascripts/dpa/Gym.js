@@ -104,42 +104,43 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Notify','FormOk'],function(A
  * ===================================================================================================================
  */		  
 	 function save(){		 
-		 frmProfile.onsubmit = function(e){
+		 frmGym.onsubmit = function(e){
 			 e.preventDefault();
-			 if(frmProfileOk.isValid()){	
-				    var data = [
-				        {name:'txtLocationId',value:profile.location.id},
-				        {name:'txtUserId',value:profile.user.id},
-				        {name:'txtDefaultActionId',value:selectPageHome.getOption()},
-				        {name:'txtRoleId',value:profile.user.role.id},
-				        {name:'txtPhoneId',value:profile.location.phone.id},
-				        {name:'txtAddressId',value:profile.location.address.id}
-				    ];				    
-					var inputs = Play.appendInputHidden(data,e.target);					
-					var xhr = new XMLHttpRequest();		
-					xhr.onreadystatechange = function () {	
-						  notify.wait('Loading...');	
-						  btnSave.disabled = true;
-						  if (this.readyState === Constants.READYSTATE_COMPLETE) {
-							  Play.removeInputHidden(inputs);					
-							  btnSave.disabled = false;
-							  if(this.status === Constants.STATUS_OK  && this.responseText === Constants.REQUEST_SUCCESS){									  
-								  localStorage.removeItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE);
-								  notify.success('Your profile has been saved successfully!');								  
-							   }else{
-								   notify.danger(this.responseText); 
-							   } 					  
-						  }		  
-					}
-					xhr.open('POST','/saveProfile');
-					xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-					xhr.send(Play.serialize(e.target));		
-					xhr.timeout = Constants.TIME_OUT;
-					xhr.ontimeout = function () {
-						 notify.danger('Time out!!!');
-						 btnSave.disabled = false;
-					}					 
-			 }			 
+			 if(FormOk.hasChanged()){
+				 if(frmGymOk.isValid()){	
+					    var data = [
+					        {name:'txtLocationId',value:gym.location.id},				        
+					        {name:'txtPhoneId',value:gym.location.phone.id},
+					        {name:'txtAddressId',value:gym.location.address.id}
+					    ];				    
+						var inputs = Play.appendInputHidden(data,e.target);					
+						var xhr = new XMLHttpRequest();		
+						xhr.onreadystatechange = function () {	
+							  notify.wait('Loading...');	
+							  btnSave.disabled = true;
+							  if (this.readyState === Constants.READYSTATE_COMPLETE) {
+								  Play.removeInputHidden(inputs);					
+								  btnSave.disabled = false;
+								  if(this.status === Constants.STATUS_OK  && this.responseText === Constants.REQUEST_SUCCESS){									  
+									  localStorage.removeItem(Constants.LOCALSTORAGE_REQUEST_LOAD_GYM);
+									  notify.success('Your data gym has been saved successfully!');								  
+								   }else{
+									   notify.danger(this.responseText); 
+								   } 					  
+							  }		  
+						}
+						xhr.open('POST','/saveGym');
+						xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
+						xhr.send(Play.serialize(e.target));		
+						xhr.timeout = Constants.TIME_OUT;
+						xhr.ontimeout = function () {
+							 notify.danger('Time out!!!');
+							 btnSave.disabled = false;
+						}					 
+				 }	
+			 }else{
+				 notify.warning('No changes to save!!!'); 
+			 }		 
 		 }			 
 	}
 	
@@ -155,16 +156,9 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Notify','FormOk'],function(A
 		  }else {
 			  gym = JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_GYM)); 
 			  fill(gym);
-		  }		
-	}
-	
-	
-	
-	
-	
-
-	
-	
+		  }
+		  save();
+	}	
 	
 });
 

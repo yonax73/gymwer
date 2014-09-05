@@ -17,7 +17,7 @@ public class LocationLogic {
 	public static boolean save(Location location){
 		boolean result = false;
 		  if(location!=null){			  
-				  if(location.getId() > 0){
+				  if(location.exists()){
                         result=LocationDao.update(location);
 				  }else{
 					  result=LocationDao.create(location);

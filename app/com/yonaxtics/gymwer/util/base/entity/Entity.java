@@ -10,61 +10,25 @@ import java.time.*;
  */
 public class Entity {
 
-	
-	
-
-
 	protected int id;
 	protected boolean active;
-	protected LocalDateTime created;
+	protected LocalDateTime created;	
 	
-	
-	
-	
-	
-	public Entity(int id){
-		
-		this.id = id;
-		
+	public Entity(int id){		
+		this.id = id;		
 	}
 	
+	public boolean exists(){		
+		return id > 0;		
+	}	
 	
-	
-	
-		
-
-	
-	
-	
-	
-	public boolean exists(){
-		
-		return id > 0;
-		
-	}
-	
-	
-	
-	
-
-	
-	
-	
-	public boolean isValid(){
-		
+	public boolean isValid(){		
 		return   exists() && isActive();
-	}
+	}	
 	
-	
-	
-	
-	public boolean equals(Entity entity){
-		
+	public boolean equals(Entity entity){		
 		return id  == entity.getId();
 	}
-	
-	
-	
 	
 	public int getId() {
 		return id;

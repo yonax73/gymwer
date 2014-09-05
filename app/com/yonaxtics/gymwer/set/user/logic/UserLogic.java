@@ -1,8 +1,5 @@
 package com.yonaxtics.gymwer.set.user.logic;
 
-
-
-import com.yonaxtics.gymwer.set.person.entity.Person;
 import com.yonaxtics.gymwer.set.user.dao.UserDao;
 import com.yonaxtics.gymwer.set.user.entity.User;
 /**
@@ -28,22 +25,12 @@ public  class   UserLogic  {
 			result = UserDao.exists(user);
 		}		
 		return result;
-	}	
-	
-	public static boolean signIn(Person person){		
-		boolean result = false;		
-		if(person != null && !person.exists() && !person.getGym().getName().isEmpty() && 
-		  !person.getUser().getEmail().isEmpty() && 
-		  !person.getUser().getPassword().isEmpty()){			
-			    result = UserDao.signIn(person);			
-		}		
-		return result;		
-	}	
+	}
 	
 	public static boolean update(User user){
 		boolean result = false;
-		if(user != null && user.getId() > 0){
-			if(user.getRole().getId() > 0 && user.getDefaultAction().getId() > 0){
+		if(user != null && user.exists()){
+			if(user.getRole().exists() && user.getDefaultAction().exists()){
 				result = UserDao.update(user);	
 			}			
 		}

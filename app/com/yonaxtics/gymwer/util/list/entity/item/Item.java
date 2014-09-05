@@ -15,15 +15,10 @@ public class Item {
 	private int option;
 	private String value;
 	
-	
-	
-	
-	public Item(int option, String value){
-		
+	public Item(int option, String value){		
 		this.option = option;
 		this.value = value;
-	}
-	
+	}	
 	public String getValue() {
 		return value;
 	}

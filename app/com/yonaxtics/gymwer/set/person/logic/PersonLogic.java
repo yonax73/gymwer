@@ -15,14 +15,7 @@ public class PersonLogic {
 	    return result;
 	}	
 	
-	public static boolean loadProfile(Person contact){		
-		boolean result = false;		
-		if(contact != null && contact.exists()){			
-			result = PersonDao.loadProfile(contact);
-			contact.setId(0);
-		}		
-		return result;
-	}
+
 
 
 	/**
@@ -31,8 +24,9 @@ public class PersonLogic {
 	 */
 	public static boolean update(Person contact) {
 		boolean result = false;
-		if(contact!=null && contact.getId() >0){
+		if(contact!=null && contact.exists()){
 			result = PersonDao.update(contact);
+			contact.setId(0);
 		}
 		return result;
 	}

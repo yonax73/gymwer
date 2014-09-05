@@ -42,12 +42,14 @@ define([], function() {
     FormOk.hasSuccess;
     FormOk.hasError;
     FormOk.result;
+    FormOk.changed;
     
 	function FormOk(element){
 		
 		FormOk.element = element;
 		FormOk.inputs = element.getElementsByTagName('input');		
 		FormOk.result = false;
+		FormOk.changed = false;
 		FormOk.msgRequired = 'This field is required and can\'t be empty!!!';
 		FormOk.msgFullName = 'This field is not a valid name!!!';
 		FormOk.msgEmail = 'This field is not a valid email address!!!';
@@ -98,6 +100,19 @@ define([], function() {
 			totalMultiple *=multiples[i++];
 		}
 		return totalMultiple > 0;
+	}
+	
+	FormOk.hasChanged = function(){
+		var n =FormOk.inputs.length;
+		var i = 0;				
+		while(i < n && !FormOk.changed){
+			FormOk.inputs[i++].onchange=function(){
+				FormOk.changed = true;
+			}			
+		}		
+		var changedAux = FormOk.changed;
+		FormOk.changed = false;
+		return changedAux;
 	}
 	
 	FormOk.validate = function(input){	

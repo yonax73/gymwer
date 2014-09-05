@@ -1,10 +1,10 @@
 package com.yonaxtics.gymwer.set.permission.controller;
 
-import static com.yonaxtics.gymwer.sec.Sec.dec;
-import static com.yonaxtics.gymwer.sec.Sec.enc;
 import static com.yonaxtics.gymwer.util.Constant.SESSION_GYM_NAME;
 import static com.yonaxtics.gymwer.util.Constant.SESSION_OK;
 import static com.yonaxtics.gymwer.util.Constant.SESSION_USER_NAME;
+import static com.yonaxtics.gymwer.sec.crypto.aes.Sec.dec;
+import static com.yonaxtics.gymwer.sec.crypto.aes.Sec.enc;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;

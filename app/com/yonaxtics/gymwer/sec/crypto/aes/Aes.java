@@ -1,4 +1,4 @@
-package com.yonaxtics.gymwer.sec.crypto;
+package com.yonaxtics.gymwer.sec.crypto.aes;
 
 import java.util.Base64;
 

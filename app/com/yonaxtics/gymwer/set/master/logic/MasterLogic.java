@@ -17,7 +17,7 @@ public class MasterLogic {
 	public static boolean save(MasterValue masterValue){
 		boolean result = false;
 		if(masterValue!=null){
-			if(masterValue.getId() >0){
+			if(masterValue.exists()){
 				result = MasterDao.update(masterValue);
 			}else {
 				result = MasterDao.create(masterValue);

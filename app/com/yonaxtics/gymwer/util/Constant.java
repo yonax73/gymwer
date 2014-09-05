@@ -36,6 +36,7 @@ public class Constant {
 	public static final String SESSION_GYM_NAME = "11508893Y";
 	public static final String SESSION_DEFAULT_ACTION_URL = "11508894Y";   
 	public static final String SESSION_GYM_ID = "11508895Y";   
+	public static final String SESSION_USER_EMAIL = "11508896Y";
      /**
       * STATES MODULES
       */

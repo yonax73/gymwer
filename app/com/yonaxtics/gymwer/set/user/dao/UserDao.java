@@ -9,8 +9,6 @@ import java.sql.Types;
 import play.Logger;
 import play.db.DB;
 
-import com.yonaxtics.gymwer.set.action.entity.Action;
-import com.yonaxtics.gymwer.set.person.entity.Person;
 import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.util.base.dao.Dao;
 /**
@@ -20,7 +18,6 @@ import com.yonaxtics.gymwer.util.base.dao.Dao;
  *
  */
 public class UserDao extends Dao{
-
 	
 	public static boolean create(User user){		
 		boolean result = false;		
@@ -44,68 +41,22 @@ public class UserDao extends Dao{
 			close(conn);			
 		}		
 		return result;		
-	}
+	}	
 	
-	
-	public static boolean exists(User user){
-		
-		boolean result = false;		
-		CallableStatement cst = null;
-		ResultSet rs  = null;
-		Connection conn = null;
-		
-		try {
-			
-			conn = DB.getConnection();
-			String sql = "CALL sp_set_users_EXISTS(?);";
-			cst = conn.prepareCall(sql);
-			
-			cst.setString(1, user.getEmail());			
-			
-			rs  = cst.executeQuery();	
-			
-			if(rs.next()){
-				
-				result = rs.getInt(1) > 0;							
-			}			
-			
-		} catch (Exception e) {
-			
-			Logger.error(e.getMessage());
-			
-		} finally{
-			
-			if(cst != null) cst = null;
-			close(conn);
-		}
-		
-		return result;		
-	}
-	
-	
-	
-	public static boolean signIn(Person person) {		
+	public static boolean exists(User user){		
 		boolean result = false;		
 		CallableStatement cst = null;
 		ResultSet rs  = null;
 		Connection conn = null;		
 		try {			
 			conn = DB.getConnection();
-			String sql = "CALL sp_set_users_LOGIN(?,?,?);";
+			String sql = "CALL sp_set_users_EXISTS(?);";
 			cst = conn.prepareCall(sql);			
-			cst.setString(1, person.getGym().getName());
-			cst.setString(2, person.getUser().getEmail());
-			cst.setString(3, person.getUser().getPassword());			
+			cst.setString(1, user.getEmail());			
 			rs  = cst.executeQuery();				
 			if(rs.next()){				
-				result = rs.getInt(1) == 1;				
-				if(result) {					
-					person.setId(rs.getInt(2));
-					person.getUser().setName(rs.getString(3));
-					person.getUser().setDefaultAction(new Action(rs.getString(4)));		
-					person.getGym().setId(rs.getInt(5));
-				}
-			}			
+				result = rs.getInt(1) > 0;							
+			}						
 		} catch (Exception e) {			
 			Logger.error(e.getMessage());			
 		} finally{			
@@ -113,7 +64,9 @@ public class UserDao extends Dao{
 			close(conn);
 		}		
 		return result;		
-	}
+	}	
+	
+
 	
 	public static boolean update(User user){
 		boolean result = false;

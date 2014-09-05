@@ -1,81 +1,46 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
 
-
-
-
-
 #UserControl
-
-GET     /login                           com.yonaxtics.gymwer.set.user.controller.UserControl.login()
-GET     /signup                          com.yonaxtics.gymwer.set.user.controller.UserControl.signUp()
-POST    /signIn                          com.yonaxtics.gymwer.set.user.controller.UserControl.signIn()
-GET     /signOut                         com.yonaxtics.gymwer.set.user.controller.UserControl.signOut()
-POST    /createAccount                   com.yonaxtics.gymwer.set.user.controller.UserControl.createAccount()
-GET    /users                   com.yonaxtics.gymwer.set.user.controller.UserControl.users()
-
-
-
-
-
+GET     /users                          com.yonaxtics.gymwer.set.user.controller.UserControl.users()
 
 #GymControl
-
-GET     /dashboard                         com.yonaxtics.gymwer.dpa.gym.controller.GymControl.dashboard()
-GET     /gym                               com.yonaxtics.gymwer.dpa.gym.controller.GymControl.gym()
-GET     /loadGym                              com.yonaxtics.gymwer.dpa.gym.controller.GymControl.load()
-
-
-
-
+GET     /gym                            com.yonaxtics.gymwer.dpa.gym.controller.GymControl.gym()
+GET     /loadGym                        com.yonaxtics.gymwer.dpa.gym.controller.GymControl.load()
+POST    /saveGym                        com.yonaxtics.gymwer.dpa.gym.controller.GymControl.save()
 
 #PermissionControl
-
-GET    /loadNav                            com.yonaxtics.gymwer.set.permission.controller.PermissionControl.loadNav()	 
-
-
-
-
-
+GET     /loadNav                        com.yonaxtics.gymwer.set.permission.controller.PermissionControl.loadNav()
 
 #ClientControl
-
-GET    /clients                           com.yonaxtics.gymwer.dpa.client.controller.ClientControl.clients()  
-
-
-
-
+GET     /clients                        com.yonaxtics.gymwer.dpa.client.controller.ClientControl.clients()
 
 #PlanControl
-
-GET    /plans                           com.yonaxtics.gymwer.dpa.plan.controller.PlanControl.plans()     
-
-
-
+GET     /plans                          com.yonaxtics.gymwer.dpa.plan.controller.PlanControl.plans()
 
 #RoleControl
+GET     /roles                          com.yonaxtics.gymwer.dpa.role.controller.RoleControl.roles()
 
-GET /roles                             com.yonaxtics.gymwer.dpa.role.controller.RoleControl.roles()
+#ProfileControl
+GET     /profile                        com.yonaxtics.gymwer.set.profile.controller.ProfileControl.profile()
+GET     /loadProfile                    com.yonaxtics.gymwer.set.profile.controller.ProfileControl.load()
+POST    /saveProfile                    com.yonaxtics.gymwer.set.profile.controller.ProfileControl.save()
 
-
-
-
-#PersonControl
-
-GET /profile                       com.yonaxtics.gymwer.set.person.controller.PersonControl.profile()
-GET /loadProfile                   com.yonaxtics.gymwer.set.person.controller.PersonControl.loadProfile()
-POST /saveProfile                  com.yonaxtics.gymwer.set.person.controller.PersonControl.saveProfile()
-
-
-#PictureControl        
-           
-POST /uploadPicture                com.yonaxtics.gymwer.set.picture.controller.PictureControl.uploadPicture()
+#PictureControl           
+POST    /uploadPicture                  com.yonaxtics.gymwer.set.picture.controller.PictureControl.uploadPicture()
 
 #ListControl
+GET     /personUrls                     com.yonaxtics.gymwer.util.list.controller.ListControl.personUrls()   
 
-GET /personUrls                              com.yonaxtics.gymwer.util.list.controller.ListControl.personUrls()   
+#LoginControl
+GET     /login                          com.yonaxtics.gymwer.sec.login.controller.LoginControl.login()
+GET     /signup                         com.yonaxtics.gymwer.sec.login.controller.LoginControl.signUp()
+POST    /signIn                         com.yonaxtics.gymwer.sec.login.controller.LoginControl.signIn()
+GET     /signOut                        com.yonaxtics.gymwer.sec.login.controller.LoginControl.signOut()
+POST    /createAccount                  com.yonaxtics.gymwer.sec.login.controller.LoginControl.createAccount()
 
-
+#DashBoardControl
+GET     /dashboard                      com.yonaxtics.gymwer.dpa.dashboard.controller.DashboardControl.dashboard()
 
 
 

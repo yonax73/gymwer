@@ -108,7 +108,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 		  Play.getId('txtRole').textContent = profile.user.role.name;	
 		  selectPageHome = new Select(Play.getId('selectPageHome'),List.url());
 	      selectPageHome.init(profile.user.defaultAction.id);	
-		  Play.getId('txtEmail').value = profile.user.email;
+		  Play.getId('txtEmail').textContent = profile.user.email;
 		  Play.getId('nameUser').textContent = profile.user.name;
 		  Play.getId('txtFullName').value = profile.name;
 		  Play.getId('txtDocument').value = profile.document;
@@ -178,40 +178,44 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 	 function save(){		 
 		 frmProfile.onsubmit = function(e){
 			 e.preventDefault();
-			 if(frmProfileOk.isValid()){	
-				    var data = [
-				        {name:'txtLocationId',value:profile.location.id},
-				        {name:'txtUserId',value:profile.user.id},
-				        {name:'txtDefaultActionId',value:selectPageHome.getOption()},
-				        {name:'txtRoleId',value:profile.user.role.id},
-				        {name:'txtPhoneId',value:profile.location.phone.id},
-				        {name:'txtAddressId',value:profile.location.address.id}
-				    ];				    
-					var inputs = Play.appendInputHidden(data,e.target);					
-					var xhr = new XMLHttpRequest();		
-					xhr.onreadystatechange = function () {	
-						  notify.wait('Loading...');	
-						  btnSave.disabled = true;
-						  if (this.readyState === Constants.READYSTATE_COMPLETE) {
-							  Play.removeInputHidden(inputs);					
-							  btnSave.disabled = false;
-							  if(this.status === Constants.STATUS_OK  && this.responseText === Constants.REQUEST_SUCCESS){									  
-								  localStorage.removeItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE);
-								  notify.success('Your profile has been saved successfully!');								  
-							   }else{
-								   notify.danger(this.responseText); 
-							   } 					  
-						  }		  
-					}
-					xhr.open('POST','/saveProfile');
-					xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-					xhr.send(Play.serialize(e.target));		
-					xhr.timeout = Constants.TIME_OUT;
-					xhr.ontimeout = function () {
-						 notify.danger('Time out!!!');
-						 btnSave.disabled = false;
-					}					 
-			 }			 
+			 if(FormOk.hasChanged()){
+				 if(frmProfileOk.isValid()){	
+					    var data = [
+					        {name:'txtLocationId',value:profile.location.id},
+					        {name:'txtUserId',value:profile.user.id},
+					        {name:'txtDefaultActionId',value:selectPageHome.getOption()},
+					        {name:'txtRoleId',value:profile.user.role.id},
+					        {name:'txtPhoneId',value:profile.location.phone.id},
+					        {name:'txtAddressId',value:profile.location.address.id}
+					    ];				    
+						var inputs = Play.appendInputHidden(data,e.target);					
+						var xhr = new XMLHttpRequest();		
+						xhr.onreadystatechange = function () {	
+							  notify.wait('Loading...');	
+							  btnSave.disabled = true;
+							  if (this.readyState === Constants.READYSTATE_COMPLETE) {
+								  Play.removeInputHidden(inputs);					
+								  btnSave.disabled = false;
+								  if(this.status === Constants.STATUS_OK  && this.responseText === Constants.REQUEST_SUCCESS){									  
+									  localStorage.removeItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE);
+									  notify.success('Your profile has been saved successfully!');								  
+								   }else{
+									   notify.danger(this.responseText); 
+								   } 					  
+							  }		  
+						}
+						xhr.open('POST','/saveProfile');
+						xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
+						xhr.send(Play.serialize(e.target));		
+						xhr.timeout = Constants.TIME_OUT;
+						xhr.ontimeout = function () {
+							 notify.danger('Time out!!!');
+							 btnSave.disabled = false;
+						}					 
+				 }	
+			 }else{
+				 notify.warning('No changes to save!!!'); 
+			 }		 
 		 }			 
 	}
 /* ==================================================================================================================
@@ -228,7 +232,9 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 		  fill(profile);
 	  }		  
 	  uploadPicture();	
-	  save();		  
+	  save();	
+	  
+	  
 	}
 	
 

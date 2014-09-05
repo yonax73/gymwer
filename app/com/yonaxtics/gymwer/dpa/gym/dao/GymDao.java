@@ -75,6 +75,31 @@ public class GymDao extends Dao{
 		return result;		
 	}
 
+	/**
+	 * @param gym
+	 * @return
+	 */
+	public static boolean update(Gym gym) {
+		boolean result = false;
+		CallableStatement cst = null;		
+		Connection conn = null;
+		try {
+			conn = DB.getConnection();
+			cst = conn.prepareCall("CALL sp_dpa_gyms_UPDATE(?,?,?,?)");
+			cst.setInt(1, gym.getId());
+			cst.setString(2, gym.getNit());
+			cst.setString(3, gym.getName());
+			cst.setInt(4, gym.getLocation() == null ? 0 : gym.getLocation().getId());
+			result = cst.executeUpdate() > 0;
+		} catch (Exception e) {
+            Logger.error(e.getMessage());
+		}finally{
+			if(cst!=null) cst = null;
+			close(conn);
+		}
+		return result;
+	}
+
 	
 	
 	

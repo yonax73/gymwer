@@ -1,15 +1,15 @@
 #Internal Error Users - 10
 1001 = Error creating user From UserControl - createAcount
-1002 = Error update user From PersonControl - saveProfile
+1002 = Error update user From ProfileControl - saveProfile
 
 #Internal Error Persons- 20
-2001 = Error creating person From UserControl - createAcount
-2002 = Error loading profile From personControl - loadProfile
-2003 = Error update person From PersonControl - saveProfile
+2001 = Error creating person From LoginControl - createAcount
+2002 = Error update person From profileControl - save
 
 #Internal Error Gyms- 30
 3001 = Error creating gym From UserControl - createAcount
 3002 = Error Load gym From GymControl - load
+3003 = Error update gym From GymControl - save
 
 #Internal Error Permissions- 40
 4001 = Error tryning Load Nav per Contact - loadNav
@@ -21,8 +21,17 @@
 6001 = Error loading urls From ListControl - personUrls
 
 #Internal Error Masters -70
-7001 = Error save phone From PersonControl - saveProfile
-7002 = Error save address From PersonControl - saveProfile
+7001 = Error save phone From ProfileControl - saveProfile
+7002 = Error save address From ProfileControl - saveProfile
+7003 = Error save phone From GymControl - save
+7004 = Error save address From GymControl - save
+
+#Internal Error Location -80
+8001 = Error save Location From ProfileControl - saveProfile
+8002 = Error save Location From GymControl - save
+
+#Internal Error Profile -90
+9001 = Error loading profile From profileControl - load
 
 
 
