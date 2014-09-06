@@ -41,6 +41,13 @@ img {
 	margin: auto;
 }
 
+.panel>.divider{
+    border-bottom: 1px solid #dddddd;
+    margin-top: 0.4em;   
+}
+#pnlFilter{
+	 margin-top: 2em; 
+}
 
 
 /*************************************************************************

@@ -21,11 +21,27 @@
 			 </div>	
 			 <div class="row">		 
                  <div class="col-md-12">
-					<div class="panel ">
-					      <!-- Default panel contents -->
-					      <div class="panel-heading">Plans Filters</div>
-					      <div class="panel-body">
-	                          <form class="form-horizontal  id="frmGym">
+					<div class="panel">
+					      <div class="panel-heading">
+					        <div class="col-md-9">
+				     		      <a href="#frmFilters" id="filters"><i class="fa fa-filter">&nbsp;Filters</i></a> 
+						          &nbsp;&nbsp;&nbsp;
+						         <a href="/createPlan"><i class="fa fa-plus">&nbsp;New Plan</i></a>	
+					        </div>
+					        <div class="col-md-3">
+					          <form id="frmQuickSearch">
+					               <div class="input-group">
+								      <input type="search" class="form-control" placeholder="Quick Search">
+								      <span class="input-group-btn">
+								        <button class="btn btn-default" id="btnQuickSearch" type="button"><i class="fa fa-search"></i></button>
+								      </span>
+								    </div>								    
+					          </form>
+					        </div> 				         
+					      </div>
+					      <div class="col-md-12 divider"></div>
+					      <div class="panel-body hidden" id="pnlFilter">
+	                          <form class="form-horizontal"  id="frmFilters">
 			                          <div class=" col-md-6 col-lg-6  col-sm-6 col-xs-6">
 						                    <div class="form-group">
 						                      <label for="txtNit" class="col-sm-2 control-label">Nit</label>
@@ -54,10 +70,9 @@
 						                      </div>
 						                    </div>      
 			                          </div>
+			                           <button class="btn btn-default pull-right" id="btnSearch" type="button"><i class="fa fa-search">&nbsp;Search</i></button>
 				                 </form>
 					      </div>
-					
-					      <!-- Table -->
 					      <table class="table">
 					        <thead>
 					          <tr>

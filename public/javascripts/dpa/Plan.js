@@ -50,21 +50,32 @@ require.config({
 
 
 
-requirejs(['Aes', 'Constants', 'Play','Json','Nav'],function(Aes,Constants, Play, Json,Nav ) {
-
-	
-	
-	
+requirejs(['Aes', 'Constants', 'Play','Json','Nav'],function(Aes,Constants, Play, Json,Nav ) {	
 /* ==================================================================================================================
  * REGION ATTRIBUTES
- * ===================================================================================================================*/
-
+ * ===================================================================================================================*/	
 	
-	if(Play.ready()){ 	
+	var frmFilters = Play.getId('frmFilters');	
 	
+	if(Play.ready()){ 		
 		load();
-		init();
-		
+		init();		
+	}	
+/* ==================================================================================================================
+ * REGION FILTERS
+ * ===================================================================================================================
+ */	
+	
+	function filters(){
+		var filters = Play.getId('filters'); 
+		var pnlFilter = Play.getId('pnlFilter');
+		filters.onclick = function(){			
+		if(pnlFilter.classList.contains('hidden')){
+			pnlFilter.classList.remove('hidden');
+			}else{
+				pnlFilter.classList.add('hidden');
+			}
+		}
 	}
 
 	
@@ -91,7 +102,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav'],function(Aes,Constants, Play
 				  }
 			  }
 		}
-		xhr.open('GET','/load');
+		xhr.open('GET','/loadGym');
 		xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
 		xhr.send();		
 		//set time out	
@@ -106,6 +117,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav'],function(Aes,Constants, Play
 	  function init(){
 		
 		  Nav.init();
+		  filters();
 	}
 	
 	
