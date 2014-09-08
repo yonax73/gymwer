@@ -2,7 +2,7 @@ package com.yonaxtics.gymwer.dpa.plan.controller;
 
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.dpa.plan.plan;
+import views.html.dpa.plan.*;
 
 /** 
  * Clase     : PlanControl.java<br/>
@@ -13,13 +13,9 @@ import views.html.dpa.plan.plan;
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
 
-public class PlanControl extends Controller {
-
+public class PlanControl extends Controller {	
 	
-	
-	
-	public static Result plans(){
-		
-		return ok(plan.render());
+	public static Result plans(){		
+		return ok(main.render());
 	}
 }
