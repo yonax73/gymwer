@@ -243,6 +243,18 @@
 			console.log('------*-------');
        }
     }
+
+    Play.filterToggle = function(){
+        var filters = Play.getId('filters'); 
+		var pnlFilter = Play.getId('pnlFilter');
+		filters.onclick = function(){			
+		if(pnlFilter.classList.contains('hidden')){
+			pnlFilter.classList.remove('hidden');
+			}else{
+				pnlFilter.classList.add('hidden');
+			}
+		}
+    }
 	
 
 	return Play;

@@ -5,4 +5,61 @@
 <!--  * Author Yonatan Alexis Quintero Rodriguez -->
 <!--  * Created on : 10, Sep 2014 -->
 <!--  */ -->
-<h1>Plan</h1>
+  <div class="tab-pane active" id="plan">	
+      <div class="row">
+		<div class="col-md-10 col-md-offset-1">
+		  <div class="col-md-12" id="notify"></div>
+		</div>
+	 </div>	
+     <div class="row">	              
+         <form class="form-horizontal  col-md-11 col-lg-11  col-sm-9 col-xs-12" id="frmPlan">
+           <div class="form-group">
+             <label for="txtCode" class="col-sm-2 control-label">Code</label>
+             <div class="col-sm-10">
+               <input name="txtCode" type="text" class="form-control" id="txtCode" placeholder="Code">
+             </div>
+           </div>
+           <div class="form-group">
+             <label for="txtName" class="col-sm-2 control-label">Name</label>
+             <div class="col-sm-10">
+               <input type="text" class="form-control" name="txtName" id="txtName" placeholder="Plan Name" data-keyup="true" data-required="true">
+             </div>
+           </div>                    
+           <div class="form-group">
+             <label for="txtPrice" class="col-sm-2 control-label">Price</label>
+             <div class="col-sm-10">
+               <input type="number" class="form-control" id="txtPrice" name="txtPrice" placeholder="Price Plan">
+             </div>
+           </div>
+           <div class="form-group">
+             <label for="txtDaysExpire" class="col-sm-2 control-label">Days To Expire</label>
+             <div class="col-sm-10">
+               <input type="number" class="form-control" id="txtDaysExpire" name="txtDaysExpire" placeholder="Days To Expire">
+             </div>
+           </div>
+           <div class="form-group">
+             <label for="txtNotes" class="col-sm-2 control-label">Notes</label>
+             <div class="col-sm-10">
+               <textarea class="form-control" id="txtNotes" name="txtNotes" placeholder="Notes"></textarea>
+             </div>
+           </div>
+            <div class="form-group">
+              <label for="selectStatus" class="col-sm-3 control-label">Status</label>
+              <div class="col-sm-9">
+                <span id="selectStatus"></span> 
+              </div>
+            </div>  
+           <div class="form-group">
+             <label for="txtDate" class="col-sm-2 control-label">Date Created</label>
+             <div class="col-sm-10">
+               <input type="datetime-local" class="form-control" id="txtDate" name="txtDate" placeholder="Date Created" readonly="readonly"/>
+             </div>
+           </div>           
+           <div class="form-group ">
+               <div class="col-sm-offset-2 col-sm-10 ">                      
+                  <button class="btn btn-success" id="btnSave" >Save</button>                            
+               </div>
+           </div>
+         </form>
+     </div>	
+</div>

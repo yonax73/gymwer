@@ -12,7 +12,8 @@ require.config({
 		Json :      'play/yonaxtics/Json',
 		Nav :      'play/yonaxtics/Nav',
 		List :      'set/List',	
-		Select :    'play/yonaxtics/Select'
+		Select :    'play/yonaxtics/Select',
+		Tab :    'play/yonaxtics/Tab'
 
 			
 	}
@@ -52,12 +53,13 @@ require.config({
 
 
 
-requirejs(['Aes', 'Constants', 'Play','Json','Nav','List','Select'],function(Aes,Constants, Play, Json,Nav,List,Select ) {	
+requirejs(['Aes', 'Constants', 'Play','Json','Nav','List','Select','Tab'],function(Aes,Constants, Play, Json,Nav,List,Select,Tab) {	
 /* ==================================================================================================================
  * REGION ATTRIBUTES
  * ===================================================================================================================*/
 	var frmFilters = Play.getId('frmFilters');	
 	var selectStatus= null;
+	var tabs = null;
 /* ==================================================================================================================
  * REGION READY
  * ===================================================================================================================
@@ -66,134 +68,31 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','List','Select'],function(Aes
 		init();		
 	}	
 /* ==================================================================================================================
+ * REGION NAVEGATION TABS
+ * ===================================================================================================================
+ */	
+   function navegationTabs(){
+   	    tabs = new Tab(Play.getId('tabs'),Play.getId('tabs-content'));
+   	    Play.getId('create').onclick = function(){
+   	    	tabs.add('#newPlan',0,'New Plan','/plan');
+   	    }
+   }
+
+/* ==================================================================================================================
  * REGION FILTERS
  * ===================================================================================================================
- */	
-	
-	function filters(){
-		var filters = Play.getId('filters'); 
-
-		var pnlFilter = Play.getId('pnlFilter');
-		filters.onclick = function(){			
-		if(pnlFilter.classList.contains('hidden')){
-			pnlFilter.classList.remove('hidden');
-			}else{
-				pnlFilter.classList.add('hidden');
-			}
-		}
-	}
-	
-	
-/* ==================================================================================================================
- * REGION NEW PLAN
- * ===================================================================================================================
- */	
-	
-	
-	function addEvent(){
-		var tabs = Play.getId('tabs').getElementsByTagName('li');
-	    var n = tabs.length;
-		for (var i = 0; i < n; i++) {
-		      tabs[i].onclick = function(){
-		    	  clear();
-		    	  clearTabsContent();
-		    	  this.classList.add('active');
-		    	  Play.getId(this.dataset.tab).classList.add('active');  
-		      }		
-		}
-	}
-	
-	function clear(){
-		var tabs = Play.getId('tabs').getElementsByTagName('li');
-	    var n = tabs.length;
-	    var i =0;
-	    var flag = false;
-	    while(!flag || i<n){
-	    	var tab = tabs[i++];
-	    	if(tab.classList.contains('active')){
-	             tab.classList.remove('active');
-	             flag = true;
-	    	}	    	
-	    }
-	}
-	
-	function clearTabsContent(){
-		var tabs = Play.getId('tab-content').getElementsByTagName('li');
-	    var n = tabs.length;
-	    var i =0;
-	    var flag = false;
-	    while(!flag || i<n){
-	    	var tab = tabs[i++];
-	    	if(tab.classList.contains('active')){
-	             tab.classList.remove('active');
-	             flag = true;
-	    	}	    	
-	    }
-	}
-	
-	function createTab(){
-		Play.getId('create').onclick = function(){
-               addTab();
-		}
-	}
-	
-	function addTab(){
-		var tabs = Play.getId('tabs').getElementsByTagName('li');
-		var tab = document.createElement('li');
-		var a = document.createElement('a');
-		 clear();
-		a.href='#0';
-		tab.dataset.tab = 0;
-		a.textContent = 'New Plan';		
-		tab.appendChild(a);
-		tab.classList.add('active');
-	    tab.onclick = function(){
-    	  clear();
-    	  clearTabsContent();	
-    	  this.classList.add('active');
-    	  Play.getId(this.dataset.tab).classList.add('active');    	  
-	    }	    
-	    Play.getId('tabs').appendChild(tab);
-	    var tabContent = Play.getId('tab-content');
-	    var tabsContent = tabContent.getElementsByTagName('li');	    
-	    clearTabsContent();		
-		var newTabContent = document.createElement('li');
-		newTabContent.id="0";
-		newTabContent.classList.add('tab-pane');
-		newTabContent.classList.add('active');
-		tabContent.appendChild(newTabContent);
-	    var xhr= new XMLHttpRequest();
-	    xhr.open('GET', '/plan');
-	    xhr.onreadystatechange= function() {
-	        if (this.readyState!==4) return;
-	        if (this.status!==200) return; // or whatever error handling you want
-	        newTabContent.innerHTML= this.responseText;
-	    };
-	    xhr.send();
-	}
-	
-	function tabInit(){
-		
-		createTab();
-		addEvent();
-		
-		
-
-	}
-		
-
-	
+ */		
+	function filters(){          
+          Play.filterToggle();
+	}	
 /* ==================================================================================================================
  * REGION LOAD
  * ===================================================================================================================
  */	
 	
-	function load(){
-		
-		var xhr = new XMLHttpRequest();
-		
-		xhr.onreadystatechange = function () {		
-		       
+	function load(){		
+		var xhr = new XMLHttpRequest();		
+		xhr.onreadystatechange = function () {				       
 			  if (this.readyState === Constants.READYSTATE_COMPLETE) {
 				  						
 				  if(this.status === Constants.STATUS_OK){				 
@@ -225,11 +124,11 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','List','Select'],function(Aes
  */	
 	
 	  function init(){
+		  navegationTabs();
 		  loadList();
 		  load();
 		  Nav.init();
-		  filters();
-		  tabInit();
+		  filters();		
 	}
 	
 	
