@@ -22,18 +22,22 @@ public class Global extends GlobalSettings {
     }	
     
     public Promise<Result> onBadRequest(RequestHeader request, String error) {
+    	Logger.error("Bad Request uri: "+request.uri());
+    	Logger.error("Bad Request Error: "+error);
         return Promise.<Result>pure(badRequest("Don't try to hack the URI!"));
     }
     
     public Promise<Result> onHandlerNotFound(RequestHeader request) {
+    	Logger.error("Not found Page: "+request.uri());
         return Promise.<Result>pure(notFound(
-            views.html.sec.error.notFoundPage.render()//request.uri()
+            views.html.sec.error.notFoundPage.render()
         ));
     }
     
     public Promise<Result> onError(RequestHeader request, Throwable t) {
-        return Promise.<Result>pure(internalServerError(
-            views.html.sec.error.errorPage.render()//t
+    	Logger.error(t.getMessage(),t);
+        return Promise.<Result>pure(internalServerError(        		  
+            views.html.sec.error.errorPage.render()        
         ));
     }
 
