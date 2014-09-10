@@ -103,9 +103,13 @@ define([], function() {
     * LISTS LOCAL STORAGE
     */	
 	Constants.LOCALSTORAGE_LIST_URL = 'LOCALSTORAGE_LIST_URL';
+	Constants.LOCALSTORAGE_LIST_ENTITY_STATES = 'LOCALSTORAGE_LIST_ENTITY_STATES';
 
 	
-	
+	/**
+	 * ENTITY STATES LIST
+	 */
+	Constants.ENTYTY_STATES_ALL = -1;
 	
 	
 	
@@ -134,6 +138,8 @@ define([], function() {
 	 * XMLHTTPREQUEST READY STATE
 	 */
 	Constants.TIME_OUT = 10000000;		
+	
+	
 	
 
 	return Constants;

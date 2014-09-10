@@ -40,8 +40,7 @@ define(['./Constants','./Json'], function(Constants,Json) {
 	/**
 	 * url of page home list
 	 */
-	List.url = function(){		
-		
+	List.url = function(){			
 		if(localStorage.getItem(Constants.LOCALSTORAGE_LIST_URL) == null){				
 			var xhr = new XMLHttpRequest();		
 			xhr.onreadystatechange = function () {		       
@@ -62,8 +61,34 @@ define(['./Constants','./Json'], function(Constants,Json) {
 			}			 
 		} else {			
 			return JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_LIST_URL));			
-		}
-		 
+		}		 
+	}
+	
+	/**
+	 * entity States list
+	 */
+	List.entityStates = function(){			
+		if(localStorage.getItem(Constants.LOCALSTORAGE_LIST_ENTITY_STATES) == null){				
+			var xhr = new XMLHttpRequest();		
+			xhr.onreadystatechange = function () {		       
+				  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
+					  if(this.status === Constants.STATUS_OK){									  
+						     var items = Json.parse(this.responseText);						
+							 localStorage.setItem(Constants.LOCALSTORAGE_LIST_ENTITY_STATES,JSON.stringify(items));							 
+							 return items;					
+					   } 					  
+				  }		  
+			}
+			xhr.open('GET','/entityStates');
+			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded;charset=UTF-8');
+			xhr.send();
+			xhr.timeout = Constants.TIME_OUT;
+			 xhr.ontimeout = function () {
+				 console.error('Time out!!!');										
+			}			 
+		} else {			
+			return JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_LIST_ENTITY_STATES));			
+		}		 
 	}
 	
 	

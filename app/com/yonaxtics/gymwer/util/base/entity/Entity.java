@@ -13,6 +13,9 @@ public class Entity {
 	protected int id;
 	protected boolean active;
 	protected LocalDateTime created;	
+	public final static byte ACTIVE = 1;
+	public final static byte INACTIVE = 0;
+	public final static byte ALL = -1;
 	
 	public Entity(int id){		
 		this.id = id;		

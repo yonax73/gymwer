@@ -1,5 +1,6 @@
 package com.yonaxtics.gymwer.util.list.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.yonaxtics.gymwer.util.base.entity.Entity;
@@ -15,14 +16,26 @@ import com.yonaxtics.gymwer.util.list.entity.item.Item;
  */
 
 public class ListItem {
-
 	
 	private Entity entity;
 	private List<Item> items;
 	
-	public ListItem(Entity entity){
-		this.entity = entity;		
+	public ListItem(){	
+		this.items = new ArrayList<Item>();
 	}	
+	public ListItem(List<Item> items){
+		this.items = items;
+	}		
+	public ListItem(Entity entity){
+		this.entity = entity;
+		this.items = new ArrayList<Item>();
+	}	
+	public void add(Item item){
+		this.items.add(item);
+	}
+	public int size(){
+		return this.items.size();
+	}
 	public Entity getEntity() {
 		return entity;
 	}

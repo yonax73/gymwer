@@ -53,7 +53,9 @@ img {
 	list-style: none;
 }
 
-
+.color-red{
+	color: red;
+}
 /*************************************************************************
 *                                                                        *
 *                               CONTENT MAIN                             * 
@@ -107,6 +109,7 @@ nav {
 	overflow: auto;
 	margin: 0 0 0 -15px;
 	height: 100%;
+	
 }
 
 nav .divider {

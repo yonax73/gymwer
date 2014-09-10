@@ -3,7 +3,6 @@ package com.yonaxtics.gymwer.util.list.dao;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 import play.Logger;
 import play.db.DB;
@@ -39,13 +38,12 @@ public class ListDao extends Dao {
 			cst = conn.prepareCall(sql);
 			cst.setInt(1, urls.getEntity().getId());			
 			rs  = cst.executeQuery();				
-			if(rs.next()){				
-			    urls.setItems(new ArrayList<Item>()); 		      
+			if(rs.next()){				  	      
 			      do{			    	  
-			    	 urls.getItems().add(new Item(rs.getInt(1), rs.getString(2)));			    	  
+			    	 urls.add(new Item(rs.getInt(1), rs.getString(2)));			    	  
 			      }while(rs.next());				
 			}			
-			result = urls.getItems() != null && urls.getItems().size() > 0;			
+			result =  urls.size() > 0;			
 		} catch (Exception e) {			
 			Logger.error(e.getMessage());			
 		} finally{			

@@ -53,10 +53,11 @@ public class ProfileDao extends Dao {
     	        if(rs.getBlob(11) != null){
 	    	        Blob blob = rs.getBlob(11);	    	     	    	        
 	    	        contact.setPicture(new Picture(Base64.getEncoder().encodeToString(blob.getBytes(1, (int) blob.length()))));
+	    	        contact.getPicture().setMime(rs.getString(12));
     	        }
-    	        contact.getUser().getRole().setId(rs.getInt(12));
-    	        contact.getLocation().getPhone().setId(rs.getInt(13));
-    	        contact.getLocation().getAddress().setId(rs.getInt(14));			      				
+    	        contact.getUser().getRole().setId(rs.getInt(13));
+    	        contact.getLocation().getPhone().setId(rs.getInt(14));
+    	        contact.getLocation().getAddress().setId(rs.getInt(15));			      				
 			}			
 		} catch (Exception e) {			
 			Logger.error(e.getMessage());			

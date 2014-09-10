@@ -5,7 +5,9 @@ import static com.yonaxtics.gymwer.sec.crypto.aes.Sec.enc;
 import static com.yonaxtics.gymwer.util.Constant.SESSION_OK;
 
 import com.yonaxtics.gymwer.set.person.entity.Person;
+import com.yonaxtics.gymwer.util.base.entity.Entity;
 import com.yonaxtics.gymwer.util.list.entity.ListItem;
+import com.yonaxtics.gymwer.util.list.entity.item.Item;
 import com.yonaxtics.gymwer.util.list.logic.ListLogic;
 
 import play.libs.Json;
@@ -30,5 +32,13 @@ public class ListControl extends Controller {
 			return ok(enc(Json.toJson(urls.getItems()).toString()));
 		}		
 		return ok("Internal Error 6001");
+	}	
+	
+	public static Result entityStates(){
+		ListItem states = new ListItem();
+		states.add(new Item(Entity.ALL, "ALL"));
+		states.add(new Item(Entity.ACTIVE, "ACTIVE"));
+		states.add(new Item(Entity.INACTIVE, "INACTIVE"));
+		return ok(enc(Json.toJson(states.getItems()).toString()));
 	}
 }

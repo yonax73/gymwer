@@ -66,7 +66,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 	var notify = new Notify(Play.getId('notify'));	
 	var frmProfileOk = new FormOk(frmProfile);
 	var selectPageHome= null;
-	var  profile = null;
+	var profile = null;
 /* ==================================================================================================================
  * REGION READY
  * ===================================================================================================================
@@ -97,15 +97,15 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 			 notify.danger('Time out!!!');									
 		}	
      }	
-	function loadList(){
-		List.url();	
+	function loadList(){		
+		List.url();
 	}	
 	function fill(profile){          
 		  if(profile.picture != null){
 			Play.getId('userPicture').src =  Play.base64Blob(profile.picture.mime, profile.picture.src);
 		  }
 		  Play.getId('txtNameUser').value = profile.user.name;
-		  Play.getId('txtRole').textContent = profile.user.role.name;	
+		  Play.getId('txtRole').textContent = profile.user.role.name;
 		  selectPageHome = new Select(Play.getId('selectPageHome'),List.url());
 	      selectPageHome.init(profile.user.defaultAction.id);	
 		  Play.getId('txtEmail').textContent = profile.user.email;
@@ -232,9 +232,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 		  fill(profile);
 	  }		  
 	  uploadPicture();	
-	  save();	
-	  
-	  
+	  save();	  
 	}
 	
 

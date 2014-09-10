@@ -47,7 +47,7 @@ define([], function() {
 	function FormOk(element){
 		
 		FormOk.element = element;
-		FormOk.inputs = element.getElementsByTagName('input');		
+		FormOk.inputs = element.getElementsByTagName('input');	
 		FormOk.result = false;
 		FormOk.changed = false;
 		FormOk.msgRequired = 'This field is required and can\'t be empty!!!';
@@ -132,8 +132,7 @@ define([], function() {
 	    	  case 'datetime-local':
 	    	  case 'color':
 	    	  case 'textarea':
-	    	  case 'password':
-	    	  case 'select':    		  
+	    	  case 'password':	    	   		  
 	    		  if(input.dataset.required==='true'){
 	    			  FormOk.result = FormOk.isNotEmpty(input);
 	    			  if(FormOk.result){

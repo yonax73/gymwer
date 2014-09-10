@@ -70,11 +70,11 @@ define([], function() {
 	     Select.input = document.createElement('input');
 	     Select.ul=  document.createElement('ul');	
 	     Select.i = document.createElement('i');	     
-	     Select.input.type = 'select';	 
-	     Select.input.readOnly  = true;	 
+	     Select.input.type = 'text';	 
+	     Select.input.readOnly  = true;	     
 	     Select.input.className = 'form-control'
 	     Select.i.className = 'fa fa-chevron-circle-down';	     
-	     
+	     Select.input.onchange =function(){return true;}	
 	     Select.span.appendChild(Select.input);
 	     Select.span.appendChild(Select.i);	  
 	     Select.span.onclick = function(){				 
@@ -89,7 +89,8 @@ define([], function() {
 		    	  Select.currentItemLi.focus();
 	         }
 	     }
-	     Select.ul.classList.add('select-list');	          
+	     Select.ul.classList.add('select-list');
+	     Select.ul.classList.add('hidden');
 	     Select.element.appendChild(Select.span);
 	     Select.element.appendChild(Select.ul);	  	
 		
@@ -103,18 +104,18 @@ define([], function() {
 		for (var i = 0; i < n; i++) {			
 			  var item = Select.items[i];
 			  var li = document.createElement('li');
-			  li.textContent= item.value;							
-			  li.classList.add('hidden');  
+			  li.textContent= item.value;			  
 			  li.tabIndex = i;
 			  li.dataset.option = item.option;
 			  li.onclick = function(){					  	
 				  Select.oldItemLi = Select.currentItemLi;
 				  Select.currentItemLi = this;
-				  Select.input.value = this.textContent;
+				  Select.input.value = this.textContent;				  
 				  Select.input.dataset.option = this.dataset.option;
+				  Select.input.onchange();	
 				  Select.toggle();	
 				  this.classList.add('selected');	
-				  Select.oldItemLi.classList.remove('selected');					 
+				  Select.oldItemLi.classList.remove('selected');				  	  
 		     }
 			 li.onkeydown = function checkKey(e) {
 		         e = e || window.event;
@@ -122,8 +123,9 @@ define([], function() {
 		        	  e.preventDefault();
 					  Select.oldItemLi = Select.currentItemLi;
 					  Select.currentItemLi = this;
-					  Select.input.value = this.textContent;
+					  Select.input.value = this.textContent;					
 					  Select.input.dataset.option = this.dataset.option;
+					  Select.input.onchange();	
 					  Select.toggle();	
 					  this.classList.add('selected');	
 					  Select.oldItemLi.classList.remove('selected');	
@@ -152,6 +154,7 @@ define([], function() {
 		  }
 		  
 		 Select.input.value =  Select.currentItemLi.textContent;
+		 
 		 Select.input.dataset.option = Select.currentItemLi.dataset.option;
 		 Select.currentItemLi.focus();
 		 Select.currentItemLi.classList.add('selected');
@@ -160,11 +163,8 @@ define([], function() {
 	
 	
     Select.toggle = function(){   	 
-   	 
-    	 if(!Select.disabled){	    		 
-	   		  var itemsLi = Select.ul.getElementsByTagName('li');
-			  var n = itemsLi.length;				  
-			  for (var i = 0; i < n; i++) itemsLi[i].classList.toggle('hidden');				  
+    	 if(!Select.disabled){
+    		 Select.ul.classList.toggle('hidden');
 	    }  	 
    }
     
