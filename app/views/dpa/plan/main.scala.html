@@ -12,13 +12,11 @@
 <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<ul class="nav nav-tabs" id="tabs">
-		  <li class="active"><a href="#plans">Plans</a></li>			
+		  <li class="active" data-tab="search"><a href="#search" >Plans</a></li>			
 		</ul>
-		<div class="tab-content" id="tab-content">		
-		  <div class="tab-pane active" id="search">@search()</div>
-          <div class="tab-pane" id="create">@plan()</div>
-          <div class="tab-pane" id="open">@plan()</div>   
-     </div>
+		<ul class="tab-content" id="tab-content">		
+		  <li class="tab-pane active" id="search">@search()</li>
+     </ul>
    </div>
  </div>
  <script type="text/javascript" data-main="@routes.Assets.at("javascripts/dpa/Plan.js")" src="@routes.Assets.at("javascripts/require.js")"></script>

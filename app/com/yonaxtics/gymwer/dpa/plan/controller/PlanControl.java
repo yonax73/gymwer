@@ -18,4 +18,8 @@ public class PlanControl extends Controller {
 	public static Result plans(){		
 		return ok(main.render());
 	}
+	
+	public static Result plan(){
+		return ok(plan.render());
+	}
 }

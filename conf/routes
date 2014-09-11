@@ -17,6 +17,7 @@ GET     /clients                        com.yonaxtics.gymwer.dpa.client.controll
 
 #PlanControl
 GET     /plans                          com.yonaxtics.gymwer.dpa.plan.controller.PlanControl.plans()
+GET     /plan                           com.yonaxtics.gymwer.dpa.plan.controller.PlanControl.plan()
 
 #RoleControl
 GET     /roles                          com.yonaxtics.gymwer.dpa.role.controller.RoleControl.roles()

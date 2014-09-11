@@ -10,7 +10,9 @@ require.config({
 		Constants : 'play/yonaxtics/Constants',
 		Play :      'play/yonaxtics/Play',		
 		Json :      'play/yonaxtics/Json',
-		Nav :      'play/yonaxtics/Nav'	
+		Nav :      'play/yonaxtics/Nav',
+		List :      'set/List',	
+		Select :    'play/yonaxtics/Select'
 
 			
 	}
@@ -50,15 +52,17 @@ require.config({
 
 
 
-requirejs(['Aes', 'Constants', 'Play','Json','Nav'],function(Aes,Constants, Play, Json,Nav ) {	
+requirejs(['Aes', 'Constants', 'Play','Json','Nav','List','Select'],function(Aes,Constants, Play, Json,Nav,List,Select ) {	
 /* ==================================================================================================================
  * REGION ATTRIBUTES
- * ===================================================================================================================*/	
-	
+ * ===================================================================================================================*/
 	var frmFilters = Play.getId('frmFilters');	
-	
-	if(Play.ready()){ 		
-		load();
+	var selectStatus= null;
+/* ==================================================================================================================
+ * REGION READY
+ * ===================================================================================================================
+ */	
+	if(Play.ready()){		
 		init();		
 	}	
 /* ==================================================================================================================
@@ -68,6 +72,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav'],function(Aes,Constants, Play
 	
 	function filters(){
 		var filters = Play.getId('filters'); 
+
 		var pnlFilter = Play.getId('pnlFilter');
 		filters.onclick = function(){			
 		if(pnlFilter.classList.contains('hidden')){
@@ -77,6 +82,105 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav'],function(Aes,Constants, Play
 			}
 		}
 	}
+	
+	
+/* ==================================================================================================================
+ * REGION NEW PLAN
+ * ===================================================================================================================
+ */	
+	
+	
+	function addEvent(){
+		var tabs = Play.getId('tabs').getElementsByTagName('li');
+	    var n = tabs.length;
+		for (var i = 0; i < n; i++) {
+		      tabs[i].onclick = function(){
+		    	  clear();
+		    	  clearTabsContent();
+		    	  this.classList.add('active');
+		    	  Play.getId(this.dataset.tab).classList.add('active');  
+		      }		
+		}
+	}
+	
+	function clear(){
+		var tabs = Play.getId('tabs').getElementsByTagName('li');
+	    var n = tabs.length;
+	    var i =0;
+	    var flag = false;
+	    while(!flag || i<n){
+	    	var tab = tabs[i++];
+	    	if(tab.classList.contains('active')){
+	             tab.classList.remove('active');
+	             flag = true;
+	    	}	    	
+	    }
+	}
+	
+	function clearTabsContent(){
+		var tabs = Play.getId('tab-content').getElementsByTagName('li');
+	    var n = tabs.length;
+	    var i =0;
+	    var flag = false;
+	    while(!flag || i<n){
+	    	var tab = tabs[i++];
+	    	if(tab.classList.contains('active')){
+	             tab.classList.remove('active');
+	             flag = true;
+	    	}	    	
+	    }
+	}
+	
+	function createTab(){
+		Play.getId('create').onclick = function(){
+               addTab();
+		}
+	}
+	
+	function addTab(){
+		var tabs = Play.getId('tabs').getElementsByTagName('li');
+		var tab = document.createElement('li');
+		var a = document.createElement('a');
+		 clear();
+		a.href='#0';
+		tab.dataset.tab = 0;
+		a.textContent = 'New Plan';		
+		tab.appendChild(a);
+		tab.classList.add('active');
+	    tab.onclick = function(){
+    	  clear();
+    	  clearTabsContent();	
+    	  this.classList.add('active');
+    	  Play.getId(this.dataset.tab).classList.add('active');    	  
+	    }	    
+	    Play.getId('tabs').appendChild(tab);
+	    var tabContent = Play.getId('tab-content');
+	    var tabsContent = tabContent.getElementsByTagName('li');	    
+	    clearTabsContent();		
+		var newTabContent = document.createElement('li');
+		newTabContent.id="0";
+		newTabContent.classList.add('tab-pane');
+		newTabContent.classList.add('active');
+		tabContent.appendChild(newTabContent);
+	    var xhr= new XMLHttpRequest();
+	    xhr.open('GET', '/plan');
+	    xhr.onreadystatechange= function() {
+	        if (this.readyState!==4) return;
+	        if (this.status!==200) return; // or whatever error handling you want
+	        newTabContent.innerHTML= this.responseText;
+	    };
+	    xhr.send();
+	}
+	
+	function tabInit(){
+		
+		createTab();
+		addEvent();
+		
+		
+
+	}
+		
 
 	
 /* ==================================================================================================================
@@ -95,7 +199,8 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav'],function(Aes,Constants, Play
 				  if(this.status === Constants.STATUS_OK){				 
 					  
 					  var gym = Json.parse(this.responseText);				  
-					  
+						selectStatus = new Select(Play.getId('selectStatus'),List.entityStates());
+						selectStatus.init(Constants.ENTYTY_STATES_ALL);	
 				  }else {
 					  
 		               //error message   									  
@@ -108,6 +213,11 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav'],function(Aes,Constants, Play
 		//set time out	
      }
 	
+	function loadList(){	
+		List.entityStates();
+		
+	}	
+	
 
 /* ==================================================================================================================
  * REGION INIT
@@ -115,9 +225,11 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav'],function(Aes,Constants, Play
  */	
 	
 	  function init(){
-		
+		  loadList();
+		  load();
 		  Nav.init();
 		  filters();
+		  tabInit();
 	}
 	
 	
