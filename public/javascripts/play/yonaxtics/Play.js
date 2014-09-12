@@ -211,7 +211,7 @@
 		
 		return 'data:'+mime+';base64,'+ src;
 	}
-	
+	//quit
     Play.appendInputHidden = function(data,form){    	
     	var inputs = new Array();
     	for (var i = 0; i < data.length; i++) {			
@@ -224,7 +224,7 @@
 		}
     	return inputs;
     }
-    
+    //quit
     Play.removeInputHidden = function(inputs){    	
     	for (var i = 0; i < inputs.length; i++) {			
     		inputs[i].parentNode.removeChild(inputs[i]);

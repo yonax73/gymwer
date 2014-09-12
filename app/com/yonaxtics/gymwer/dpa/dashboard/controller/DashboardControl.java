@@ -1,10 +1,10 @@
 package com.yonaxtics.gymwer.dpa.dashboard.controller;
 
-import static com.yonaxtics.gymwer.sec.crypto.aes.Sec.dec;
-import static com.yonaxtics.gymwer.util.Constant.SESSION_OK;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.dpa.dashboard.dashboard;
+
+import com.yonaxtics.gymwer.sec.session.Session;
 
 /** 
  * Clase     : DashboardControl.java<br/>
@@ -18,10 +18,10 @@ import views.html.dpa.dashboard.dashboard;
 public class DashboardControl extends Controller {
 	
 	public static Result dashboard(){	
-	    if(session(SESSION_OK)!= null && Integer.parseInt(dec(session(SESSION_OK))) > 0) {	    	 
+	    if(Session.exists(Session.OK)) {	    	 
     	   	return ok(dashboard.render());
 	    } else {
-	    	session().clear();			
+	    	Session.end();	
 			return redirect("/login");
 	    }		
 	}	

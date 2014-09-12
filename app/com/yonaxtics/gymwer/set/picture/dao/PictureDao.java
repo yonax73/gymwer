@@ -32,7 +32,7 @@ public class PictureDao extends Dao {
 				 conn = DB.getConnection();			 
 				 String sql = "CALL sp_set_pictures_UPDATE(?,?,?)";			 
 				 cst = conn.prepareCall(sql);				 
-				 cst.setInt(1,picture.getPersonId());				 
+				 cst.setInt(1,picture.getId());				 
 				 cst.setString(2, picture.getMime());
 				 cst.setBlob(3, new FileInputStream(picture.getFile()));				 
 				 result = cst.executeUpdate() > 0;				 

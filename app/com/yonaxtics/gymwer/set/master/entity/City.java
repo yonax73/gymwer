@@ -9,13 +9,12 @@ package com.yonaxtics.gymwer.set.master.entity;
  *
  */
 public class City  extends MasterValue{
-
+	
+	private static final long serialVersionUID = 1L;
 	private Country country;
 	
-	public City(int id) {
-		
-		super(id);
-		
+	public City(int id) {		
+		super(id);		
 	}
 	
 	public City(int id, String name){

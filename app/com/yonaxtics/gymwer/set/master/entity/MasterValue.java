@@ -11,25 +11,23 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
  */
 public class MasterValue   extends Entity	{
 
-	
+	private static final long serialVersionUID = 1L;
+	public final static int ROL_SUPER_ADMIN = 4;
+	public final static int ROL_ADMIN = 33;
+ 
+    
 	private int masterId;
 	private String value1;
 	private String value2;
-	private String value3;
-
+	private String value3;	
 	
-	
-	public MasterValue(int id) {
-		
-		super(id);
-		
+	public MasterValue(int id) {		
+		super(id);		
 	}
 	
 	
-	public boolean isEmpty(){
-		
-		return value1 == null || value1 == "" || value2 == null || value2 == "";
-		
+	public boolean isEmpty(){		
+		return value1 == null || value1 == "" || value2 == null || value2 == "";		
 	}
    
 	public int getMasterId() {

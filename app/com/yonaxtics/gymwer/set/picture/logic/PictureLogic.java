@@ -1,10 +1,9 @@
 package com.yonaxtics.gymwer.set.picture.logic;
 
-import static com.yonaxtics.gymwer.sec.crypto.aes.Sec.dec;
-import static com.yonaxtics.gymwer.util.Constant.SESSION_OK;
-import static play.mvc.Controller.session;
 import play.mvc.Http.MultipartFormData.FilePart;
 
+import com.yonaxtics.gymwer.sec.session.Session;
+import com.yonaxtics.gymwer.set.person.entity.Person;
 import com.yonaxtics.gymwer.set.picture.dao.PictureDao;
 import com.yonaxtics.gymwer.set.picture.entity.Picture;
 
@@ -23,12 +22,11 @@ public class PictureLogic {
 	
 	  public static boolean update(FilePart file){		  
 		  boolean result = false;		  
-		  if(file != null){			  
-			  Picture picture = new Picture(file.getFile());
-			  picture.setMime(file.getContentType());
-			  picture.setPersonId(Integer.parseInt(dec(session(SESSION_OK))));			  
-			  result =  PictureDao.update(picture);
-			  picture.setPersonId(0);
+		  if(file != null){		
+			  Person contact = (Person) Session.getAttribute(Session.OK);
+			  contact.setPicture(new Picture(file.getFile()));			  
+			  contact.getPicture().setMime(file.getContentType());			  			  
+			  result =  PictureDao.update(contact.getPicture());			  
 		  }		  
 		  return result;
 	  }

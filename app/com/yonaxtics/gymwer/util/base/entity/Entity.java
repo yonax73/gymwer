@@ -1,5 +1,6 @@
 package com.yonaxtics.gymwer.util.base.entity;
 
+import java.io.Serializable;
 import java.time.*;
 
 /**
@@ -8,8 +9,9 @@ import java.time.*;
  * @version 0.1 (7/16/2014)
  *
  */
-public class Entity {
+public class Entity implements Serializable {	
 
+	private static final long serialVersionUID = 1L;
 	protected int id;
 	protected boolean active;
 	protected LocalDateTime created;	

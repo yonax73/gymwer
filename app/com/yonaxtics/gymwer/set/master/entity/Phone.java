@@ -1,6 +1,5 @@
 package com.yonaxtics.gymwer.set.master.entity;
 
-import static com.yonaxtics.gymwer.util.Constant.MASTER_PHONE_ID;
 
 
 
@@ -12,25 +11,25 @@ import static com.yonaxtics.gymwer.util.Constant.MASTER_PHONE_ID;
  */
 public class Phone extends MasterValue {
 
-	public Phone(int id) {
-		
-		super(id);
-		setMasterId(MASTER_PHONE_ID);
 	
+
+	public Phone(int id) {		
+		super(id);
+		setMasterId(Master.PHONE_ID);	
 	}
 	
 	public Phone(int id,String phone){
 		
 		super(id);
 		setValue1(phone);
-		setMasterId(MASTER_PHONE_ID);
+		setMasterId(Master.PHONE_ID);
 	}
 	
 	public Phone(String phone){
 		
 		super(0);
 		setValue1(phone);
-		setMasterId(MASTER_PHONE_ID);
+		setMasterId(Master.PHONE_ID);
 	}
 	
 	public void setPhone(String phone){

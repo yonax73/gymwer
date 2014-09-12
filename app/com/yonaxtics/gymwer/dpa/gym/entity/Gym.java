@@ -13,7 +13,8 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
  *
  */
 public class Gym extends Entity {
-
+	
+	
 	private String nit;
 	private String name;	
 	private Location location;	

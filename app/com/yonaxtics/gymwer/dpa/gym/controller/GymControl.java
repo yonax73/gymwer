@@ -3,8 +3,6 @@
 import static com.yonaxtics.gymwer.sec.crypto.aes.Sec.dec;
 import static com.yonaxtics.gymwer.sec.crypto.aes.Sec.enc;
 import static com.yonaxtics.gymwer.util.Constant.REQUEST_SUCCESS;
-import static com.yonaxtics.gymwer.util.Constant.SESSION_GYM_ID;
-import static com.yonaxtics.gymwer.util.Constant.SESSION_OK;
 
 import java.util.Map;
 
@@ -13,13 +11,11 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.dpa.gym.gym;
 
-import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 import com.yonaxtics.gymwer.dpa.gym.logic.GymLogic;
-import com.yonaxtics.gymwer.set.location.entity.Location;
+import com.yonaxtics.gymwer.sec.session.Session;
 import com.yonaxtics.gymwer.set.location.logic.LocationLogic;
-import com.yonaxtics.gymwer.set.master.entity.Address;
-import com.yonaxtics.gymwer.set.master.entity.Phone;
 import com.yonaxtics.gymwer.set.master.logic.MasterLogic;
+import com.yonaxtics.gymwer.set.person.entity.Person;
 /**
  * 
  * @author yonatan quintero
@@ -29,18 +25,19 @@ import com.yonaxtics.gymwer.set.master.logic.MasterLogic;
 public class GymControl extends Controller {
 	
 	public static Result gym(){
-		if(session(SESSION_OK)!= null && Integer.parseInt(dec(session(SESSION_OK))) > 0) {
+		if(Session.exists(Session.OK)) {
 		  return ok(gym.render());
 		}else{
-	    	session().clear();			
+	    	Session.end();			
 			return redirect("/login");			
 		}
 	}	
 	
-	public static Result load(){			
-		Gym gym = new Gym(Integer.parseInt(dec(session(SESSION_GYM_ID))));
-		if(GymLogic.load(gym)){
-			return ok(enc(Json.toJson(gym).toString()));	
+	public static Result load(){		
+		Person contact = (Person) Session.getAttribute(Session.OK);
+		if(GymLogic.load(contact.getGym())){
+			Session.setAttribute(Session.OK, contact);
+			return ok(enc(Json.toJson(contact.getGym()).toString()));	
 		}else{
 			return ok("Internal Error 3002");
 		}		
@@ -48,25 +45,17 @@ public class GymControl extends Controller {
 	
 	public static Result save(){
 		String result = null;
-		Location location = null;
-		Phone phone = null;
-		Address address = null;
-		Gym gym = null;
+		Person contact = (Person) Session.getAttribute(Session.OK);
 		final Map<String,String[]>data = request().body().asFormUrlEncoded();
-		gym = new Gym(dec(data.get("txtName")[0]));		
-	    if(!gym.getName().isEmpty()){
-			phone = new Phone(Integer.parseInt(dec(data.get("txtPhoneId")[0])),dec(data.get("txtPhone")[0]));						
-			if(MasterLogic.save(phone) ){
-				address = new Address(Integer.parseInt(dec(data.get("txtAddressId")[0])),dec(data.get("txtAddress")[0]));
-			    if(MasterLogic.save(address)){
-			    	location = new Location(Integer.parseInt(dec(data.get("txtLocationId")[0])));
-			    	location.setPhone(phone);
-			    	location.setAddress(address);
-			    	if(LocationLogic.save(location)){
-				       gym.setId(Integer.parseInt(dec(session(SESSION_GYM_ID))));
-				       gym.setNit(dec(data.get("txtNit")[0]));
-			    	   gym.setLocation(location);  
-			    	   if(GymLogic.update(gym)){
+		contact.getGym().setName(dec(data.get("txtName")[0]));		
+	    if(!contact.getGym().getName().isEmpty()){	    	
+	    	contact.getGym().getLocation().getPhone().setPhone((dec(data.get("txtPhone")[0])));			
+			if(MasterLogic.save(contact.getGym().getLocation().getPhone()) ){
+				contact.getGym().getLocation().getAddress().setAddress(dec(data.get("txtAddress")[0]));				
+			    if(MasterLogic.save(contact.getGym().getLocation().getAddress())){			    	
+			    	if(LocationLogic.save(contact.getGym().getLocation())){
+			    	    contact.getGym().setName(dec(data.get("txtNit")[0]));			    	   
+			    	   if(GymLogic.update(contact.getGym())){
 			    			return ok(REQUEST_SUCCESS);		
 			    	   }else{
 			    			result = "Internal Error 3003";

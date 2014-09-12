@@ -14,27 +14,23 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
 
 public class Action extends Entity {
 
+	private static final long serialVersionUID = 1L;
+	public final static int LOAD_PROFILE = 25;
+    public final static int LOAD_GYM = 26;     
 	
 	private String description;
 	private String url;
 	private String ico;
 	private Module module;	
-	
-	
-	
 
 	/**
 	 * @param id
 	 */
-	public Action(int id) {
-		
-		super(id);
-		
+	public Action(int id) {		
+		super(id);		
 	}
 	
-	
-	public Action(String url,String ico, Module module) {
-		
+	public Action(String url,String ico, Module module) {		
 		super(0);
 		this.url = url;
 		this.ico = ico;

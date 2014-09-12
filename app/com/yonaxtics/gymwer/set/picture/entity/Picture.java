@@ -15,10 +15,10 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
 
 public class Picture extends Entity {
 
+	private static final long serialVersionUID = 1L;
 	private String mime;
 	private String src;
 	private File file;
-	private int personId;
 	
 	/**
 	 * @param id
@@ -77,14 +77,6 @@ public class Picture extends Entity {
 	}
 
 
-	public int getPersonId() {
-		return personId;
-	}
-
-
-	public void setPersonId(int personId) {
-		this.personId = personId;
-	}
 
 
 

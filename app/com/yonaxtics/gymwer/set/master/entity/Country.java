@@ -10,6 +10,8 @@ package com.yonaxtics.gymwer.set.master.entity;
  *
  */
 public class Country extends MasterValue{
+	
+	private static final long serialVersionUID = 1L;
 
 	public Country(int id) {
 		

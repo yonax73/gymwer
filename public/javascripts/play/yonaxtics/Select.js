@@ -36,6 +36,7 @@ define([], function() {
 	 Select.items;	 
      Select.span;    
      Select.input;
+     Select.inputHidden;
      Select.i;     
      Select.ul;
      Select.oldItemLi;
@@ -59,17 +60,14 @@ define([], function() {
 		if(option !== undefined){
 		    Select.selectItem(option);			
 		}		
-	}
-
-
-	
+	}	
 	
 	Select.create =function(){
 		
 	     Select.span = 	document.createElement('span');
-	     Select.input = document.createElement('input');
+	     Select.input = document.createElement('input');	     
 	     Select.ul=  document.createElement('ul');	
-	     Select.i = document.createElement('i');	     
+	     Select.i = document.createElement('i');	    	     
 	     Select.input.type = 'text';	 
 	     Select.input.readOnly  = true;	     
 	     Select.input.className = 'form-control'
@@ -88,11 +86,18 @@ define([], function() {
 		    	  Select.toggle();
 		    	  Select.currentItemLi.focus();
 	         }
-	     }
+	     }	     
 	     Select.ul.classList.add('select-list');
 	     Select.ul.classList.add('hidden');
+	     Select.inputHidden = document.createElement('input'); 
+	     Select.element.appendChild(Select.inputHidden); 	
+	     Select.inputHidden.type ='hidden';
+	     if(Select.element.dataset.name!==undefined && Select.element.dataset.name!==null){           
+           Select.inputHidden.name = Select.element.dataset.name;           
+	     }	     
 	     Select.element.appendChild(Select.span);
-	     Select.element.appendChild(Select.ul);	  	
+	     Select.element.appendChild(Select.ul);	 
+	     
 		
 	}
 	
@@ -108,27 +113,13 @@ define([], function() {
 			  li.tabIndex = i;
 			  li.dataset.option = item.option;
 			  li.onclick = function(){					  	
-				  Select.oldItemLi = Select.currentItemLi;
-				  Select.currentItemLi = this;
-				  Select.input.value = this.textContent;				  
-				  Select.input.dataset.option = this.dataset.option;
-				  Select.input.onchange();	
-				  Select.toggle();	
-				  this.classList.add('selected');	
-				  Select.oldItemLi.classList.remove('selected');				  	  
+                    Select.changeValue(this);			  	  
 		     }
 			 li.onkeydown = function checkKey(e) {
 		         e = e || window.event;
 		         if (e.keyCode === 13) {
 		        	  e.preventDefault();
-					  Select.oldItemLi = Select.currentItemLi;
-					  Select.currentItemLi = this;
-					  Select.input.value = this.textContent;					
-					  Select.input.dataset.option = this.dataset.option;
-					  Select.input.onchange();	
-					  Select.toggle();	
-					  this.classList.add('selected');	
-					  Select.oldItemLi.classList.remove('selected');	
+                      Select.changeValue(this);
 		         }
 		     }			  
 			  Select.ul.appendChild(li);			
@@ -156,6 +147,7 @@ define([], function() {
 		 Select.input.value =  Select.currentItemLi.textContent;
 		 
 		 Select.input.dataset.option = Select.currentItemLi.dataset.option;
+		 Select.inputHidden.value= Select.currentItemLi.dataset.option;
 		 Select.currentItemLi.focus();
 		 Select.currentItemLi.classList.add('selected');
 	}
@@ -167,6 +159,18 @@ define([], function() {
     		 Select.ul.classList.toggle('hidden');
 	    }  	 
    }
+
+   Select.changeValue = function(li){
+      Select.oldItemLi = Select.currentItemLi;
+	  Select.currentItemLi = li;
+	  Select.input.value = li.textContent;				  
+	  Select.input.dataset.option = li.dataset.option;
+	  Select.inputHidden.value= li.dataset.option;
+	  Select.input.onchange();	
+	  Select.toggle();	
+	  li.classList.add('selected');	
+	  Select.oldItemLi.classList.remove('selected');	
+   }
     
    Select.addItem = function(option,value){
      	 var li = document.createElement('li');
@@ -174,27 +178,13 @@ define([], function() {
 		  li.tabIndex =  Select.items.length+1;
 		  li.dataset.option = option;
 		  li.onclick = function(){					  	
-			  Select.oldItemLi = Select.currentItemLi;
-			  Select.currentItemLi = this;
-			  Select.input.value = this.textContent;				  
-			  Select.input.dataset.option = this.dataset.option;
-			  Select.input.onchange();	
-			  Select.toggle();	
-			  this.classList.add('selected');	
-			  Select.oldItemLi.classList.remove('selected');				  	  
+              Select.changeValue(this);			  	  
 	     }
 		 li.onkeydown = function checkKey(e) {
 	         e = e || window.event;
 	         if (e.keyCode === 13) {
 	        	  e.preventDefault();
-				  Select.oldItemLi = Select.currentItemLi;
-				  Select.currentItemLi = this;
-				  Select.input.value = this.textContent;					
-				  Select.input.dataset.option = this.dataset.option;
-				  Select.input.onchange();	
-				  Select.toggle();	
-				  this.classList.add('selected');	
-				  Select.oldItemLi.classList.remove('selected');	
+                  Select.changeValue(this);	
 	         }
 	     }			  
 		  Select.ul.appendChild(li);			

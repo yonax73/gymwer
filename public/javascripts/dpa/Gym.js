@@ -107,19 +107,12 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Notify','FormOk'],function(A
 		 frmGym.onsubmit = function(e){
 			 e.preventDefault();
 			 if(FormOk.hasChanged()){
-				 if(frmGymOk.isValid()){	
-					    var data = [
-					        {name:'txtLocationId',value:gym.location.id},				        
-					        {name:'txtPhoneId',value:gym.location.phone.id},
-					        {name:'txtAddressId',value:gym.location.address.id}
-					    ];				    
-						var inputs = Play.appendInputHidden(data,e.target);					
+				 if(frmGymOk.isValid()){			    						
 						var xhr = new XMLHttpRequest();		
 						xhr.onreadystatechange = function () {	
 							  notify.wait('Loading...');	
 							  btnSave.disabled = true;
-							  if (this.readyState === Constants.READYSTATE_COMPLETE) {
-								  Play.removeInputHidden(inputs);					
+							  if (this.readyState === Constants.READYSTATE_COMPLETE) {								  
 								  btnSave.disabled = false;
 								  if(this.status === Constants.STATUS_OK  && this.responseText === Constants.REQUEST_SUCCESS){									  
 									  localStorage.removeItem(Constants.LOCALSTORAGE_REQUEST_LOAD_GYM);

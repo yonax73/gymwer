@@ -11,11 +11,11 @@ import com.yonaxtics.gymwer.dpa.role.entity.Role;
  *
  */
 public class User extends Entity {
-
 	
+	private static final long serialVersionUID = 1L;
 	private Role role;
 	private String name;
-	private String password;
+	private transient String  password;
 	private String email;
 	private Action defaultAction;
 	

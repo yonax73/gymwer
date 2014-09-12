@@ -1,7 +1,5 @@
 package com.yonaxtics.gymwer.set.module.entity;
 
-import static com.yonaxtics.gymwer.util.Constant.MASTER_VALUE_MODULE_CHILD;
-import static com.yonaxtics.gymwer.util.Constant.MASTER_VALUE_MODULE_PARENT;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +18,16 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
 
 public class Module extends Entity {
 
+	private static final long serialVersionUID = 1L;
 	
+	public final static int PARENT =1;
+    public final static int CHILD =2;  
+    
 	private String description;
 	private int rolId;
 	private List<Action> children;
 	private Module parent;
+	
 	
 	/**
 	 * @param id
@@ -60,17 +63,13 @@ public class Module extends Entity {
 		setDescription(description);
 	}
 
-	public boolean isChild(){
-		
-		return rolId == MASTER_VALUE_MODULE_CHILD;
-		
+	public boolean isChild(){		
+		return rolId == CHILD;		
 	}
 	
 	
-	public boolean isParent(){
-		
-		return rolId == MASTER_VALUE_MODULE_PARENT;
-		
+	public boolean isParent(){		
+		return rolId == PARENT;		
 	}
 	
 	

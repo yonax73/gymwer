@@ -12,9 +12,7 @@ import com.yonaxtics.gymwer.set.master.entity.*;
  */
 public class Location extends Entity {
 
-
-
-
+	private static final long serialVersionUID = 1L;
 	private Phone phone;
 	private Address address;
 	

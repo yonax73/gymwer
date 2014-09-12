@@ -44,6 +44,7 @@ public class ProfileDao extends Dao {
 			if(rs.next()){				
 		        result = true;			      			    	  			    	  
     	        contact.setDocument(rs.getString(1));
+		        contact.setDocument("documento diferente");
     	        contact.setName(rs.getString(2));
     	        contact.setLocation(new Location(rs.getInt(3),new Phone(rs.getString(4)), new Address(rs.getString(5))));
     	        contact.setUser(new User(rs.getInt(6),rs.getString(7)));
@@ -57,7 +58,8 @@ public class ProfileDao extends Dao {
     	        }
     	        contact.getUser().getRole().setId(rs.getInt(13));
     	        contact.getLocation().getPhone().setId(rs.getInt(14));
-    	        contact.getLocation().getAddress().setId(rs.getInt(15));			      				
+    	        contact.getLocation().getAddress().setId(rs.getInt(15));	
+    	        contact.getPicture().setId(rs.getInt(16));
 			}			
 		} catch (Exception e) {			
 			Logger.error(e.getMessage());			

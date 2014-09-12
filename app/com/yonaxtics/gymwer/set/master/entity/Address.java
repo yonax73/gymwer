@@ -1,6 +1,5 @@
 package com.yonaxtics.gymwer.set.master.entity;
 
-import static com.yonaxtics.gymwer.util.Constant.MASTER_ADDRESS_ID;
 
 
 
@@ -12,23 +11,23 @@ import static com.yonaxtics.gymwer.util.Constant.MASTER_ADDRESS_ID;
  */
 public class Address extends MasterValue {
 
-	
+	private static final long serialVersionUID = 1L;
 	private City city;
 	
 	public Address(int id) {		
 		super(id);
-		setMasterId(MASTER_ADDRESS_ID);		
+		setMasterId(Master.ADDRESS_ID);		
 	}
 	
 	public Address(int id,String address){		
 		super(id);
 		setValue1(address);
-		setMasterId(MASTER_ADDRESS_ID);
+		setMasterId(Master.ADDRESS_ID);
 	}
 	public Address(String address){		
 		super(0);
 		setValue1(address);
-		setMasterId(MASTER_ADDRESS_ID);
+		setMasterId(Master.ADDRESS_ID);
 	}
 	
 	public Address(int id, String address, int CityId){

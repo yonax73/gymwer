@@ -13,33 +13,27 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
  *
  */
 public class Person  extends Entity {
+
+	private static final long serialVersionUID = 1L;
+	public final static int FEMALE = 6;
+	public final static int  MALE = 5;
 	
 	private User user;
 	private Location location;	
 	private String document;
 	private String name;
 	private Gym gym;
-    private Picture picture;	
+    private Picture picture;
 	
-
-	
-	public Person(int id) {
-		
+	public Person(int id) {		
 		super(id);		
 	}
-	
-	
-	
-	
-
 		
-	public Person(User user,Gym gym){
-		
+	public Person(User user,Gym gym){		
 		super(0);		
 		this.user = user;
 		this.gym = gym;
-	}	
-
+	}
 	
 	public User getUser() {
 		return user;
