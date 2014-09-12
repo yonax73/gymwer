@@ -110,7 +110,7 @@ define([], function() {
 	 * ENTITY STATES LIST
 	 */
 	Constants.ENTYTY_STATES_ALL = -1;
-	
+	Constants.ENTYTY_STATES_ACTIVE = 1;
 	
 	
 	

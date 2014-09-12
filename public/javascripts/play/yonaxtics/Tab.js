@@ -58,7 +58,7 @@ define([], function() {
         }
 	}
 
-	Tab.add = function(href,tabContentId,title,url){		
+	Tab.add = function(href,tabContentId,title,url,callBackFn){		
        if(Tab.exists(tabContentId)){
            Tab.getItem(tabContentId).onclick();
        }else{
@@ -82,7 +82,8 @@ define([], function() {
 			xhr.onreadystatechange = function () {		       
 				  if (this.readyState === 4) {				  						
 					  if(this.status === 200){									  
-						 tabContentItem.innerHTML = this.responseText;					  
+						 tabContentItem.innerHTML = this.responseText;	
+						 callBackFn();				  
 					   } 					  
 				  }		  
 			}

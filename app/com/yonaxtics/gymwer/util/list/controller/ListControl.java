@@ -35,8 +35,7 @@ public class ListControl extends Controller {
 	}	
 	
 	public static Result entityStates(){
-		ListItem states = new ListItem();
-		states.add(new Item(Entity.ALL, "ALL"));
+		ListItem states = new ListItem();		
 		states.add(new Item(Entity.ACTIVE, "ACTIVE"));
 		states.add(new Item(Entity.INACTIVE, "INACTIVE"));
 		return ok(enc(Json.toJson(states.getItems()).toString()));

@@ -52,16 +52,16 @@ define([], function() {
 		Select.disabled = false;		
 		return Select;
 	}
-	
-	
-	
-	
-	Select.init = function(option){
-	     
+
+	Select.init = function(option){	     
 		Select.create();
 		Select.fill();
-		Select.selectItem(option);		
+		if(option !== undefined){
+		    Select.selectItem(option);			
+		}		
 	}
+
+
 	
 	
 	Select.create =function(){
@@ -168,7 +168,37 @@ define([], function() {
 	    }  	 
    }
     
-    
+   Select.addItem = function(option,value){
+     	 var li = document.createElement('li');
+		  li.textContent= value;			  
+		  li.tabIndex =  Select.items.length+1;
+		  li.dataset.option = option;
+		  li.onclick = function(){					  	
+			  Select.oldItemLi = Select.currentItemLi;
+			  Select.currentItemLi = this;
+			  Select.input.value = this.textContent;				  
+			  Select.input.dataset.option = this.dataset.option;
+			  Select.input.onchange();	
+			  Select.toggle();	
+			  this.classList.add('selected');	
+			  Select.oldItemLi.classList.remove('selected');				  	  
+	     }
+		 li.onkeydown = function checkKey(e) {
+	         e = e || window.event;
+	         if (e.keyCode === 13) {
+	        	  e.preventDefault();
+				  Select.oldItemLi = Select.currentItemLi;
+				  Select.currentItemLi = this;
+				  Select.input.value = this.textContent;					
+				  Select.input.dataset.option = this.dataset.option;
+				  Select.input.onchange();	
+				  Select.toggle();	
+				  this.classList.add('selected');	
+				  Select.oldItemLi.classList.remove('selected');	
+	         }
+	     }			  
+		  Select.ul.appendChild(li);			
+    }
     
    Select.getItem = function(){
 	   

@@ -59,6 +59,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','List','Select','Tab'],functi
  * ===================================================================================================================*/
 	var frmFilters = Play.getId('frmFilters');	
 	var selectStatus= null;
+	var selectStatusNew = null;
 	var tabs = null;
 /* ==================================================================================================================
  * REGION READY
@@ -74,7 +75,10 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','List','Select','Tab'],functi
    function navegationTabs(){
    	    tabs = new Tab(Play.getId('tabs'),Play.getId('tabs-content'));
    	    Play.getId('create').onclick = function(){
-   	    	tabs.add('#newPlan',0,'New Plan','/plan');
+   	    	tabs.add('#newPlan',0,'New Plan','/plan',function(){
+   	    		selectStatusNew =  new Select(Play.getId('selectStatusNew'),List.entityStates());
+   	    		selectStatus.init(Constants.ENTYTY_STATES_ACTIVE);	
+   	    	});   	    	
    	    }
    }
 
@@ -98,8 +102,11 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','List','Select','Tab'],functi
 				  if(this.status === Constants.STATUS_OK){				 
 					  
 					  var gym = Json.parse(this.responseText);				  
-						selectStatus = new Select(Play.getId('selectStatus'),List.entityStates());
-						selectStatus.init(Constants.ENTYTY_STATES_ALL);	
+						selectStatus = new Select(Play.getId('selectStatus'),List.entityStates());						
+						selectStatus.init();							
+						selectStatus.addItem(Constants.ENTYTY_STATES_ALL,'ALL');
+						selectStatus.selectItem(Constants.ENTYTY_STATES_ALL);
+						
 				  }else {
 					  
 		               //error message   									  
