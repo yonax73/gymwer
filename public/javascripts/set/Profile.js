@@ -152,6 +152,10 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 								      reader.readAsDataURL(picture);
 								      localStorage.removeItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE);	
 								      notify.success('The picture has been changed successfully!!!');	
+								}else if(this.status === Constants.STATUS_INTERNAL_SERVER_ERROR){
+									    document.body.innerHTML = this.responseText;   
+								}else{
+									notify.danger(this.responseText);
 								}									  
 						  }							  
 						}

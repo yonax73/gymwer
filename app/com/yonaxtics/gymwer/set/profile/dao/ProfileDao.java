@@ -43,8 +43,7 @@ public class ProfileDao extends Dao {
 			rs  = cst.executeQuery();				
 			if(rs.next()){				
 		        result = true;			      			    	  			    	  
-    	        contact.setDocument(rs.getString(1));
-		        contact.setDocument("documento diferente");
+    	        contact.setDocument(rs.getString(1));		        
     	        contact.setName(rs.getString(2));
     	        contact.setLocation(new Location(rs.getInt(3),new Phone(rs.getString(4)), new Address(rs.getString(5))));
     	        contact.setUser(new User(rs.getInt(6),rs.getString(7)));

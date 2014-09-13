@@ -56,11 +56,13 @@ public class Session {
 		try {
 			if (!key.isEmpty()) {		       
 				byte [] data = (byte[]) Cache.get(dec(Http.Context.current().session().get(key)));
-				ByteArrayInputStream 	bais = new ByteArrayInputStream(data);
-				ObjectInputStream ins = new ObjectInputStream(bais);
-				entity = (Entity) ins.readObject();
-				ins.close();
-				bais.close();
+				if(data!=null){
+					ByteArrayInputStream 	bais = new ByteArrayInputStream(data);
+					ObjectInputStream ins = new ObjectInputStream(bais);
+					entity = (Entity) ins.readObject();
+					ins.close();
+					bais.close();					
+				}
 			} else {
 				Logger.error("Value for " + key + " is null");
 			}
@@ -71,25 +73,19 @@ public class Session {
 		}
 		return entity;
 	}
-
 	
 	public static boolean exists(String key){
 		boolean result = false;
-		if (!key.isEmpty()) {
-		   result = Http.Context.current().session().get(key) != null; 					 
-		}
+		if (!key.isEmpty())result = Http.Context.current().session().get(key) != null;		
 		return result;
 	}
 	
-	public static void clear(){
-		if(Http.Context.current().session().get(LOGIN)!=null){
-			Login login = (Login)Session.getAttribute(LOGIN);
-			login.finalize();		
-		}	
-		 Http.Context.current().session().entrySet().stream().parallel().forEach(key->{
-			  Cache.remove(dec(key.getKey())); 
-		 });
-		 Http.Context.current().session().clear();
+	public static void clear(){	
+		  play.mvc.Http.Session session = Http.Context.current().session();
+		  Login login = (Login) getAttribute(LOGIN);
+		  if(login!=null)login.destroy();
+		  session.entrySet().stream().parallel().forEach(key->{Cache.remove(dec(key.getValue()));});
+		  session.clear();
 	}
 	
 }

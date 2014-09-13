@@ -25,18 +25,15 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
  */
 
 public class Login extends Entity{
-
 	
-	public static int COUNTER;	
+	private static int counter;	
 	private Person person;
 	private  String hostAddress;	
 	
 	public Login(Person person) {		
-		super((int) (System.currentTimeMillis()*(++COUNTER)));
-		this.person = person;		
-		created = LocalDateTime.now();
-		networkInfoClient();
-		messageInit();
+		super(generateId());
+		this.person = person;
+		init();
 	}
 	
 	private  void networkInfoClient(){
@@ -60,40 +57,45 @@ public class Login extends Entity{
 		}	
 	}
 	
-	private void messageInit(){
+	private void init(){
+		created = LocalDateTime.now();
+		networkInfoClient();
         StringBuffer strBf = new StringBuffer("New Session [- ");
         strBf.append(String.valueOf(id));
         strBf.append(" -] ");
         strBf.append("has been initialized at the ");
         strBf.append(getFormatCreated());
         strBf.append(" for the User [- ");
-        strBf.append(person.getId());
-        strBf.append(" -] ");
         strBf.append(person.getUser().getEmail());
+        strBf.append(" -] ");        
         strBf.append(" since Client ");         
         strBf.append(hostAddress); 		
 	    strBf.append("\nActive sessions ");
-	    strBf.append(String.valueOf(COUNTER));
+	    strBf.append(String.valueOf(counter));
 		Logger.info(strBf.toString());
 	}
 	
-	private void messageFinalize(){
+	private static int generateId(){
+		return (int) (System.currentTimeMillis()*(++counter));
+	}
+	
+	public void destroy(){
+		counter--;
 		StringBuffer strBf = new StringBuffer("Session [-");		
         strBf.append(String.valueOf(id));
         strBf.append(" -] ");
         strBf.append("has been ended at the ");
 		strBf.append(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
         strBf.append(" for the User [- ");
-        strBf.append(person.getId());
-        strBf.append(" -] ");
         strBf.append(person.getUser().getEmail());
+        strBf.append(" -] ");        
 		strBf.append("since Client ");
 		strBf.append(hostAddress);
 		strBf.append(" and was logged ");
 		strBf.append(String.valueOf(getTimeConnection()));
-		strBf.append(" minutes.");
+		strBf.append(" minutes aprox.");
 		strBf.append("\nActive sessions");
-		strBf.append(String.valueOf(COUNTER));
+		strBf.append(String.valueOf(counter));
 		Logger.info(strBf.toString());
 	}
 	
@@ -110,8 +112,6 @@ public class Login extends Entity{
 	}
 	
 	public void finalize(){
-         COUNTER--;
-         messageFinalize();
          person = null;
          created = null;
          hostAddress = null;

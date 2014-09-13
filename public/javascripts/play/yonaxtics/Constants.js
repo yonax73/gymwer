@@ -132,6 +132,7 @@ define([], function() {
 	 * XMLHTTPREQUEST STATUS
 	 */
 	Constants.STATUS_OK  = 200;	
+	Constants.STATUS_INTERNAL_SERVER_ERROR = 500;
 	
 	
 	/**
