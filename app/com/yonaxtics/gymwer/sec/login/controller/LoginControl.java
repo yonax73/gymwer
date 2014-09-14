@@ -15,9 +15,10 @@ import views.html.sec.login.signup;
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 import com.yonaxtics.gymwer.dpa.gym.logic.GymLogic;
 import com.yonaxtics.gymwer.dpa.role.entity.Role;
+import com.yonaxtics.gymwer.sec.Secured;
+import com.yonaxtics.gymwer.sec.securedController;
 import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.sec.login.logic.LoginLogic;
-import com.yonaxtics.gymwer.sec.session.Session;
 import com.yonaxtics.gymwer.set.person.entity.Person;
 import com.yonaxtics.gymwer.set.person.logic.PersonLogic;
 import com.yonaxtics.gymwer.set.user.entity.User;
@@ -37,8 +38,8 @@ public class LoginControl extends Controller {
 	
 
 	public static  Result  login() {
-		if(Session.exists(Session.LOGIN)){					
-			Login login = (Login) Session.getAttribute(Session.LOGIN); 
+		if(securedController.exists(securedController.LOGIN)){					
+			Login login = (Login) securedController.getAttribute(securedController.LOGIN); 
 			if(login!=null){
 				return redirect(login.getPerson().getUser().getDefaultAction().getUrl());	
 			}			
@@ -51,7 +52,7 @@ public class LoginControl extends Controller {
 	}	
 	
 	public static Result signOut(){
-		Session.clear();
+		securedController.clear();
 		return redirect("/login");
 	}	
 	
@@ -96,7 +97,7 @@ public class LoginControl extends Controller {
 		final Map<String, String[]> data = request().body().asFormUrlEncoded();		
 		Login login = new Login(new Person(new User(dec(data.get("txtEmail")[0]),data.get("txtPassword")[0]), new Gym(dec(data.get("txtSiteName")[0]))));
 		if(LoginLogic.signIn(login)){			    
-				Session.setAttribute(Session.LOGIN, login);
+				securedController.setAttribute(securedController.LOGIN, login);
 				return ok(login.getPerson().getUser().getDefaultAction().getUrl());				
 			} else {				
 				return ok(REQUEST_BAD);

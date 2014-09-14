@@ -1,8 +1,15 @@
 package com.yonaxtics.gymwer.util.base.entity;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.time.*;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import play.Logger;
 
 /**
  * 
@@ -42,6 +49,40 @@ public class Entity implements Serializable {
 		return "No Date";
 	}
 	
+	public byte[] serialize(){
+		byte[] data  = null;
+		try {										
+		        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		        ObjectOutputStream oos = new ObjectOutputStream(bos);
+		        oos.writeObject(this);
+		        oos.flush();
+		        oos.close();
+		        bos.close();
+		        data = bos.toByteArray();			
+		} catch (IOException ex) {
+			Logger.error(ex.getMessage());
+		}
+		return data;		
+	}
+	
+	public static Entity deserialize(byte[]data){
+		Entity entity = null;
+		try {				
+			if(data!=null){
+				ByteArrayInputStream bais = new ByteArrayInputStream(data);
+				ObjectInputStream ins = new ObjectInputStream(bais);
+				entity = (Entity) ins.readObject();
+				ins.close();
+				bais.close();					
+			}			
+		} catch (IOException ex) {
+			Logger.error(ex.getMessage());			
+		} catch (ClassNotFoundException ex) {			
+			Logger.error(ex.getMessage());
+		}
+		return entity;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -65,5 +106,7 @@ public class Entity implements Serializable {
 	public void setCreated(LocalDateTime created) {
 		this.created = created;
 	}
+	
+	
 	
 }

@@ -12,8 +12,8 @@ import play.mvc.Result;
 import views.html.dpa.gym.gym;
 
 import com.yonaxtics.gymwer.dpa.gym.logic.GymLogic;
+import com.yonaxtics.gymwer.sec.securedController;
 import com.yonaxtics.gymwer.sec.login.entity.Login;
-import com.yonaxtics.gymwer.sec.session.Session;
 import com.yonaxtics.gymwer.set.location.logic.LocationLogic;
 import com.yonaxtics.gymwer.set.master.logic.MasterLogic;
 /**
@@ -25,18 +25,18 @@ import com.yonaxtics.gymwer.set.master.logic.MasterLogic;
 public class GymControl extends Controller {
 	
 	public static Result gym(){
-		if(Session.exists(Session.LOGIN)) {
+		if(securedController.exists(securedController.LOGIN)) {
 		  return ok(gym.render());
 		}else{
-	    	Session.clear();			
+	    	securedController.clear();			
 			return redirect("/login");			
 		}
 	}	
 	
 	public static Result load(){		
-		Login login = (Login) Session.getAttribute(Session.LOGIN);
+		Login login = (Login) securedController.getAttribute(securedController.LOGIN);
 		if(GymLogic.load(login.getPerson().getGym())){
-			Session.setAttribute(Session.LOGIN, login);
+			securedController.setAttribute(securedController.LOGIN, login);
 			return ok(enc(Json.toJson(login.getPerson().getGym()).toString()));	
 		}else{
 			return ok("Internal Error 3002");
@@ -45,7 +45,7 @@ public class GymControl extends Controller {
 	
 	public static Result save(){
 		String result = null;
-		Login login = (Login)  Session.getAttribute(Session.LOGIN);
+		Login login = (Login)  securedController.getAttribute(securedController.LOGIN);
 		final Map<String,String[]>data = request().body().asFormUrlEncoded();
 		login.getPerson().getGym().setName(dec(data.get("txtName")[0]));		
 	    if(!login.getPerson().getGym().getName().isEmpty()){	    	

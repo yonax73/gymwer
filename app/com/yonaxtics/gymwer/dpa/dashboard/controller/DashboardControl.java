@@ -4,7 +4,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.dpa.dashboard.dashboard;
 
-import com.yonaxtics.gymwer.sec.session.Session;
+import com.yonaxtics.gymwer.sec.securedController;
 
 /** 
  * Clase     : DashboardControl.java<br/>
@@ -18,10 +18,10 @@ import com.yonaxtics.gymwer.sec.session.Session;
 public class DashboardControl extends Controller {
 	
 	public static Result dashboard(){	
-	    if(Session.exists(Session.LOGIN)) {	    	 
+	    if(securedController.exists(securedController.LOGIN)) {	    	 
     	   	return ok(dashboard.render());
 	    } else {
-	    	Session.clear();	
+	    	securedController.clear();	
 			return redirect("/login");
 	    }		
 	}	

@@ -7,8 +7,8 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import com.yonaxtics.gymwer.sec.securedController;
 import com.yonaxtics.gymwer.sec.login.entity.Login;
-import com.yonaxtics.gymwer.sec.session.Session;
 import com.yonaxtics.gymwer.set.permission.logic.PermissionLogic;
 
 /** 
@@ -22,7 +22,7 @@ import com.yonaxtics.gymwer.set.permission.logic.PermissionLogic;
 public class PermissionControl extends Controller {	
 	
 	public static Result loadNav(){		
-		Login login = (Login) Session.getAttribute(Session.LOGIN);	
+		Login login = (Login) securedController.getAttribute(securedController.LOGIN);	
     	if(login!=null && PermissionLogic.loadNav(login.getPerson())){    	    
     		return ok(enc(Json.toJson(login.getPerson()).toString()));
     	}		

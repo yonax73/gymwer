@@ -11,8 +11,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.set.profile.profile;
 
+import com.yonaxtics.gymwer.sec.securedController;
 import com.yonaxtics.gymwer.sec.login.entity.Login;
-import com.yonaxtics.gymwer.sec.session.Session;
 import com.yonaxtics.gymwer.set.location.logic.LocationLogic;
 import com.yonaxtics.gymwer.set.master.logic.MasterLogic;
 import com.yonaxtics.gymwer.set.person.logic.PersonLogic;
@@ -31,18 +31,18 @@ import com.yonaxtics.gymwer.set.user.logic.UserLogic;
 public class ProfileControl extends Controller {
 	
 	public static Result profile(){		
-	    if(Session.exists(Session.LOGIN)) {	    	
+	    if(securedController.exists(securedController.LOGIN)) {	    	
 	    	return ok(profile.render());	    	
 	    } else {	    	
-	    	Session.clear();			
+	    	securedController.clear();			
 			return redirect("/login");
 	    }		
 	}	
 	
 	public static Result load(){		
-		Login login = (Login) Session.getAttribute(Session.LOGIN);		
+		Login login = (Login) securedController.getAttribute(securedController.LOGIN);		
 		if(login != null && ProfileLogic.load(login.getPerson())){			
-			Session.setAttribute(Session.LOGIN, login);
+			securedController.setAttribute(securedController.LOGIN, login);
 			return ok(enc(Json.toJson(login.getPerson()).toString()));			
 		} else {		     
 			return ok("Internal Error 9001");			
@@ -51,7 +51,7 @@ public class ProfileControl extends Controller {
 	
 	public static Result save(){
 		String result = null;
-		Login login = (Login) Session.getAttribute(Session.LOGIN);
+		Login login = (Login) securedController.getAttribute(securedController.LOGIN);
         if(login != null){
     		final Map<String, String[]>data = request().body().asFormUrlEncoded();		
     		login.getPerson().getUser().setName(dec(data.get("txtNameUser")[0]));
@@ -83,7 +83,7 @@ public class ProfileControl extends Controller {
     		}
     		return ok(result);
         }else{
-	    	Session.clear();			
+	    	securedController.clear();			
 			return redirect("/login");
         }
 	}
