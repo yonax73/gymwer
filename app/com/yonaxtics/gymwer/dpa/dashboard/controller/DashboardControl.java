@@ -18,10 +18,10 @@ import com.yonaxtics.gymwer.sec.session.Session;
 public class DashboardControl extends Controller {
 	
 	public static Result dashboard(){	
-	    if(Session.exists(Session.OK)) {	    	 
+	    if(Session.exists(Session.LOGIN)) {	    	 
     	   	return ok(dashboard.render());
 	    } else {
-	    	Session.end();	
+	    	Session.clear();	
 			return redirect("/login");
 	    }		
 	}	

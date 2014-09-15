@@ -18,12 +18,10 @@ import com.yonaxtics.gymwer.dpa.role.entity.Role;
 import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.sec.login.logic.LoginLogic;
 import com.yonaxtics.gymwer.sec.session.Session;
-import com.yonaxtics.gymwer.set.master.entity.MasterValue;
 import com.yonaxtics.gymwer.set.person.entity.Person;
 import com.yonaxtics.gymwer.set.person.logic.PersonLogic;
 import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.set.user.logic.UserLogic;
-
 
 /** 
  * Clase     : LoginControl.java<br/>
@@ -39,9 +37,9 @@ public class LoginControl extends Controller {
 	
 
 	public static  Result  login() {
-		if(Session.exists(Session.OK)){					
-			Person contact = (Person) Session.getAttribute(Session.OK); 
-			return redirect(contact.getUser().getDefaultAction().getUrl());
+		if(Session.exists(Session.LOGIN)){					
+			Login login = (Login) Session.getAttribute(Session.LOGIN); 
+			return redirect(login.getPerson().getUser().getDefaultAction().getUrl());
 		}		
 		return ok(login.render());   
 	}	
@@ -50,8 +48,8 @@ public class LoginControl extends Controller {
 		return ok(signup.render());   
 	}	
 	
-	public static Result signOut(){		
-		Session.end();
+	public static Result signOut(){
+		Session.clear();
 		return redirect("/login");
 	}	
 	
@@ -63,7 +61,7 @@ public class LoginControl extends Controller {
 		final Map<String, String[]> data = request().body().asFormUrlEncoded();		
 		if (dec(data.get("cbxTerms")[0]).equals(CHECKED)) {
 			if (data.get("txtPassword")[0].equals(data.get("txtPasswordConfirm")[0])) {				
-				user = new User(dec(data.get("txtEmail")[0]), data.get("txtPassword")[0], new Role(MasterValue.ROL_SUPER_ADMIN));
+				user = new User(dec(data.get("txtEmail")[0]), data.get("txtPassword")[0], new Role(Role.SUPER_ADMIN));
 				if(!UserLogic.exists(user)){												
 			        if(UserLogic.create(user)){			        	
 			        	gym = new Gym(dec(data.get("txtNameGym")[0]));		        		
@@ -94,11 +92,10 @@ public class LoginControl extends Controller {
 	
 	public static Result signIn(){		
 		final Map<String, String[]> data = request().body().asFormUrlEncoded();		
-		Person contact = new Person(new User(dec(data.get("txtEmail")[0]),data.get("txtPassword")[0]), new Gym(dec(data.get("txtSiteName")[0])));		
-		if(LoginLogic.signIn(new Login(contact))){
-			    Session.start();
-				Session.setAttribute(Session.OK, contact);
-				return ok(contact.getUser().getDefaultAction().getUrl());				
+		Login login = new Login(new Person(new User(dec(data.get("txtEmail")[0]),data.get("txtPassword")[0]), new Gym(dec(data.get("txtSiteName")[0]))));
+		if(LoginLogic.signIn(login)){			    
+				Session.setAttribute(Session.LOGIN, login);
+				return ok(login.getPerson().getUser().getDefaultAction().getUrl());				
 			} else {				
 				return ok(REQUEST_BAD);
 		 }							

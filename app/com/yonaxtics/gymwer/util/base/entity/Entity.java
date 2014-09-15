@@ -2,6 +2,7 @@ package com.yonaxtics.gymwer.util.base.entity;
 
 import java.io.Serializable;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 
@@ -33,6 +34,12 @@ public class Entity implements Serializable {
 	
 	public boolean equals(Entity entity){		
 		return id  == entity.getId();
+	}
+	
+	public String getFormatCreated(){
+		if(created!=null)
+		return created.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+		return "No Date";
 	}
 	
 	public int getId() {

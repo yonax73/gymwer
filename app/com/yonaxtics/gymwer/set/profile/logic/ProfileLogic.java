@@ -17,8 +17,7 @@ public class ProfileLogic  {
 	public static boolean load(Person contact){		
 		boolean result = false;		
 		if(contact != null && contact.exists()){			
-			result = ProfileDao.load(contact);
-			contact.setId(0);
+			result = ProfileDao.load(contact);			
 		}		
 		return result;
 	}

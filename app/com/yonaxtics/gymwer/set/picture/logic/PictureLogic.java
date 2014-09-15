@@ -23,7 +23,7 @@ public class PictureLogic {
 	  public static boolean update(FilePart file){		  
 		  boolean result = false;		  
 		  if(file != null){		
-			  Person contact = (Person) Session.getAttribute(Session.OK);
+			  Person contact = (Person) Session.getAttribute(Session.LOGIN);
 			  contact.setPicture(new Picture(file.getFile()));			  
 			  contact.getPicture().setMime(file.getContentType());			  			  
 			  result =  PictureDao.update(contact.getPicture());			  

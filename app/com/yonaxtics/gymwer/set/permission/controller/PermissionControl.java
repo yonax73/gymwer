@@ -7,9 +7,9 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.sec.session.Session;
 import com.yonaxtics.gymwer.set.permission.logic.PermissionLogic;
-import com.yonaxtics.gymwer.set.person.entity.Person;
 
 /** 
  * Class     : PermissionControl.java.java<br/>
@@ -19,15 +19,12 @@ import com.yonaxtics.gymwer.set.person.entity.Person;
  * User      : YQ<br/> 
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
-public class PermissionControl extends Controller {
-   
-	
-	
+public class PermissionControl extends Controller {	
 	
 	public static Result loadNav(){		
-		Person contact = (Person) Session.getAttribute(Session.OK);	
-    	if(PermissionLogic.loadNav(contact)){    	    
-    		return ok(enc(Json.toJson(contact).toString()));
+		Login login = (Login) Session.getAttribute(Session.LOGIN);	
+    	if(PermissionLogic.loadNav(login.getPerson())){    	    
+    		return ok(enc(Json.toJson(login.getPerson()).toString()));
     	}		
     	return ok("Internal Error 4001");		
 	}

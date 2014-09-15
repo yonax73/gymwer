@@ -17,25 +17,21 @@ import com.yonaxtics.gymwer.set.permission.entity.*;
  */
 public class Role extends MasterValue {
 
+	public final static int SUPER_ADMIN = 4;
+	public final static int ADMIN = 33;
 	
 	private List<Permission> permissions;
 	
-	public Role(int id) {
-		
-		super(id);
-		
+	public Role(int id) {		
+		super(id);		
 	}
 	
-	public Role(int id, String name){
-		
+	public Role(int id, String name){		
 		super(id);
 		setValue1(name);
-	}
+	}	
 	
-	
-	
-	public Role(String name) {
-		
+	public Role(String name) {		
 		super(0);
 		setValue1(name);
 	}
@@ -57,17 +53,14 @@ public class Role extends MasterValue {
 		      getPermissions().removeIf(p -> p.getAction().getModule().isChild());	
 		}catch(Exception e){
 			Logger.error(e.getMessage());
-		}
-      
+		}      
 	}
 	
-	public String getName(){
-		
+	public String getName(){		
 		return getValue1();
 	}
 	
-	public void setName(String name){
-		
+	public void setName(String name){		
 		setValue1(name);
 	}
 

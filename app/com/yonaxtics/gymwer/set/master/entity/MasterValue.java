@@ -12,9 +12,6 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
 public class MasterValue   extends Entity	{
 
 	private static final long serialVersionUID = 1L;
-	public final static int ROL_SUPER_ADMIN = 4;
-	public final static int ROL_ADMIN = 33;
- 
     
 	private int masterId;
 	private String value1;

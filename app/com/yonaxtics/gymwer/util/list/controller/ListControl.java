@@ -5,6 +5,7 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.sec.session.Session;
 import com.yonaxtics.gymwer.util.base.entity.Entity;
 import com.yonaxtics.gymwer.util.list.entity.ListItem;
@@ -24,7 +25,7 @@ public class ListControl extends Controller {
 
 	
 	public static Result personUrls(){		
-		ListItem urls = new ListItem(Session.getAttribute(Session.OK));
+		ListItem urls = new ListItem(((Login)Session.getAttribute(Session.LOGIN)).getPerson());
 		if(ListLogic.loadPersonUrls(urls)){			
 			return ok(enc(Json.toJson(urls.getItems()).toString()));
 		}		
