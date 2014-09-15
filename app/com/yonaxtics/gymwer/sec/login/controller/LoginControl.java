@@ -20,7 +20,7 @@ import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.set.user.logic.UserLogic;
 
 /** 
- * Clase     : LoginControl.java<br/>
+ * Class     : LoginControl.java<br/>
  * Copyright : (c) 2014<br/>
  * Company   : yonaxtics<br/>
  * date      : Sep 4, 2014<br/> 
@@ -28,9 +28,7 @@ import com.yonaxtics.gymwer.set.user.logic.UserLogic;
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
 
-public class LoginControl extends securedController {
-	
-	
+public class LoginControl extends securedController {	
 
 	public static  Result  login() {
         if(isAuthenticated()){
@@ -38,7 +36,7 @@ public class LoginControl extends securedController {
         	if(user!=null){
         		return redirect(user.getDefaultAction().getUrl());	
         	}
-        }		
+        }			
 		return ok(login.render());   
 	}	
 	
