@@ -41,7 +41,7 @@ public class ProfileControl extends Controller {
 	
 	public static Result load(){		
 		Login login = (Login) Session.getAttribute(Session.LOGIN);		
-		if(ProfileLogic.load(login.getPerson())){			
+		if(login != null && ProfileLogic.load(login.getPerson())){			
 			Session.setAttribute(Session.LOGIN, login);
 			return ok(enc(Json.toJson(login.getPerson()).toString()));			
 		} else {		     
@@ -52,34 +52,39 @@ public class ProfileControl extends Controller {
 	public static Result save(){
 		String result = null;
 		Login login = (Login) Session.getAttribute(Session.LOGIN);
-		final Map<String, String[]>data = request().body().asFormUrlEncoded();		
-		login.getPerson().getUser().setName(dec(data.get("txtNameUser")[0]));
-		login.getPerson().getUser().getDefaultAction().setId(Integer.parseInt(dec(data.get("txtDefaultActionId")[0])));
-		if(UserLogic.update(login.getPerson().getUser())){			
-			login.getPerson().getLocation().getPhone().setPhone(dec(data.get("txtPhone")[0]));
-			if(MasterLogic.save(login.getPerson().getLocation().getPhone())){				
-				login.getPerson().getLocation().getAddress().setAddress(dec(data.get("txtAddress")[0]));
-			    if(MasterLogic.save(login.getPerson().getLocation().getAddress())){
-			    	if(LocationLogic.save(login.getPerson().getLocation())){			    		
-			    		login.getPerson().setDocument(dec(data.get("txtDocument")[0]));
-			    		login.getPerson().setName((dec(data.get("txtFullName")[0])));			    		
-			    		if(PersonLogic.update(login.getPerson())){
-			    			return ok(REQUEST_SUCCESS);		
-			    		}else{
-			    			result = "Internal Error 2002";
-			    		}				    				    	
-			    	}else{
-			    	    result = "Internal Error 8001";	
-			    	}	
-			    }else{
-			    	result = "Internal Error 7002";	
-			    }
-			}else{
-				result = "Internal Error 7001";
-			}			
-		}else{
-			result = "Internal Error 1002";
-		}
-		return ok(result);
+        if(login != null){
+    		final Map<String, String[]>data = request().body().asFormUrlEncoded();		
+    		login.getPerson().getUser().setName(dec(data.get("txtNameUser")[0]));
+    		login.getPerson().getUser().getDefaultAction().setId(Integer.parseInt(dec(data.get("txtDefaultActionId")[0])));
+    		if(UserLogic.update(login.getPerson().getUser())){			
+    			login.getPerson().getLocation().getPhone().setPhone(dec(data.get("txtPhone")[0]));
+    			if(MasterLogic.save(login.getPerson().getLocation().getPhone())){				
+    				login.getPerson().getLocation().getAddress().setAddress(dec(data.get("txtAddress")[0]));
+    			    if(MasterLogic.save(login.getPerson().getLocation().getAddress())){
+    			    	if(LocationLogic.save(login.getPerson().getLocation())){			    		
+    			    		login.getPerson().setDocument(dec(data.get("txtDocument")[0]));
+    			    		login.getPerson().setName((dec(data.get("txtFullName")[0])));			    		
+    			    		if(PersonLogic.update(login.getPerson())){
+    			    			return ok(REQUEST_SUCCESS);		
+    			    		}else{
+    			    			result = "Internal Error 2002";
+    			    		}				    				    	
+    			    	}else{
+    			    	    result = "Internal Error 8001";	
+    			    	}	
+    			    }else{
+    			    	result = "Internal Error 7002";	
+    			    }
+    			}else{
+    				result = "Internal Error 7001";
+    			}			
+    		}else{
+    			result = "Internal Error 1002";
+    		}
+    		return ok(result);
+        }else{
+	    	Session.clear();			
+			return redirect("/login");
+        }
 	}
 }

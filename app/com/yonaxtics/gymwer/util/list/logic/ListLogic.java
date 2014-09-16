@@ -20,7 +20,7 @@ public class ListLogic {
 	 */
 	public static boolean loadPersonUrls(ListItem urls) {
 		boolean result = false;		
-		if(urls != null && urls.getEntity().exists()){
+		if(urls != null &&   urls.getEntity() != null && urls.getEntity().exists()){
 			result = ListDao.loadPersonUrls(urls);
 		}
 		return result;

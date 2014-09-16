@@ -23,7 +23,7 @@ public class PermissionControl extends Controller {
 	
 	public static Result loadNav(){		
 		Login login = (Login) Session.getAttribute(Session.LOGIN);	
-    	if(PermissionLogic.loadNav(login.getPerson())){    	    
+    	if(login!=null && PermissionLogic.loadNav(login.getPerson())){    	    
     		return ok(enc(Json.toJson(login.getPerson()).toString()));
     	}		
     	return ok("Internal Error 4001");		

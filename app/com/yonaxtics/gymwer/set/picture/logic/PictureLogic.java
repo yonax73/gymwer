@@ -23,9 +23,11 @@ public class PictureLogic {
 		  boolean result = false;		  
 		  if(file != null){		
 			  Login login = (Login) Session.getAttribute(Session.LOGIN);
-			  login.getPerson().getPicture().setFile(file.getFile());			  
-			  login.getPerson().getPicture().setMime(file.getContentType());			  			  
-			  result =  PictureDao.update(login.getPerson().getPicture());			  
+			  if(login!=null){
+				  login.getPerson().getPicture().setFile(file.getFile());			  
+				  login.getPerson().getPicture().setMime(file.getContentType());			  			  
+				  result =  PictureDao.update(login.getPerson().getPicture());	
+			  }		  
 		  }		  
 		  return result;
 	  }

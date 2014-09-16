@@ -29,6 +29,7 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
 public class Session {
 
 	public final static String LOGIN = "11508891YS";
+	private final static int TIME = 60 * 360;
 	
 	public static void setAttribute(String key, Entity entity) {
 		try {
@@ -42,7 +43,7 @@ public class Session {
 		        byte[] data = bos.toByteArray();	
 		        String cacheKey = key.concat(key.concat(String.valueOf(System.currentTimeMillis())));
 		        Http.Context.current().session().put(key,enc(cacheKey));
-		        Cache.set(cacheKey, data);		       
+		        Cache.set(cacheKey, data,TIME);		       
 			} else {
 				Logger.error("Value for " + key + " is null");
 			}

@@ -39,7 +39,9 @@ public class LoginControl extends Controller {
 	public static  Result  login() {
 		if(Session.exists(Session.LOGIN)){					
 			Login login = (Login) Session.getAttribute(Session.LOGIN); 
-			return redirect(login.getPerson().getUser().getDefaultAction().getUrl());
+			if(login!=null){
+				return redirect(login.getPerson().getUser().getDefaultAction().getUrl());	
+			}			
 		}		
 		return ok(login.render());   
 	}	
