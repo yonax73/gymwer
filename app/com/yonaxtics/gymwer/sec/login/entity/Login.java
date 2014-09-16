@@ -1,14 +1,12 @@
 package com.yonaxtics.gymwer.sec.login.entity;
 
+import static com.yonaxtics.gymwer.util.Utils.getNetworkInfoClient;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import play.Logger;
-
-import com.yonaxtics.gymwer.set.user.entity.User;
-
-import static com.yonaxtics.gymwer.util.Utils.getNetworkInfoClient;
 
 import com.yonaxtics.gymwer.util.base.entity.Entity;
 
@@ -25,18 +23,17 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
 public class Login extends Entity{
 	
 	private static int counter;	
-	private transient User user;
 	private String name;
 	private String email;
 	private transient String password;
 	private  String hostAddress;	
 	
-	public Login(String email,String password,User user) {		
+	public Login(String email,String password) {		
 		super(0);		
 		this.email = email;
 		this.password = password;
 		this.name = email.split("@")[0];
-		this.user = new User(counter);
+		
 	}
 
 	@Override
@@ -45,6 +42,7 @@ public class Login extends Entity{
 	}
 	
 	public void start(){
+		counter++;
 		created = LocalDateTime.now();
 		hostAddress = getNetworkInfoClient();
         StringBuffer strBf = new StringBuffer("New Session [- ");
@@ -84,14 +82,6 @@ public class Login extends Entity{
 	
 	public  long getTimeConnection() {
 		return  Duration.between(created, LocalDateTime.now()).toMinutes();
-	}
-	
-	public User getUser() {
-		return user;
-	}
-	
-	public void setUser(User user) {
-		this.user = user;
 	}
 	
 	public String getName() {

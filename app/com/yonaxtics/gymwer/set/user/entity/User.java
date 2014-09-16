@@ -1,6 +1,7 @@
 package com.yonaxtics.gymwer.set.user.entity;
 
 import com.yonaxtics.gymwer.dpa.role.entity.Role;
+import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.set.action.entity.Action;
 import com.yonaxtics.gymwer.set.person.entity.Person;
 
@@ -19,11 +20,6 @@ public class User extends Person {
 	public User(int id) {		
 		super(id);		
 	}
-	
-	public User(Role role){		
-		super(0);				
-		this.role = role;
-	}
 
 	public User(int id,String name) {          
 		super(id);
@@ -35,6 +31,15 @@ public class User extends Person {
 		this.name = name;
 	}
 	
+	/**
+	 * @param role
+	 * @param login
+	 */
+	public User(Role role, Login login) {
+        this.role = role;
+        this.login = login;
+	}
+
 	public boolean isEmpty() {		
 		return name == null
 		   || name == "";

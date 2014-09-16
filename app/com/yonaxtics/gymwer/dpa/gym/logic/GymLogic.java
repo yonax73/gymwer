@@ -12,7 +12,7 @@ public class GymLogic {
 	
 	public static boolean create(Gym gym) {		
 		boolean result = false;			 
-		if(gym != null && !gym.exists() && !gym.getName().isEmpty()){		    		  
+		if(gym != null  && !gym.isEmpty()){		    		  
                result =	GymDao.create(gym);
 		}
 	    return result;
@@ -40,6 +40,15 @@ public class GymLogic {
 			result = GymDao.update(gym);
 		}
 		return result;
+	}
+
+	/**
+	 * @param gym
+	 * @return
+	 */
+	public static boolean exists(Gym gym) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	

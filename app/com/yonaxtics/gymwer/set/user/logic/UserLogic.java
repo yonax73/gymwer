@@ -13,13 +13,11 @@ public  class   UserLogic  {
 
 	public static boolean create(User user) {		
 		boolean result = false;					 
-		if(user != null && !user.exists() && !user.isEmpty()){		    		  
+		if(user != null && !user.exists()){		    		  
              result = UserDao.create(user);	    	
 		}	      
 	    return result;
-	}	
-	
-
+	}
 	
 	public static boolean update(User user){
 		boolean result = false;
@@ -29,6 +27,24 @@ public  class   UserLogic  {
 			}			
 		}
 		return result;
+	}
+
+	/**
+	 * @param user
+	 * @return
+	 */
+	public static boolean load(User user) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/**
+	 * @param user
+	 * @return
+	 */
+	public static boolean relationalWithGym(User user) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	

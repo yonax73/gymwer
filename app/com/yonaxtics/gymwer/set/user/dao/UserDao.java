@@ -25,13 +25,15 @@ public class UserDao extends Dao{
 		Connection conn = null;		
 		try {			 
 			 conn = DB.getConnection();			 
-			 String sql = "CALL sp_set_users_CREATE(?,?,?,?,?);";			 
+			 String sql = "CALL sp_set_users_CREATE(?,?,?,?,?,?,?);";			 
 			 cst = conn.prepareCall(sql);
 			 cst.registerOutParameter(1, Types.INTEGER);
-			 cst.setString(2, user.getName());
-			 cst.setString(3, user.getPassword());			 
-			 cst.setString(4, user.getEmail());
-			 cst.setInt(5, user.getRole().getId());			 
+			 cst.setInt(2, user.getRole().getId());
+			 cst.setInt(3, user.getLogin().getId());			 
+			 cst.setInt(4, user.getLocation()==null ? 0 :user.getLocation().getId());
+			 cst.setString(5, user.getDocument());
+			 cst.setString(6, user.getName());
+			 cst.setString(7, user.getLastName());
 			 result = cst.executeUpdate() > 0;			 
 			 if(result) user.setId(cst.getInt(1));			 
 		} catch (Exception e) {              

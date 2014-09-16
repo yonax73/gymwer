@@ -3,6 +3,7 @@ package com.yonaxtics.gymwer.set.person.entity;
 import java.util.List;
 
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
+import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.set.location.entity.Location;
 import com.yonaxtics.gymwer.set.picture.entity.Picture;
 import com.yonaxtics.gymwer.util.base.entity.Entity;
@@ -24,6 +25,7 @@ public abstract class Person  extends Entity {
 	protected String name;
 	protected String lastName;
 	protected List<Gym> listGym;
+	protected transient Login login;
 	protected Gym gym;
 	protected Picture picture;
 	
@@ -94,6 +96,20 @@ public abstract class Person  extends Entity {
 
 	public void setGym(Gym gym) {
 		this.gym = gym;
+	}
+
+	/**
+	 * @return the login
+	 */
+	public Login getLogin() {
+		return login;
+	}
+
+	/**
+	 * @param login the login to set
+	 */
+	public void setLogin(Login login) {
+		this.login = login;
 	}
 
 
