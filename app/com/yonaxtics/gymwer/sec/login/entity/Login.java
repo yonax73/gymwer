@@ -27,13 +27,13 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
 public class Login extends Entity{
 	
 	private static int counter;	
-	private Person person;
+	private Person person;//quit
 	private  String hostAddress;	
 	
 	public Login(Person person) {		
-		super(generateId());
+		super(0);
 		this.person = person;
-		init();
+		
 	}
 	
 	private  void networkInfoClient(){
@@ -57,7 +57,7 @@ public class Login extends Entity{
 		}	
 	}
 	
-	private void init(){
+	public void start(){
 		created = LocalDateTime.now();
 		networkInfoClient();
         StringBuffer strBf = new StringBuffer("New Session [- ");
@@ -75,9 +75,7 @@ public class Login extends Entity{
 		Logger.info(strBf.toString());
 	}
 	
-	private static int generateId(){
-		return (int) (System.currentTimeMillis()*(++counter));
-	}
+
 	
 	public void destroy(){
 		counter--;

@@ -49,38 +49,10 @@ public class Entity implements Serializable {
 		return "No Date";
 	}
 	
-	public byte[] serialize(){
-		byte[] data  = null;
-		try {										
-		        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		        ObjectOutputStream oos = new ObjectOutputStream(bos);
-		        oos.writeObject(this);
-		        oos.flush();
-		        oos.close();
-		        bos.close();
-		        data = bos.toByteArray();			
-		} catch (IOException ex) {
-			Logger.error(ex.getMessage());
-		}
-		return data;		
-	}
+
 	
-	public static Entity deserialize(byte[]data){
-		Entity entity = null;
-		try {				
-			if(data!=null){
-				ByteArrayInputStream bais = new ByteArrayInputStream(data);
-				ObjectInputStream ins = new ObjectInputStream(bais);
-				entity = (Entity) ins.readObject();
-				ins.close();
-				bais.close();					
-			}			
-		} catch (IOException ex) {
-			Logger.error(ex.getMessage());			
-		} catch (ClassNotFoundException ex) {			
-			Logger.error(ex.getMessage());
-		}
-		return entity;
+	public String getSerial(){
+		return new String(this.getClass().getName().concat(":").concat(String.valueOf(id)));
 	}
 	
 	public int getId() {

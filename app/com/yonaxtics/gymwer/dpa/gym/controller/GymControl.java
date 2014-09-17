@@ -28,7 +28,7 @@ public class GymControl extends Controller {
 		if(securedController.exists(securedController.LOGIN)) {
 		  return ok(gym.render());
 		}else{
-	    	securedController.clear();			
+	    	securedController.sessionClear();			
 			return redirect("/login");			
 		}
 	}	

@@ -1,13 +1,9 @@
 package com.yonaxtics.gymwer.sec.login.controller;
 
 import static com.yonaxtics.gymwer.sec.crypto.aes.Sec.dec;
-import static com.yonaxtics.gymwer.util.Constant.CHECKED;
-import static com.yonaxtics.gymwer.util.Constant.REQUEST_BAD;
-import static com.yonaxtics.gymwer.util.Constant.REQUEST_SUCCESS;
 
 import java.util.Map;
 
-import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.sec.login.login;
 import views.html.sec.login.signup;
@@ -15,7 +11,6 @@ import views.html.sec.login.signup;
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 import com.yonaxtics.gymwer.dpa.gym.logic.GymLogic;
 import com.yonaxtics.gymwer.dpa.role.entity.Role;
-import com.yonaxtics.gymwer.sec.Secured;
 import com.yonaxtics.gymwer.sec.securedController;
 import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.sec.login.logic.LoginLogic;
@@ -33,17 +28,17 @@ import com.yonaxtics.gymwer.set.user.logic.UserLogic;
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
 
-public class LoginControl extends Controller {
+public class LoginControl extends securedController {
 	
 	
 
 	public static  Result  login() {
-		if(securedController.exists(securedController.LOGIN)){					
-			Login login = (Login) securedController.getAttribute(securedController.LOGIN); 
-			if(login!=null){
-				return redirect(login.getPerson().getUser().getDefaultAction().getUrl());	
-			}			
-		}		
+        if(isAuthenticated()){
+        	User user = getUser();
+        	if(user!=null){
+        		return redirect(user.getDefaultAction().getUrl());	
+        	}
+        }		
 		return ok(login.render());   
 	}	
 	
@@ -52,7 +47,7 @@ public class LoginControl extends Controller {
 	}	
 	
 	public static Result signOut(){
-		securedController.clear();
+		sessionClear();
 		return redirect("/login");
 	}	
 	
@@ -94,10 +89,11 @@ public class LoginControl extends Controller {
 	}	
 	
 	public static Result signIn(){		
-		final Map<String, String[]> data = request().body().asFormUrlEncoded();		
+		final Map<String, String[]> data = request().body().asFormUrlEncoded();	request();	
 		Login login = new Login(new Person(new User(dec(data.get("txtEmail")[0]),data.get("txtPassword")[0]), new Gym(dec(data.get("txtSiteName")[0]))));
-		if(LoginLogic.signIn(login)){			    
-				securedController.setAttribute(securedController.LOGIN, login);
+		if(LoginLogic.signIn(login)){
+			     initSession();
+				//show the message after the signIn
 				return ok(login.getPerson().getUser().getDefaultAction().getUrl());				
 			} else {				
 				return ok(REQUEST_BAD);

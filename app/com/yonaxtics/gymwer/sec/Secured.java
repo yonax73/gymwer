@@ -4,15 +4,24 @@ package com.yonaxtics.gymwer.sec;
 import static com.yonaxtics.gymwer.sec.crypto.aes.Sec.dec;
 import static com.yonaxtics.gymwer.sec.crypto.aes.Sec.enc;
 
+import java.net.Inet4Address;
+import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.Date;
+import java.util.Enumeration;
 
+import play.Logger;
 import play.Play;
 import play.cache.Cache;
+import play.mvc.Http;
 import play.mvc.Http.Context;
 import play.mvc.Http.Session;
 import play.mvc.Security;
 
 import com.yonaxtics.gymwer.sec.login.entity.Login;
+import com.yonaxtics.gymwer.util.Utils;
 import com.yonaxtics.gymwer.util.base.entity.Entity;
 
 /** 
@@ -35,7 +44,7 @@ public class Secured extends Security.Authenticator {
 		if(!sessionTimeout()){
 			String value =  Context.current().session().get(LOGIN);
 			if(value != null){
-				login = (Login) Entity.deserialize((byte[])Cache.get(dec(value)));
+				login = (Login) Utils.deserialize((byte[])Cache.get(dec(value)));
 			}
 		}		
 		return login;
@@ -45,10 +54,11 @@ public class Secured extends Security.Authenticator {
 		if(!(sessionTimeout() && login==null)){
 		   String cacheKey = getCacheKey(LOGIN);	
 		   Context.current().session().put(LOGIN, enc(cacheKey));
-		   Cache.set(cacheKey, login.serialize());
+		   Cache.set(cacheKey, Utils.serialize(login));
 		}
 	}
-	
+
+
 	private static boolean sessionTimeout(){
 		boolean result = false;
 		Session currentSession = Context.current().session();

@@ -34,7 +34,7 @@ public class ProfileControl extends Controller {
 	    if(securedController.exists(securedController.LOGIN)) {	    	
 	    	return ok(profile.render());	    	
 	    } else {	    	
-	    	securedController.clear();			
+	    	securedController.sessionClear();			
 			return redirect("/login");
 	    }		
 	}	
@@ -83,7 +83,7 @@ public class ProfileControl extends Controller {
     		}
     		return ok(result);
         }else{
-	    	securedController.clear();			
+	    	securedController.sessionClear();			
 			return redirect("/login");
         }
 	}

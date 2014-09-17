@@ -21,7 +21,7 @@ public class DashboardControl extends Controller {
 	    if(securedController.exists(securedController.LOGIN)) {	    	 
     	   	return ok(dashboard.render());
 	    } else {
-	    	securedController.clear();	
+	    	securedController.sessionClear();	
 			return redirect("/login");
 	    }		
 	}	
