@@ -13,9 +13,9 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
 
+@SuppressWarnings("serial")
 public class Picture extends Entity {
 
-	private static final long serialVersionUID = 1L;
 	private String mime;
 	private String src;
 	private File file;
@@ -38,7 +38,10 @@ public class Picture extends Entity {
 		this.src = src;
 	}
 	
-
+	@Override
+	public boolean isEmpty() {	
+		return file == null;
+	}
 
 	public String getMime() {
 		return mime;

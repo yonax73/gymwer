@@ -50,16 +50,14 @@ public class LoginControl extends securedController {
 	}	
 	
 	public static Result createAccount() {
-		String result = null;
-		User user = null;
-		Person contact = null;
-		Gym gym = null;				
+		String result = null;	
+		Login login = null;
 		final Map<String, String[]> data = request().body().asFormUrlEncoded();		
 		if (dec(data.get("cbxTerms")[0]).equals(CHECKED)) {
-			if (data.get("txtPassword")[0].equals(data.get("txtPasswordConfirm")[0])) {				
-				user = new User(dec(data.get("txtEmail")[0]), data.get("txtPassword")[0], new Role(Role.SUPER_ADMIN));
-				if(!UserLogic.exists(user)){												
-			        if(UserLogic.create(user)){			        	
+			if (data.get("txtPassword")[0].equals(data.get("txtPasswordConfirm")[0])) {		
+				login =new Login(dec(data.get("txtEmail")[0]), data.get("txtPassword")[0],new User(new Role(Role.SUPER_ADMIN)));				
+				if(!LoginLogic.exists(login)){												
+			        if(LoginLogic.create(login)){//hacer el user create			        	
 			        	gym = new Gym(dec(data.get("txtNameGym")[0]));		        		
 		        		if(GymLogic.create(gym)){			        	
 		        			contact = new Person(user,gym);			        			

@@ -9,10 +9,7 @@ import java.sql.SQLException;
  * @version 0.1 (7/26/2014)
  *
  */
-public class Dao {
-
-	
-	
+public class Dao {	
 
 	public static  void close(Connection connection){		
 	    try {	    	
@@ -20,6 +17,5 @@ public class Dao {
 		} catch (SQLException e) {			
 			e.printStackTrace();
 		}
-	}
-	
+	}	
 }

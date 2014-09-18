@@ -1,6 +1,5 @@
 package com.yonaxtics.gymwer.set.master.entity;
 
-import com.yonaxtics.gymwer.util.base.entity.Entity;
 
 /** 
  * Clase     : Master.java<br/>
@@ -11,16 +10,7 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
 
-public class Master extends Entity {
-	
-	private static final long serialVersionUID = 1L;
+public interface IMaster  {		
     public final static int PHONE_ID = 3;
     public final static int ADDRESS_ID = 4;
-	/**
-	 * @param id
-	 */
-	public Master(int id) {
-		super(id);		
-	}
-
 }

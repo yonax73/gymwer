@@ -8,7 +8,8 @@ import play.Logger;
 import play.db.DB;
 
 import com.yonaxtics.gymwer.set.master.entity.MasterValue;
-import com.yonaxtics.gymwer.util.base.dao.Dao;
+
+import  com.yonaxtics.gymwer.util.base.dao.Dao;
 
 /** 
  * Clase     : MasterDao.java<br/>
@@ -19,7 +20,7 @@ import com.yonaxtics.gymwer.util.base.dao.Dao;
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
 
-public class MasterDao  extends Dao {
+public class MasterDao extends Dao {
 
 	/**
 	 * @param masterValue

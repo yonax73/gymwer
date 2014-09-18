@@ -9,22 +9,21 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
  * @version 0.1 (7/16/2014)
  *
  */
-public class MasterValue   extends Entity	{
-
-	private static final long serialVersionUID = 1L;
+@SuppressWarnings("serial")
+public abstract class  MasterValue   extends Entity	{
     
-	private int masterId;
-	private String value1;
-	private String value2;
-	private String value3;	
+	protected int masterId;
+	protected String value1;
+	protected String value2;
+	protected String value3;	
 	
 	public MasterValue(int id) {		
 		super(id);		
 	}
 	
-	
-	public boolean isEmpty(){		
-		return value1 == null || value1 == "" || value2 == null || value2 == "";		
+	@Override
+	public boolean isEmpty() {	
+		return value1 == null || value1 =="";
 	}
    
 	public int getMasterId() {

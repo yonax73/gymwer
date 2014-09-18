@@ -12,18 +12,20 @@ import com.yonaxtics.gymwer.set.action.entity.*;
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
 
-public class Permission extends Entity {
-
+@SuppressWarnings("serial")
+public class Permission extends Entity {	
 	
-	
-	private Action action;
-	
-	
+	private Action action;	
 	/**
 	 * @param id
 	 */
 	public Permission(int id) {
 		super(id);		
+	}
+	
+	@Override
+	public boolean isEmpty() {	
+		return action == null;
 	}
 	
 	public Permission(Action action){

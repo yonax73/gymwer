@@ -16,18 +16,15 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
 
+@SuppressWarnings("serial")
 public class Module extends Entity {
-
-	private static final long serialVersionUID = 1L;
 	
 	public final static int PARENT =1;
-    public final static int CHILD =2;  
-    
+    public final static int CHILD =2;     
 	private String description;
 	private int rolId;
 	private List<Action> children;
-	private Module parent;
-	
+	private Module parent;	
 	
 	/**
 	 * @param id
@@ -40,56 +37,45 @@ public class Module extends Entity {
 	public Module(int id, String description, int rolId) {
 		super(id);
 		this.description = description;
-		this.rolId = rolId;
-		
-		if(isParent()){
-			
-			children = new ArrayList<Action>();
-			
-		}
-		
-	}	
-	
+		this.rolId = rolId;		
+		if(isParent()){			
+			children = new ArrayList<Action>();			
+		}		
+	}		
 	
 	public Module(int id, String description) {
 		super(id);
-		setDescription(description);
-	
-	}
-	
+		setDescription(description);	
+	}	
 	
 	public Module(String description) {
 		super(0);
 		setDescription(description);
 	}
-
+	
+	@Override
+	public boolean isEmpty() {	
+		return description == null || description =="";
+	}
 	public boolean isChild(){		
 		return rolId == CHILD;		
-	}
-	
+	}	
 	
 	public boolean isParent(){		
 		return rolId == PARENT;		
-	}
+	}	
 	
-	
-	
-	public void releaseParent(){
-		
+	public void releaseParent(){		
 		setParent(null);
-	}
+	}	
 	
-	
-	public String getDescription(){
-		
+	public String getDescription(){		
 		return description;
 	}	
 	
-	public void setDescription(String description){
-		
+	public void setDescription(String description){		
 		this.description = description;
 	}
-	
 
 	public List<Action> getChildren() {
 		return children;

@@ -1,15 +1,8 @@
 package com.yonaxtics.gymwer.util.base.entity;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
-import play.Logger;
 
 /**
  * 
@@ -17,7 +10,7 @@ import play.Logger;
  * @version 0.1 (7/16/2014)
  *
  */
-public class Entity implements Serializable {	
+public abstract class  Entity implements Serializable {	
 
 	private static final long serialVersionUID = 1L;
 	protected int id;
@@ -31,12 +24,14 @@ public class Entity implements Serializable {
 		this.id = id;		
 	}
 	
+    public abstract boolean isEmpty(); 
+	
 	public boolean exists(){		
 		return id > 0;		
 	}	
 	
 	public boolean isValid(){		
-		return   exists() && isActive();
+		return   id > 0 && active;
 	}	
 	
 	public boolean equals(Entity entity){		
@@ -48,7 +43,6 @@ public class Entity implements Serializable {
 		return created.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 		return "No Date";
 	}
-	
 
 	
 	public String getSerial(){

@@ -9,19 +9,20 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
  * @version 0.1 (7/16/2014)
  *
  */
+@SuppressWarnings("serial")
 public class TicketDetail extends Entity {
-
 
 	private int item;
 	private LocalDateTime finished;
 	
-	public TicketDetail(int id) {
-		
-		super(id);
-		
+	public TicketDetail(int id) {		
+		super(id);		
 	}
-
-
+	
+	@Override
+	public boolean isEmpty() {	
+		return item < 1;
+	}
 
 	public int getItem() {
 		return item;
@@ -30,9 +31,7 @@ public class TicketDetail extends Entity {
 	public LocalDateTime getFinished() {
 		return finished;
 	}
-
-
-
+	
 	public void setItem(int item) {
 		this.item = item;
 	}

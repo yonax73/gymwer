@@ -1,18 +1,15 @@
 package com.yonaxtics.gymwer.sec.login.entity;
 
-import java.net.Inet4Address;
-import java.net.Inet6Address;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Enumeration;
 
 import play.Logger;
 
-import com.yonaxtics.gymwer.set.person.entity.Person;
+import com.yonaxtics.gymwer.set.user.entity.User;
+
+import static com.yonaxtics.gymwer.util.Utils.getNetworkInfoClient;
+
 import com.yonaxtics.gymwer.util.base.entity.Entity;
 
 /** 
@@ -24,49 +21,39 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
 
+@SuppressWarnings("serial")
 public class Login extends Entity{
 	
 	private static int counter;	
-	private Person person;//quit
+	private transient User user;
+	private String name;
+	private String email;
+	private transient String password;
 	private  String hostAddress;	
 	
-	public Login(Person person) {		
-		super(0);
-		this.person = person;
-		
+	public Login(String email,String password,User user) {		
+		super(0);		
+		this.email = email;
+		this.password = password;
+		this.name = email.split("@")[0];
+		this.user = new User(counter);
 	}
-	
-	private  void networkInfoClient(){
-		Enumeration<NetworkInterface> net = null;			
-		try {				
-			net = NetworkInterface.getNetworkInterfaces();	
-			while (net.hasMoreElements()) {	
-				NetworkInterface element = net.nextElement();	
-				Enumeration<InetAddress> addresses = element.getInetAddresses();	
-				while (hostAddress== null && addresses.hasMoreElements()) {	
-					InetAddress ip = addresses.nextElement();	
-					if (ip instanceof Inet4Address || ip instanceof Inet6Address) {	
-						if (ip.isSiteLocalAddress()) {	
-							hostAddress = ip.getHostAddress();
-						}	
-					}	
-				}	
-			}				
-		} catch (SocketException e) {				
-			Logger.error(e.getMessage());
-		}	
+
+	@Override
+	public boolean isEmpty() {		
+		return email == null || email == "";
 	}
 	
 	public void start(){
 		created = LocalDateTime.now();
-		networkInfoClient();
+		hostAddress = getNetworkInfoClient();
         StringBuffer strBf = new StringBuffer("New Session [- ");
         strBf.append(String.valueOf(id));
         strBf.append(" -] ");
         strBf.append("has been initialized at the ");
         strBf.append(getFormatCreated());
         strBf.append(" for the User [- ");
-        strBf.append(person.getUser().getEmail());
+        strBf.append(email);
         strBf.append(" -] ");        
         strBf.append(" since Client ");         
         strBf.append(hostAddress); 		
@@ -74,8 +61,6 @@ public class Login extends Entity{
 	    strBf.append(String.valueOf(counter));
 		Logger.info(strBf.toString());
 	}
-	
-
 	
 	public void destroy(){
 		counter--;
@@ -85,7 +70,7 @@ public class Login extends Entity{
         strBf.append("has been ended at the ");
 		strBf.append(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
         strBf.append(" for the User [- ");
-        strBf.append(person.getUser().getEmail());
+        strBf.append(email);
         strBf.append(" -] ");        
 		strBf.append("since Client ");
 		strBf.append(hostAddress);
@@ -100,21 +85,41 @@ public class Login extends Entity{
 	public  long getTimeConnection() {
 		return  Duration.between(created, LocalDateTime.now()).toMinutes();
 	}
-
-	public Person getPerson() {
-		return person;
-	}
-
-	public void setPerson(Person person) {
-		this.person = person;
+	
+	public User getUser() {
+		return user;
 	}
 	
-	public void finalize(){
-         person = null;
-         created = null;
-         hostAddress = null;
-         id= 0;
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	public String getName() {
+		return name;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getHostAddress() {
+		return hostAddress;
+	}
 
 }

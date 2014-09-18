@@ -42,30 +42,7 @@ public class UserDao extends Dao{
 		}		
 		return result;		
 	}	
-	
-	public static boolean exists(User user){		
-		boolean result = false;		
-		CallableStatement cst = null;
-		ResultSet rs  = null;
-		Connection conn = null;		
-		try {			
-			conn = DB.getConnection();
-			String sql = "CALL sp_set_users_EXISTS(?);";
-			cst = conn.prepareCall(sql);			
-			cst.setString(1, user.getEmail());			
-			rs  = cst.executeQuery();				
-			if(rs.next()){				
-				result = rs.getInt(1) > 0;							
-			}						
-		} catch (Exception e) {			
-			Logger.error(e.getMessage());			
-		} finally{			
-			if(cst != null) cst = null;
-			close(conn);
-		}		
-		return result;		
-	}	
-	
+
 
 	
 	public static boolean update(User user){

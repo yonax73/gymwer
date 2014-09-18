@@ -19,10 +19,13 @@ public class Client extends Person {
     private List<Ticket> ticketList;
     private List<Ticket> ticketHistoricalList;
 	
-	public Client(int id) {
-		
-		super(id); 
-		
+	public Client(int id) {		
+		super(id); 		
+	}
+	
+	@Override
+	public boolean isEmpty() {	
+		return name == null || name == "";
 	}
 
 	public String getBirthday() {
@@ -80,6 +83,8 @@ public class Client extends Person {
 	public void setTicketHistoricalList(List<Ticket> ticketHistoricalList) {
 		this.ticketHistoricalList = ticketHistoricalList;
 	}
+
+
 	
 	
 	

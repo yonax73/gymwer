@@ -12,9 +12,9 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
 
+@SuppressWarnings("serial")
 public class Action extends Entity {
 
-	private static final long serialVersionUID = 1L;
 	public final static int LOAD_PROFILE = 25;
     public final static int LOAD_GYM = 26;     
 	
@@ -35,14 +35,16 @@ public class Action extends Entity {
 		this.url = url;
 		this.ico = ico;
 		this.module = module;
-	}
+	}	
 	
-	
-	
-	public Action(String url) {
-		
+	public Action(String url) {		
 		super(0);
 		this.url = url;
+	}
+	
+	@Override
+	public boolean isEmpty() {
+	    return description == null || description == "";
 	}
 
 
@@ -108,6 +110,8 @@ public class Action extends Entity {
 	public void setModule(Module module) {
 		this.module = module;
 	}
+
+
 
 	
 }

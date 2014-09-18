@@ -12,15 +12,29 @@ import com.yonaxtics.gymwer.sec.login.entity.Login;
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
 
-public class LoginLogic {
+public class LoginLogic {	
+	
+	public static boolean create(Login login) {		
+		boolean result = false;					 
+		if(login != null  && !login.isEmpty()){		    		  
+             result = LoginDao.create(login);	    	
+		}	      
+	    return result;
+	}	
 	
 	public static boolean signIn(Login login){		
 		boolean result = false;		
-		if(login != null && !login.getPerson().exists() && !login.getPerson().getGym().getName().isEmpty() && 
-		  !login.getPerson().getUser().getEmail().isEmpty() && 
-		  !login.getPerson().getUser().getPassword().isEmpty()){			
+		if(login != null && !login.getUser().getGym().getName().isEmpty() && !login.getUser().isEmpty() && !login.getPassword().isEmpty()){			
 			    result = LoginDao.signIn(login);			
 		}		
 		return result;		
-	}	
+	}
+	
+	public static boolean exists(Login login){		
+		boolean result = false;		
+		if(login != null &&  !login.isEmpty()){			
+			result = LoginDao.exists(login);
+		}		
+		return result;
+	}
 }

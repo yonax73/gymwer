@@ -12,6 +12,7 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
  * @version 0.1 (7/16/2014)
  *
  */
+@SuppressWarnings("serial")
 public class Gym extends Entity {
 	
 	
@@ -21,42 +22,36 @@ public class Gym extends Entity {
 	private List<Client> clientList;
 	private List<Plan> planList;
 	
-	public Gym(int id) {
-		
-		super(id);
-		
+	public Gym(int id) {		
+		super(id);		
 	}
 	
-	public Gym(String name){
-		
+	public Gym(String name){		
 		super(0);
-		this.name = name;
-		
+		this.name = name;		
+	}	
+
+	@Override
+	public boolean isEmpty() {	
+		return name== null || name == "";
 	}
 	
 	public String getNit() {
 		return nit;
 	}
 
-
-
 	public void setNit(String nit) {
 		this.nit = nit;
 	}
-
-
 
 	public String getName() {
 		return name;
 	}
 
-
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
+	
 	public Location getLocation() {
 		return location;
 	}
@@ -64,8 +59,6 @@ public class Gym extends Entity {
 	public void setLocation(Location location) {
 		this.location = location;
 	}
-
-
 
 	public List<Client> getClientList() {
 		return clientList;
@@ -82,6 +75,7 @@ public class Gym extends Entity {
 	public void setPlanList(List<Plan> planList) {
 		this.planList = planList;
 	}
+
 
 
 

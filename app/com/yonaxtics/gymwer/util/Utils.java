@@ -5,6 +5,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
 
 import play.Logger;
 
@@ -50,5 +56,27 @@ public class Utils {
 			Logger.error(ex.getMessage());
 		}
 		return object;
+	}
+	public static String getNetworkInfoClient(){
+		String hostAddress = null;
+		Enumeration<NetworkInterface> net = null;			
+		try {				
+			net = NetworkInterface.getNetworkInterfaces();	
+			while (net.hasMoreElements()) {	
+				NetworkInterface element = net.nextElement();	
+				Enumeration<InetAddress> addresses = element.getInetAddresses();	
+				while (hostAddress== null && addresses.hasMoreElements()) {	
+					InetAddress ip = addresses.nextElement();	
+					if (ip instanceof Inet4Address || ip instanceof Inet6Address) {	
+						if (ip.isSiteLocalAddress()) {	
+							hostAddress = ip.getHostAddress();
+						}	
+					}	
+				}	
+			}				
+		} catch (SocketException e) {				
+			Logger.error(e.getMessage());
+		}
+		return hostAddress;
 	}
 }
