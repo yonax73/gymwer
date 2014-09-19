@@ -54,9 +54,9 @@ public class ProfileControl extends Controller {
 		Login login = (Login) securedController.getAttribute(securedController.LOGIN);
         if(login != null){
     		final Map<String, String[]>data = request().body().asFormUrlEncoded();		
-    		login.getPerson().getUser().setName(dec(data.get("txtNameUser")[0]));
-    		login.getPerson().getUser().getDefaultAction().setId(Integer.parseInt(dec(data.get("txtDefaultActionId")[0])));
-    		if(UserLogic.update(login.getPerson().getUser())){			
+    		login.getPerson().getUserLoggedIn().setName(dec(data.get("txtNameUser")[0]));
+    		login.getPerson().getUserLoggedIn().getDefaultAction().setId(Integer.parseInt(dec(data.get("txtDefaultActionId")[0])));
+    		if(UserLogic.update(login.getPerson().getUserLoggedIn())){			
     			login.getPerson().getLocation().getPhone().setPhone(dec(data.get("txtPhone")[0]));
     			if(MasterLogic.save(login.getPerson().getLocation().getPhone())){				
     				login.getPerson().getLocation().getAddress().setAddress(dec(data.get("txtAddress")[0]));

@@ -44,22 +44,22 @@ public class PermissionDao extends Dao {
 			rs  = cst.executeQuery();				
 			if(rs.next()){				
 			      result = true;	
-			      contact.getUser().setRole(new Role(0));
-			      contact.getUser().getRole().setPermissions(new ArrayList<Permission>());			      
+			      contact.getUserLoggedIn().setRole(new Role(0));
+			      contact.getUserLoggedIn().getRole().setPermissions(new ArrayList<Permission>());			      
 			      do{			    	  			    	  
 			    	Action action = new Action(rs.getInt(1));
 			    	action.setUrl(rs.getString(2));
 			    	action.setIco(rs.getString(3));
 			    	action.setModule(new Module(rs.getInt(4),rs.getString(5),rs.getInt(6)));			    	
 			    	if(action.getId() == Action.LOAD_PROFILE){			    		
-			    		action.getModule().setDescription(contact.getUser().getName());			    		
+			    		action.getModule().setDescription(contact.getUserLoggedIn().getName());			    		
 			    	} else if (action.getId() == Action.LOAD_GYM){			    		
 			    		action.getModule().setDescription(contact.getGym().getName());			    		
 			    	}			    	
 			    	if(action.getModule().isChild()){			    		
 			    		action.getModule().setParent(new Module(rs.getInt(7),rs.getString(8)));			    		
 			    	}			    	
-					contact.getUser().getRole().getPermissions().add(new Permission(action));			    	  
+					contact.getUserLoggedIn().getRole().getPermissions().add(new Permission(action));			    	  
 			      }while(rs.next());				
 			}						
 		} catch (Exception e) {			

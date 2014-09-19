@@ -43,8 +43,19 @@ public  class   UserLogic  {
 	 * @return
 	 */
 	public static boolean relationalWithGym(User user) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean result = false;
+		if(user!= null && user.exists() && user.getGym()!= null && user.getGym().exists()){
+			result  = UserDao.relationalWithGym(user);
+		}
+		return result;
+	}
+
+	public static boolean loadByEmail(User user) {
+		boolean result = false;
+		if(user!= null && user.getLogin()!= null && !user.getLogin().isEmpty()){
+			 result = UserDao.loadByEmail(user);
+		}
+		return result;
 	}
 	
 	

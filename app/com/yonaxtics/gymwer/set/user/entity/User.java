@@ -1,5 +1,6 @@
 package com.yonaxtics.gymwer.set.user.entity;
 
+import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 import com.yonaxtics.gymwer.dpa.role.entity.Role;
 import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.set.action.entity.Action;
@@ -38,6 +39,11 @@ public class User extends Person {
 	public User(Role role, Login login) {
         this.role = role;
         this.login = login;
+	}
+
+	public User(Login login, Gym gym) {
+		this.login = login;
+		this.gym = gym;
 	}
 
 	public boolean isEmpty() {		

@@ -57,7 +57,7 @@ public class securedController extends Controller{
 	private static final int TIMEOUT = 15  * 60 * 1000;                  //(minutes - seconds - milliseconds)
 	private static final int TIME_EXPIRED = 8 * 60 * 1000 * 60;          //(hours - minutes - seconds - milliseconds)
 	
-	protected static Login getLogin(){
+	protected static Login getCurrentLogin(){
 		Login  login = null;
 		if(!sessionTimeout()){
 			String value =  Context.current().session().get(KEY_LOGIN);
@@ -68,7 +68,7 @@ public class securedController extends Controller{
 		return login;
 	}
 	
-	protected static void setLogin(Login login){
+	protected static void setCurrentLogin(Login login){
 		if(!(sessionTimeout() && login==null)){
 		   String serial = login.getSerial();	
 		   Context.current().session().put(KEY_LOGIN, enc(serial));		   
@@ -76,11 +76,15 @@ public class securedController extends Controller{
 		}
 	}
 	
-	protected static User getUser(){		
+	protected static User getUserLoggedIn(){		
 		return  (User) Utils.deserialize((byte[])Cache.get(dec(Context.current().session().get(KEY_USER))));
 	}
 	
-	protected static void initSession(){
+	protected static void setUserLoggedIn(User user){
+         
+	}
+	
+	protected static void createSession(){
 		Session currentSession = Context.current().session();
 		currentSession.put(KEY_SESSION_EXPIRED,enc(String.valueOf(TIME_EXPIRED)));
 		currentSession.put(KEY_TIMEOUT,enc(String.valueOf(TIMEOUT)));

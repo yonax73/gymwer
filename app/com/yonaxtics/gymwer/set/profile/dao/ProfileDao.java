@@ -47,15 +47,15 @@ public class ProfileDao extends Dao {
     	        contact.setName(rs.getString(2));
     	        contact.setLocation(new Location(rs.getInt(3),new Phone(rs.getString(4)), new Address(rs.getString(5))));
     	        contact.setUser(new User(rs.getInt(6),rs.getString(7)));
-    	        contact.getUser().setEmail(rs.getString(8));
-    	        contact.getUser().setRole( new Role(rs.getString(9)));
-    	        contact.getUser().setDefaultAction(new Action(rs.getInt(10)));
+    	        contact.getUserLoggedIn().setEmail(rs.getString(8));
+    	        contact.getUserLoggedIn().setRole( new Role(rs.getString(9)));
+    	        contact.getUserLoggedIn().setDefaultAction(new Action(rs.getInt(10)));
     	        if(rs.getBlob(11) != null){
 	    	        Blob blob = rs.getBlob(11);	    	     	    	        
 	    	        contact.setPicture(new Picture(Base64.getEncoder().encodeToString(blob.getBytes(1, (int) blob.length()))));
 	    	        contact.getPicture().setMime(rs.getString(12));
     	        }
-    	        contact.getUser().getRole().setId(rs.getInt(13));
+    	        contact.getUserLoggedIn().getRole().setId(rs.getInt(13));
     	        contact.getLocation().getPhone().setId(rs.getInt(14));
     	        contact.getLocation().getAddress().setId(rs.getInt(15));	
     	        contact.getPicture().setId(rs.getInt(16));

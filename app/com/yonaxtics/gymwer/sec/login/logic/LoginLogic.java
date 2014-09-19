@@ -16,17 +16,17 @@ public class LoginLogic {
 	
 	public static boolean create(Login login) {		
 		boolean result = false;					 
-		if(login != null  && !login.isEmpty()){		    		  
+		if(login != null && !login.exists() && !login.isEmpty() ){		    		  
              result = LoginDao.create(login);	    	
 		}	      
 	    return result;
 	}	
 	
-	public static boolean signIn(Login login){		
+	public static boolean signIn(Login login, String nameGym){		
 		boolean result = false;		
-		if(login != null && !login.getUser().getGym().getName().isEmpty() && !login.getUser().isEmpty() && !login.getPassword().isEmpty()){			
-			    result = LoginDao.signIn(login);			
-		}		
+		if(login != null && !login.isEmpty() && nameGym != null && nameGym.isEmpty()){
+			result = LoginDao.signIn(login,nameGym);
+		}
 		return result;		
 	}
 	

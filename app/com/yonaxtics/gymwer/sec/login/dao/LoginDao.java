@@ -44,7 +44,7 @@ public class LoginDao extends Dao{
 		return result;		
 	}	
 	
-	public static boolean signIn(Login login) {		
+	public static boolean signIn(Login login, String nameGym) {		
 		boolean result = false;		
 		CallableStatement cst = null;
 		ResultSet rs  = null;
@@ -53,7 +53,7 @@ public class LoginDao extends Dao{
 			conn = DB.getConnection();
 			String sql = "CALL sp_sec_login_SIGN_IN(?,?,?);";
 			cst = conn.prepareCall(sql);			
-			cst.setString(1, login.getUser().getGym().getName());
+			cst.setString(1, nameGym);
 			cst.setString(2, login.getEmail());
 			cst.setString(3, login.getPassword());			
 			rs  = cst.executeQuery();							

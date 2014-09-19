@@ -47,8 +47,11 @@ public class GymLogic {
 	 * @return
 	 */
 	public static boolean exists(Gym gym) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean result = false;
+		if(gym!=null && !gym.isEmpty()){
+			result = GymDao.exists(gym);
+		}
+		return result;
 	}
 	
 	

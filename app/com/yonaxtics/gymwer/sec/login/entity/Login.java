@@ -41,7 +41,7 @@ public class Login extends Entity{
 		return email == null || email == "";
 	}
 	
-	public void start(){
+	public void init(){
 		counter++;
 		created = LocalDateTime.now();
 		hostAddress = getNetworkInfoClient();

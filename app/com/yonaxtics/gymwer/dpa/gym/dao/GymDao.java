@@ -100,6 +100,27 @@ public class GymDao extends Dao{
 		return result;
 	}
 
+	public static boolean exists(Gym gym) {
+		boolean result = false;		
+		CallableStatement cst = null;
+		ResultSet rs  = null;
+		Connection conn = null;		
+		try {			
+			conn = DB.getConnection();
+			String sql = "CALL sp_dpa_gym_EXISTS(?);";
+			cst = conn.prepareCall(sql);			
+			cst.setString(1, gym.getName());			
+			rs  = cst.executeQuery();			
+			result = rs.next() && rs.getInt(1) > 0;									
+		} catch (Exception e) {			
+			Logger.error(e.getMessage());			
+		} finally{			
+			if(cst != null) cst = null;
+			close(conn);
+		}		
+		return result;		
+	}
+
 	
 	
 	

@@ -14,8 +14,6 @@ import com.yonaxtics.gymwer.dpa.role.entity.Role;
 import com.yonaxtics.gymwer.sec.securedController;
 import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.sec.login.logic.LoginLogic;
-import com.yonaxtics.gymwer.set.person.entity.Person;
-import com.yonaxtics.gymwer.set.person.logic.PersonLogic;
 import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.set.user.logic.UserLogic;
 
@@ -33,7 +31,7 @@ public class LoginControl extends securedController {
 
 	public static Result login() {
 		if (isAuthenticated()) {
-			User user = getUser();
+			User user = getUserLoggedIn();
 			if (user != null) {
 				return redirect(user.getDefaultAction().getUrl());
 			}
@@ -68,7 +66,7 @@ public class LoginControl extends securedController {
 					if (GymLogic.exists(user.getGym())) {
 						result = "This user and gym already exists!";
 					} else if (GymLogic.create(user.getGym())) {
-						if (UserLogic.load(user)) {
+						if (UserLogic.loadByEmail(user)) {
 							if (UserLogic.relationalWithGym(user)) {
 								return ok(REQUEST_SUCCESS);
 							} else {
@@ -112,12 +110,14 @@ public class LoginControl extends securedController {
 
 	public static Result signIn() {
 		final Map<String, String[]> data = request().body().asFormUrlEncoded();
-		request();
-		Login login = new Login(new Person(new User(dec(data.get("txtEmail")[0]), data.get("txtPassword")[0]), new Gym(dec(data.get("txtSiteName")[0]))));
-		if (LoginLogic.signIn(login)) {
-			initSession();
-			// show the message after the signIn
-			return ok(login.getPerson().getUser().getDefaultAction().getUrl());
+		User user = new User(new Login(dec(data.get("txtEmail")[0]), data.get("txtPassword")[0]), new Gym(dec(data.get("txtSiteName")[0])));		
+		if (LoginLogic.signIn(user.getLogin(),user.getGym().getName())) {
+			//Load object User
+			createSession();
+			user.getLogin().init();
+			setCurrentLogin(user.getLogin());
+			setUserLoggedIn(user);			
+			return ok(user.getDefaultAction().getUrl());
 		} else {
 			return ok(REQUEST_BAD);
 		}

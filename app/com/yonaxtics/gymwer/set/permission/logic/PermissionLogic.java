@@ -28,7 +28,7 @@ public class PermissionLogic {
 		if(contact != null && contact.exists()){				  	
 		  result = 	PermissionDao.loadNav(contact);		  
 		  if(result){		 			  
-			  contact.getUser().getRole().arrange();		  
+			  contact.getUserLoggedIn().getRole().arrange();		  
 		  }		  
 		}
 		return result;		
