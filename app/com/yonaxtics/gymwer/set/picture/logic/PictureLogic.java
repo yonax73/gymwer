@@ -21,14 +21,14 @@ public class PictureLogic {
 	
 	  public static boolean update(FilePart file){		  
 		  boolean result = false;		  
-		  if(file != null){		
-			  Login login = (Login) securedController.getAttribute(securedController.LOGIN);
-			  if(login!=null){
-				  login.getPerson().getPicture().setFile(file.getFile());			  
-				  login.getPerson().getPicture().setMime(file.getContentType());			  			  
-				  result =  PictureDao.update(login.getPerson().getPicture());	
-			  }		  
-		  }		  
+//		  if(file != null){		
+//			  Login login = (Login) securedController.getAttribute(securedController.LOGIN);
+//			  if(login!=null){
+//				  login.getPerson().getPicture().setFile(file.getFile());			  
+//				  login.getPerson().getPicture().setMime(file.getContentType());			  			  
+//				  result =  PictureDao.update(login.getPerson().getPicture());	
+//			  }		  
+//		  }		  
 		  return result;
 	  }
 }

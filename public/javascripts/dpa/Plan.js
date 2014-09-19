@@ -107,10 +107,9 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','List','Select','Tab'],functi
 						selectStatusFilter.addItem(Constants.ENTYTY_STATES_ALL,'ALL');
 						selectStatusFilter.selectItem(Constants.ENTYTY_STATES_ALL);
 						
-				  }else {
-					  
-		               //error message   									  
-				  }
+				     }else {				   
+					   document.body.innerHtml = this.responseText;					   
+				   } 						  
 			  }
 		}
 		xhr.open('GET','/loadGym');

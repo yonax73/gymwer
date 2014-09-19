@@ -25,6 +25,12 @@ public abstract class  MasterValue   extends Entity	{
 	public boolean isEmpty() {	
 		return value1 == null || value1 =="";
 	}
+	
+	@Override
+	public void copy(Entity entity) {
+	
+		
+	}
    
 	public int getMasterId() {
 		return masterId;

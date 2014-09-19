@@ -98,7 +98,7 @@ requirejs(['Aes','Constants','Play','FormOk','Notify'],function(Aes,Constants, P
 							  localStorage.clear();		
 							  sessionStorage.clear();
 							  btnLogin.disabled = false;
-							  if(Constants.REQUEST_BAD === this.responseText){	
+							  if(Constants.BAD_REQUEST === this.responseText){	
 								  notify.danger('The name, password or user are incorrect!!!');
 							  }else {
 								  sessionStorage.setItem(Constants.SESSIONSTORAGE_OK,Constants.OK);

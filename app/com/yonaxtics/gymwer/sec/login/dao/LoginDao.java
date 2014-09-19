@@ -8,6 +8,7 @@ import java.sql.Types;
 import play.Logger;
 import play.db.DB;
 
+import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.util.base.dao.Dao;
 /** 
@@ -44,7 +45,7 @@ public class LoginDao extends Dao{
 		return result;		
 	}	
 	
-	public static boolean signIn(Login login, String nameGym) {		
+	public static boolean signIn(Login login, Gym gym) {		
 		boolean result = false;		
 		CallableStatement cst = null;
 		ResultSet rs  = null;
@@ -53,11 +54,12 @@ public class LoginDao extends Dao{
 			conn = DB.getConnection();
 			String sql = "CALL sp_sec_login_SIGN_IN(?,?,?);";
 			cst = conn.prepareCall(sql);			
-			cst.setString(1, nameGym);
+			cst.setString(1, gym.getName());
 			cst.setString(2, login.getEmail());
 			cst.setString(3, login.getPassword());			
-			rs  = cst.executeQuery();							
-			result = rs.next() &&  rs.getInt(1) == 1;			
+			rs  = cst.executeQuery();			
+			if(rs.next()) login.setId(rs.getInt(1));
+			result = login.getId() > 0;
 		} catch (Exception e) {			
 			Logger.error(e.getMessage());			
 		} finally{			

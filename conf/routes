@@ -3,6 +3,8 @@
 
 #UserControl
 GET     /users                          com.yonaxtics.gymwer.set.user.controller.UserControl.users()
+GET     /user                           com.yonaxtics.gymwer.set.user.controller.UserControl.user()
+GET     /loaduser                       com.yonaxtics.gymwer.set.user.controller.UserControl.loadUser()
 
 #GymControl
 GET     /gym                            com.yonaxtics.gymwer.dpa.gym.controller.GymControl.gym()
@@ -22,10 +24,6 @@ GET     /plan                           com.yonaxtics.gymwer.dpa.plan.controller
 #RoleControl
 GET     /roles                          com.yonaxtics.gymwer.dpa.role.controller.RoleControl.roles()
 
-#ProfileControl
-GET     /profile                        com.yonaxtics.gymwer.set.profile.controller.ProfileControl.profile()
-GET     /loadProfile                    com.yonaxtics.gymwer.set.profile.controller.ProfileControl.load()
-POST    /saveProfile                    com.yonaxtics.gymwer.set.profile.controller.ProfileControl.save()
 
 #PictureControl           
 POST    /uploadPicture                  com.yonaxtics.gymwer.set.picture.controller.PictureControl.uploadPicture()

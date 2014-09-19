@@ -24,6 +24,12 @@ public class Permission extends Entity {
 	}
 	
 	@Override
+	public void copy(Entity entity) {
+	
+		
+	}
+	
+	@Override
 	public boolean isEmpty() {	
 		return action == null;
 	}

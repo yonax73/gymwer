@@ -64,7 +64,7 @@ requirejs(['Aes','Constants','Play','Notify','FormOk'],function(Aes,Constants, P
 				 notify.wait('Loading...');					 
 				 btnSignUp.disabled = true;			        
 				  if (this.readyState === Constants.READYSTATE_COMPLETE) {					  						
-					  if(this.status === Constants.STATUS_OK && this.responseText === Constants.REQUEST_SUCCESS){						  
+					  if(this.status === Constants.STATUS_OK && this.responseText === Constants.SUCCESS_REQUEST){						  
 						  sessionStorage.setItem(Constants.SESSIONSTORAGE_MESSAGE, 'Your account has been created successfully');
 						  window.location = '/login';						  
 					  }else {						  

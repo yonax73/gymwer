@@ -25,10 +25,10 @@ public class ListControl extends Controller {
 
 	
 	public static Result personUrls(){		
-		ListItem urls = new ListItem(((Login)securedController.getAttribute(securedController.LOGIN)).getPerson());
-		if(ListLogic.loadPersonUrls(urls)){			
-			return ok(enc(Json.toJson(urls.getItems()).toString()));
-		}		
+//		ListItem urls = new ListItem(null,null);
+//		if(ListLogic.loadPersonUrls(urls)){			
+//			return ok(enc(Json.toJson(urls.getItems()).toString()));
+//		}		
 		return ok("Internal Error 6001");
 	}	
 	

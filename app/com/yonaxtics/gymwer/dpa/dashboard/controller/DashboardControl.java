@@ -18,11 +18,12 @@ import com.yonaxtics.gymwer.sec.securedController;
 public class DashboardControl extends Controller {
 	
 	public static Result dashboard(){	
-	    if(securedController.exists(securedController.LOGIN)) {	    	 
-    	   	return ok(dashboard.render());
-	    } else {
-	    	securedController.sessionClear();	
-			return redirect("/login");
-	    }		
+//	    if(securedController.exists(securedController.LOGIN)) {	    	 
+//    	   	return ok(dashboard.render());
+//	    } else {
+//	    	securedController.sessionDestroy();	
+//			return redirect("/login");
+//	    }		
+		return ok();
 	}	
 }

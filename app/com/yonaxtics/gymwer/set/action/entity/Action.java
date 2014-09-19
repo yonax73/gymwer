@@ -37,8 +37,8 @@ public class Action extends Entity {
 		this.module = module;
 	}	
 	
-	public Action(String url) {		
-		super(0);
+	public Action(int id,String url) {		
+		super(id);
 		this.url = url;
 	}
 	
@@ -46,7 +46,11 @@ public class Action extends Entity {
 	public boolean isEmpty() {
 	    return description == null || description == "";
 	}
-
+	@Override
+	public void copy(Entity entity) {
+	
+		
+	}
 
 	/**
 	 * @return the description

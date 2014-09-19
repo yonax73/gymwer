@@ -31,6 +31,12 @@ public class Location extends Entity {
 		this.address = address;
 	}
 	
+	@Override
+	public void copy(Entity entity) {
+	
+		
+	}
+	
 	
 	public Phone getPhone() {
 		return phone;
@@ -49,6 +55,14 @@ public class Location extends Entity {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+
+
+	@Override
+	public boolean isEmpty() {
+	
+		return false;
 	}
 	
 	

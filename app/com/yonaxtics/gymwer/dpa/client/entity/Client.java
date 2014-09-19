@@ -1,7 +1,9 @@
 package com.yonaxtics.gymwer.dpa.client.entity;
 
 import java.util.List;
+
 import com.yonaxtics.gymwer.set.person.entity.*;
+import com.yonaxtics.gymwer.util.base.entity.Entity;
 import com.yonaxtics.gymwer.dpa.ticket.entity.*;
 /**
  * 
@@ -9,6 +11,7 @@ import com.yonaxtics.gymwer.dpa.ticket.entity.*;
  * @version 0.1 (7/16/2014)
  *
  */
+@SuppressWarnings("serial")
 public class Client extends Person {
 
 	private String birthday;
@@ -26,6 +29,12 @@ public class Client extends Person {
 	@Override
 	public boolean isEmpty() {	
 		return name == null || name == "";
+	}
+	
+	@Override
+	public void copy(Entity entity) {
+	
+	
 	}
 
 	public String getBirthday() {
@@ -83,6 +92,8 @@ public class Client extends Person {
 	public void setTicketHistoricalList(List<Ticket> ticketHistoricalList) {
 		this.ticketHistoricalList = ticketHistoricalList;
 	}
+
+
 
 
 	

@@ -5,15 +5,15 @@ import static com.yonaxtics.gymwer.sec.crypto.aes.Sec.enc;
 
 import java.util.Date;
 
-import play.cache.Cache;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Http.Context;
 import play.mvc.Http.Session;
+import play.mvc.Result;
 
+import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.set.user.entity.User;
-import com.yonaxtics.gymwer.util.Utils;
 
 /**
  * Clase : Session.java<br/>
@@ -42,47 +42,50 @@ public class securedController extends Controller{
 	/**
 	 * STATES REQUEST
 	 */
-	protected final static String REQUEST_SUCCESS = "19880511YSC+";
-	protected final static String REQUEST_BAD = "19880512YSC+";
+	protected final static String SUCCESS_REQUEST = "success_Request";
+	protected final static String BAD_REQUEST = "bad_Request";
 	/*
 	 * KEY SESSION
 	 */	
-	private static final String KEY_LOGIN = "11508891YSC-";
-	private static final String KEY_TIMEOUT = "11508892YSC-";
-	private static final String KEY_SESSION_EXPIRED = "11508893YSC-";
-	private static final String KEY_USER = "11508894YSC-";
+	private static final String KEY_TIMEOUT = "KEY_TIMEOUT";
+	private static final String KEY_SESSION_EXPIRED = "KEY_SESSION_EXPIRED";
+	
 	/**
 	 * TIMES IN MILLISECONDS
 	 */
-	private static final int TIMEOUT = 15  * 60 * 1000;                  //(minutes - seconds - milliseconds)
-	private static final int TIME_EXPIRED = 8 * 60 * 1000 * 60;          //(hours - minutes - seconds - milliseconds)
+	private static final long TIMEOUT = 15  * 60 * 1000;                  //(minutes - seconds - milliseconds)
+	private static final long TIME_EXPIRED = 8 * 60 * 60 * 1000;          //(hours - minutes - seconds - milliseconds)
 	
-	protected static Login getCurrentLogin(){
-		Login  login = null;
-		if(!sessionTimeout()){
-			String value =  Context.current().session().get(KEY_LOGIN);
-			if(value != null){
-				login = (Login) Utils.deserialize((byte[])Cache.get(dec(value)));
-			}
-		}		
-		return login;
+	
+	protected static Login getCurrentLogin(){		
+		return (Login) Persitence.getObject(dec(Context.current().session().get(Login.KEY)));
 	}
 	
-	protected static void setCurrentLogin(Login login){
-		if(!(sessionTimeout() && login==null)){
+	protected static void setCurrentLogin(Login login){		
 		   String serial = login.getSerial();	
-		   Context.current().session().put(KEY_LOGIN, enc(serial));		   
-		   Cache.set(serial, Utils.serialize(login));
-		}
+			Session session = Context.current().session();
+			if (!session.containsKey(Login.KEY)) {
+				session.put(Login.KEY, enc(serial));
+			}   	
+		   Persitence.setObject(serial, login);
 	}
 	
 	protected static User getUserLoggedIn(){		
-		return  (User) Utils.deserialize((byte[])Cache.get(dec(Context.current().session().get(KEY_USER))));
+		return  (User) Persitence.getObject(dec(Context.current().session().get(User.KEY)));
 	}
 	
-	protected static void setUserLoggedIn(User user){
-         
-	}
+	public static void setUserLoggedIn(User user){
+        String serial = user.getSerial();         
+		Session session = Context.current().session();
+		if (!session.containsKey(User.KEY)) {
+			session.put(User.KEY, enc(serial));
+		}
+		Persitence.setObject(serial, user);
+	}	
+ 	
+ 	protected static Gym getCurrentGym(){
+ 		return (Gym) Persitence.getObject(dec(Context.current().session().get(Gym.KEY)));
+ 	}
 	
 	protected static void createSession(){
 		Session currentSession = Context.current().session();
@@ -93,14 +96,24 @@ public class securedController extends Controller{
 	protected static byte authenticated(){		   
 	    if(sessionExpired())return SESSION_EXPIRED;
 		if(sessionTimeout())return SESSION_TIMEOUT;
-		String value =  Http.Context.current().session().get(KEY_LOGIN);
+		String value =  Http.Context.current().session().get(Login.KEY);
 		if(value==null) return UNAUTHENTICATED;
-		if(Cache.get(dec(value))==null) return UNAUTHENTICATED;
+		if(Persitence.get(dec(value))==null) return UNAUTHENTICATED;
 		return AUTHENTICATED;
 	}
 	
 	protected static boolean isAuthenticated(){
 		return authenticated() == AUTHENTICATED;
+	}
+	
+	protected static Result onUnauthorized(byte result){
+		sessionDestroy();		
+		return unauthorized(views.html.sec.error.unauthorized.render(),NOTIFICATION[result]);
+	}
+	
+	protected static Result closeSession(){
+		sessionDestroy();
+		return redirect("/login");
 	}
 
 	protected static boolean sessionTimeout(){
@@ -113,12 +126,13 @@ public class securedController extends Controller{
 				long currentT  = new Date().getTime();			
 				if((currentT-previousT) > TIMEOUT){					
 					result = true;
-					sessionClear();
+					sessionDestroy();
 				}
 			}
 		}	
 		return result;
 	}
+	
 	protected static boolean sessionExpired(){
 		boolean result = false;
 		Session currentSession = Context.current().session();
@@ -129,20 +143,19 @@ public class securedController extends Controller{
 				long currentT  = new Date().getTime();			
 				if((currentT-previousT) > TIME_EXPIRED){					
 					result = true;
-					sessionClear();
+					sessionDestroy();
 				}
 			}
 		}
 		return result;
-	}
+	}	
 	
-	
-	protected static void sessionClear(){	
+	protected static void sessionDestroy(){	
 		  Session currentSession = Http.Context.current().session();
-		  String value =  currentSession.get(KEY_LOGIN);
-		  Login login = value !=null ? (Login) Utils.deserialize((byte[])Cache.get(dec(value))) : null;		  
+		  String value =  currentSession.get(Login.KEY);
+		  Login login = value !=null ? (Login) Persitence.getObject(dec(value)) : null;		  
 		  if(login!=null)login.destroy();
-		  currentSession.entrySet().stream().parallel().forEach(key->{Cache.remove(dec(key.getValue()));});
+		  Persitence.remove(value);		  
 		  currentSession.clear();
 	}
 

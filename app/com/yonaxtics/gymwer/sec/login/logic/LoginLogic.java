@@ -1,5 +1,6 @@
 package com.yonaxtics.gymwer.sec.login.logic;
 
+import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 import com.yonaxtics.gymwer.sec.login.dao.LoginDao;
 import com.yonaxtics.gymwer.sec.login.entity.Login;
 
@@ -22,10 +23,10 @@ public class LoginLogic {
 	    return result;
 	}	
 	
-	public static boolean signIn(Login login, String nameGym){		
+	public static boolean signIn(Login login, Gym gym){		
 		boolean result = false;		
-		if(login != null && !login.isEmpty() && nameGym != null && nameGym.isEmpty()){
-			result = LoginDao.signIn(login,nameGym);
+		if(login != null && !login.isEmpty() && gym != null && !gym.isEmpty()){
+			result = LoginDao.signIn(login,gym);
 		}
 		return result;		
 	}

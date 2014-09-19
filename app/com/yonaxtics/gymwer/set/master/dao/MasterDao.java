@@ -32,7 +32,7 @@ public class MasterDao extends Dao {
 		Connection conn = null;
 		try {
 			conn = DB.getConnection();
-			cst = conn.prepareCall("CALL t_set_master_values_UPDATE(?,?,?,?)");
+			cst = conn.prepareCall("CALL sp_set_master_values_UPDATE(?,?,?,?)");
 			cst.setInt(1,masterValue.getId());
 			cst.setString(2, masterValue.getValue1());
 			cst.setString(3, masterValue.getValue2());
@@ -57,7 +57,7 @@ public class MasterDao extends Dao {
 		Connection conn = null;		
 		try {			 
 			 conn = DB.getConnection();			 
-			 String sql = "CALL t_set_master_values_CREATE(?,?,?,?,?);";			 
+			 String sql = "CALL sp_set_master_values_CREATE(?,?,?,?,?);";			 
 			 cst = conn.prepareCall(sql);
 			 cst.registerOutParameter(1, Types.INTEGER);
 			 cst.setInt(2,masterValue.getMasterId());	

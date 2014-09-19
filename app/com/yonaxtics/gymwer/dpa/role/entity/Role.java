@@ -35,6 +35,7 @@ public class Role extends MasterValue {
 		super(0);
 		setValue1(name);
 	}
+	
 
 	public void arrange(){			
 		try{	

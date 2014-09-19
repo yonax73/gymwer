@@ -81,6 +81,8 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Notify','FormOk'],function(A
 					  gym = Json.parse(this.responseText);
 					  localStorage.setItem(Constants.LOCALSTORAGE_REQUEST_LOAD_GYM,JSON.stringify(gym));
 					  fill(gym);						
+				   }else if(this.status === 401){					   
+					   document.body.innerHtml = this.responseText;					   
 				   } 					  
 			  }		  
 		}

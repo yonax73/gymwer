@@ -29,7 +29,7 @@ public class PersonDao extends Dao{
 			String sql = "CALL sp_set_persons_CREATE(?, ?, ?, ?, ?, ?);";
 			cst = conn.prepareCall(sql);
 			cst.registerOutParameter(1, Types.INTEGER);
-			cst.setInt(2, person.getUserLoggedIn().getId());			
+			//cst.setInt(2, person.getUserLoggedIn().getId());			
 			if(person.getLocation() == null){				
 				person.setLocation(new Location(0));
 			}

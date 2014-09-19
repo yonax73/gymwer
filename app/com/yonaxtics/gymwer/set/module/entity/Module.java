@@ -54,6 +54,12 @@ public class Module extends Entity {
 	}
 	
 	@Override
+	public void copy(Entity entity) {
+	
+		
+	}
+	
+	@Override
 	public boolean isEmpty() {	
 		return description == null || description =="";
 	}

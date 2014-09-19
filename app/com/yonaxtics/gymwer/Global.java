@@ -8,7 +8,9 @@ import play.Logger;
 import play.libs.F.Promise;
 import play.mvc.Http.RequestHeader;
 import play.mvc.Result;
-
+import play.mvc.Action;
+import play.mvc.Http.Request;
+import java.lang.reflect.Method;
 
 
 public class Global extends GlobalSettings {	
@@ -40,6 +42,17 @@ public class Global extends GlobalSettings {
             views.html.sec.error.errorPage.render()        
         ));
     }
+    
+    public Action onRequest(Request request, Method actionMethod) {
+        System.out.println("before each request..." + request.toString());
+        System.out.println("before each request..." + actionMethod.getName());
+        return super.onRequest(request, actionMethod);
+    }
+
+
+    
+
+
 
 
 }

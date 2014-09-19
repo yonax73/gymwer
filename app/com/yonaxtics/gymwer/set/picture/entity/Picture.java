@@ -27,6 +27,12 @@ public class Picture extends Entity {
 		super(id);		
 	}
 	
+	@Override
+	public void copy(Entity entity) {
+	
+		
+	}
+	
 	
 	public Picture(File file){
 		super(0);

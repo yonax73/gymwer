@@ -23,6 +23,12 @@ public class TicketDetail extends Entity {
 	public boolean isEmpty() {	
 		return item < 1;
 	}
+	
+	@Override
+	public void copy(Entity entity) {
+	
+		
+	}
 
 	public int getItem() {
 		return item;

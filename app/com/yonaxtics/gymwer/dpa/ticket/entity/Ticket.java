@@ -28,6 +28,12 @@ public class Ticket extends Entity {
 	public boolean isEmpty() {	
 		return code== null || code == "";
 	}
+	
+	@Override
+	public void copy(Entity entity) {
+	
+		
+	}
 
 	public Plan getPlan() {
 		return plan;

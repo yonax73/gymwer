@@ -24,6 +24,12 @@ public class Plan extends Entity {
 	public boolean isEmpty() {	
 		return name== null || name == "";
 	}
+	
+	@Override
+	public void copy(Entity entity) {
+	
+		
+	}
 
 	public String getCode() {
 		return code;

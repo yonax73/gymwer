@@ -44,15 +44,14 @@ public class LoginControl extends securedController {
 	}
 
 	public static Result signOut() {
-		sessionClear();
-		return redirect("/login");
+	     return closeSession();
 	}
 
 	/**
 	 * Solo se permite crear un super admin por gimnasio, en caso de que exista
 	 * el gimansio y el usuario, o solo el gimnasio no se podra crear la cuenta.
 	 * 
-	 * @return
+	 * @return result
 	 */
 	public static Result createAccount() {
 		String result = null;
@@ -68,7 +67,7 @@ public class LoginControl extends securedController {
 					} else if (GymLogic.create(user.getGym())) {
 						if (UserLogic.loadByEmail(user)) {
 							if (UserLogic.relationalWithGym(user)) {
-								return ok(REQUEST_SUCCESS);
+								return ok(SUCCESS_REQUEST);
 							} else {
 								result = "Error trying relational User with Gym!";
 							}
@@ -83,7 +82,7 @@ public class LoginControl extends securedController {
 						if (GymLogic.create(user.getGym())) {
 							if (UserLogic.create(user)) {
 								if (UserLogic.relationalWithGym(user)) {
-									return ok(REQUEST_SUCCESS);
+									return ok(SUCCESS_REQUEST);
 								} else {
 									result = "Error trying relational User with Gym!";
 								}
@@ -109,17 +108,21 @@ public class LoginControl extends securedController {
 	}
 
 	public static Result signIn() {
+		String result = null;
 		final Map<String, String[]> data = request().body().asFormUrlEncoded();
-		User user = new User(new Login(dec(data.get("txtEmail")[0]), data.get("txtPassword")[0]), new Gym(dec(data.get("txtSiteName")[0])));		
-		if (LoginLogic.signIn(user.getLogin(),user.getGym().getName())) {
-			//Load object User
-			createSession();
-			user.getLogin().init();
-			setCurrentLogin(user.getLogin());
-			setUserLoggedIn(user);			
-			return ok(user.getDefaultAction().getUrl());
+		User user = new User(new Login(dec(data.get("txtEmail")[0]), data.get("txtPassword")[0]), new Gym(dec(data.get("txtSiteName")[0])));
+		if (LoginLogic.signIn(user.getLogin(), user.getGym())) {
+			if (UserLogic.loadByLogin(user)) {
+				createSession();
+				user.getLogin().init();
+				setCurrentLogin(user.getLogin());
+				result = user.getDefaultAction().getUrl();
+			} else {
+				result = "Error tryning load user!";
+			}
 		} else {
-			return ok(REQUEST_BAD);
+			result = BAD_REQUEST;
 		}
+		return ok(result);
 	}
 }

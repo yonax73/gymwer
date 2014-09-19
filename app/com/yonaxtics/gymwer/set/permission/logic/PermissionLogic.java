@@ -2,7 +2,7 @@ package com.yonaxtics.gymwer.set.permission.logic;
 
 
 import com.yonaxtics.gymwer.set.permission.dao.PermissionDao;
-import com.yonaxtics.gymwer.set.person.entity.Person;
+import com.yonaxtics.gymwer.set.user.entity.User;
 
 /** 
  * Class     : PermissionLogic.java.java<br/>
@@ -22,13 +22,13 @@ public class PermissionLogic {
 	/**
 	 * @param contact
 	 */
-	public static boolean loadNav(Person contact) {
+	public static boolean loadNav(User user) {
 		
 		boolean result = false;
-		if(contact != null && contact.exists()){				  	
-		  result = 	PermissionDao.loadNav(contact);		  
+		if(user != null && user.exists()){				  	
+		  result = 	PermissionDao.loadNav(user);		  
 		  if(result){		 			  
-			  contact.getUserLoggedIn().getRole().arrange();		  
+			  user.getRole().arrange();		  
 		  }		  
 		}
 		return result;		

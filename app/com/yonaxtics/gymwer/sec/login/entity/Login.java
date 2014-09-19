@@ -22,6 +22,9 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
 @SuppressWarnings("serial")
 public class Login extends Entity{
 	
+	
+	public static final String KEY = "11508891YLN";
+	
 	private static int counter;	
 	private String name;
 	private String email;
@@ -39,6 +42,12 @@ public class Login extends Entity{
 	@Override
 	public boolean isEmpty() {		
 		return email == null || email == "";
+	}
+	
+	@Override
+	public void copy(Entity entity) {
+	
+		
 	}
 	
 	public void init(){
@@ -75,7 +84,7 @@ public class Login extends Entity{
 		strBf.append(" and was logged ");
 		strBf.append(String.valueOf(getTimeConnection()));
 		strBf.append(" minutes aprox.");
-		strBf.append("\nActive sessions");
+		strBf.append("\nActive sessions ");
 		strBf.append(String.valueOf(counter));
 		Logger.info(strBf.toString());
 	}

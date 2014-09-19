@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
  * @version 0.1 (7/16/2014)
  *
  */
-public abstract class  Entity implements Serializable {	
+public abstract class  Entity implements Serializable,Cloneable {	
 
 	private static final long serialVersionUID = 1L;
 	protected int id;
@@ -20,11 +20,15 @@ public abstract class  Entity implements Serializable {
 	public final static byte INACTIVE = 0;
 	public final static byte ALL = -1;
 	
+	
 	public Entity(int id){		
 		this.id = id;		
 	}
 	
-    public abstract boolean isEmpty(); 
+    public abstract boolean isEmpty();
+    
+    public abstract void copy(Entity entity);
+    
 	
 	public boolean exists(){		
 		return id > 0;		

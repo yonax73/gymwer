@@ -16,7 +16,7 @@ import views.html.dpa.plan.*;
 public class PlanControl extends Controller {	
 	
 	public static Result plans(){		
-		return ok(main.render());
+		return ok(masterPlan.render());
 	}
 	
 	public static Result plan(){
