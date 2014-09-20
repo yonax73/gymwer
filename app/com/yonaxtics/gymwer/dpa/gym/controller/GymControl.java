@@ -11,7 +11,7 @@ import views.html.dpa.gym.gym;
 
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 import com.yonaxtics.gymwer.dpa.gym.logic.GymLogic;
-import com.yonaxtics.gymwer.sec.securedController;
+import com.yonaxtics.gymwer.sec.SecuredController;
 import com.yonaxtics.gymwer.set.location.logic.LocationLogic;
 import com.yonaxtics.gymwer.set.master.logic.MasterLogic;
 import com.yonaxtics.gymwer.set.user.entity.User;
@@ -21,7 +21,7 @@ import com.yonaxtics.gymwer.set.user.entity.User;
  * @version 0.1 (9/8/2014)
  *
  */
-public class GymControl extends securedController {
+public class GymControl extends SecuredController {
 	
 	public static Result gym(){
 		byte result = authenticated();

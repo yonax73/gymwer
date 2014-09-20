@@ -5,15 +5,27 @@ import static play.mvc.Results.notFound;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
+import play.api.http.MediaRange;
+import play.i18n.Lang;
 import play.libs.F.Promise;
+import play.mvc.Http.Cookies;
+import play.mvc.Http.RequestBody;
 import play.mvc.Http.RequestHeader;
 import play.mvc.Result;
 import play.mvc.Action;
 import play.mvc.Http.Request;
+
 import java.lang.reflect.Method;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
+import com.yonaxtics.gymwer.sec.Filter;
 
 
 public class Global extends GlobalSettings {	
+	
+	private static final String AUTHENTICATED = "Authenticated";
 	
     public void onStart(Application app) {  
         Logger.info("Application has started");
@@ -43,10 +55,21 @@ public class Global extends GlobalSettings {
         ));
     }
     
-    public Action onRequest(Request request, Method actionMethod) {
-        System.out.println("before each request..." + request.toString());
-        System.out.println("before each request..." + actionMethod.getName());
-        return super.onRequest(request, actionMethod);
+    @SuppressWarnings("rawtypes")
+	public Action onRequest(Request request, Method actionMethod) {
+        if(Filter.filter_action(actionMethod)){
+        	final String result = Filter.authorized_request(actionMethod); 
+        	if(result.equals(AUTHENTICATED)){
+        		return super.onRequest(request, actionMethod);	
+        	}else{
+        		
+        		return super.onRequest(null,actionMethod);
+        	}        	
+        }else {
+        	return super.onRequest(request, actionMethod);	
+        }
+    	
+        
     }
 
 

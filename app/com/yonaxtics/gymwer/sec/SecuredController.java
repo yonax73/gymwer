@@ -17,7 +17,7 @@ import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.set.user.entity.User;
 
 /**
- * Clase : Session.java<br/>
+ * Class : SecuredController.java<br/>
  * Copyright : (c) 2014<br/>
  * Company : yonaxtics<br/>
  * date : Sep 11, 2014<br/>
@@ -26,7 +26,7 @@ import com.yonaxtics.gymwer.set.user.entity.User;
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
 
-public class securedController extends Controller{
+public class SecuredController extends Controller{
 	
 	/**
 	 * AUTHENTICATION
@@ -34,7 +34,7 @@ public class securedController extends Controller{
 	protected static final byte SESSION_EXPIRED = 3;
 	protected static final byte SESSION_TIMEOUT = 2;
 	protected static final byte UNAUTHENTICATED = 1;
-	protected static final byte AUTHENTICATED = 0;
+	protected static final byte AUTHENTICATED = 0;	
 	protected static final String  NOTIFICATION[] = {"Authenticated","Unauthenticated","Session Timeout","Session Expired"};
 	/**
 	 * CLIENT WEB

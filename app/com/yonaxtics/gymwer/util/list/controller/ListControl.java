@@ -5,7 +5,7 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-import com.yonaxtics.gymwer.sec.securedController;
+import com.yonaxtics.gymwer.sec.SecuredController;
 import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.util.base.entity.Entity;
 import com.yonaxtics.gymwer.util.list.entity.ListItem;

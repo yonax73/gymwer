@@ -11,7 +11,7 @@ import views.html.sec.login.signup;
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 import com.yonaxtics.gymwer.dpa.gym.logic.GymLogic;
 import com.yonaxtics.gymwer.dpa.role.entity.Role;
-import com.yonaxtics.gymwer.sec.securedController;
+import com.yonaxtics.gymwer.sec.SecuredController;
 import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.sec.login.logic.LoginLogic;
 import com.yonaxtics.gymwer.set.user.entity.User;
@@ -27,7 +27,7 @@ import com.yonaxtics.gymwer.set.user.logic.UserLogic;
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
 
-public class LoginControl extends securedController {
+public class LoginControl extends SecuredController {
 
 	public static Result login() {
 		if (is_authenticated()) {

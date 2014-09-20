@@ -6,7 +6,7 @@ import static com.yonaxtics.gymwer.sec.crypto.aes.Sec.enc;
 import play.libs.Json;
 import play.mvc.Result;
 
-import com.yonaxtics.gymwer.sec.securedController;
+import com.yonaxtics.gymwer.sec.SecuredController;
 import com.yonaxtics.gymwer.set.permission.logic.PermissionLogic;
 import com.yonaxtics.gymwer.set.user.entity.User;
 
@@ -18,7 +18,7 @@ import com.yonaxtics.gymwer.set.user.entity.User;
  * User      : YQ<br/> 
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
-public class PermissionControl extends securedController {	
+public class PermissionControl extends SecuredController {	
 	
 	public static Result loadNav(){		
 		User user = user_loggedIn();

@@ -4,7 +4,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.dpa.dashboard.dashboard;
 
-import com.yonaxtics.gymwer.sec.securedController;
+import com.yonaxtics.gymwer.sec.SecuredController;
 
 /** 
  * Clase     : DashboardControl.java<br/>

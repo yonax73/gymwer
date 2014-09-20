@@ -15,6 +15,7 @@ import com.yonaxtics.gymwer.set.permission.entity.*;
  * @version 0.1 (7/16/2014)
  *
  */
+@SuppressWarnings("serial")
 public class Role extends MasterValue {
 
 	public final static int SUPER_ADMIN = 4;

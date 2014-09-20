@@ -2,7 +2,7 @@ package com.yonaxtics.gymwer.set.picture.logic;
 
 import play.mvc.Http.MultipartFormData.FilePart;
 
-import com.yonaxtics.gymwer.sec.securedController;
+import com.yonaxtics.gymwer.sec.SecuredController;
 import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.set.picture.dao.PictureDao;
 
