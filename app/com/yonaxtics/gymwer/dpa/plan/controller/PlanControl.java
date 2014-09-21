@@ -1,8 +1,10 @@
 package com.yonaxtics.gymwer.dpa.plan.controller;
 
-import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.dpa.plan.*;
+import views.html.dpa.plan.masterPlan;
+import views.html.dpa.plan.plan;
+
+import com.yonaxtics.gymwer.sec.SecuredController;
 
 /** 
  * Clase     : PlanControl.java<br/>
@@ -13,7 +15,7 @@ import views.html.dpa.plan.*;
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
 
-public class PlanControl extends Controller {	
+public class PlanControl extends SecuredController {	
 	
 	public static Result plans(){		
 		return ok(masterPlan.render());

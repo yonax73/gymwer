@@ -23,7 +23,7 @@ public class Filter extends SecuredController {
 			"signIn",
 			"signOut"
 	};	
-	private final static int ACIONS_EXCLUDE_LENGTH = ACTIONS_EXCLUDES.length;	
+	private final static int ACTIONS_EXCLUDE_LENGTH = ACTIONS_EXCLUDES.length;	
 	
 	public static boolean filter_action(Method actionMethod){
 		boolean result = true;
@@ -33,7 +33,7 @@ public class Filter extends SecuredController {
 				int i = 0;			
 				do {
 					if(action.equals(ACTIONS_EXCLUDES[i++]))result = false;					
-				} while (i < ACIONS_EXCLUDE_LENGTH && result);
+				} while (i < ACTIONS_EXCLUDE_LENGTH && result);
 			}				
 		}		
 		return result;
