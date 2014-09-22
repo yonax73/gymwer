@@ -30,8 +30,8 @@ import com.yonaxtics.gymwer.set.user.logic.UserLogic;
 public class LoginControl extends securedController {
 
 	public static Result login() {
-		if (isAuthenticated()) {
-			User user = getUserLoggedIn();
+		if (is_authenticated()) {
+			User user = user_loggedIn();
 			if (user != null) {
 				return redirect(user.getDefaultAction().getUrl());
 			}
@@ -44,7 +44,7 @@ public class LoginControl extends securedController {
 	}
 
 	public static Result signOut() {
-	     return closeSession();
+	     return sign_out();
 	}
 
 	/**
@@ -112,10 +112,8 @@ public class LoginControl extends securedController {
 		final Map<String, String[]> data = request().body().asFormUrlEncoded();
 		User user = new User(new Login(dec(data.get("txtEmail")[0]), data.get("txtPassword")[0]), new Gym(dec(data.get("txtSiteName")[0])));
 		if (LoginLogic.signIn(user.getLogin(), user.getGym())) {
-			if (UserLogic.loadByLogin(user)) {
-				createSession();
-				user.getLogin().init();
-				setCurrentLogin(user.getLogin());
+			if (UserLogic.loadByLogin(user)) {				
+				session_start(user);						
 				result = user.getDefaultAction().getUrl();
 			} else {
 				result = "Error tryning load user!";

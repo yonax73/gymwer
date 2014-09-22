@@ -23,7 +23,7 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
 public class Login extends Entity{
 	
 	
-	public static final String KEY = "11508891YLN";
+	public static final String KEY = "LOGIN_KEY";
 	
 	private static int counter;	
 	private String name;
@@ -71,7 +71,7 @@ public class Login extends Entity{
 	
 	public void destroy(){
 		counter--;
-		StringBuffer strBf = new StringBuffer("Session [-");		
+		StringBuffer strBf = new StringBuffer("Session [- ");		
         strBf.append(String.valueOf(id));
         strBf.append(" -] ");
         strBf.append("has been ended at the ");
@@ -80,6 +80,28 @@ public class Login extends Entity{
         strBf.append(email);
         strBf.append(" -] ");        
 		strBf.append("since Client ");
+		strBf.append(hostAddress);
+		strBf.append(" and was logged ");
+		strBf.append(String.valueOf(getTimeConnection()));
+		strBf.append(" minutes aprox.");
+		strBf.append("\nActive sessions ");
+		strBf.append(String.valueOf(counter));
+		Logger.info(strBf.toString());
+	}
+	
+	public void destroy(String cause){
+		counter--;
+		StringBuffer strBf = new StringBuffer("Session [- ");		
+        strBf.append(String.valueOf(id));
+        strBf.append(" -] ");
+        strBf.append("has been ended at the ");
+		strBf.append(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        strBf.append(" for the User [- ");
+        strBf.append(email);
+        strBf.append(" -] ");
+        strBf.append("Caused by ");
+        strBf.append(cause);             
+		strBf.append(" since Client ");
 		strBf.append(hostAddress);
 		strBf.append(" and was logged ");
 		strBf.append(String.valueOf(getTimeConnection()));

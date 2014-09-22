@@ -2,9 +2,7 @@ package com.yonaxtics.gymwer.sec;
 
 
 
-import static com.yonaxtics.gymwer.sec.crypto.aes.Sec.enc;
 import play.cache.Cache;
-import play.mvc.Http.Context;
 
 import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.util.Utils;
@@ -20,7 +18,7 @@ import com.yonaxtics.gymwer.util.Utils;
 
 public class Persitence extends Cache {
       
-	public static final int TIME_EXPIRED = 72 * 60 * 1000 * 60;          //(hours - minutes - seconds - milliseconds)
+	public static final int TIME_EXPIRED = 72 * 60;          //(hours - minutes)
 
 	
 	public static Object getObject(String key){
@@ -41,11 +39,12 @@ public class Persitence extends Cache {
 		String serial = user.getSerial();
 		User auxUser = (User) getObject(serial);
 		if (auxUser != null && auxUser.exists()) {
-			user.copy(auxUser);						
-			Context.current().session().put(User.KEY, enc(serial));			
+			user.copy(auxUser);							
 			result  = user.exists();
 		}
 		return result;
 	}
+	
+	
 	
 }

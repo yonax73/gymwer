@@ -16,6 +16,7 @@ public abstract class  Entity implements Serializable,Cloneable {
 	protected int id;
 	protected boolean active;
 	protected LocalDateTime created;	
+	public final static String DATE_TIME_FORMATTER = "yyyy-MM-dd HH:mm";
 	public final static byte ACTIVE = 1;
 	public final static byte INACTIVE = 0;
 	public final static byte ALL = -1;
@@ -44,7 +45,7 @@ public abstract class  Entity implements Serializable,Cloneable {
 	
 	public String getFormatCreated(){
 		if(created!=null)
-		return created.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+		return created.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER));
 		return "No Date";
 	}
 

@@ -3,7 +3,8 @@ package com.yonaxtics.gymwer.sec;
 import static com.yonaxtics.gymwer.sec.crypto.aes.Sec.dec;
 import static com.yonaxtics.gymwer.sec.crypto.aes.Sec.enc;
 
-import java.util.Date;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -44,117 +45,94 @@ public class securedController extends Controller{
 	 */
 	protected final static String SUCCESS_REQUEST = "success_Request";
 	protected final static String BAD_REQUEST = "bad_Request";
-	/*
-	 * KEY SESSION
-	 */	
-	private static final String KEY_TIMEOUT = "KEY_TIMEOUT";
-	private static final String KEY_SESSION_EXPIRED = "KEY_SESSION_EXPIRED";
-	
 	/**
-	 * TIMES IN MILLISECONDS
+	 * TIMES IN MINUTES
 	 */
-	private static final long TIMEOUT = 15  * 60 * 1000;                  //(minutes - seconds - milliseconds)
-	private static final long TIME_EXPIRED = 8 * 60 * 60 * 1000;          //(hours - minutes - seconds - milliseconds)
+	private static final long TIMEOUT = 15;                  //(minutes)
+	private static final long TIME_EXPIRED = 8 * 60;         //(hours - minutes)
 	
 	
-	protected static Login getCurrentLogin(){		
+	protected static Login current_login(){		
 		return (Login) Persitence.getObject(dec(Context.current().session().get(Login.KEY)));
 	}
 	
-	protected static void setCurrentLogin(Login login){		
-		   String serial = login.getSerial();	
-			Session session = Context.current().session();
-			if (!session.containsKey(Login.KEY)) {
-				session.put(Login.KEY, enc(serial));
-			}   	
-		   Persitence.setObject(serial, login);
-	}
-	
-	protected static User getUserLoggedIn(){		
+	protected static User user_loggedIn(){		
 		return  (User) Persitence.getObject(dec(Context.current().session().get(User.KEY)));
 	}
-	
-	public static void setUserLoggedIn(User user){
-        String serial = user.getSerial();         
-		Session session = Context.current().session();
-		if (!session.containsKey(User.KEY)) {
-			session.put(User.KEY, enc(serial));
-		}
-		Persitence.setObject(serial, user);
-	}	
  	
- 	protected static Gym getCurrentGym(){
+ 	protected static Gym current_gym(){
  		return (Gym) Persitence.getObject(dec(Context.current().session().get(Gym.KEY)));
  	}
 	
-	protected static void createSession(){
+	protected static void session_start(User user){
 		Session currentSession = Context.current().session();
-		currentSession.put(KEY_SESSION_EXPIRED,enc(String.valueOf(TIME_EXPIRED)));
-		currentSession.put(KEY_TIMEOUT,enc(String.valueOf(TIMEOUT)));
+		Login login  = user.getLogin();		
+		String serialLogin = login.getSerial();
+		login.init();		
+		Persitence.setObject(serialLogin, login);
+		currentSession.put(Login.KEY, enc(serialLogin));
+		currentSession.put(User.KEY, enc(user.getSerial()));
 	}
 	
 	protected static byte authenticated(){		   
-	    if(sessionExpired())return SESSION_EXPIRED;
-		if(sessionTimeout())return SESSION_TIMEOUT;
+	    if(session_expired())return SESSION_EXPIRED;
+		if(session_timeout())return SESSION_TIMEOUT;
 		String value =  Http.Context.current().session().get(Login.KEY);
 		if(value==null) return UNAUTHENTICATED;
 		if(Persitence.get(dec(value))==null) return UNAUTHENTICATED;
 		return AUTHENTICATED;
 	}
 	
-	protected static boolean isAuthenticated(){
+	protected static boolean is_authenticated(){
 		return authenticated() == AUTHENTICATED;
 	}
 	
-	protected static Result onUnauthorized(byte result){
-		sessionDestroy();		
-		return unauthorized(views.html.sec.error.unauthorized.render(),NOTIFICATION[result]);
+	protected static Result unauthorized(byte result){
+		session_destroy(result);		
+		return unauthorized(views.html.sec.error.unauthorized.render());
 	}
 	
-	protected static Result closeSession(){
-		sessionDestroy();
+	protected static Result sign_out(){
+		session_destroy();
 		return redirect("/login");
 	}
 
-	protected static boolean sessionTimeout(){
-		boolean result = false;
-		Session currentSession = Context.current().session();
-		if(currentSession.get(KEY_TIMEOUT)!=null){
-			String previousTick = dec(currentSession.get(KEY_TIMEOUT));
-			if(previousTick!=null && !previousTick.isEmpty()){
-				long previousT = Long.valueOf(previousTick);
-				long currentT  = new Date().getTime();			
-				if((currentT-previousT) > TIMEOUT){					
-					result = true;
-					sessionDestroy();
-				}
+	protected static boolean session_timeout(){
+		boolean result = false;					
+		Login login = (Login) Persitence.getObject(dec(Context.current().session().get(Login.KEY)));			
+		if(login!=null){	
+			if((Duration.between(login.getCreated(), LocalDateTime.now()).toMinutes()) > TIMEOUT){					
+				result = true;					
 			}
-		}	
+		}
 		return result;
 	}
 	
-	protected static boolean sessionExpired(){
-		boolean result = false;
-		Session currentSession = Context.current().session();
-		if(currentSession.get(KEY_SESSION_EXPIRED)!=null){
-			String previousTick = dec(currentSession.get(KEY_SESSION_EXPIRED));
-			if(previousTick!=null && !previousTick.isEmpty()){
-				long previousT = Long.valueOf(previousTick);
-				long currentT  = new Date().getTime();			
-				if((currentT-previousT) > TIME_EXPIRED){					
-					result = true;
-					sessionDestroy();
-				}
+	protected static boolean session_expired(){
+		boolean result = false;					
+		Login login = (Login) Persitence.getObject(dec(Context.current().session().get(Login.KEY)));			
+		if(login!=null){	
+			if((Duration.between(login.getCreated(), LocalDateTime.now()).toMinutes()) > TIME_EXPIRED){					
+				result = true;					
 			}
 		}
 		return result;
 	}	
 	
-	protected static void sessionDestroy(){	
+	protected static void session_destroy(){	
 		  Session currentSession = Http.Context.current().session();
 		  String value =  currentSession.get(Login.KEY);
 		  Login login = value !=null ? (Login) Persitence.getObject(dec(value)) : null;		  
 		  if(login!=null)login.destroy();
+		  Persitence.remove(value);		  
+		  currentSession.clear();
+	}
+	
+	protected static void session_destroy(byte result){	
+		  Session currentSession = Http.Context.current().session();
+		  String value =  currentSession.get(Login.KEY);
+		  Login login = value !=null ? (Login) Persitence.getObject(dec(value)) : null;		  
+		  if(login!=null)login.destroy(NOTIFICATION[result]);
 		  Persitence.remove(value);		  
 		  currentSession.clear();
 	}

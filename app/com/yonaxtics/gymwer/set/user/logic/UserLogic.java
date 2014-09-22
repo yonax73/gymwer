@@ -1,7 +1,6 @@
 package com.yonaxtics.gymwer.set.user.logic;
 
 import com.yonaxtics.gymwer.sec.Persitence;
-import static com.yonaxtics.gymwer.sec.securedController.setUserLoggedIn;
 import com.yonaxtics.gymwer.set.user.dao.UserDao;
 import com.yonaxtics.gymwer.set.user.entity.User;
 /**
@@ -64,7 +63,7 @@ public  class   UserLogic  {
 			if(!result){
 				result = UserDao.loadByLogin(user);
 				if(result){
-					setUserLoggedIn(user);	
+					Persitence.setObject(user.getSerial(), user);	
 				}				
 			}
 		}

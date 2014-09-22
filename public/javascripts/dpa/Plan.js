@@ -99,17 +99,17 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','List','Select','Tab'],functi
 		xhr.onreadystatechange = function () {				       
 			  if (this.readyState === Constants.READYSTATE_COMPLETE) {
 				  						
+				  						
 				  if(this.status === Constants.STATUS_OK){				 
 					  
 					  var gym = Json.parse(this.responseText);				  
 						selectStatusFilter = new Select(Play.getId('selectStatusFilter'),List.entityStates());						
 						selectStatusFilter.init();							
 						selectStatusFilter.addItem(Constants.ENTYTY_STATES_ALL,'ALL');
-						selectStatusFilter.selectItem(Constants.ENTYTY_STATES_ALL);
-						
-				     }else {				   
-					   document.body.innerHtml = this.responseText;					   
-				   } 						  
+						selectStatusFilter.selectItem(Constants.ENTYTY_STATES_ALL);						
+				     }else {								  
+				       document.body.innerHTML = this.responseText; 
+				   } 				  						
 			  }
 		}
 		xhr.open('GET','/loadGym');

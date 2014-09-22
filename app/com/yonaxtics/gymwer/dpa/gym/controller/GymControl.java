@@ -28,14 +28,14 @@ public class GymControl extends securedController {
 		if(result == AUTHENTICATED){
 			return ok(gym.render());
 		}else{			
-			return onUnauthorized(result);
+			return unauthorized(result);
 		}		
 	}	
 	
 	public static Result load(){	
 		byte result = authenticated();
 		if(result == AUTHENTICATED){			
-			User user = getUserLoggedIn();
+			User user = user_loggedIn();
  			if(user!=null){
  				if(GymLogic.load(user.getGym())){ 					
  					return ok(enc(Json.toJson(user.getGym()).toString()));	
@@ -43,10 +43,10 @@ public class GymControl extends securedController {
  					return ok("Error trying Load Gym!");
  				}					
 			}else{
-				return closeSession();	
+				return sign_out();	
 			}
 		}else{
-			return onUnauthorized(result);
+			return unauthorized(result);
 		}				
 	}
 	
@@ -54,7 +54,7 @@ public class GymControl extends securedController {
 		byte result = authenticated();
 		if(result == AUTHENTICATED){
 			String message = null;
-			Gym gym = getCurrentGym();
+			Gym gym = current_gym();
 			if(gym!=null){
 				final Map<String,String[]>data = request().body().asFormUrlEncoded();
 				gym.setName(dec(data.get("txtName")[0]));		
@@ -85,11 +85,11 @@ public class GymControl extends securedController {
 				return ok(message);
 			
 			}else{
-				return closeSession(); 
+				return sign_out(); 
 			}
 			
 		}else {
-			return onUnauthorized(result);
+			return unauthorized(result);
 		}
 
 	}

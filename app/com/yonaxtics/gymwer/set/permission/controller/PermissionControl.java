@@ -21,7 +21,7 @@ import com.yonaxtics.gymwer.set.user.entity.User;
 public class PermissionControl extends securedController {	
 	
 	public static Result loadNav(){		
-		User user = getUserLoggedIn();
+		User user = user_loggedIn();
     	if(user!=null && PermissionLogic.loadNav(user)){    	    
     		return ok(enc(Json.toJson(user).toString()));
     	}		
