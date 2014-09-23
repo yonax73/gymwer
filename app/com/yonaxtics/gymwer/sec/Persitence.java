@@ -4,6 +4,7 @@ package com.yonaxtics.gymwer.sec;
 
 import play.cache.Cache;
 
+import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.util.Utils;
 
@@ -43,6 +44,17 @@ public class Persitence extends Cache {
 			result  = user.exists();
 		}
 		return result;
+	}
+	
+	public static boolean find(Gym gym){
+		boolean result = false;
+		String serial = gym.getSerial();
+	    Gym auxGym = (Gym) getObject(serial);
+	    if(auxGym!= null && gym.exists()){
+	    	gym.copy(auxGym);
+	    	result = gym.exists();
+	    }
+	    return result;
 	}
 	
 	

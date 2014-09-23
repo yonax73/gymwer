@@ -87,11 +87,6 @@ public class SecuredController extends Controller{
 		return authenticated() == AUTHENTICATED;
 	}
 	
-	protected static Result unauthorized(byte result){
-		session_destroy(result);		
-		return unauthorized(views.html.sec.error.unauthorized.render());
-	}
-	
 	protected static Result sign_out(){
 		session_destroy();
 		return redirect("/login");

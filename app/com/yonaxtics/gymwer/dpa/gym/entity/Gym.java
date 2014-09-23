@@ -15,7 +15,7 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
 @SuppressWarnings("serial")
 public class Gym extends Entity {
 	
-	public static final String KEY = "11508894YGM";
+	public static final String KEY = "GYM_KEY";
 	
 	private String nit;
 	private String name;	
@@ -38,8 +38,15 @@ public class Gym extends Entity {
 	}
 	@Override
 	public void copy(Entity entity) {
-	
-		
+	   Gym gym = (Gym) entity;
+	   this.active = gym.active;
+	   this.clientList = gym.clientList;
+	   this.created = gym.created;
+	   this.id = gym.id;
+	   this.location = gym.location;
+	   this.nit = gym.nit;
+	   this.name = gym.name;
+	   this.planList = gym.planList;		
 	}
 	
 	public String getNit() {

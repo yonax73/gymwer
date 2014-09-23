@@ -2,6 +2,8 @@ package com.yonaxtics.gymwer.sec;
 
 import java.lang.reflect.Method;
 
+
+
 /** 
  * Class     : Filter.java<br/>
  * Copyright : (c) 2014<br/>
@@ -14,14 +16,14 @@ import java.lang.reflect.Method;
 public class Filter extends SecuredController { 
 
 	
-	private final static String EXCLUDE_ACTIONS[] = {
+	private final static String ACTIONS_EXCLUDES[] = {
 			"login",
 			"signUp",
 			"createAccount",
 			"signIn",
 			"signOut"
 	};	
-	private final static int EXCLUDE_ACIONS_LENGHT = EXCLUDE_ACTIONS.length;	
+	private final static int ACIONS_EXCLUDE_LENGTH = ACTIONS_EXCLUDES.length;	
 	
 	public static boolean filter_action(Method actionMethod){
 		boolean result = true;
@@ -30,21 +32,20 @@ public class Filter extends SecuredController {
 			if(action!=null && !action.isEmpty()){
 				int i = 0;			
 				do {
-					if(action.equals(EXCLUDE_ACTIONS[i++]))result = false;					
-				} while (i < EXCLUDE_ACIONS_LENGHT && result);
+					if(action.equals(ACTIONS_EXCLUDES[i++]))result = false;					
+				} while (i < ACIONS_EXCLUDE_LENGTH && result);
 			}				
 		}		
 		return result;
 	}
 	
 	public static String authorized_request(Method actionMethod){
-	    byte status = 1;
-        if(filter_action(actionMethod)){
-    		status = authenticated();
-    		if(status > AUTHENTICATED)	session_destroy(status);    		
-        }        
+	    byte status = 1;    
+		status = authenticated();
+		if(status > AUTHENTICATED)	session_destroy(status);   
 		return NOTIFICATION[status];	
 	}
 	
+	 
 		
 }
