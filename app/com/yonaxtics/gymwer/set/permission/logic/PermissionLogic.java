@@ -17,12 +17,13 @@ public class PermissionLogic {
 	/**
 	 * @param contact
 	 */
-	public static boolean loadNav(User user) {		
+	public static boolean load(User user) {		
 		boolean result = false;
-		if(user != null && user.exists()){				  	
-		  result = 	PermissionDao.loadNav(user);		  
+		if(user != null && user.exists()){		  	
+		  result = 	PermissionDao.load(user);		  
 		  if(result){		 			  
-			  user.getRole().arrange();		  
+			  user.getRole().addChildrenToParentsModules();		
+			  user.createNavigation();
 		  }		  
 		}
 		return result;		

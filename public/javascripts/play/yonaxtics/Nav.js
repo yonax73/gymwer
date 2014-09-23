@@ -29,36 +29,21 @@
  * ========================================================================
  */
 
-define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
+define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {	
+	function Nav(){}	
 	
-	
-	function Nav(){}
-	
-	
-	
-	
-	Nav.init = function(){
-		
-		
-		
-		if(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_NAV) === null){
-			
-			 Nav.load();
-			 
-		} else {			
-			  
+	Nav.init = function(){		
+		if(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_NAV) === null){			
+			 Nav.load();			 
+		} else {						  
 			  Nav.create(JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_NAV)));		
-		}
-		
-	}
-	
-	
+		}		
+	}	
 	
 	/**
 	 * Toogle Nav
 	 */
-     Nav.toogle = function(){
-  	  
+     Nav.toogle = function(){  	  
 	   	   var menuToggle = Play.getId('menu-toggle');	   
 		   var nav = Play.getId('nav');
 		   var content = Play.getId('content');	    	  
@@ -70,166 +55,109 @@ define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
 		   var descriptionMenuHide =  'description-menu hidden-xs hidden';
 		   var descriptionMenuShow =  'description-menu hidden-xs';		   
 		   var n = descriptionMenu.length;	
-		   var open =  true;  
-		   
-		   function navOpen(){
-			   
+		   var open =  true;  		   
+		   function navOpen(){			   
 			    for ( var i = n-1; i > -1; i--) {			    	
 			    	Play.addClass(descriptionMenu[i],descriptionMenuShow);
-				}	
-			    
+				}				    
 			    Play.addClass(nav,clsFullNav);
 			    Play.addClass(content,clsFullContent);
 			    sessionStorage.setItem(Constants.SESSIONSTORAGE_OPEN_NAV,Constants.DOM_STORAGE_TRUE);  
 			    open = true;			   
-		   }
-		   
-		   function navClose(){	
-			   
+		   }		   
+		   function navClose(){				   
 			    for ( var i = n-1; i > -1; i--) {			    	
 			    	Play.addClass(descriptionMenu[i],descriptionMenuHide);
-				}		
-			    
+				}			    
 			    Play.addClass(nav,clsMinNav);
 			    Play.addClass(content,clsMinContent);
 			    sessionStorage.setItem(Constants.SESSIONSTORAGE_OPEN_NAV,Constants.DOM_STORAGE_FALSE);
 			    open = false;			  
-		  }		
-		   
-		  nav.style.height = Play.getHeightPx();	
-		  
+		  }		   
+		  nav.style.height = Play.getHeightPx();		  
 		  if(sessionStorage.getItem(Constants.SESSIONSTORAGE_OPEN_NAV) === null){			   
 			   sessionStorage.setItem(Constants.SESSIONSTORAGE_OPEN_NAV,Constants.DOM_STORAGE_TRUE);  
 		  }		  
-		  
 		  if(sessionStorage.getItem(Constants.SESSIONSTORAGE_OPEN_NAV) === Constants.DOM_STORAGE_TRUE){			   
 			   navOpen(); 			   
 		  } else {			   
 			   navClose();
-		  }	
-		  
-		  menuToggle.onclick = function(){	
-			  
+		  }		  
+		  menuToggle.onclick = function(){			  
 			   if(open){				   
 				   navClose();				   
 			   } else {
 				   navOpen();
 			   }			   
 		   }
-  }
-  
-
-
-
-   
+  }   
    /**
     * Load data Nav
     */
-   Nav.load = function(){
-	   
-		var xhr = new XMLHttpRequest();
-		
-		xhr.onreadystatechange = function () {		
-		       
-			  if (this.readyState === Constants.READYSTATE_COMPLETE) {
-				  						
-				  if(this.status === Constants.STATUS_OK){				 
-					  
+   Nav.load = function(){	   
+		var xhr = new XMLHttpRequest();		
+		xhr.onreadystatechange = function () {		       
+			  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
+				  if(this.status === Constants.STATUS_OK){									  
 					  var contact = Json.parse(this.responseText);
 					  localStorage.setItem(Constants.LOCALSTORAGE_REQUEST_LOAD_NAV,JSON.stringify(contact));
-					  Nav.create(contact);					   
-					  
-				  }else {
-					  
+					  Nav.create(contact);					   					  
+				  }else {					  
 		               window.location = '/signOut';									  
 				  }
 			  }
 		}
 		xhr.open('GET','/loadNav');
 		xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-		xhr.send();		
-		
-   }
+		xhr.send();				
+   }   
    
-   
-   
-   
-   Nav.create = function(contact){
-	   
+   Nav.create = function(contact){	   
 	      var gym = contact.gym;
 		  var user = contact.user;
 		  var permissions = user.role.permissions;
 		  var n = permissions.length;
 		  var i = 0;
-		  var action = Play.getId('actions');	
-		  
-		  if(n > 0){
-			  
+		  var action = Play.getId('actions');			  
+		  if(n > 0){			  
 			  var act = permissions[i++].action;
-			  action.appendChild(Nav.item(act.ico,act.module.description,act.url));
-			  
-			  do{
-				  
-				  act = permissions[i++].action;			
-				  
-				  if(act.module.rolId === Constants.MASTER_VALUE_MODULE_PARENT){								  
-					  
-					  action.appendChild(Nav.itemParent(act));								  
-					  
-				  }else {								
-					  
-					  action.appendChild(Nav.item(act.ico,act.module.description,act.url));
-					  
-				  }
-				  
+			  action.appendChild(Nav.item(act.ico,act.module.description,act.url));			  
+			  do{				  
+				  act = permissions[i++].action;							  
+				  if(act.module.rolId === Constants.MASTER_VALUE_MODULE_PARENT){						  
+					  action.appendChild(Nav.itemParent(act));											  
+				  }else {													  
+					  action.appendChild(Nav.item(act.ico,act.module.description,act.url));					  
+				  }				  
 			  }while(i < n)
-		  }
-		  
+		  }		  
 		  action.appendChild(Nav.divider());
-		  action.appendChild(Nav.itemLogOut('fa fa-sign-out fa-fw','Sign Out','/signOut'));
-		  
+		  action.appendChild(Nav.itemLogOut('fa fa-sign-out fa-fw','Sign Out','/signOut'));		  
 		  Nav.toogle();	   
-   }
+   }   
    
-   
-   
-   
-   Nav.item = function(ico,description,url){
-	   
+   Nav.item = function(ico,description,url){	   
 		  var i = document.createElement('i');
 		  var span = document.createElement('span');
 		  var a = document.createElement('a');
-		  var li = document.createElement('li');
-		  
-		  i.className = ico;		  
-		  
+		  var li = document.createElement('li');		  
+		  i.className = ico;		  		  
 		  span.className = 'description-menu hidden-xs';
-		  span.textContent = description;
-		  
+		  span.textContent = description;		  
 		  a.href = url;		  
 		  a.target ='_parent';
 		  a.appendChild(i);
-		  a.appendChild(span);	
-		  
+		  a.appendChild(span);			  
 		  a.onclick = function(e){			  
 			  e.preventDefault();			 
-			  window.open(this.href, this.target);	
-			 
-		  }
-		  
-		  if(url === window.location.pathname) li.className = 'active';
-		  	  
-		  li.appendChild(a);
-		  
-		
-		  
+			  window.open(this.href, this.target);			 
+		  }		  
+		  if(url === window.location.pathname) li.className = 'active';		  	  
+		  li.appendChild(a);		  
 		  return li	   
-   }
+   }  
    
-  
-   
-   Nav.itemParent =  function(action){
-	   
+   Nav.itemParent =  function(action){	   
 	  var li  = document.createElement('li');
 	  var a = document.createElement('a');	  
 	  var ul =  document.createElement('ul');
@@ -238,126 +166,79 @@ define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
 	  var n = action.module.children.length;
  	  var clsSubListHidden = 'sub-list nav nav-pills nav-stacked bg-info hidden';
  	  var clsSubList = 'sub-list nav nav-pills nav-stacked'; 	  
- 	  var open = false;	 
-	  	  
-	  i.className = action.ico;		  
-	  
+ 	  var open = false;	 	  	  
+	  i.className = action.ico;		  	  
 	  span.className = 'description-menu hidden-xs';
-	  span.textContent = action.module.description;
-	  
+	  span.textContent = action.module.description;	  
 	  a.href = '#';		  
 	  a.appendChild(i);	  
-	  a.appendChild(span);
-	  
+	  a.appendChild(span);	  
 	 	 a.onclick = function(){	 		
-
-	 		 if(open){
-	 			 
+	 		 if(open){	 			 
 	 			 Play.addClass(ul,clsSubListHidden);
-	 			 open = false;
-	 			 
-	 		 } else {
-	 			 
+	 			 open = false;	 			 
+	 		 } else {	 			 
 	 			 Play.addClass(ul,clsSubList);
 	 			 open = true;	    			 
 	 		 }	    		 
-	 	 }	  
-	  
-	  ul.className = clsSubListHidden;
-	  
-	  for(var i = 0; i < n; i++){
-		  
+	 	 }	  	  
+	  ul.className = clsSubListHidden;	  
+	  for(var i = 0; i < n; i++){		  
 		  var act =  action.module.children[i];		  
 		  ul.appendChild(Nav.itemChild(act.ico,act.module.description,act.url,ul));		  
-	  }
-	  
+	  }	  
 	  li.appendChild(a);
 	  li.appendChild(ul);	  
-
-	  return li;
-	   
-   }
+	  return li;	   
+   }   
    
-   
-   
-   
-   Nav.itemChild = function(ico,description,url,parent){
-	   
+   Nav.itemChild = function(ico,description,url,parent){	   
 		  var i = document.createElement('i');
 		  var span = document.createElement('span');
 		  var a = document.createElement('a');
-		  var li = document.createElement('li');
-		  
-		  i.className = ico;		  
-		  
+		  var li = document.createElement('li');		  
+		  i.className = ico;		  		  
 		  span.className = 'description-menu hidden-xs';
-		  span.textContent = description;
-		  
+		  span.textContent = description;		  
 		  a.href = url;		  
 		  a.target ='_parent';
 		  a.appendChild(i);		 
-		  a.appendChild(span);	
-		  
-		  a.onclick = function(e){			
-			  
+		  a.appendChild(span);			  
+		  a.onclick = function(e){						  
 			  e.preventDefault();			 
 			  window.open(this.href, this.target);			
-		  }
-		  
+		  }		  
 		  if(url === window.location.pathname){
 			  li.className = 'active';
 			  parent.className = 'sub-list nav nav-pills nav-stacked';
-		  }
-		  	  
-		  li.appendChild(a);
-		  
-		 
-		  
+		  }		  	  
+		  li.appendChild(a);		  
 		  return li	   
-}
-
+}   
    
-   
-   
-   Nav.itemLogOut = function(ico,description,url){
-	   
+Nav.itemLogOut = function(ico,description,url){	   
 		  var i = document.createElement('i');
 		  var span = document.createElement('span');
 		  var a = document.createElement('a');
-		  var li = document.createElement('li');
-		  
-		  i.className = ico;		  
-		  
+		  var li = document.createElement('li');		  
+		  i.className = ico;		  		  
 		  span.className = 'description-menu hidden-xs';
-		  span.textContent = description;
-		  
+		  span.textContent = description;		  
 		  a.href = url;		  
 		  a.appendChild(i);
-		  a.appendChild(span);		  
-		  
-		  a.onclick = function(){
-			  
+		  a.appendChild(span);		  		  
+		  a.onclick = function(){			  
 			  localStorage.clear();		
 			  sessionStorage.clear();
-		  }
-		  
-		  li.appendChild(a);
-		  
+		  }		  
+		  li.appendChild(a);		  
 		  return li	   
-}
-
-
-
-   
-   Nav.divider = function(){
-	   
+}   
+   Nav.divider = function(){	   
 	   var li = document.createElement('li'); 
-	   li.className = 'divider';
-	   
+	   li.className = 'divider';	   
 	   return li;
-   }
-   
-	
+   }	
 	
 	return Nav;
 	

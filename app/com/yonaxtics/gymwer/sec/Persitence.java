@@ -2,9 +2,12 @@ package com.yonaxtics.gymwer.sec;
 
 
 
+import java.util.List;
+
 import play.cache.Cache;
 
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
+import com.yonaxtics.gymwer.set.permission.entity.Permission;
 import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.util.Utils;
 
@@ -56,7 +59,17 @@ public class Persitence extends Cache {
 	    }
 	    return result;
 	}
-	
+
+	/**
+	 * @param permissions
+	 * @return
+	 */
+	public static boolean find(List<Permission> permissions) {
+		boolean result = false;
+		
+		return false;
+	}
+
 	
 	
 }

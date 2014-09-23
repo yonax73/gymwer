@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.yonaxtics.gymwer.set.action.entity.Action;
+import com.yonaxtics.gymwer.set.master.entity.ModuleType;
 import com.yonaxtics.gymwer.util.base.entity.Entity;
 
 /** 
@@ -19,12 +20,12 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
 @SuppressWarnings("serial")
 public class Module extends Entity {
 	
-	public final static int PARENT =1;
-    public final static int CHILD =2;     
+    
 	private String description;
 	private int rolId;
 	private List<Action> children;
 	private Module parent;	
+	private ModuleType moduleType;
 	
 	/**
 	 * @param id
@@ -34,11 +35,11 @@ public class Module extends Entity {
 		
 	}
 	
-	public Module(int id, String description, int rolId) {
+	public Module(int id, String description, ModuleType moduleType) {
 		super(id);
 		this.description = description;
-		this.rolId = rolId;		
-		if(isParent()){			
+		this.moduleType = moduleType;	
+		if(moduleType.isParent()){			
 			children = new ArrayList<Action>();			
 		}		
 	}		
@@ -63,13 +64,7 @@ public class Module extends Entity {
 	public boolean isEmpty() {	
 		return description == null || description =="";
 	}
-	public boolean isChild(){		
-		return rolId == CHILD;		
-	}	
-	
-	public boolean isParent(){		
-		return rolId == PARENT;		
-	}	
+
 	
 	public void releaseParent(){		
 		setParent(null);
@@ -105,6 +100,14 @@ public class Module extends Entity {
 
 	public void setRolId(int rolId) {
 		this.rolId = rolId;
+	}
+
+	public ModuleType getModuleType() {
+		return moduleType;
+	}
+
+	public void setModuleType(ModuleType moduleType) {
+		this.moduleType = moduleType;
 	}
 	
 	

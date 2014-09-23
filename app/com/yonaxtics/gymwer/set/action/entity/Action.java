@@ -1,5 +1,6 @@
 package com.yonaxtics.gymwer.set.action.entity;
 
+import com.yonaxtics.gymwer.set.master.entity.ActionType;
 import com.yonaxtics.gymwer.set.module.entity.Module;
 import com.yonaxtics.gymwer.util.base.entity.Entity;
 
@@ -16,13 +17,13 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
 public class Action extends Entity {
 
 	public final static int LOAD_USER = 25;
-    public final static int LOAD_GYM = 26;   
-    
+    public final static int LOAD_GYM = 26;       
 	
 	private String description;
 	private String url;
 	private String ico;
 	private Module module;	
+	private ActionType actionType;
 
 	/**
 	 * @param id
@@ -114,6 +115,14 @@ public class Action extends Entity {
 	 */
 	public void setModule(Module module) {
 		this.module = module;
+	}
+
+	public ActionType getActionType() {
+		return actionType;
+	}
+
+	public void setActionType(ActionType actionType) {
+		this.actionType = actionType;
 	}
 
 

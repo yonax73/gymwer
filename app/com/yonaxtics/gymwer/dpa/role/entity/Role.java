@@ -38,11 +38,11 @@ public class Role extends MasterValue {
 	}
 	
 
-	public void arrange(){			
+	public void addChildrenToParentsModules(){			
 		try{	
-			  List<Action> actParents = getPermissions().stream().map(Permission::getAction).filter(act->act.getModule().isParent()).collect(Collectors.toList()); 	  
+			  List<Action> actParents = getPermissions().stream().map(Permission::getAction).filter(act->act.getModule().getModuleType().isParent()).collect(Collectors.toList()); 	  
 		      if(actParents.size() > 0){				
-				List<Action> actChildren = getPermissions().stream().map(Permission::getAction).filter(act->act.getModule().isChild()).collect(Collectors.toList());				
+				List<Action> actChildren = getPermissions().stream().map(Permission::getAction).filter(act->act.getModule().getModuleType().isChild()).collect(Collectors.toList());				
 				actChildren.stream().parallel().forEach(child -> {			
 			      actParents.stream().parallel().forEach(parent->{				
 				    if(child.getModule().getParent().equals(parent.getModule())){					
@@ -52,11 +52,11 @@ public class Role extends MasterValue {
 				  });
 				});
 			  }		    
-		      getPermissions().removeIf(p -> p.getAction().getModule().isChild());	
+		      getPermissions().removeIf(p -> p.getAction().getModule().getModuleType().isChild());	
 		}catch(Exception e){
 			Logger.error(e.getMessage());
 		}      
-	}
+	}	
 	
 	public String getName(){		
 		return getValue1();

@@ -42,7 +42,7 @@ public class SecuredController extends Controller{
 	/**
 	 * TIMES IN MINUTES
 	 */
-	private static final long TIMEOUT = 1;                   //(minutes)
+	private static final long TIMEOUT = 15;                   //(minutes)
 	private static final long TIME_EXPIRED = 10;         //(hours - minutes)
 	
 	
