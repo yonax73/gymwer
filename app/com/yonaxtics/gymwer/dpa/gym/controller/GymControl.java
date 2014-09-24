@@ -6,8 +6,8 @@ import static com.yonaxtics.gymwer.sec.crypto.aes.Sec.enc;
 import java.util.Map;
 
 import play.libs.Json;
-import play.mvc.Result;
 import play.mvc.Http.Context;
+import play.mvc.Result;
 import views.html.dpa.gym.gym;
 
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
@@ -24,8 +24,8 @@ import com.yonaxtics.gymwer.set.user.entity.User;
  */
 public class GymControl extends SecuredController {
 	
-	public static Result gym(){	
-			return ok(gym.render());			
+	public static Result gym(){			 
+			return authenticated(gym.render());			
 	}	
 	
 	public static Result load(){				

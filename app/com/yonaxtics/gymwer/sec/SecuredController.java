@@ -12,6 +12,7 @@ import play.mvc.Http;
 import play.mvc.Http.Context;
 import play.mvc.Http.Session;
 import play.mvc.Result;
+import play.twirl.api.Html;
 
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 import com.yonaxtics.gymwer.sec.login.entity.Login;
@@ -28,15 +29,7 @@ import com.yonaxtics.gymwer.set.user.entity.User;
  */
 
 public class SecuredController extends Controller{
-	
-	/**
-	 * AUTHENTICATION
-	 */
-	protected static final byte SESSION_EXPIRED = 3;
-	protected static final byte SESSION_TIMEOUT = 2;
-	protected static final byte UNAUTHENTICATED = 1;
-	protected static final byte AUTHENTICATED = 0;	
-	protected static final String  NOTIFICATION[] = {"Authenticated","Unauthenticated","Session Timeout","Session Expired"};
+
 	/**
 	 * CLIENT WEB
 	 */	
@@ -49,8 +42,8 @@ public class SecuredController extends Controller{
 	/**
 	 * TIMES IN MINUTES
 	 */
-	private static final long TIMEOUT = 1;                  //(minutes)
-	private static final long TIME_EXPIRED = 8 * 60;         //(hours - minutes)
+	private static final long TIMEOUT = 1;                   //(minutes)
+	private static final long TIME_EXPIRED = 10;         //(hours - minutes)
 	
 	
 	protected static Login current_login(){		
@@ -75,30 +68,86 @@ public class SecuredController extends Controller{
 		currentSession.put(User.KEY, enc(user.getSerial()));
 	}
 	
-	protected static byte authenticated(){		   
+	protected static Result authenticated(Html view) {
 		try {
-			if (session_expired())
-				return SESSION_EXPIRED;
-			if (session_timeout())
-				return SESSION_TIMEOUT;
+			if (session_expired()) {
+				session_destroy("Session Expired");
+				return expired();
+			}
+			if (session_timeout()) {
+				session_destroy("Session Timeout");
+				return timeout();
+			}
 			String value = Http.Context.current().session().get(Login.KEY);
-			if (value == null)
-				return UNAUTHENTICATED;
-			if (Persitence.get(dec(value)) == null)
-				return UNAUTHENTICATED;
-			return AUTHENTICATED;
+			if (!(value != null && Persitence.get(dec(value)) != null)) {
+				session_destroy("Unauthenticated");
+				return unauthenticated();
+			}
+			return ok(view);
 		} catch (Exception e) {
-			Logger.error(e.getMessage());
-			return UNAUTHENTICATED;
+			session_destroy(e.getMessage());
+			return unauthenticated();
 		}
 	}
 	
-	protected static boolean is_authenticated(){
-		return authenticated() == AUTHENTICATED;
+	protected static Result authenticated(String arg0) {
+		try {
+			if (session_expired()) {
+				session_destroy("Session Expired");
+				return expired();
+			}
+			if (session_timeout()) {
+				session_destroy("Session Timeout");
+				return timeout();
+			}
+			String value = Http.Context.current().session().get(Login.KEY);
+			if (!(value != null && Persitence.get(dec(value)) != null)) {
+				session_destroy("Unauthenticated");
+				return unauthenticated();
+			}
+			return ok(arg0);
+		} catch (Exception e) {
+			session_destroy(e.getMessage());
+			return unauthenticated();
+		}
+	}
+	
+	protected static Result authenticatedLogin(Html view) {
+		try {
+			if (session_expired()) {
+				session_destroy("Session Expired");
+				return expired();
+			}
+			if (session_timeout()) {
+				session_destroy("Session Timeout");
+				return timeout();
+			}
+			User user = user_loggedIn();
+			if (user != null) {
+				return redirect(user.getDefaultAction().getUrl());
+			}
+			return ok(view);
+		} catch (Exception e) {
+			session_destroy(e.getMessage());
+			return unauthenticated();
+		}
+	}
+
+	
+	protected static Result unauthenticated() {		
+		return unauthorized(views.html.sec.error.unauthorized.render());
+	}
+	
+	protected static Result expired() {		
+		return unauthorized(views.html.sec.error.expired.render());
+	}
+	
+	protected static Result timeout() {		
+		return unauthorized(views.html.sec.error.timeout.render());
 	}
 	
 	protected static Result sign_out(){
-		session_destroy();
+		session_destroy("Session closed by User");
 		return redirect("/login");
 	}
 
@@ -106,9 +155,13 @@ public class SecuredController extends Controller{
 		boolean result = false;
 		try {
 			Login login = (Login) Persitence.getObject(dec(Context.current().session().get(Login.KEY)));
+			LocalDateTime now = LocalDateTime.now();
 			if (login != null) {
-				if ((Duration.between(login.getCreated(), LocalDateTime.now()).toMinutes()) > TIMEOUT) {
+				if ((Duration.between(login.getTimeout(), now).toMinutes()) > TIMEOUT) {
 					result = true;
+				}else{
+					login.setTimeout(now);
+					Persitence.setObject(login.getSerial(), login);
 				}
 			}
 		} catch (Exception e) {
@@ -132,23 +185,19 @@ public class SecuredController extends Controller{
 		return result;
 	}	
 	
-	protected static void session_destroy(){	
-		  Session currentSession = Http.Context.current().session();
-		  String value =  currentSession.get(Login.KEY);
-		  Login login = value !=null ? (Login) Persitence.getObject(dec(value)) : null;		  
-		  if(login!=null)login.destroy();
-		  Persitence.remove(value);		  
-		  currentSession.clear();
-	}
+
 	
-	protected static void session_destroy(byte result){	
+	protected static void session_destroy(String cause) {
 		try {
 			Session currentSession = Http.Context.current().session();
 			String value = currentSession.get(Login.KEY);
-			Login login = value != null ? (Login) Persitence.getObject(dec(value)) : null;
-			if (login != null)
-				login.destroy(NOTIFICATION[result]);
-			Persitence.remove(value);
+			if (value != null) {
+				Persitence.remove(value);
+				Login login = (Login) Persitence.getObject(dec(value));
+				if (login != null) {
+					login.destroy(cause);
+				}
+			}
 			currentSession.clear();
 		} catch (Exception e) {
 			Logger.error(e.getMessage());

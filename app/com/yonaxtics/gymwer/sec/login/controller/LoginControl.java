@@ -30,13 +30,7 @@ import com.yonaxtics.gymwer.set.user.logic.UserLogic;
 public class LoginControl extends SecuredController {
 
 	public static Result login() {
-		if (is_authenticated()) {
-			User user = user_loggedIn();
-			if (user != null) {
-				return redirect(user.getDefaultAction().getUrl());
-			}
-		}
-		return ok(login.render());
+	       return authenticatedLogin(login.render());
 	}
 
 	public static Result signUp() {

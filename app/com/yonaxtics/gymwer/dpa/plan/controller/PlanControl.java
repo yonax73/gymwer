@@ -1,7 +1,7 @@
 package com.yonaxtics.gymwer.dpa.plan.controller;
 
 import play.mvc.Result;
-import views.html.dpa.plan.masterPlan;
+import views.html.dpa.plan.plans;
 import views.html.dpa.plan.plan;
 
 import com.yonaxtics.gymwer.sec.SecuredController;
@@ -17,11 +17,11 @@ import com.yonaxtics.gymwer.sec.SecuredController;
 
 public class PlanControl extends SecuredController {	
 	
-	public static Result plans(){		
-		return ok(masterPlan.render());
+	public static Result plans(){	
+	      return authenticated(plans.render());	
 	}
 	
 	public static Result plan(){
-		return ok(plan.render());
+		return authenticated(plan.render());
 	}
 }

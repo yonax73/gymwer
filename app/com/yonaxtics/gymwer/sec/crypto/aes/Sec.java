@@ -9,20 +9,24 @@ import play.Logger;
  */
 public class Sec extends Aes {	
 	
-	public static String dec(String cipher){		
-		try {			
-			return decrypt(prepareDec(cipher));			
-		} catch (Exception e) {			
-			Logger.error(e.getMessage());
-		}		
+	public static String dec(String cipher) {
+		if (cipher != null && !cipher.isEmpty()) {
+			try {
+				return decrypt(prepareDec(cipher));
+			} catch (Exception e) {
+				Logger.error(e.getMessage());
+			}
+		}
 		return cipher;
-	}	
+	}
 	
-	public static String enc(String value){		
-		try {			
-			return encrypt(padString(value));			
-		} catch (Exception e) {			
-			Logger.error(e.getMessage());
+	public static String enc(String value) {
+		if (value != null && !value.isEmpty()) {
+			try {
+				return encrypt(padString(value));
+			} catch (Exception e) {
+				Logger.error(e.getMessage());
+			}
 		}
 		return value;
 	}

@@ -14,16 +14,10 @@ import com.yonaxtics.gymwer.set.user.entity.User;
  */
 
 public class PermissionLogic {
-
-
-
-
-
 	/**
 	 * @param contact
 	 */
-	public static boolean loadNav(User user) {
-		
+	public static boolean loadNav(User user) {		
 		boolean result = false;
 		if(user != null && user.exists()){				  	
 		  result = 	PermissionDao.loadNav(user);		  

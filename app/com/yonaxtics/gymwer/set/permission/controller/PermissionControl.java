@@ -23,7 +23,7 @@ public class PermissionControl extends SecuredController {
 	public static Result loadNav(){		
 		User user = user_loggedIn();
     	if(user!=null && PermissionLogic.loadNav(user)){    	    
-    		return ok(enc(Json.toJson(user).toString()));
+    		return authenticated(enc(Json.toJson(user).toString()));
     	}		
     	return ok("Internal Error 4001");		
 	}

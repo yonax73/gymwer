@@ -29,7 +29,8 @@ public class Login extends Entity{
 	private String name;
 	private String email;
 	private transient String password;
-	private  String hostAddress;	
+	private  String hostAddress;
+	private LocalDateTime timeout;
 	
 	public Login(String email,String password) {		
 		super(0);		
@@ -53,6 +54,7 @@ public class Login extends Entity{
 	public void init(){
 		counter++;
 		created = LocalDateTime.now();
+		timeout = created;
 		hostAddress = getNetworkInfoClient();
         StringBuffer strBf = new StringBuffer("New Session [- ");
         strBf.append(String.valueOf(id));
@@ -66,26 +68,6 @@ public class Login extends Entity{
         strBf.append(hostAddress); 		
 	    strBf.append("\nActive sessions ");
 	    strBf.append(String.valueOf(counter));
-		Logger.info(strBf.toString());
-	}
-	
-	public void destroy(){
-		counter--;
-		StringBuffer strBf = new StringBuffer("Session [- ");		
-        strBf.append(String.valueOf(id));
-        strBf.append(" -] ");
-        strBf.append("has been ended at the ");
-		strBf.append(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
-        strBf.append(" for the User [- ");
-        strBf.append(email);
-        strBf.append(" -] ");        
-		strBf.append("since Client ");
-		strBf.append(hostAddress);
-		strBf.append(" and was logged ");
-		strBf.append(String.valueOf(getTimeConnection()));
-		strBf.append(" minutes aprox.");
-		strBf.append("\nActive sessions ");
-		strBf.append(String.valueOf(counter));
 		Logger.info(strBf.toString());
 	}
 	
@@ -141,6 +123,14 @@ public class Login extends Entity{
 
 	public String getHostAddress() {
 		return hostAddress;
+	}
+
+	public LocalDateTime getTimeout() {
+		return timeout;
+	}
+
+	public void setTimeout(LocalDateTime timeout) {
+		this.timeout = timeout;
 	}
 
 }

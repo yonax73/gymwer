@@ -15,8 +15,9 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
 @SuppressWarnings("serial")
 public class Action extends Entity {
 
-	public final static int LOAD_PROFILE = 25;
-    public final static int LOAD_GYM = 26;     
+	public final static int LOAD_USER = 25;
+    public final static int LOAD_GYM = 26;   
+    
 	
 	private String description;
 	private String url;

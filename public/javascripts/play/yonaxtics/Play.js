@@ -180,22 +180,22 @@
 	
 	
 	
-	Play.ready = function(){
-		
-		var result = false;
-		
-		if(sessionStorage.getItem(Constants.SESSIONSTORAGE_OK) === null){			
-			
-			window.location = '/signOut';
-		
-		} else if(sessionStorage.getItem(Constants.SESSIONSTORAGE_OK) == Constants.OK){
-			
-			result = true
-		}
-		
-		return result;
-			 
-	}
+//	Play.ready = function(){
+//		
+//		var result = false;
+//		
+//		if(sessionStorage.getItem(Constants.SESSIONSTORAGE_OK) === null){			
+//			
+//			window.location = '/signOut';
+//		
+//		} else if(sessionStorage.getItem(Constants.SESSIONSTORAGE_OK) == Constants.OK){
+//			
+//			result = true
+//		}
+//		
+//		return result;
+//			 
+//	}
 	
 	
 	
