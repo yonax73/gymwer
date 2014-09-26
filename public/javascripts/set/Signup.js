@@ -51,38 +51,34 @@ require.config({
 
 
 
-requirejs(['Aes','Constants','Play','Notify','FormOk'],function(Aes,Constants, Play,Notify,FormOk) {
-	var btnSignUp = Play.getId('btnSignUp');	
-	var frmSingUp = Play.getId('frmSignUp');	
-	var notify = new Notify(Play.getId('altSignUp'));	
-	var form = new FormOk(frmSingUp);
-	frmSingUp.onsubmit = function(e){		
-		e.preventDefault();		
-		if(form.isValid()){		    
-			 var xhr = new XMLHttpRequest();			 
-			 xhr.onreadystatechange = function () {				 
-				 notify.wait('Loading...');					 
-				 btnSignUp.disabled = true;			        
-				  if (this.readyState === Constants.READYSTATE_COMPLETE) {					  						
-					  if(this.status === Constants.STATUS_OK && this.responseText === Constants.SUCCESS_REQUEST){						  
-						  sessionStorage.setItem(Constants.SESSIONSTORAGE_MESSAGE, 'Your account has been created successfully');
-						  window.location = '/login';						  
-					  }else {						  
-						    notify.danger(this.responseText);
-							btnSignUp.disabled = false;											  
-					  }
-				  }
-			 }			 
-			 xhr.open('POST','/createAccount');
-			 xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-			 xhr.send(Play.serialize(e.target));			
-			 xhr.timeout = Constants.TIME_OUT;
-			 xhr.ontimeout = function () {
-				 notify.danger('Timed Out!!!');
-				 btnSignUp.disabled = false;				
-			}			
-		}		
-	}			
-});
+requirejs([ 'Aes', 'Constants', 'Play', 'Notify', 'FormOk' ],
+		function(Aes, Constants, Play, Notify, FormOk) {
+			var btnSignUp = Play.getId('btnSignUp');
+			var frmSingUp = Play.getId('frmSignUp');
+			var notify = new Notify(Play.getId('altSignUp'));
+			var form = new FormOk(frmSingUp);
+			frmSingUp.onsubmit = function(e) {
+				e.preventDefault();
+				if (form.isValid()) {
+					Play.loadRequest(e.target,function(xhr) {
+						notify.wait('Loading...');
+						btnSignUp.disabled = true;
+						if (xhr.readyState === Constants.READYSTATE_COMPLETE) {
+							if (xhr.status === Constants.STATUS_OK && xhr.responseText === Constants.SUCCESS_REQUEST) {
+								sessionStorage.setItem(Constants.SESSIONSTORAGE_MESSAGE,'Your account has been created successfully');
+								window.location = '/login';
+							} else {
+								notify.danger(xhr.responseText);
+								btnSignUp.disabled = false;
+							}
+						}
+					}, function() {
+						notify.danger('Timed Out!!!');
+						btnLogin.disabled = false;
+					});
+				}
+			}
+
+		});
 
 

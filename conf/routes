@@ -4,7 +4,8 @@
 #UserControl
 GET     /users                          com.yonaxtics.gymwer.set.user.controller.UserControl.users()
 GET     /user                           com.yonaxtics.gymwer.set.user.controller.UserControl.user()
-GET     /loaduser                       com.yonaxtics.gymwer.set.user.controller.UserControl.loadUser()
+GET     /loadUser                       com.yonaxtics.gymwer.set.user.controller.UserControl.loadUser()
+POST    /saveUser                       com.yonaxtics.gymwer.set.user.controller.UserControl.saveUser()
 
 #GymControl
 GET     /gym                            com.yonaxtics.gymwer.dpa.gym.controller.GymControl.gym()
@@ -12,7 +13,7 @@ GET     /loadGym                        com.yonaxtics.gymwer.dpa.gym.controller.
 POST    /saveGym                        com.yonaxtics.gymwer.dpa.gym.controller.GymControl.save()
 
 #PermissionControl
-GET     /loadNav                        com.yonaxtics.gymwer.set.permission.controller.PermissionControl.loadNav()
+GET     /loadNav                        com.yonaxtics.gymwer.sec.permission.controller.PermissionControl.loadNav()
 
 #ClientControl
 GET     /clients                        com.yonaxtics.gymwer.dpa.client.controller.ClientControl.clients()

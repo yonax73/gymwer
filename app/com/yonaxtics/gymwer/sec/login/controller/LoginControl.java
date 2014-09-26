@@ -16,6 +16,8 @@ import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.sec.login.logic.LoginLogic;
 import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.set.user.logic.UserLogic;
+import com.yonaxtics.gymwer.util.Utils;
+
 
 /**
  * Class : LoginControl.java<br/>
@@ -50,11 +52,11 @@ public class LoginControl extends SecuredController {
 	public static Result createAccount() {
 		String result = null;
 		User user = null;
-		final Map<String, String[]> data = request().body().asFormUrlEncoded();
-		if (dec(data.get("cbxTerms")[0]).equals(CHECKED)) {
-			if (data.get("txtPassword")[0].equals(data.get("txtPasswordConfirm")[0])) {
-				user = new User(new Role(Role.SUPER_ADMIN), new Login(dec(data.get("txtEmail")[0]), data.get("txtPassword")[0]));
-				user.setGym(new Gym(dec(data.get("txtNameGym")[0])));
+		final Map<String, String> data = Utils.deserializeJson(dec(request().body().asText()));
+		if (data.get("cbxTerms").equals(CHECKED)) {
+			if (data.get("txtPassword").equals(data.get("txtPasswordConfirm"))) {
+				user = new User(new Role(Role.SUPER_ADMIN), new Login(data.get("txtEmail"), data.get("txtPassword")));
+				user.setGym(new Gym(data.get("txtNameGym")));
 				if (LoginLogic.exists(user.getLogin())) {
 					if (GymLogic.exists(user.getGym())) {
 						result = "This user and gym already exists!";
@@ -101,20 +103,18 @@ public class LoginControl extends SecuredController {
 		return ok(result);
 	}
 
-	public static Result signIn() {
-		String result = null;
-		final Map<String, String[]> data = request().body().asFormUrlEncoded();
-		User user = new User(new Login(dec(data.get("txtEmail")[0]), data.get("txtPassword")[0]), new Gym(dec(data.get("txtSiteName")[0])));
+	public static Result signIn() {		
+		final Map<String, String> data = Utils.deserializeJson(dec(request().body().asText()));
+		User user = new User(new Login(data.get("email"), data.get("password")), new Gym(data.get("gymName")));
 		if (LoginLogic.signIn(user.getLogin(), user.getGym())) {
 			if (UserLogic.loadByLogin(user)) {				
-				session_start(user);						
-				result = user.getDefaultAction().getUrl();
-			} else {
-				result = "Error tryning load user!";
+				session_start(user);				
+				return ok(user.getDefaultAction().getUrl());
+			} else {				
+				return badRequest("Error tryning load user!");
 			}
 		} else {
-			result = BAD_REQUEST;
-		}
-		return ok(result);
+			return ok(BAD_REQUEST);
+		}		
 	}
 }

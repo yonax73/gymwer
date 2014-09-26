@@ -31,13 +31,17 @@ public class GymControl extends SecuredController {
 	public static Result load(){				
 		User user = user_loggedIn();
 		if (user != null) {
-			Gym gym = user.getGym();
-			if (GymLogic.load(gym)) {
-				Context.current().session().put(Gym.KEY, enc(gym.getSerial()));
-				return ok(enc(Json.toJson(gym).toString()));
-			} else {
-				return ok("Error trying Load Gym!");
-			}
+           if(user.getRole().isAuthorizedToLoadGym()){
+   			Gym gym = user.getGym();
+   			if (GymLogic.load(gym)) {
+   				Context.current().session().put(Gym.KEY, enc(gym.getSerial()));
+   				return ok(enc(Json.toJson(gym).toString()));
+   			} else {
+   				return ok("Error trying Load Gym!");
+   			}
+           }else{
+        	   return ok("You do not have permission to view gym information!");
+           }
 		} else {
 			return sign_out();
 		}	

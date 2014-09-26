@@ -41,27 +41,27 @@ define(['./Constants','./Json'], function(Constants,Json) {
 	 * url of page home list
 	 */
 	List.url = function(){			
-		if(localStorage.getItem(Constants.LOCALSTORAGE_LIST_URL) == null){				
-			var xhr = new XMLHttpRequest();		
-			xhr.onreadystatechange = function () {		       
-				  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
-					  if(this.status === Constants.STATUS_OK){									  
-						     var items = Json.parse(this.responseText);						
-							 localStorage.setItem(Constants.LOCALSTORAGE_LIST_URL,JSON.stringify(items));							 
-							 return items;					
-					   } 					  
-				  }		  
-			}
-			xhr.open('GET','/personUrls');
-			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded;charset=UTF-8');
-			xhr.send();
-			xhr.timeout = Constants.TIME_OUT;
-			 xhr.ontimeout = function () {
-				 console.error('Time out!!!');										
-			}			 
-		} else {			
-			return JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_LIST_URL));			
-		}		 
+//		if(localStorage.getItem(Constants.LOCALSTORAGE_LIST_URL) == null){				
+//			var xhr = new XMLHttpRequest();		
+//			xhr.onreadystatechange = function () {		       
+//				  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
+//					  if(this.status === Constants.STATUS_OK){									  
+//						     var items = Json.parse(this.responseText);						
+//							 localStorage.setItem(Constants.LOCALSTORAGE_LIST_URL,JSON.stringify(items));							 
+//							 return items;					
+//					   } 					  
+//				  }		  
+//			}
+//			xhr.open('GET','/personUrls');
+//			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded;charset=UTF-8');
+//			xhr.send();
+//			xhr.timeout = Constants.TIME_OUT;
+//			 xhr.ontimeout = function () {
+//				 console.error('Time out!!!');										
+//			}			 
+//		} else {			
+//			return JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_LIST_URL));			
+//		}		 
 	}
 	
 	/**

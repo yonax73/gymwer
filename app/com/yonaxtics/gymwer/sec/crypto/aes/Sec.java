@@ -9,10 +9,21 @@ import play.Logger;
  */
 public class Sec extends Aes {	
 	
+//	public static String dec(String cipher) {
+//		if (cipher != null && !cipher.isEmpty()) {
+//			try {
+//				return decrypt(prepareDec(cipher));
+//			} catch (Exception e) {
+//				Logger.error(e.getMessage());
+//			}
+//		}
+//		return cipher;
+//	}
+	
 	public static String dec(String cipher) {
 		if (cipher != null && !cipher.isEmpty()) {
 			try {
-				return decrypt(prepareDec(cipher));
+				return decrypt(cipher);
 			} catch (Exception e) {
 				Logger.error(e.getMessage());
 			}
@@ -31,9 +42,9 @@ public class Sec extends Aes {
 		return value;
 	}
 	
-	private  static String prepareDec(String value){		
-		return value.replace('?', '=').replace(' ', '+');
-	}
+//	private  static String prepareDec(String value){		
+//		return value.replace('?', '=').replace(' ', '+');
+//	}
 	
 	
 }

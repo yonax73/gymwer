@@ -71,9 +71,9 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
  * REGION READY
  * ===================================================================================================================
  */	
-	if(Play.ready()){		
+	
 		init();		
-	}	
+
 /* ==================================================================================================================
  * REGION LOAD
  * ===================================================================================================================
@@ -83,9 +83,9 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 		xhr.onreadystatechange = function () {		       
 			  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
 				  if(this.status === Constants.STATUS_OK){									  
-					  User = Json.parse(this.responseText);
-					  localStorage.setItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE,JSON.stringify(User));
-					  fill(User);						
+//					  User = Json.parse(this.responseText);
+//					  localStorage.setItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE,JSON.stringify(User));
+//					  fill(User);						
 				   } 					  
 			  }		  
 		}
@@ -184,23 +184,49 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 			 e.preventDefault();
 			 if(FormOk.hasChanged()){
 				 if(frmUserOk.isValid()){				    						
+//						var xhr = new XMLHttpRequest();		
+//						xhr.onreadystatechange = function () {	
+//							  notify.wait('Loading...');	
+//							  btnSave.disabled = true;
+//							  if (this.readyState === Constants.READYSTATE_COMPLETE) {								  			
+//								  btnSave.disabled = false;
+//								  if(this.status === Constants.STATUS_OK  && this.responseText === Constants.SUCCESS_REQUEST){									  
+//									  localStorage.removeItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE);
+//									  notify.success('Your User has been saved successfully!');								  
+//								   }else{
+//									   notify.danger(this.responseText); 
+//								   } 					  
+//							  }		  
+//						}
+//						xhr.open('POST','/saveUser');
+//						xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
+//						xhr.send(Play.serialize(e.target));		
+//						xhr.timeout = Constants.TIME_OUT;
+//						xhr.ontimeout = function () {
+//							 notify.danger('Time out!!!');
+//							 btnSave.disabled = false;
+//						}					 
+//				 }	
 						var xhr = new XMLHttpRequest();		
 						xhr.onreadystatechange = function () {	
 							  notify.wait('Loading...');	
 							  btnSave.disabled = true;
 							  if (this.readyState === Constants.READYSTATE_COMPLETE) {								  			
 								  btnSave.disabled = false;
-								  if(this.status === Constants.STATUS_OK  && this.responseText === Constants.SUCCESS_REQUEST){									  
-									  localStorage.removeItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE);
-									  notify.success('Your User has been saved successfully!');								  
-								   }else{
-									   notify.danger(this.responseText); 
-								   } 					  
+//								  if(this.status === Constants.STATUS_OK  && this.responseText === Constants.SUCCESS_REQUEST){									  
+									  //localStorage.removeItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE);
+									  console.log(this.responseText);
+									//  notify.success('Your User has been saved successfully!');								  
+//								   }else{
+//									   notify.danger(this.responseText); 
+//								   } 					  
 							  }		  
 						}
 						xhr.open('POST','/saveUser');
-						xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-						xhr.send(Play.serialize(e.target));		
+						xhr.setRequestHeader("Content-Type","text/plain");
+						var data = {name:'prueba',id:1};
+						console.log(data);
+						xhr.send(Play.enc(JSON.stringify(data)).toString());		
 						xhr.timeout = Constants.TIME_OUT;
 						xhr.ontimeout = function () {
 							 notify.danger('Time out!!!');

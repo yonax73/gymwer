@@ -7,7 +7,7 @@ import java.util.List;
 import play.cache.Cache;
 
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
-import com.yonaxtics.gymwer.set.permission.entity.Permission;
+import com.yonaxtics.gymwer.sec.permission.entity.Permission;
 import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.util.Utils;
 

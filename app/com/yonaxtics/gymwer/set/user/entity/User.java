@@ -5,9 +5,7 @@ import play.Logger;
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 import com.yonaxtics.gymwer.dpa.role.entity.Role;
 import com.yonaxtics.gymwer.sec.login.entity.Login;
-import com.yonaxtics.gymwer.sec.navegation.Navigation;
 import com.yonaxtics.gymwer.set.action.entity.Action;
-import com.yonaxtics.gymwer.set.permission.entity.Permission;
 import com.yonaxtics.gymwer.set.person.entity.Person;
 import com.yonaxtics.gymwer.util.base.entity.Entity;
 
@@ -25,10 +23,14 @@ public class User extends Person {
 	
 	private Role role;
 	private Action defaultAction;	
-	private Navigation navigation;
+	
 	
 	public User(int id) {		
 		super(id);		
+	}
+	
+	public User() {		
+		super(0);		
 	}
 
 	public User(int id,String name) {          
@@ -54,14 +56,11 @@ public class User extends Person {
 		this.login = login;
 		this.gym = gym;
 	}
-	
-	public String getSerialToPermissionList(){
-		return new String(Permission.class.getName().concat(":").concat(login.getEmail()));
-	}
+
 	
 	@Override
 	public String getSerial(){
-		return new String(this.getClass().getName().concat(":").concat(login.getEmail()));
+		return new String(this.getClass().getName().concat(":").concat(String.valueOf(id)));
 	}
 	
 	@Override
@@ -82,22 +81,7 @@ public class User extends Person {
 	}
     
 	
-	public void createNavigation() {		
-		navigation = new Navigation();		
-		role.getPermissions().stream().parallel().forEach(permission-> {
-			Action action = permission.getAction();
-			if(action.getActionType().isToNavigation()){
-				if(action.getId()==Action.LOAD_USER){
-					action.setDescription(name);
-				}
-				if(action.getId() == Action.LOAD_GYM){
-					action.setDescription(gym.getName());
-				}
-				navigation.add(action);
-			}
-		});
-		
-	}
+
     
     /**
      * Create object copy, with an exception in the object Login.
@@ -116,7 +100,7 @@ public class User extends Person {
 		this.name = user.name;
 		this.picture = user.picture;
 		this.role = user.role;	
-		this.navigation = user.navigation;
+		
 	}
 
 
@@ -142,13 +126,7 @@ public class User extends Person {
 		this.defaultAction = defaultAction;
 	}
 
-	public Navigation getNavigation() {
-		return navigation;
-	}
 
-	public void setNavigation(Navigation navigation) {
-		this.navigation = navigation;
-	}
 
 
 

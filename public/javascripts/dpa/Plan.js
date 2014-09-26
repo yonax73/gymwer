@@ -131,10 +131,10 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','List','Select','Tab'],functi
  */	
 	
 	  function init(){
+		  Nav.init();
 		  navegationTabs();
 		  loadList();
-		  load();
-		  Nav.init();
+		  load();		 
 		  filters();		
 	}
 	

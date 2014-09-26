@@ -1,4 +1,4 @@
-package com.yonaxtics.gymwer.set.permission.controller;
+package com.yonaxtics.gymwer.sec.permission.controller;
 
 
 
@@ -7,7 +7,7 @@ import play.libs.Json;
 import play.mvc.Result;
 
 import com.yonaxtics.gymwer.sec.SecuredController;
-import com.yonaxtics.gymwer.set.permission.logic.PermissionLogic;
+import com.yonaxtics.gymwer.sec.permission.logic.PermissionLogic;
 import com.yonaxtics.gymwer.set.user.entity.User;
 
 /** 
@@ -22,8 +22,9 @@ public class PermissionControl extends SecuredController {
 	
 	public static Result loadNav(){		
 		User user = user_loggedIn();
-    	if(user!=null && PermissionLogic.load(user)){    	    
-    		return authenticated(enc(Json.toJson(user).toString()));
+    	if(user!=null && PermissionLogic.load(user)){ 
+    		user.getSerial();
+    		return authenticated(enc(Json.toJson(user.getRole().getPermissionsLoad()).toString()));
     	}		
     	return ok("Internal Error 4001");		
 	}

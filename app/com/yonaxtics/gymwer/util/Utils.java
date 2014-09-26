@@ -10,7 +10,11 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.HashMap;
+
+import org.apache.commons.lang3.StringUtils;
 
 import play.Logger;
 
@@ -78,5 +82,15 @@ public class Utils {
 			Logger.error(e.getMessage());
 		}
 		return hostAddress;
+	}
+	public static HashMap<String, String> deserializeJson(String json){		
+		json =  StringUtils.replace(json, "{","");
+		json =  StringUtils.replace(json, "}","");		
+		HashMap<String, String> data = new HashMap<String, String>();		
+		Arrays.asList(json.split("\",\"")).stream().parallel().forEach(value->{
+			String node[] = StringUtils.replace(value, "\"","").split(":");				
+			data.put(node[0], node[1]);
+		});				
+		return data;
 	}
 }

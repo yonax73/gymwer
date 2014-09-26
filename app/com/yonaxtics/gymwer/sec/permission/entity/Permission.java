@@ -1,4 +1,4 @@
-package com.yonaxtics.gymwer.set.permission.entity;
+package com.yonaxtics.gymwer.sec.permission.entity;
 
 import com.yonaxtics.gymwer.util.base.entity.Entity;
 import com.yonaxtics.gymwer.set.action.entity.*;

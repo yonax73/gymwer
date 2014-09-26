@@ -88,39 +88,37 @@ requirejs(['Aes','Constants','Play','FormOk','Notify'],function(Aes,Constants, P
 	 function formLoginAction(){	
 		frmLogin.onsubmit = function(e) {			
 			e.preventDefault();		
-			if(form.isValid()){	
-				 var xhr = new XMLHttpRequest();									 
-				 xhr.onreadystatechange = function () {
-					 notify.wait('Loading...');										 
-					 btnLogin.disabled = true;									        
-					  if (this.readyState === Constants.READYSTATE_COMPLETE) {											  											  											  
-						  if(this.status === Constants.STATUS_OK){												  	
-							  localStorage.clear();		
-							  sessionStorage.clear();
-							  btnLogin.disabled = false;
-							  if(Constants.BAD_REQUEST === this.responseText){	
-								  notify.danger('The name, password or user are incorrect!!!');
-							  }else {
-								  sessionStorage.setItem(Constants.SESSIONSTORAGE_OK,Constants.OK);
-								  window.location = this.responseText;																		  
-							  }												  
-						  }else {
-							    notify.danger(this.responseText);
-								btnLogin.disabled = false;											  
-						  }
-					  }
-				 }
-				 xhr.open('POST','/signIn');
-				 xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-				 xhr.send(Play.serialize(e.target));	
-				 xhr.timeout = Constants.TIME_OUT;
-				 xhr.ontimeout = function () {
-					notify.danger('Timed Out!!!');
-					btnLogin.disabled = false;										
-				}
+			if(form.isValid()){
+				 Play.loadRequest(e.target,function(xhr) {
+							notify.wait('Loading...');
+							btnLogin.disabled = true;	
+							if (xhr.readyState === Constants.READYSTATE_COMPLETE) {
+								if (xhr.status === Constants.STATUS_OK) {
+									localStorage.clear();
+									sessionStorage.clear();
+									btnLogin.disabled = false;
+									if (Constants.BAD_REQUEST === xhr.responseText) {
+										notify.danger('The name, password or user are incorrect!!!');
+									} else {
+										//sessionStorage.setItem(Constants.SESSIONSTORAGE_OK,Constants.OK);
+										window.location = this.responseText;
+									}
+								} else {
+									notify.danger(this.responseText);
+									btnLogin.disabled = false;
+								}
+							}
+						}, function() {
+							notify.danger('Timed Out!!!');
+							btnLogin.disabled = false;
+	           });
 			}
 		}
-	}	
+	}
+	 
+	 
+	 
+	 
 });
 
 

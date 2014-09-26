@@ -14,10 +14,35 @@ import com.yonaxtics.gymwer.util.base.entity.Entity;
  */
 
 @SuppressWarnings("serial")
-public class Action extends Entity {
-
-	public final static int LOAD_USER = 25;
-    public final static int LOAD_GYM = 26;       
+public class Action extends Entity {	
+    
+    public final static int CREATE_CLIENT = 1; 
+    public final static int UPDATE_CLIENT = 2; 
+    public final static int DELETE_CLIENT = 3; 
+    public final static int CREATE_PLANS = 4; 
+    public final static int UPDATE_PLANS = 5; 
+    public final static int DELETE_PLANS = 6; 
+    public final static int ACTIVE_INACTIVE_CLIENT = 7; 
+    public final static int ACTIVE_INACTIVE_PLAN = 8; 
+    public final static int CREATE_USER = 9; 
+    public final static int UPDATE_USER = 10; 
+    public final static int ACTIVE_INACTIVE_USER = 11; 
+    public final static int DELETE_USER = 12; 
+    public final static int CREATE_ROLE = 13; 
+    public final static int UPDATE_ROLE = 14; 
+    public final static int ACTIVE_INACTIVE_ROLE = 15; 
+    public final static int DELETE_ROLE = 16; 
+    public final static int LOAD_CLIENTS = 17; 
+    public final static int LOAD_DASHBOARD = 18; 
+    public final static int LOAD_PLANS = 19; 
+    public final static int SHOW_RESOURCES = 20; 
+    public final static int LOAD_USERS = 21; 
+    public final static int LOAD_ROLES = 22; 
+    public final static int LOAD_MESSAGES = 23;
+    public final static int LOAD_SETTINGS = 24;
+    public final static int LOAD_USER = 25;
+    public final static int LOAD_GYM = 26;
+    
 	
 	private String description;
 	private String url;

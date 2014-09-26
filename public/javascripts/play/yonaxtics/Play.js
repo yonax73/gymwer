@@ -176,28 +176,7 @@
 	Play.encd = function(name,value){		
 			
 		return name+'='+(''+Play.enc(value)).replace(/=/g,'?');
-	}
-	
-	
-	
-//	Play.ready = function(){
-//		
-//		var result = false;
-//		
-//		if(sessionStorage.getItem(Constants.SESSIONSTORAGE_OK) === null){			
-//			
-//			window.location = '/signOut';
-//		
-//		} else if(sessionStorage.getItem(Constants.SESSIONSTORAGE_OK) == Constants.OK){
-//			
-//			result = true
-//		}
-//		
-//		return result;
-//			 
-//	}
-	
-	
+	}	
 	
 	Play.getHeightPx = function(){
 		
@@ -207,29 +186,10 @@
 		return  (Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight) +'px');
 	}
 	
-	Play.base64Blob = function(mime,src){
-		
+	Play.base64Blob = function(mime,src){		
 		return 'data:'+mime+';base64,'+ src;
 	}
-	//quit
-    Play.appendInputHidden = function(data,form){    	
-    	var inputs = new Array();
-    	for (var i = 0; i < data.length; i++) {			
-			var input =  document.createElement('input');
-			input.type = 'hidden';
-			input.value =  data[i].value;
-			input.name = data[i].name;
-			inputs.push(input);			
-			form.appendChild(input);
-		}
-    	return inputs;
-    }
-    //quit
-    Play.removeInputHidden = function(inputs){    	
-    	for (var i = 0; i < inputs.length; i++) {			
-    		inputs[i].parentNode.removeChild(inputs[i]);
-		}
-    }
+
     
     Play.printForm = function(form){
     	var elems = form.elements;
@@ -253,6 +213,60 @@
 			}else{
 				pnlFilter.classList.add('hidden');
 			}
+		}
+    }
+    
+    Play.serializeToJson = function(form){
+    	var elems = form.elements;	
+		var data = {};
+		var i=0;		
+		var len = elems.length;				
+		for (i = 0; i < len; i ++) {
+			var element = elems[i];
+			var type = element.type;			
+			var value = element.value;
+			var name = element.name;			
+			if(name !== null && name !== undefined && name !== ""){
+				switch (type) {
+				case 'text':
+				case 'radio':
+				case 'checkbox':					            
+	    	    case 'search':
+	    	    case 'email':
+	    	    case 'url':
+	    	    case 'tel':
+	    	    case 'number':
+	    	    case 'range':
+	    	    case 'date':
+	    	    case 'month':
+	    	    case 'week':
+	    	    case 'time':
+	    	    case 'datetime':
+	    	    case 'datetime-local':
+	    	    case 'color':
+	    	    case 'textarea':
+	    	    case 'password':
+	    	    case 'select':   
+				case 'hidden':					
+					data[name] = value;
+					break;				
+				}
+			}
+		}
+		return data;
+    } 
+    
+    Play.loadRequest = function(form,onReady,onTimeout){
+		 var xhr = new XMLHttpRequest();								 
+		 xhr.onreadystatechange = function () {
+                 onReady(this);
+		 }
+		 xhr.open(form.method,form.action);
+		 xhr.setRequestHeader("Content-Type","text/plain");		 		 
+		 xhr.send(Play.enc(JSON.stringify(Play.serializeToJson(form))).toString());	
+		 xhr.timeout = Constants.TIME_OUT;
+		 xhr.ontimeout = function () {
+              onTimeOut();										
 		}
     }
 	

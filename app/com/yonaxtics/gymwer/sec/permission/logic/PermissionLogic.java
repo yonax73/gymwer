@@ -1,7 +1,8 @@
-package com.yonaxtics.gymwer.set.permission.logic;
+package com.yonaxtics.gymwer.sec.permission.logic;
 
 
-import com.yonaxtics.gymwer.set.permission.dao.PermissionDao;
+import com.yonaxtics.gymwer.sec.Persitence;
+import com.yonaxtics.gymwer.sec.permission.dao.PermissionDao;
 import com.yonaxtics.gymwer.set.user.entity.User;
 
 /** 
@@ -19,11 +20,15 @@ public class PermissionLogic {
 	 */
 	public static boolean load(User user) {		
 		boolean result = false;
-		if(user != null && user.exists()){		  	
-		  result = 	PermissionDao.load(user);		  
+		if(user != null && user.exists()){			
+		  result = Persitence.find(user);
+		  if(result){
+			  result = user.getRole().isPermissonsReady();
+		  }else{
+			  result = 	PermissionDao.load(user);  
+		  }		  		  
 		  if(result){		 			  
-			  user.getRole().addChildrenToParentsModules();		
-			  user.createNavigation();
+			  user.getRole().addChildrenToParentsModules();			 
 		  }		  
 		}
 		return result;		

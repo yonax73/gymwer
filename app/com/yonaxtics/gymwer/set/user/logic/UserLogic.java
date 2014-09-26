@@ -1,6 +1,7 @@
 package com.yonaxtics.gymwer.set.user.logic;
 
 import com.yonaxtics.gymwer.sec.Persitence;
+import com.yonaxtics.gymwer.sec.permission.dao.PermissionDao;
 import com.yonaxtics.gymwer.set.user.dao.UserDao;
 import com.yonaxtics.gymwer.set.user.entity.User;
 /**
@@ -62,6 +63,7 @@ public  class   UserLogic  {
 			result = Persitence.find(user);
 			if(!result){
 				result = UserDao.loadByLogin(user);
+				result = PermissionDao.load(user);
 				if(result){
 					Persitence.setObject(user.getSerial(), user);	
 				}				

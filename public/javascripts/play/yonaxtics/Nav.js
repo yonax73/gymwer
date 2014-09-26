@@ -32,12 +32,8 @@
 define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {	
 	function Nav(){}	
 	
-	Nav.init = function(){		
-		if(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_NAV) === null){			
-			 Nav.load();			 
-		} else {						  
-			  Nav.create(JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_NAV)));		
-		}		
+	Nav.init = function(){				
+	   Nav.load();			
 	}	
 	
 	/**
@@ -99,8 +95,7 @@ define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
 		xhr.onreadystatechange = function () {		       
 			  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
 				  if(this.status === Constants.STATUS_OK){									  
-					  var contact = Json.parse(this.responseText);
-					  localStorage.setItem(Constants.LOCALSTORAGE_REQUEST_LOAD_NAV,JSON.stringify(contact));
+					  var contact = Json.parse(this.responseText);					
 					  Nav.create(contact);					   					  
 				  }else {					  
 		               window.location = '/signOut';									  
@@ -112,10 +107,7 @@ define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
 		xhr.send();				
    }   
    
-   Nav.create = function(contact){	   
-	      var gym = contact.gym;
-		  var user = contact.user;
-		  var permissions = user.role.permissions;
+   Nav.create = function(permissions){
 		  var n = permissions.length;
 		  var i = 0;
 		  var action = Play.getId('actions');			  
