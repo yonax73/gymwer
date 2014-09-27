@@ -26,30 +26,32 @@ public class ListDao extends Dao {
 	 * @param urls
 	 * @return
 	 */
-	public static boolean loadPersonUrls(ListItem urls) {
-		
-		boolean result = false;		
+	public static boolean loadActionsByUser(ListItem urls,int typeAction) {
+
+		boolean result = false;
 		CallableStatement cst = null;
-		ResultSet rs  = null;
-		Connection conn = null;		
-		try {			
+		ResultSet rs = null;
+		Connection conn = null;
+		try {
 			conn = DB.getConnection();
-			String sql = "CALL sp_set_actions_LIST_URLS_BY_PERSON(?)";
+			String sql = "CALL sp_set_actions_LIST_ACTIONS_BY_USER(?,?)";
 			cst = conn.prepareCall(sql);
-			cst.setInt(1, urls.getEntity().getId());			
-			rs  = cst.executeQuery();				
-			if(rs.next()){				  	      
-			      do{			    	  
-			    	 urls.add(new Item(rs.getInt(1), rs.getString(2)));			    	  
-			      }while(rs.next());				
-			}			
-			result =  urls.size() > 0;			
-		} catch (Exception e) {			
-			Logger.error(e.getMessage());			
-		} finally{			
-			if(cst != null) cst = null;
+			cst.setInt(1, urls.getEntity().getId());
+			cst.setInt(2, typeAction);
+			rs = cst.executeQuery();
+			if (rs.next()) {
+				do {
+					urls.add(new Item(rs.getInt(1), rs.getString(2)));
+				} while (rs.next());
+			}
+			result = urls.size() > 0;
+		} catch (Exception e) {
+			Logger.error(e.getMessage());
+		} finally {
+			if (cst != null)
+				cst = null;
 			close(conn);
-		}		
+		}
 		return result;
 	}
 

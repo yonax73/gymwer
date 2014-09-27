@@ -26,6 +26,6 @@ public class PermissionControl extends SecuredController {
     		user.getSerial();
     		return authenticated(enc(Json.toJson(user.getRole().getPermissionsLoad()).toString()));
     	}		
-    	return ok("Internal Error 4001");		
+    	return ok("Error trying load the navegation!");		
 	}
 }

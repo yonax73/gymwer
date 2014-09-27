@@ -28,23 +28,27 @@ public class GymControl extends SecuredController {
 			return authenticated(gym.render());			
 	}	
 	
-	public static Result load(){				
+	public static Result load() {
 		User user = user_loggedIn();
 		if (user != null) {
-           if(user.getRole().isAuthorizedToLoadGym()){
-   			Gym gym = user.getGym();
-   			if (GymLogic.load(gym)) {
-   				Context.current().session().put(Gym.KEY, enc(gym.getSerial()));
-   				return ok(enc(Json.toJson(gym).toString()));
-   			} else {
-   				return ok("Error trying Load Gym!");
-   			}
-           }else{
-        	   return ok("You do not have permission to view gym information!");
-           }
+			boolean hasPermission = user.getRole().isSuperAdmin();
+			if (!hasPermission) {
+				hasPermission = user.getRole().isAuthorizedToLoadGym();
+			}
+			if (hasPermission) {
+				Gym gym = user.getGym();
+				if (GymLogic.load(gym)) {
+					Context.current().session().put(Gym.KEY, enc(gym.getSerial()));
+					return ok(enc(Json.toJson(gym).toString()));
+				} else {
+					return ok("Error trying Load Gym!");
+				}
+			} else {
+				return ok("You do not have permission to view gym information!");
+			}
 		} else {
 			return sign_out();
-		}	
+		}
 	}
 	
 	public static Result save() {

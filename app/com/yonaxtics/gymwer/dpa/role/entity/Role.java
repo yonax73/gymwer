@@ -73,6 +73,10 @@ public class Role extends MasterValue {
 		}      
 	}
 	
+	public boolean isSuperAdmin(){
+		return id == Role.SUPER_ADMIN;
+	}
+	
 	public boolean isAuthorizedToLoadPlans() {
 		boolean result = false;
 		int n = permissionsLoad.size();

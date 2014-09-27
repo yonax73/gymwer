@@ -78,7 +78,6 @@ requirejs([ 'Aes', 'Constants', 'Play', 'Notify', 'FormOk' ],
 					});
 				}
 			}
-
-		});
+});
 
 

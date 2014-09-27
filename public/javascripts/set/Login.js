@@ -97,14 +97,13 @@ requirejs(['Aes','Constants','Play','FormOk','Notify'],function(Aes,Constants, P
 									localStorage.clear();
 									sessionStorage.clear();
 									btnLogin.disabled = false;
-									if (Constants.BAD_REQUEST === xhr.responseText) {
+									if (Constants.UNSUCCESSFULLY_REQUEST === xhr.responseText) {
 										notify.danger('The name, password or user are incorrect!!!');
-									} else {
-										//sessionStorage.setItem(Constants.SESSIONSTORAGE_OK,Constants.OK);
-										window.location = this.responseText;
+									} else {																			
+										window.location = xhr.responseText;
 									}
 								} else {
-									notify.danger(this.responseText);
+									notify.danger(xhr.responseText);
 									btnLogin.disabled = false;
 								}
 							}

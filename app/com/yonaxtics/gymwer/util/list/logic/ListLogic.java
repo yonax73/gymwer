@@ -18,10 +18,10 @@ public class ListLogic {
 	 * @param urls
 	 * @return
 	 */
-	public static boolean loadPersonUrls(ListItem urls) {
+	public static boolean loadActionsByUser(ListItem urls,int actionType) {
 		boolean result = false;		
 		if(urls != null &&   urls.getEntity() != null && urls.getEntity().exists()){
-			result = ListDao.loadPersonUrls(urls);
+			result = ListDao.loadActionsByUser(urls,actionType);
 		}
 		return result;
 	}

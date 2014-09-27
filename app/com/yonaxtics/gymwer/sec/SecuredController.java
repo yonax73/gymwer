@@ -37,8 +37,8 @@ public class SecuredController extends Controller{
 	/**
 	 * STATES REQUEST
 	 */
-	protected final static String SUCCESS_REQUEST = "success_Request";
-	protected final static String BAD_REQUEST = "bad_Request";
+	protected final static String SUCCESS_REQUEST = "success_request";
+	protected final static String UNSUCCESSFULLY_REQUEST = "unsuccessfully_request";
 	/**
 	 * TIMES IN MINUTES
 	 */

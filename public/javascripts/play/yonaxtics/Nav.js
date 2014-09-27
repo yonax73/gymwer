@@ -111,12 +111,12 @@ define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
 		  var n = permissions.length;
 		  var i = 0;
 		  var action = Play.getId('actions');			  
-		  if(n > 0){			  
+		  if(n > 0){			   
 			  var act = permissions[i++].action;
 			  action.appendChild(Nav.item(act.ico,act.module.description,act.url));			  
 			  do{				  
 				  act = permissions[i++].action;							  
-				  if(act.module.rolId === Constants.MASTER_VALUE_MODULE_PARENT){						  
+				  if(act.module.moduleType.parent){						  
 					  action.appendChild(Nav.itemParent(act));											  
 				  }else {													  
 					  action.appendChild(Nav.item(act.ico,act.module.description,act.url));					  
@@ -149,7 +149,7 @@ define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
 		  return li	   
    }  
    
-   Nav.itemParent =  function(action){	   
+   Nav.itemParent =  function(action){	  
 	  var li  = document.createElement('li');
 	  var a = document.createElement('a');	  
 	  var ul =  document.createElement('ul');

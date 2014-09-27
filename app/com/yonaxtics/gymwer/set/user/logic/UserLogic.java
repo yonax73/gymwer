@@ -62,8 +62,8 @@ public  class   UserLogic  {
 		if(user != null && user.getLogin()!= null && user.getLogin().exists() && !user.getGym().isEmpty()){
 			result = Persitence.find(user);
 			if(!result){
-				result = UserDao.loadByLogin(user);
-				result = PermissionDao.load(user);
+				result = UserDao.loadByLogin(user);				
+				result = PermissionDao.load(user);								
 				if(result){
 					Persitence.setObject(user.getSerial(), user);	
 				}				

@@ -2,11 +2,11 @@ package com.yonaxtics.gymwer.util.list.controller;
 
 import static com.yonaxtics.gymwer.sec.crypto.aes.Sec.enc;
 import play.libs.Json;
-import play.mvc.Controller;
 import play.mvc.Result;
 
 import com.yonaxtics.gymwer.sec.SecuredController;
-import com.yonaxtics.gymwer.sec.login.entity.Login;
+import com.yonaxtics.gymwer.set.master.entity.ActionType;
+import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.util.base.entity.Entity;
 import com.yonaxtics.gymwer.util.list.entity.ListItem;
 import com.yonaxtics.gymwer.util.list.entity.item.Item;
@@ -21,15 +21,21 @@ import com.yonaxtics.gymwer.util.list.logic.ListLogic;
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
 
-public class ListControl extends Controller {
+public class ListControl extends SecuredController {
 
 	
-	public static Result personUrls(){		
-//		ListItem urls = new ListItem(null,null);
-//		if(ListLogic.loadPersonUrls(urls)){			
-//			return ok(enc(Json.toJson(urls.getItems()).toString()));
-//		}		
-		return ok("Internal Error 6001");
+	public static Result actionsLoad(){	
+		User user = user_loggedIn();
+		if(user!=null){
+			ListItem actions = new ListItem();
+			if(ListLogic.loadActionsByUser(actions,ActionType.LOAD)){			
+				return ok(enc(Json.toJson(actions.getItems()).toString()));
+			}		
+			return ok("Error trying load list actions load");			
+		}else{
+			return sign_out();
+		}
+
 	}	
 	
 	public static Result entityStates(){

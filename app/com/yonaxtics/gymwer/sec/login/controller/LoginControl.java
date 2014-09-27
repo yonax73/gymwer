@@ -114,7 +114,7 @@ public class LoginControl extends SecuredController {
 				return badRequest("Error tryning load user!");
 			}
 		} else {
-			return ok(BAD_REQUEST);
+			return ok(UNSUCCESSFULLY_REQUEST);
 		}		
 	}
 }
