@@ -42,8 +42,10 @@ public class Action extends Entity {
     public final static int LOAD_SETTINGS = 24;
     public final static int LOAD_USER = 25;
     public final static int LOAD_GYM = 26;
+    public static final int UPDATE_GYM = 27;
     
     public final static String ACTIONS_LOAD_LIST_KEY = "ACTIONS_LOAD_LIST_KEY";
+	
 	
 	private String description;
 	private String url;

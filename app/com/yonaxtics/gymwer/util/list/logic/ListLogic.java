@@ -1,6 +1,10 @@
 package com.yonaxtics.gymwer.util.list.logic;
 
+import static com.yonaxtics.gymwer.sec.crypto.aes.Sec.enc;
+import play.mvc.Http.Context;
+
 import com.yonaxtics.gymwer.sec.Persitence;
+import com.yonaxtics.gymwer.set.action.entity.Action;
 import com.yonaxtics.gymwer.util.list.dao.ListDao;
 import com.yonaxtics.gymwer.util.list.entity.ListItem;
 
@@ -25,10 +29,9 @@ public class ListLogic {
 			result = Persitence.find(actions);
 			if(!result){
 				result = ListDao.loadActionsByUser(actions,actionType);
-				if(result){
-					String serial = actions.getSerial();
-					serial.toLowerCase();
+				if(result){					
 					Persitence.setObject(actions.getSerial(), actions);
+					Context.current().session().put(Action.ACTIONS_LOAD_LIST_KEY, enc(actions.getSerial()));					
 				}
 			}			
 		}

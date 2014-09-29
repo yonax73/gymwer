@@ -24,7 +24,7 @@ public abstract class Person  extends Entity {
 	protected String lastName;	
 	protected Location location;
 	protected transient Login login;
-	protected Gym gym;
+	protected transient Gym gym;
 	protected Picture picture;
 	
 	public Person(int id) {		

@@ -21,7 +21,7 @@ public class User extends Person {
 	
 	public static final String KEY = "USER_KEY";
 	
-	private Role role;
+	private transient Role role;
 	private Action defaultAction;	
 	
 	

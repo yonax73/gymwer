@@ -1,42 +1,43 @@
 package com.yonaxtics.gymwer.sec.permission.logic;
 
-
 import com.yonaxtics.gymwer.dpa.role.entity.Role;
 import com.yonaxtics.gymwer.sec.Persitence;
 import com.yonaxtics.gymwer.sec.permission.dao.PermissionDao;
-import com.yonaxtics.gymwer.set.user.entity.User;
+import com.yonaxtics.gymwer.set.master.entity.ActionType;
 
-/** 
- * Class     : PermissionLogic.java.java<br/>
+/**
+ * Class : PermissionLogic.java.java<br/>
  * Copyright : (c) 2014<br/>
- * Company   : yonaxtics<br/>
- * date      : Aug 15, 2014<br/> 
- * User      : YQ<br/> 
+ * Company : yonaxtics<br/>
+ * date : Aug 15, 2014<br/>
+ * User : YQ<br/>
+ * 
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
 
 public class PermissionLogic {
-	
+
 	/**
 	 * @param contact
 	 */
-	public static boolean load(User user) {
+	public static boolean load(Role role) {
 		boolean result = false;
-		if (user != null && user.exists()) {
-			Role role = user.getRole();
-			if (role != null) {
-				result = Persitence.find(role);
-				if (!result) {
-					result = PermissionDao.load(user);
+		if (role.exists()) {
+			result = Persitence.find(role);
+			if (!result) {
+				if (role.isSuperAdmin()) {
+					result = PermissionDao.load(role, ActionType.LOAD);
+				} else {
+					result = PermissionDao.load(role);
 				}
-				if (result) {
-					role.addChildrenToParentsModules();
-				}
+				Persitence.setObject(role.getSerial(), role);
+			}
+			if (result) {
+				role.addChildrenToParentsModules();
 			}
 		}
+
 		return result;
 	}
-	
-
 
 }

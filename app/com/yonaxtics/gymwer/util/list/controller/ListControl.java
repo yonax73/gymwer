@@ -2,11 +2,9 @@ package com.yonaxtics.gymwer.util.list.controller;
 
 import static com.yonaxtics.gymwer.sec.crypto.aes.Sec.enc;
 import play.libs.Json;
-import play.mvc.Http.Context;
 import play.mvc.Result;
 
 import com.yonaxtics.gymwer.sec.SecuredController;
-import com.yonaxtics.gymwer.set.action.entity.Action;
 import com.yonaxtics.gymwer.set.master.entity.ActionType;
 import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.util.base.entity.Entity;
@@ -31,8 +29,7 @@ public class ListControl extends SecuredController {
 		User user = user_loggedIn();
 		if(user!=null){
 			ListItem actions = new ListItem(user);
-			if(ListLogic.loadActionsByUser(actions,ActionType.LOAD)){	
-				Context.current().session().put(Action.ACTIONS_LOAD_LIST_KEY, enc(actions.getSerial()));
+			if(ListLogic.loadActionsByUser(actions,ActionType.LOAD)){				
 				return ok(enc(Json.toJson(actions.getItems()).toString()));
 			}		
 			return ok("Error trying load list actions load");			

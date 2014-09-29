@@ -57,9 +57,9 @@ public class Role extends MasterValue {
 
 	public void addChildrenToParentsModules(){			
 		try{	
-			  List<Action> actParents = getPermissionsLoad().stream().map(Permission::getAction).filter(act->act.getModule().getModuleType().isParent()).collect(Collectors.toList()); 	  
+			  List<Action> actParents = permissionsLoad.stream().map(Permission::getAction).filter(act->act.getModule().getModuleType().isParent()).collect(Collectors.toList()); 	  
 		      if(actParents.size() > 0){				
-				List<Action> actChildren = getPermissionsLoad().stream().map(Permission::getAction).filter(act->act.getModule().getModuleType().isChild()).collect(Collectors.toList());				
+				List<Action> actChildren = permissionsLoad.stream().map(Permission::getAction).filter(act->act.getModule().getModuleType().isChild()).collect(Collectors.toList());				
 				actChildren.stream().parallel().forEach(child -> {			
 			      actParents.stream().parallel().forEach(parent->{				
 				    if(child.getModule().getParent().equals(parent.getModule())){					
@@ -69,7 +69,7 @@ public class Role extends MasterValue {
 				  });
 				});
 			  }		    
-		      getPermissionsLoad().removeIf(p -> p.getAction().getModule().getModuleType().isChild());	
+		      permissionsLoad.removeIf(p -> p.getAction().getModule().getModuleType().isChild());	
 		}catch(Exception e){
 			Logger.error(e.getMessage());
 		}      
@@ -94,38 +94,50 @@ public class Role extends MasterValue {
 	}
 	
 	public boolean isAuthorizedToLoadPlans() {
-		boolean result = false;
+		boolean result = isSuperAdmin();
 		int n = permissionsLoad.size();
 		int i = 0;
-		do {
+		while (!result && i < n) {
 			if (Action.LOAD_PLANS == permissionsLoad.get(i++).getAction().getId()) {
 				result = true;
 			}
-		} while (!result && i < n);
+		}
 		return result;
 	}
 	
 	public boolean isAuthorizedToLoadGym() {
-		boolean result = false;
+		boolean result = isSuperAdmin();
 		int n = permissionsLoad.size();
 		int i = 0;
-		do {
+		while (!result && i < n) {
 			if (Action.LOAD_GYM == permissionsLoad.get(i++).getAction().getId()) {
 				result = true;
 			}
-		} while (!result && i < n);
+		}
 		return result;
 	}
 	
 	public boolean isAuthorizedToUpdateUser() {
-		boolean result = false;
+		boolean result = isSuperAdmin();
 		int n = permissionsUpdate.size();
 		int i = 0;
-		do {
+		while (!result && i < n) {
 			if (Action.UPDATE_USER == permissionsUpdate.get(i++).getAction().getId()) {
 				result = true;
 			}
-		} while (!result && i < n);
+		}
+		return result;
+	}
+	
+	public boolean isAuthorizedToUpdateGym() {
+		boolean result = isSuperAdmin();
+		int n = permissionsUpdate.size();
+		int i = 0;
+		while (!result && i < n) {
+			if (Action.UPDATE_GYM == permissionsUpdate.get(i++).getAction().getId()) {
+				result = true;
+			}
+		}
 		return result;
 	}
 	
@@ -135,6 +147,22 @@ public class Role extends MasterValue {
 	
 	public void setName(String name){		
 		setValue1(name);
+	}
+	
+	public String getLoginName(){
+		return value2;
+	}
+	
+	public void setLoginName(String loginName){
+		value2 = loginName;
+	}
+	
+	public String getGymName(){
+		return value3;
+	}
+	
+	public void setGymName(String gymName){
+		value3 = gymName;
 	}
 
 	public List<Permission> getPermissionsLoad() {
@@ -184,6 +212,8 @@ public class Role extends MasterValue {
 	public void setPermissonsReady(boolean permissonsReady) {
 		this.permissonsReady = permissonsReady;
 	}
+
+
 
 	
 }

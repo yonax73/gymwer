@@ -29,12 +29,12 @@ import com.yonaxtics.gymwer.set.user.entity.User;
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
 
-public class SecuredController extends Controller{
+public class SecuredController extends Controller {
 
 	/**
 	 * CLIENT WEB
-	 */	
-	protected final static String CHECKED = "on";		
+	 */
+	protected final static String CHECKED = "on";
 	/**
 	 * STATES REQUEST
 	 */
@@ -43,37 +43,37 @@ public class SecuredController extends Controller{
 	/**
 	 * TIMES IN MINUTES
 	 */
-	private static final long TIMEOUT = 3;                   //(minutes)
-	private static final long TIME_EXPIRED = 10;         //(hours - minutes)
-	
-	
-	protected static Login current_login(){		
+	private static final long TIMEOUT = 3; // (minutes)
+	private static final long TIME_EXPIRED = 10; // (hours - minutes)
+
+	protected static Login current_login() {
 		return (Login) Persitence.getObject(dec(Context.current().session().get(Login.KEY)));
 	}
-	
-	protected static User user_loggedIn(){		
-		return  (User) Persitence.getObject(dec(Context.current().session().get(User.KEY)));
+
+	protected static User user_loggedIn() {
+		return (User) Persitence.getObject(dec(Context.current().session().get(User.KEY)));
 	}
- 	
- 	protected static Gym current_gym(){
- 		return (Gym) Persitence.getObject(dec(Context.current().session().get(Gym.KEY)));
- 	}
- 	
- 	protected static Role current_role(){
- 		return (Role) Persitence.getObject(dec(Context.current().session().get(Role.KEY)));
- 	}
-	
-	protected static void session_start(User user){
+
+	protected static Gym current_gym() {
+		return (Gym) Persitence.getObject(dec(Context.current().session().get(Gym.KEY)));
+	}
+
+	protected static Role current_role() {
+		return (Role) Persitence.getObject(dec(Context.current().session().get(Role.KEY)));
+	}
+
+	protected static void session_start(User user) {
 		Session currentSession = Context.current().session();
-		Login login  = user.getLogin();		
+		Login login = user.getLogin();
 		String serialLogin = login.getSerial();
-		login.init();		
+		login.init();
 		Persitence.setObject(serialLogin, login);
 		currentSession.put(Login.KEY, enc(serialLogin));
 		currentSession.put(User.KEY, enc(user.getSerial()));
+		currentSession.put(Gym.KEY, enc(user.getGym().getSerial()));
 		currentSession.put(Role.KEY, enc(user.getRole().getSerial()));
 	}
-	
+
 	protected static Result authenticated(Html view) {
 		try {
 			if (session_expired()) {
@@ -95,7 +95,7 @@ public class SecuredController extends Controller{
 			return unauthenticated();
 		}
 	}
-	
+
 	protected static Result authenticated(String arg0) {
 		try {
 			if (session_expired()) {
@@ -117,7 +117,7 @@ public class SecuredController extends Controller{
 			return unauthenticated();
 		}
 	}
-	
+
 	protected static Result authenticatedLogin(Html view) {
 		try {
 			if (session_expired()) {
@@ -139,20 +139,19 @@ public class SecuredController extends Controller{
 		}
 	}
 
-	
-	protected static Result unauthenticated() {		
+	protected static Result unauthenticated() {
 		return unauthorized(views.html.sec.error.unauthorized.render());
 	}
-	
-	protected static Result expired() {		
+
+	protected static Result expired() {
 		return unauthorized(views.html.sec.error.expired.render());
 	}
-	
-	protected static Result timeout() {		
+
+	protected static Result timeout() {
 		return unauthorized(views.html.sec.error.timeout.render());
 	}
-	
-	protected static Result sign_out(){
+
+	protected static Result sign_out() {
 		session_destroy("Session closed by User");
 		return redirect("/login");
 	}
@@ -165,7 +164,7 @@ public class SecuredController extends Controller{
 			if (login != null) {
 				if ((Duration.between(login.getTimeout(), now).toMinutes()) > TIMEOUT) {
 					result = true;
-				}else{
+				} else {
 					login.setTimeout(now);
 					Persitence.setObject(login.getSerial(), login);
 				}
@@ -175,8 +174,8 @@ public class SecuredController extends Controller{
 		}
 		return result;
 	}
-	
-	protected static boolean session_expired(){
+
+	protected static boolean session_expired() {
 		boolean result = false;
 		try {
 			Login login = (Login) Persitence.getObject(dec(Context.current().session().get(Login.KEY)));
@@ -189,10 +188,8 @@ public class SecuredController extends Controller{
 			Logger.error(e.getMessage());
 		}
 		return result;
-	}	
-	
+	}
 
-	
 	protected static void session_destroy(String cause) {
 		try {
 			Session currentSession = Http.Context.current().session();
@@ -210,5 +207,4 @@ public class SecuredController extends Controller{
 		}
 	}
 
-	
 }

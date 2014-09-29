@@ -112,15 +112,17 @@ public class UserDao extends Dao{
 			String sql = "CALL sp_set_users_LOAD_BY_LOGIN(?,?)";
 			cst = conn.prepareCall(sql);
 			cst.setInt(1, user.getLogin().getId());
-			cst.setString(2, user.getGym().getName());
+			final String gymName = user.getGym().getName();
+			cst.setString(2, gymName);
 			rs  = cst.executeQuery();
 			if(rs.next()){
 				user.setId(rs.getInt(1));
 				user.setDocument(rs.getString(2));
 				user.setName(rs.getString(3));
-				user.setLastName(rs.getString(4));
+				user.setLastName(rs.getString(4));				
 				user.getGym().setId(rs.getInt(5));
-				user.setRole(new Role(rs.getInt(6),rs.getString(7)));
+				Role role = new Role(rs.getInt(6),rs.getString(7));
+				role.setGymName(gymName);
 				user.setDefaultAction(new Action(rs.getInt(8),rs.getString(9)));
 				user.setLocation(new Location(rs.getInt(10)));
 				if(user.getLocation().exists()){
@@ -133,7 +135,10 @@ public class UserDao extends Dao{
 				    Blob blob = rs.getBlob(17);	
 					user.getPicture().setSrc(Base64.getEncoder().encodeToString(blob.getBytes(1, (int) blob.length())));
 				}
-				user.getLogin().setName(rs.getString(18));
+				final String loginName = rs.getString(18); 
+				user.getLogin().setName(loginName);
+				role.setLoginName(loginName);
+				user.setRole(role);
 			}
 			result = user.exists();
 		    
