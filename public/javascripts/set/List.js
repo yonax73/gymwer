@@ -29,7 +29,7 @@
  * ========================================================================
  */
 
-define(['./Constants','./Json'], function(Constants,Json) {
+define(['./Constants','./Json','./Select'], function(Constants,Json,Select) {
 	
 	/**
 	 * The lists are loaded in local storage, but when this  changed is necessary reload the list again.
@@ -38,44 +38,37 @@ define(['./Constants','./Json'], function(Constants,Json) {
 	
 	
 	/**
-	 * url of page home list
+	 * Actions Load List, this list is persistent in cache server
 	 */
-	List.url = function(){			
-//		if(localStorage.getItem(Constants.LOCALSTORAGE_LIST_URL) == null){				
-//			var xhr = new XMLHttpRequest();		
-//			xhr.onreadystatechange = function () {		       
-//				  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
-//					  if(this.status === Constants.STATUS_OK){									  
-//						     var items = Json.parse(this.responseText);						
-//							 localStorage.setItem(Constants.LOCALSTORAGE_LIST_URL,JSON.stringify(items));							 
-//							 return items;					
-//					   } 					  
-//				  }		  
-//			}
-//			xhr.open('GET','/actionsLoad');
-//			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded;charset=UTF-8');
-//			xhr.send();
-//			xhr.timeout = Constants.TIME_OUT;
-//			 xhr.ontimeout = function () {
-//				 console.error('Time out!!!');										
-//			}			 
-//		} else {			
-//			return JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_LIST_URL));			
-//		}		 
-	}
+	List.actionsLoad = function(callback){	
+			var xhr = new XMLHttpRequest();		
+			xhr.onreadystatechange = function () {		       
+				  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
+					  if(this.status === Constants.STATUS_OK){					  
+						  callback(this);
+					   } 					  
+				  }		  
+			}
+			xhr.open('GET','/actionsLoad');
+			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded;charset=UTF-8');
+			xhr.send();
+			xhr.timeout = Constants.TIME_OUT;
+			 xhr.ontimeout = function () {
+				 console.error('Time out!!!');										
+			}			 
+	}	 
+	
 	
 	/**
-	 * entity States list
+	 * entity States list,this list is persistent in local storage
 	 */
-	List.entityStates = function(){			
-		if(localStorage.getItem(Constants.LOCALSTORAGE_LIST_ENTITY_STATES) == null){				
+	List.entityStates = function(callback){			
+		
 			var xhr = new XMLHttpRequest();		
 			xhr.onreadystatechange = function () {		       
 				  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
 					  if(this.status === Constants.STATUS_OK){									  
-						     var items = Json.parse(this.responseText);						
-							 localStorage.setItem(Constants.LOCALSTORAGE_LIST_ENTITY_STATES,JSON.stringify(items));							 
-							 return items;					
+						  callback(this);					
 					   } 					  
 				  }		  
 			}
@@ -86,10 +79,8 @@ define(['./Constants','./Json'], function(Constants,Json) {
 			 xhr.ontimeout = function () {
 				 console.error('Time out!!!');										
 			}			 
-		} else {			
-			return JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_LIST_ENTITY_STATES));			
-		}		 
-	}
+	} 		 
+	
 	
 	
 	

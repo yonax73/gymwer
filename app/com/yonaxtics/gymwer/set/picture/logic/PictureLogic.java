@@ -1,10 +1,7 @@
 package com.yonaxtics.gymwer.set.picture.logic;
 
-import play.mvc.Http.MultipartFormData.FilePart;
-
-import com.yonaxtics.gymwer.sec.SecuredController;
-import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.set.picture.dao.PictureDao;
+import com.yonaxtics.gymwer.set.picture.entity.Picture;
 
 /** 
  * Clase     : PictureLogic.java<br/>
@@ -19,16 +16,11 @@ public class PictureLogic {
 
 	
 	
-	  public static boolean update(FilePart file){		  
+	  public static boolean update(Picture picture){		  
 		  boolean result = false;		  
-//		  if(file != null){		
-//			  Login login = (Login) securedController.getAttribute(securedController.LOGIN);
-//			  if(login!=null){
-//				  login.getPerson().getPicture().setFile(file.getFile());			  
-//				  login.getPerson().getPicture().setMime(file.getContentType());			  			  
-//				  result =  PictureDao.update(login.getPerson().getPicture());	
-//			  }		  
-//		  }		  
+		  if(picture != null){				  			  
+				  result =  PictureDao.update(picture);	
+			  }		  		  
 		  return result;
 	  }
 }

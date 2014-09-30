@@ -101,6 +101,18 @@ public class Role extends MasterValue {
 		return result;
 	}
 	
+	public boolean isAuthorizedToUpdateUser() {
+		boolean result = false;
+		int n = permissionsUpdate.size();
+		int i = 0;
+		do {
+			if (Action.UPDATE_USER == permissionsUpdate.get(i++).getAction().getId()) {
+				result = true;
+			}
+		} while (!result && i < n);
+		return result;
+	}
+	
 	public String getName(){		
 		return getValue1();
 	}

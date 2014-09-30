@@ -59,12 +59,16 @@ public class UserDao extends Dao{
 		Connection conn = null;
 		try {
 			conn = DB.getConnection();
-			cst = conn.prepareCall("CALL sp_set_users_UPDATE(?,?,?,?,?)");
+			cst = conn.prepareCall("CALL sp_set_users_UPDATE(?,?,?,?,?,?,?,?,?)");
 			cst.setInt(1,user.getId());
-			cst.setInt(2,user.getRole().getId());
-			cst.setInt(3, user.getDefaultAction().getId());
-			cst.setString(4, user.getName());
-			//cst.setString(5, user.getEmail());
+			cst.setString(2, user.getDocument());
+			cst.setString(3, user.getName());
+			cst.setString(4, user.getLastName());
+			cst.setInt(5, user.getLocation().getId());
+			cst.setInt(6,user.getRole().getId());
+			cst.setInt(7, user.getDefaultAction().getId());
+			cst.setString(8, user.getLogin().getName());
+			cst.setInt(9, user.getLogin().getId());
 			result = cst.executeUpdate() > 0;
 		} catch (Exception e) {
             Logger.error(e.getMessage());

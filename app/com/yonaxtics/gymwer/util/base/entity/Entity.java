@@ -26,7 +26,8 @@ public abstract class  Entity implements Serializable,Cloneable {
 		this.id = id;		
 	}
 	
-    public abstract boolean isEmpty();
+ 
+	public abstract boolean isEmpty();
     
     public abstract void copy(Entity entity);
     
@@ -51,7 +52,7 @@ public abstract class  Entity implements Serializable,Cloneable {
 
 	
 	public String getSerial(){
-		return new String(this.getClass().getName().concat(":").concat(String.valueOf(id)));
+		return new String(String.valueOf(this.getClass().hashCode()).concat(":").concat(String.valueOf(id)));
 	}
 	
 	public int getId() {

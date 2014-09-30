@@ -1,5 +1,6 @@
 package com.yonaxtics.gymwer.util.list.logic;
 
+import com.yonaxtics.gymwer.sec.Persitence;
 import com.yonaxtics.gymwer.util.list.dao.ListDao;
 import com.yonaxtics.gymwer.util.list.entity.ListItem;
 
@@ -15,13 +16,21 @@ import com.yonaxtics.gymwer.util.list.entity.ListItem;
 public class ListLogic {
 
 	/**
-	 * @param urls
+	 * @param actions
 	 * @return
 	 */
-	public static boolean loadActionsByUser(ListItem urls,int actionType) {
+	public static boolean loadActionsByUser(ListItem actions,int actionType) {
 		boolean result = false;		
-		if(urls != null &&   urls.getEntity() != null && urls.getEntity().exists()){
-			result = ListDao.loadActionsByUser(urls,actionType);
+		if(actions != null &&   actions.getEntity() != null && actions.getEntity().exists()){
+			result = Persitence.find(actions);
+			if(!result){
+				result = ListDao.loadActionsByUser(actions,actionType);
+				if(result){
+					String serial = actions.getSerial();
+					serial.toLowerCase();
+					Persitence.setObject(actions.getSerial(), actions);
+				}
+			}			
 		}
 		return result;
 	}

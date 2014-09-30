@@ -56,12 +56,6 @@ public class User extends Person {
 		this.login = login;
 		this.gym = gym;
 	}
-
-	
-	@Override
-	public String getSerial(){
-		return new String(this.getClass().getName().concat(":").concat(String.valueOf(id)));
-	}
 	
 	@Override
 	public User clone(){

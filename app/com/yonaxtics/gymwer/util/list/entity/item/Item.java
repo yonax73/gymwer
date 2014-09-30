@@ -1,5 +1,7 @@
 package com.yonaxtics.gymwer.util.list.entity.item;
 
+import java.io.Serializable;
+
 
 /** 
  * Clase     : Item.java<br/>
@@ -10,7 +12,8 @@ package com.yonaxtics.gymwer.util.list.entity.item;
  * @author Yonatan Alexis Quintero Rodriguez<br/>
  */
 
-public class Item {
+@SuppressWarnings("serial")
+public class Item implements Serializable{
 	
 	private int option;
 	private String value;

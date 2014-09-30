@@ -74,9 +74,17 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','List','Select','Tab'],functi
    function navegationTabs(){
    	    tabs = new Tab(Play.getId('tabs'),Play.getId('tabs-content'));
    	    Play.getId('create').onclick = function(){
-   	    	tabs.add('#newPlan',0,'New Plan','/plan',function(){
-   	    		selectStatus =  new Select(Play.getId('selectStatus'),List.entityStates());
-   	    		selectStatus.init(Constants.ENTYTY_STATES_ACTIVE);	
+   	    	tabs.add('#newPlan',0,'New Plan','/plan',function(){   	  
+				  var localStorageList = localStorage.getItem(Constants.LOCALSTORAGE_LIST_ENTITY_STATES); 
+				  if(localStorageList == null){
+					  List.entityStates(function(xhr){
+						   var items = Json.parse(xhr.responseText);
+						   fillEntityStatesList(items);
+						   localStorage.setItem(Constants.LOCALSTORAGE_LIST_ENTITY_STATES,JSON.stringify(items));
+					  });
+				  }else{
+					  fillEntityStatesList(JSON.parse(localStorageList));	
+				  }	
    	    	});   	    	
    	    }
    }
@@ -96,16 +104,19 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','List','Select','Tab'],functi
 	function load(){		
 		var xhr = new XMLHttpRequest();		
 		xhr.onreadystatechange = function () {				       
-			  if (this.readyState === Constants.READYSTATE_COMPLETE) {
-				  						
-				  						
-				  if(this.status === Constants.STATUS_OK){				 
-					  
-					  var gym = Json.parse(this.responseText);				  
-						selectStatusFilter = new Select(Play.getId('selectStatusFilter'),List.entityStates());						
-						selectStatusFilter.init();							
-						selectStatusFilter.addItem(Constants.ENTYTY_STATES_ALL,'ALL');
-						selectStatusFilter.selectItem(Constants.ENTYTY_STATES_ALL);						
+			  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
+				  if(this.status === Constants.STATUS_OK){									  
+					  var gym = Json.parse(this.responseText);
+					  var localStorageList = localStorage.getItem(Constants.LOCALSTORAGE_LIST_ENTITY_STATES); 
+					  if(localStorageList == null){
+						  List.entityStates(function(xhr){
+							   var items = Json.parse(xhr.responseText);
+							   fillEntityStatesListFull(items);
+							   localStorage.setItem(Constants.LOCALSTORAGE_LIST_ENTITY_STATES,JSON.stringify(items));
+						  });
+					  }else{
+						  fillEntityStatesListFull(JSON.parse(localStorageList));	
+					  }				
 				     }else {								  
 				       document.body.innerHTML = this.responseText; 
 				   } 				  						
@@ -117,11 +128,17 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','List','Select','Tab'],functi
 		//set time out	
      }
 	
-	function loadList(){	
-		List.entityStates();
-		
-	}	
-	
+
+function fillEntityStatesList(items){ 
+		selectStatus =  new Select(Play.getId('selectStatus'),items);
+   		selectStatus.init(Constants.ENTYTY_STATES_ACTIVE);		
+}	
+function fillEntityStatesListFull(items){ 
+	selectStatusFilter = new Select(Play.getId('selectStatusFilter'),items);						
+	selectStatusFilter.init();							
+	selectStatusFilter.addItem(Constants.ENTYTY_STATES_ALL,'ALL');
+	selectStatusFilter.selectItem(Constants.ENTYTY_STATES_ALL);		
+}	
 
 /* ==================================================================================================================
  * REGION INIT
@@ -131,7 +148,6 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','List','Select','Tab'],functi
 	  function init(){
 		  Nav.init();
 		  navegationTabs();
-		  loadList();
 		  load();		 
 		  filters();		
 	}

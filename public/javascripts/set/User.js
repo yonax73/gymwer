@@ -66,13 +66,11 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 	var notify = new Notify(Play.getId('notify'));	
 	var frmUserOk = new FormOk(frmUser);
 	var selectPageHome= null;
-	var User = null;
 /* ==================================================================================================================
  * REGION READY
  * ===================================================================================================================
- */	
-	
-		init();		
+ */		
+	init();		
 
 /* ==================================================================================================================
  * REGION LOAD
@@ -82,10 +80,8 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 		var xhr = new XMLHttpRequest();		
 		xhr.onreadystatechange = function () {		       
 			  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
-				  if(this.status === Constants.STATUS_OK){									  
-//					  User = Json.parse(this.responseText);
-//					  localStorage.setItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE,JSON.stringify(User));
-//					  fill(User);						
+				  if(this.status === Constants.STATUS_OK){
+					 fill(Json.parse(this.responseText));						
 				   } 					  
 			  }		  
 		}
@@ -97,23 +93,24 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 			 notify.danger('Time out!!!');									
 		}	
      }	
-	function loadList(){		
-		List.url();
-	}	
-	function fill(User){          
-		  if(User.picture != null){
-			Play.getId('userPicture').src =  Play.base64Blob(User.picture.mime, User.picture.src);
+
+	function fill(user){
+		  if(user.picture != null){
+			Play.getId('userPicture').src =  Play.base64Blob(user.picture.mime, user.picture.src);
 		  }
-		  Play.getId('txtNameUser').value = User.user.name;
-		  Play.getId('txtRole').textContent = User.user.role.name;
-		  selectPageHome = new Select(Play.getId('selectPageHome'),List.url());
-	      selectPageHome.init(User.user.defaultAction.id);	
-		  Play.getId('txtEmail').textContent = User.user.email;
-		  Play.getId('nameUser').textContent = User.user.name;
-		  Play.getId('txtFullName').value = User.name;
-		  Play.getId('txtDocument').value = User.document;
-		  Play.getId('txtAddress').value = User.location.address.address;
-		  Play.getId('txtPhone').value = User.location.phone.phone;		
+		  Play.getId('txtNameUser').value = user.name;
+		  Play.getId('txtRole').textContent = user.role.name;
+		  Play.getId('txtEmail').textContent = user.login.email;
+		  Play.getId('nameUser').textContent = user.login.name;
+		  Play.getId('txtFirstName').value = user.name;
+		  Play.getId('txtLastName').value = user.lastName;
+		  Play.getId('txtDocument').value = user.document;
+		  Play.getId('txtAddress').value = user.location.address.address;
+		  Play.getId('txtPhone').value = user.location.phone.phone;
+		  List.actionsLoad(function(xhr){
+			  selectPageHome = new Select(Play.getId('selectPageHome'),Json.parse(xhr.responseText));
+			  selectPageHome.init(user.defaultAction.id);	
+		  });
 	}
 /* ==================================================================================================================
  * REGION UPLOAD PICTURE
@@ -242,15 +239,9 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
  * REGION INIT
  * ===================================================================================================================
  */		
-	function init(){		
-	  loadList();
-	  Nav.init();		
-	  if(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE) == null){			  
-		  load();
-	  }else {
-		  User = JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE)); 
-		  fill(User);
-	  }		  
+	function init(){
+	  Nav.init();	 		  
+	  load();  
 	  uploadPicture();	
 	  save();	  
 	}

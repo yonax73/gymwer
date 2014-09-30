@@ -2,14 +2,12 @@ package com.yonaxtics.gymwer.sec;
 
 
 
-import java.util.List;
-
 import play.cache.Cache;
 
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
-import com.yonaxtics.gymwer.sec.permission.entity.Permission;
 import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.util.Utils;
+import com.yonaxtics.gymwer.util.list.entity.ListItem;
 
 /** 
  * Class     : CacheLogic.java<br/>
@@ -60,15 +58,17 @@ public class Persitence extends Cache {
 	    return result;
 	}
 
-	/**
-	 * @param permissions
-	 * @return
-	 */
-	public static boolean find(List<Permission> permissions) {
+	public static boolean find(ListItem listItem){
 		boolean result = false;
-		
-		return false;
+		String serial = listItem.getSerial();
+		ListItem auxListItem = (ListItem) getObject(serial);
+	    if(auxListItem!= null && !auxListItem.isEmpty()){
+	    	listItem.copy(auxListItem);
+	    	result = listItem.size() > 0;
+	    }
+	    return result;
 	}
+    
 
 	
 	
