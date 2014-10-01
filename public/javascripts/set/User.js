@@ -69,36 +69,24 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 /* ==================================================================================================================
  * REGION READY
  * ===================================================================================================================
- */		
+ */	
 	init();		
 
 /* ==================================================================================================================
  * REGION LOAD
  * ===================================================================================================================
  */		
-	function load(){		
-		var xhr = new XMLHttpRequest();		
-		xhr.onreadystatechange = function () {		       
-			  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
-				  if(this.status === Constants.STATUS_OK){
-					 fill(Json.parse(this.responseText));						
-				   } 					  
-			  }		  
-		}
-		xhr.open('GET','/loadUser');
-		xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-		xhr.send();		
-		xhr.timeout = Constants.TIME_OUT;
-		xhr.ontimeout = function () {
-			 notify.danger('Time out!!!');									
-		}	
+	function load(){
+		Play.getRequest('/loadUser',function(xhr){							
+			 fill(Json.parse(xhr.responseText))	
+		});
      }	
 
 	function fill(user){
 		  if(user.picture != null){
 			Play.getId('userPicture').src =  Play.base64Blob(user.picture.mime, user.picture.src);
 		  }
-		  Play.getId('txtNameUser').value = user.name;
+		  Play.getId('txtNameUser').value = user.login.name;
 		  Play.getId('txtRole').textContent = user.role.name;
 		  Play.getId('txtEmail').textContent = user.login.email;
 		  Play.getId('nameUser').textContent = user.login.name;
@@ -133,38 +121,26 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 		    var reader = null;		    
 		    if(picture.type.match('image.*')){		    	
 		    	if(picture.size <= 65535){		    		
-					    xhr = new XMLHttpRequest();						
-						xhr.onreadystatechange = function () {	
-							  notify.wait('Upload picture	...');	
-							  Play.getId('fileselect').disabled = true;
-							  if (this.readyState === Constants.READYSTATE_COMPLETE) {	
-								  Play.getId('fileselect').disabled = false;
-								  if(this.status === Constants.STATUS_OK && this.responseText === Constants.SUCCESS_REQUEST){									  
-								    	reader = new FileReader();
-									    reader.onload = (function(theFile) {
-								        return function(e) {
-								          Play.getId('userPicture').src =  e.target.result;		         
-								        };
-								      })(picture);		      
-								      reader.readAsDataURL(picture);
-								      localStorage.removeItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE);	
-								      notify.success('The picture has been changed successfully!!!');	
-								}else if(this.status === Constants.STATUS_INTERNAL_SERVER_ERROR){
-									    document.body.innerHTML = this.responseText;   
-								}else{
-									notify.danger(this.responseText);
-								}									  
-						  }							  
-						}
-						xhr.open('POST','/uploadPicture');				
-						var formData = new FormData();
-						formData.append('picture', picture);
-						xhr.send(formData);
-						xhr.timeout = Constants.TIME_OUT;
-						xhr.ontimeout = function () {
-							notify.danger('Time out!!!');	
-							Play.getId('fileselect').disabled = false;
-						}		    		
+					var formData = new FormData();
+					formData.append('picture', picture);
+					Play.sendPost(formData,'/uploadPicture',function(){
+						  notify.wait('Upload picture	...');	
+						  Play.getId('fileselect').disabled = true;
+						},function(xhr){
+							  Play.getId('fileselect').disabled = false;
+							  if(xhr.responseText === Constants.SUCCESS_REQUEST){
+							    	reader = new FileReader();
+								    reader.onload = (function(theFile) {
+							        return function(e) {
+							          Play.getId('userPicture').src =  e.target.result;		         
+							        };
+							      })(picture);		      
+							      reader.readAsDataURL(picture);								   
+							      notify.success('The picture has been changed successfully!!!');	
+							}else{
+								notify.danger(xhr.responseText);
+							}
+						});		    		    		
 		    	} else {		    		
 		    		 notify.danger('The image can be maximun of 64 KB');
 		    	}		    	
@@ -176,65 +152,28 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
  * REGION SAVE
  * ===================================================================================================================
  */		  
-	 function save(){		 
+	 function save(){	 
 		 frmUser.onsubmit = function(e){
 			 e.preventDefault();
 			 if(FormOk.hasChanged()){
-				 if(frmUserOk.isValid()){				    						
-//						var xhr = new XMLHttpRequest();		
-//						xhr.onreadystatechange = function () {	
-//							  notify.wait('Loading...');	
-//							  btnSave.disabled = true;
-//							  if (this.readyState === Constants.READYSTATE_COMPLETE) {								  			
-//								  btnSave.disabled = false;
-//								  if(this.status === Constants.STATUS_OK  && this.responseText === Constants.SUCCESS_REQUEST){									  
-//									  localStorage.removeItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE);
-//									  notify.success('Your User has been saved successfully!');								  
-//								   }else{
-//									   notify.danger(this.responseText); 
-//								   } 					  
-//							  }		  
-//						}
-//						xhr.open('POST','/saveUser');
-//						xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-//						xhr.send(Play.serialize(e.target));		
-//						xhr.timeout = Constants.TIME_OUT;
-//						xhr.ontimeout = function () {
-//							 notify.danger('Time out!!!');
-//							 btnSave.disabled = false;
-//						}					 
-//				 }	
-						var xhr = new XMLHttpRequest();		
-						xhr.onreadystatechange = function () {	
-							  notify.wait('Loading...');	
-							  btnSave.disabled = true;
-							  if (this.readyState === Constants.READYSTATE_COMPLETE) {								  			
-								  btnSave.disabled = false;
-//								  if(this.status === Constants.STATUS_OK  && this.responseText === Constants.SUCCESS_REQUEST){									  
-									  //localStorage.removeItem(Constants.LOCALSTORAGE_REQUEST_LOAD_PROFILE);
-									  console.log(this.responseText);
-									//  notify.success('Your User has been saved successfully!');								  
-//								   }else{
-//									   notify.danger(this.responseText); 
-//								   } 					  
-							  }		  
-						}
-						xhr.open('POST','/saveUser');
-						xhr.setRequestHeader("Content-Type","text/plain");
-						var data = {name:'prueba',id:1};
-						console.log(data);
-						xhr.send(Play.enc(JSON.stringify(data)).toString());		
-						xhr.timeout = Constants.TIME_OUT;
-						xhr.ontimeout = function () {
-							 notify.danger('Time out!!!');
-							 btnSave.disabled = false;
-						}					 
-				 }	
-			 }else{
-				 notify.warning('No changes to save!!!'); 
+				 if(frmUserOk.isValid()){
+					 Play.sendRequest(e.target,function(){
+						  notify.wait('Loading...');	
+						  btnSave.disabled = true; 
+					 },function(xhr){	
+						 btnSave.disabled = false;
+						 if(xhr.responseText === Constants.SUCCESS_REQUEST){
+							 notify.success('Your User has been saved successfully!');
+						 }else{
+							 notify.danger(xhr.responseText); 
+						 }						
+					 });
 			 }		 
-		 }			 
+		 }else{
+			 notify.warning('No changes to save!!!'); 
+		 }				 
 	}
+}
 /* ==================================================================================================================
  * REGION INIT
  * ===================================================================================================================
@@ -255,7 +194,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 	  
 	  
 	  
-})
+});
 		  
 
 

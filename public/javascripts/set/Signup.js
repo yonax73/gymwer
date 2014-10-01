@@ -60,22 +60,19 @@ requirejs([ 'Aes', 'Constants', 'Play', 'Notify', 'FormOk' ],
 			frmSingUp.onsubmit = function(e) {
 				e.preventDefault();
 				if (form.isValid()) {
-					Play.loadRequest(e.target,function(xhr) {
+					Play.sendRequest(e.target,function(){
 						notify.wait('Loading...');
 						btnSignUp.disabled = true;
-						if (xhr.readyState === Constants.READYSTATE_COMPLETE) {
-							if (xhr.status === Constants.STATUS_OK && xhr.responseText === Constants.SUCCESS_REQUEST) {
+					},function(xhr) {						
+							if (xhr.responseText === Constants.SUCCESS_REQUEST) {
 								sessionStorage.setItem(Constants.SESSIONSTORAGE_MESSAGE,'Your account has been created successfully');
 								window.location = '/login';
 							} else {
 								notify.danger(xhr.responseText);
 								btnSignUp.disabled = false;
-							}
-						}
-					}, function() {
-						notify.danger('Timed Out!!!');
-						btnLogin.disabled = false;
-					});
+							}						
+					   }
+					);
 				}
 			}
 });

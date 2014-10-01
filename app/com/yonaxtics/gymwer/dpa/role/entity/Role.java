@@ -22,6 +22,8 @@ public class Role extends MasterValue {
 	public final static int SUPER_ADMIN = 4;
 	public final static int ADMIN = 33;
 	
+	public final static String KEY = "ROLE_KEY";
+	
 	private List<Permission> permissionsLoad;
 	private List<Permission> permissionsCreate;
 	private List<Permission> permissionsUpdate;
@@ -71,6 +73,20 @@ public class Role extends MasterValue {
 		}catch(Exception e){
 			Logger.error(e.getMessage());
 		}      
+	}
+	
+	public void copy(Role role){
+		id = role.id;
+		value1 = role.value1;
+		permissonsReady = role.permissonsReady;
+		if(permissonsReady){
+			permissionsLoad = role.permissionsLoad;
+			permissionsCreate = role.permissionsCreate;
+			permissionsUpdate = role.permissionsUpdate;
+			permissionsDelete = role.permissionsDelete;
+			permissionsChangeStatus = role.permissionsChangeStatus;
+		}
+
 	}
 	
 	public boolean isSuperAdmin(){

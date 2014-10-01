@@ -256,20 +256,69 @@
 		return data;
     } 
     
-    Play.loadRequest = function(form,onReady,onTimeout){
+    Play.sendPost = function(data,action,onReady,onBeforeSend){
 		 var xhr = new XMLHttpRequest();								 
 		 xhr.onreadystatechange = function () {
-                 onReady(this);
+			 onBeforeSend();
+			 if(this.readyState ===  Constants.READYSTATE_COMPLETE){
+				 if(this.status === Constants.STATUS_OK){
+					 onReady(this);
+				 }else{					
+					 document.body.innerHTML = this.responseText;  
+				 }
+			 }                 
+		 }
+		 xhr.open("POST",action);			 		 
+		 xhr.send(data);	
+		 xhr.timeout = Constants.TIME_OUT;
+		 xhr.ontimeout = function () {
+			 console.error("Timeout!");
+			 document.body.innerHTML = this.responseText;  										
+		}
+  }
+    
+    Play.sendRequest = function(form,onBeforeSend,onReady){
+		 var xhr = new XMLHttpRequest();								 
+		 xhr.onreadystatechange = function () {
+			 onBeforeSend();
+			 if(this.readyState ===  Constants.READYSTATE_COMPLETE){
+				 if(this.status === Constants.STATUS_OK){
+					 onReady(this);
+				 }else{
+					 document.body.innerHTML = this.responseText;					
+				 }
+			 }                 
 		 }
 		 xhr.open(form.method,form.action);
 		 xhr.setRequestHeader("Content-Type","text/plain");		 		 
 		 xhr.send(Play.enc(JSON.stringify(Play.serializeToJson(form))).toString());	
 		 xhr.timeout = Constants.TIME_OUT;
 		 xhr.ontimeout = function () {
-              onTimeOut();										
+			 console.error("Timeout!");
+			 document.body.innerHTML = this.responseText;  									
 		}
     }
+    
+    Play.getRequest = function(action,onReady){
+		 var xhr = new XMLHttpRequest();								 
+		 xhr.onreadystatechange = function () {	
+			 if(this.readyState ===  Constants.READYSTATE_COMPLETE){
+				 if(this.status === Constants.STATUS_OK){
+					 onReady(this);
+				 }else{					
+					 document.body.innerHTML = this.responseText;  
+				 }
+			 }                 
+		 }		 
+		 xhr.open('GET',action);
+		 xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");		 		 
+		 xhr.send();	
+		 xhr.timeout = Constants.TIME_OUT;
+		 xhr.ontimeout = function () {
+			 console.error("Timeout!");
+			 document.body.innerHTML = this.responseText;  										
+		}
+   }
 
 	return Play;
-
 });

@@ -61,38 +61,21 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Notify','FormOk'],function(A
 	var frmGym = Play.getId('frmGym');	
 	var notify = new Notify(Play.getId('notify'));	
 	var frmGymOk = new FormOk(frmGym);	
-	var gym = null;
 /* ==================================================================================================================
  * REGION READY
  * ===================================================================================================================
  */	
-		if(Play.ready()){		
-			init();		
-		}	
+		
+	init();		
+
 /* ==================================================================================================================
  * REGION LOAD
  * ===================================================================================================================
  */		
 	function load(){
-		var xhr = new XMLHttpRequest();		
-		xhr.onreadystatechange = function () {		       
-			  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
-				  if(this.status === Constants.STATUS_OK){									  
-					  gym = Json.parse(this.responseText);
-					  localStorage.setItem(Constants.LOCALSTORAGE_REQUEST_LOAD_GYM,JSON.stringify(gym));
-					  fill(gym);						
-				   }else if(this.status === 401){					   
-					   document.body.innerHtml = this.responseText;					   
-				   } 					  
-			  }		  
-		}
-		xhr.open('GET','/loadGym');
-		xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-		xhr.send();		
-		xhr.timeout = Constants.TIME_OUT;
-		xhr.ontimeout = function () {
-			 notify.danger('Time out!!!');									
-		}
+		Play.getRequest('/loadGym',function(xhr){							
+			 fill(Json.parse(this.responseText););	
+		});
      }	
 	function fill(gym){
 	      Play.getId('nameGym').textContent =gym.name;
@@ -109,29 +92,18 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Notify','FormOk'],function(A
 		 frmGym.onsubmit = function(e){
 			 e.preventDefault();
 			 if(FormOk.hasChanged()){
-				 if(frmGymOk.isValid()){			    						
-						var xhr = new XMLHttpRequest();		
-						xhr.onreadystatechange = function () {	
-							  notify.wait('Loading...');	
-							  btnSave.disabled = true;
-							  if (this.readyState === Constants.READYSTATE_COMPLETE) {								  
-								  btnSave.disabled = false;
-								  if(this.status === Constants.STATUS_OK  && this.responseText === Constants.REQUEST_SUCCESS){									  
-									  localStorage.removeItem(Constants.LOCALSTORAGE_REQUEST_LOAD_GYM);
-									  notify.success('Your data gym has been saved successfully!');								  
-								   }else{
-									   notify.danger(this.responseText); 
-								   } 					  
-							  }		  
-						}
-						xhr.open('POST','/saveGym');
-						xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-						xhr.send(Play.serialize(e.target));		
-						xhr.timeout = Constants.TIME_OUT;
-						xhr.ontimeout = function () {
-							 notify.danger('Time out!!!');
-							 btnSave.disabled = false;
-						}					 
+				 if(frmGymOk.isValid()){	
+					 Play.sendRequest(e.target,function(){
+						  notify.wait('Loading...');	
+						  btnSave.disabled = true; 
+					 },function(xhr){	
+						 btnSave.disabled = false;
+						 if(xhr.responseText === Constants.SUCCESS_REQUEST){
+							 notify.success('Your data gym has been saved successfully!');
+						 }else{
+							 notify.danger(xhr.responseText); 
+						 }						
+					 });
 				 }	
 			 }else{
 				 notify.warning('No changes to save!!!'); 
@@ -145,13 +117,8 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Notify','FormOk'],function(A
  * ===================================================================================================================*/	
 	
 	  function init(){		
-		  Nav.init();
-		  if(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_GYM) == null){			  
-			  load();
-		  }else {
-			  gym = JSON.parse(localStorage.getItem(Constants.LOCALSTORAGE_REQUEST_LOAD_GYM)); 
-			  fill(gym);
-		  }
+		  Nav.init();		  	  
+		  load();
 		  save();
 	}	
 	

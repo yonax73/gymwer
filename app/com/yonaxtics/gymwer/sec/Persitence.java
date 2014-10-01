@@ -5,6 +5,7 @@ package com.yonaxtics.gymwer.sec;
 import play.cache.Cache;
 
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
+import com.yonaxtics.gymwer.dpa.role.entity.Role;
 import com.yonaxtics.gymwer.set.user.entity.User;
 import com.yonaxtics.gymwer.util.Utils;
 import com.yonaxtics.gymwer.util.list.entity.ListItem;
@@ -47,6 +48,16 @@ public class Persitence extends Cache {
 		return result;
 	}
 	
+	public static boolean find(Role role) {
+		boolean result = false;
+		String serial = role.getSerial();
+		Role auxRole = (Role) getObject(serial);
+		if (auxRole != null && auxRole.exists()) {
+			role.copy(auxRole);							
+			result  = role.isPermissonsReady();
+		}
+		return result;
+	}
 	public static boolean find(Gym gym){
 		boolean result = false;
 		String serial = gym.getSerial();

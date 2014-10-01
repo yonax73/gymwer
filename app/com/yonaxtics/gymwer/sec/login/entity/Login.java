@@ -35,9 +35,7 @@ public class Login extends Entity{
 	public Login(String email,String password) {		
 		super(0);		
 		this.email = email;
-		this.password = password;
-		this.name = email.split("@")[0];
-		
+		this.password = password;		
 	}
 
 	@Override
@@ -49,6 +47,10 @@ public class Login extends Entity{
 	public void copy(Entity entity) {
 	
 		
+	}
+	
+	public void setUserNameByUserEmail(){
+		 name = email.split("@")[0];
 	}
 	
 	public void init(){

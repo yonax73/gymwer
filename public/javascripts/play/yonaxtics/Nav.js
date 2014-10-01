@@ -90,21 +90,10 @@ define(['./Play','./Json','./Constants'], function(Play,Json,Constants) {
    /**
     * Load data Nav
     */
-   Nav.load = function(){	   
-		var xhr = new XMLHttpRequest();		
-		xhr.onreadystatechange = function () {		       
-			  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
-				  if(this.status === Constants.STATUS_OK){									  
-					  var contact = Json.parse(this.responseText);					
-					  Nav.create(contact);					   					  
-				  }else {					  
-		               window.location = '/signOut';									  
-				  }
-			  }
-		}
-		xhr.open('GET','/loadNav');
-		xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-		xhr.send();				
+   Nav.load = function(){
+		Play.getRequest('/loadNav',function(xhr){							
+			  Nav.create(Json.parse(xhr.responseText));	
+		});
    }   
    
    Nav.create = function(permissions){

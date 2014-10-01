@@ -133,6 +133,7 @@ public class UserDao extends Dao{
 				    Blob blob = rs.getBlob(17);	
 					user.getPicture().setSrc(Base64.getEncoder().encodeToString(blob.getBytes(1, (int) blob.length())));
 				}
+				user.getLogin().setName(rs.getString(18));
 			}
 			result = user.exists();
 		    

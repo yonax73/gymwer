@@ -12,6 +12,7 @@ import views.html.dpa.gym.gym;
 
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 import com.yonaxtics.gymwer.dpa.gym.logic.GymLogic;
+import com.yonaxtics.gymwer.dpa.role.entity.Role;
 import com.yonaxtics.gymwer.sec.SecuredController;
 import com.yonaxtics.gymwer.set.location.logic.LocationLogic;
 import com.yonaxtics.gymwer.set.master.logic.MasterLogic;
@@ -47,45 +48,54 @@ public class GymControl extends SecuredController {
 				return ok("You do not have permission to view gym information!");
 			}
 		} else {
-			return sign_out();
+			return badRequest("The user is Null");
 		}
 	}
 	
 	public static Result save() {
 		String message = null;
-		Gym gym = current_gym();
-		if (gym != null) {
-			final Map<String, String[]> data = request().body().asFormUrlEncoded();
-			gym.setName(dec(data.get("txtName")[0]));
-			if (!gym.getName().isEmpty()) {
-				gym.getLocation().getPhone().setPhone((dec(data.get("txtPhone")[0])));
-				if (MasterLogic.save(gym.getLocation().getPhone())) {
-					gym.getLocation().getAddress().setAddress(dec(data.get("txtAddress")[0]));
-					if (MasterLogic.save(gym.getLocation().getAddress())) {
-						if (LocationLogic.save(gym.getLocation())) {
-							gym.setName(dec(data.get("txtNit")[0]));
-							if (GymLogic.update(gym)) {
-								return ok(SUCCESS_REQUEST);
+		Role role = current_role();
+		if (role != null) {
+			boolean hasPermission = role.isSuperAdmin();
+			if (!hasPermission) {
+				hasPermission = role.isAuthorizedToUpdateUser();
+			}
+			if (hasPermission) {				
+				Gym gym = current_gym();
+				final Map<String, String[]> data = request().body().asFormUrlEncoded();
+				gym.setName(dec(data.get("txtName")[0]));
+				if (!gym.getName().isEmpty()) {
+					gym.getLocation().getPhone().setPhone((dec(data.get("txtPhone")[0])));
+					if (MasterLogic.save(gym.getLocation().getPhone())) {
+						gym.getLocation().getAddress().setAddress(dec(data.get("txtAddress")[0]));
+						if (MasterLogic.save(gym.getLocation().getAddress())) {
+							if (LocationLogic.save(gym.getLocation())) {
+								gym.setName(dec(data.get("txtNit")[0]));
+								if (GymLogic.update(gym)) {
+									message = SUCCESS_REQUEST;
+								} else {
+									message = "Error trying to save Gym!";
+								}
 							} else {
-								message = "Error trying to save Gym!";
+								message = "Error trying to save Location!";
 							}
 						} else {
-							message = "Error trying to save Location!";
+							message = "Error trying to save Address!";
 						}
 					} else {
-						message = "Error trying to save Address!";
+						message = "Error trying to save Phone!";
 					}
 				} else {
-					message = "Error trying to save Phone!";
-				}
-			} else {
-				message = "The user Name is required and can't empty";
-			}
-			return ok(message);
+					message = "The user Name is required and can't empty";
+				}				
 
-		} else {
-			return sign_out();
+			} else {
+				message = "You do not have permission to edit Gym information!";
+			}
+		}else{
+			return badRequest("The role is Null");
 		}
+		return ok(message);
 	}
 		
 	

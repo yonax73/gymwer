@@ -76,9 +76,9 @@ public class PermissionDao extends Dao {
 					case ActionType.LOAD:
 						final int id = action.getId();
 						if (id == Action.LOAD_USER) {
-							action.setDescription(user.getName());
-						} else if (id == Action.LOAD_GYM) {
-							action.setDescription(user.getGym().getName());
+							action.getModule().setDescription(user.getLogin().getName());
+						} else if (id == Action.LOAD_GYM) {							
+							action.getModule().setDescription(user.getGym().getName());
 						}
 						permissionsLoad.add(new Permission(action));
 						break;

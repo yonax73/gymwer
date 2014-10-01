@@ -7,6 +7,7 @@ import play.libs.Json;
 import play.mvc.Result;
 
 import com.yonaxtics.gymwer.sec.SecuredController;
+import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.sec.permission.logic.PermissionLogic;
 import com.yonaxtics.gymwer.set.user.entity.User;
 
@@ -21,11 +22,21 @@ import com.yonaxtics.gymwer.set.user.entity.User;
 public class PermissionControl extends SecuredController {	
 	
 	public static Result loadNav(){		
-		User user = user_loggedIn();
-    	if(user!=null && PermissionLogic.load(user)){ 
-    		user.getSerial();
-    		return authenticated(enc(Json.toJson(user.getRole().getPermissionsLoad()).toString()));
-    	}		
-    	return ok("Error trying load the navegation!");		
+		User user = user_loggedIn();		
+    	if(user!=null){ 
+    		Login login = current_login();
+    		if(login!=null){
+        		user.setLogin(login);
+        		if(PermissionLogic.load(user)){
+        			return authenticated(enc(Json.toJson(user.getRole().getPermissionsLoad()).toString()));
+        		}else{
+        			return ok("Error trying load the navegation!");		
+        		}        		
+    		}else{
+    			return badRequest("The login is Null");
+    		}    	
+    	}else{
+    		return badRequest("The user is Null");
+    	}    	
 	}
 }

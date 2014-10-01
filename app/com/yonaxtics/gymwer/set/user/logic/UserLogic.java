@@ -1,6 +1,8 @@
 package com.yonaxtics.gymwer.set.user.logic;
 
+import com.yonaxtics.gymwer.dpa.role.entity.Role;
 import com.yonaxtics.gymwer.sec.Persitence;
+import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.sec.permission.dao.PermissionDao;
 import com.yonaxtics.gymwer.set.user.dao.UserDao;
 import com.yonaxtics.gymwer.set.user.entity.User;
@@ -25,7 +27,12 @@ public  class   UserLogic  {
 		boolean result = false;
 		if(user != null && user.exists()){
 			if(user.getRole().exists() && user.getDefaultAction().exists()){
-				result = UserDao.update(user);	
+				result = UserDao.update(user);
+				if(result){
+					Persitence.setObject(user.getSerial(), user);
+					Login login = user.getLogin();
+					Persitence.setObject(login.getSerial(), login);
+				}
 			}			
 		}
 		return result;
@@ -65,7 +72,9 @@ public  class   UserLogic  {
 				result = UserDao.loadByLogin(user);				
 				result = PermissionDao.load(user);								
 				if(result){
-					Persitence.setObject(user.getSerial(), user);	
+					Persitence.setObject(user.getSerial(), user);
+					Role role = user.getRole();
+					Persitence.setObject(role.getSerial(), role);
 				}				
 			}
 		}

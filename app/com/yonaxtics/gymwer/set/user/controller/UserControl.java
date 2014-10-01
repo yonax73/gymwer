@@ -18,6 +18,7 @@ import com.yonaxtics.gymwer.set.master.entity.Address;
 import com.yonaxtics.gymwer.set.master.entity.Phone;
 import com.yonaxtics.gymwer.set.master.logic.MasterLogic;
 import com.yonaxtics.gymwer.set.user.entity.User;
+import com.yonaxtics.gymwer.set.user.logic.UserLogic;
 import com.yonaxtics.gymwer.util.Utils;
 
 
@@ -46,10 +47,10 @@ public class UserControl extends SecuredController {
 				user.setLogin(login);
 				return authenticated(enc(Json.toJson(user).toString()));
 			}else{
-			    return sign_out();    	
+				return badRequest("The Login is Null"); 	
 			}			
 		}
-		return sign_out();
+		return badRequest("The user is Null");
 	}
 	
 	
@@ -68,36 +69,53 @@ public class UserControl extends SecuredController {
 					final Map<String, String> data = Utils.deserializeJson(dec(request().body().asText()));
 					Phone phone = null;
 					Address address = null;
-					Location location  = null;
-					phone = new Phone(Integer.parseInt(data.get("txtPhoneId")),data.get("txtPhone"));
-					if (MasterLogic.save(phone)) {
-						address = new Address(Integer.parseInt(data.get("txtAddressId")),data.get("txtAddress"));
-						if(MasterLogic.save(address)){
-							location = new Location(Integer.parseInt(data.get("txtLocationId")));
+					Location location  = user.getLocation();
+					if(location==null){
+						phone = new Phone(data.get("txtPhone"));
+						address = new Address(data.get("txtAddress"));
+						location = new Location(0);
+					}else{
+						phone = location.getPhone();
+						address = location.getAddress();
+						phone.setPhone(data.get("txtPhone"));
+						address.setAddress(data.get("txtAddress"));
+					}								
+					if (MasterLogic.save(phone)) {										
+						if(MasterLogic.save(address)){						
 							if((!phone.isEmpty() && phone.exists()) ||( !address.isEmpty() && address.exists())){
 								location.setPhone(phone);
 								location.setAddress(address);
-								if(LocationLogic.save(location)){
-									return ok();
-								}	else {}
+								if(!LocationLogic.save(location)){
+									result = "Error trying save the address!";
+								}
+								user.setDocument(data.get("txtDocument"));
+								user.setName(data.get("txtFirstName"));
+								user.setLastName(data.get("txtLastName"));
+								user.setLocation(location);
+								user.getLogin().setName(data.get("txtNameUser"));								
+								user.getDefaultAction().setId(Integer.parseInt(data.get("txtDefaultActionId")));
+							}
+							if(UserLogic.update(user)){
+								result = SUCCESS_REQUEST;
+							}else{
+								result = "Error trying save the user!";		
 							}
 						}else{
-							return ok("Erro trying save the address!");
+							result = "Error trying save the address!";
 						}
 					} else {						
-						return ok("Error trying save the phone!");
+						result = "Error trying save the phone!";
 					}
 				} else {
-					return sign_out();
+					return badRequest("The Login is Null");
 				}
 			} else {
-				return ok("You do not have permission to edit User information!");
+				result = "You do not have permission to edit User information!";
 			}
-
 		} else {
-			return sign_out();
+			return badRequest("The user is Null");
 		}
-		return null;
+		return ok(result);
 		
 	}
 

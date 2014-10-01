@@ -15,6 +15,7 @@ import play.mvc.Result;
 import play.twirl.api.Html;
 
 import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
+import com.yonaxtics.gymwer.dpa.role.entity.Role;
 import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.set.user.entity.User;
 
@@ -42,7 +43,7 @@ public class SecuredController extends Controller{
 	/**
 	 * TIMES IN MINUTES
 	 */
-	private static final long TIMEOUT = 15;                   //(minutes)
+	private static final long TIMEOUT = 3;                   //(minutes)
 	private static final long TIME_EXPIRED = 10;         //(hours - minutes)
 	
 	
@@ -57,6 +58,10 @@ public class SecuredController extends Controller{
  	protected static Gym current_gym(){
  		return (Gym) Persitence.getObject(dec(Context.current().session().get(Gym.KEY)));
  	}
+ 	
+ 	protected static Role current_role(){
+ 		return (Role) Persitence.getObject(dec(Context.current().session().get(Role.KEY)));
+ 	}
 	
 	protected static void session_start(User user){
 		Session currentSession = Context.current().session();
@@ -66,6 +71,7 @@ public class SecuredController extends Controller{
 		Persitence.setObject(serialLogin, login);
 		currentSession.put(Login.KEY, enc(serialLogin));
 		currentSession.put(User.KEY, enc(user.getSerial()));
+		currentSession.put(Role.KEY, enc(user.getRole().getSerial()));
 	}
 	
 	protected static Result authenticated(Html view) {

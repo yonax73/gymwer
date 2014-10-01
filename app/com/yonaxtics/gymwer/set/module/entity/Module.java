@@ -22,7 +22,6 @@ public class Module extends Entity {
 	
     
 	private String description;
-	private int rolId;
 	private List<Action> children;
 	private Module parent;	
 	private ModuleType moduleType;
@@ -92,14 +91,6 @@ public class Module extends Entity {
 
 	public void setParent(Module parent) {
 		this.parent = parent;
-	}
-
-	public int getRolId() {
-		return rolId;
-	}
-
-	public void setRolId(int rolId) {
-		this.rolId = rolId;
 	}
 
 	public ModuleType getModuleType() {

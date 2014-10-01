@@ -89,35 +89,23 @@ requirejs(['Aes','Constants','Play','FormOk','Notify'],function(Aes,Constants, P
 		frmLogin.onsubmit = function(e) {			
 			e.preventDefault();		
 			if(form.isValid()){
-				 Play.loadRequest(e.target,function(xhr) {
-							notify.wait('Loading...');
-							btnLogin.disabled = true;	
-							if (xhr.readyState === Constants.READYSTATE_COMPLETE) {
-								if (xhr.status === Constants.STATUS_OK) {
-									localStorage.clear();
-									sessionStorage.clear();
-									btnLogin.disabled = false;
-									if (Constants.UNSUCCESSFULLY_REQUEST === xhr.responseText) {
-										notify.danger('The name, password or user are incorrect!!!');
-									} else {																			
-										window.location = xhr.responseText;
-									}
-								} else {
-									notify.danger(xhr.responseText);
-									btnLogin.disabled = false;
-								}
-							}
-						}, function() {
-							notify.danger('Timed Out!!!');
+				 Play.sendRequest(e.target,function(){
+				             notify.wait('Loading...');
+				             btnLogin.disabled = true;
+					     },function(xhr) {						
+							localStorage.clear();
+							sessionStorage.clear();
 							btnLogin.disabled = false;
-	           });
+							if (Constants.UNSUCCESSFULLY_REQUEST === xhr.responseText) {
+								notify.danger('The name, password or user are incorrect!!!');
+							} else {																			
+								window.location = xhr.responseText;
+							}					     
+				        }
+			      );
 			}
 		}
-	}
-	 
-	 
-	 
-	 
+	}	 
 });
 
 

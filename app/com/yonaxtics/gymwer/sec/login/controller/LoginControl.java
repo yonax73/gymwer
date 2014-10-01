@@ -56,6 +56,7 @@ public class LoginControl extends SecuredController {
 		if (data.get("cbxTerms").equals(CHECKED)) {
 			if (data.get("txtPassword").equals(data.get("txtPasswordConfirm"))) {
 				user = new User(new Role(Role.SUPER_ADMIN), new Login(data.get("txtEmail"), data.get("txtPassword")));
+				user.getLogin().setUserNameByUserEmail();
 				user.setGym(new Gym(data.get("txtNameGym")));
 				if (LoginLogic.exists(user.getLogin())) {
 					if (GymLogic.exists(user.getGym())) {

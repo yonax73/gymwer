@@ -29,7 +29,7 @@
  * ========================================================================
  */
 
-define(['./Constants','./Json','./Select'], function(Constants,Json,Select) {
+define(['./Constants','./Json','./Play'], function(Constants,Json,Play) {
 	
 	/**
 	 * The lists are loaded in local storage, but when this  changed is necessary reload the list again.
@@ -40,45 +40,20 @@ define(['./Constants','./Json','./Select'], function(Constants,Json,Select) {
 	/**
 	 * Actions Load List, this list is persistent in cache server
 	 */
-	List.actionsLoad = function(callback){	
-			var xhr = new XMLHttpRequest();		
-			xhr.onreadystatechange = function () {		       
-				  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
-					  if(this.status === Constants.STATUS_OK){					  
-						  callback(this);
-					   } 					  
-				  }		  
-			}
-			xhr.open('GET','/actionsLoad');
-			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded;charset=UTF-8');
-			xhr.send();
-			xhr.timeout = Constants.TIME_OUT;
-			 xhr.ontimeout = function () {
-				 console.error('Time out!!!');										
-			}			 
+	List.actionsLoad = function(callback){
+		Play.getRequest('/actionsLoad',function(xhr){
+			   callback(xhr);
+		});	 
 	}	 
 	
 	
 	/**
 	 * entity States list,this list is persistent in local storage
 	 */
-	List.entityStates = function(callback){			
-		
-			var xhr = new XMLHttpRequest();		
-			xhr.onreadystatechange = function () {		       
-				  if (this.readyState === Constants.READYSTATE_COMPLETE) {				  						
-					  if(this.status === Constants.STATUS_OK){									  
-						  callback(this);					
-					   } 					  
-				  }		  
-			}
-			xhr.open('GET','/entityStates');
-			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded;charset=UTF-8');
-			xhr.send();
-			xhr.timeout = Constants.TIME_OUT;
-			 xhr.ontimeout = function () {
-				 console.error('Time out!!!');										
-			}			 
+	List.entityStates = function(callback){
+		Play.getRequest('/entityStates',function(xhr){
+			   callback(xhr);
+		});	 
 	} 		 
 	
 	
