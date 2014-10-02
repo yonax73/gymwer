@@ -74,7 +74,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Notify','FormOk'],function(A
  */		
 	function load(){
 		Play.getRequest('/loadGym',function(xhr){							
-			 fill(Json.parse(this.responseText););	
+			 fill(Json.parse(xhr.responseText));	
 		});
      }	
 	function fill(gym){

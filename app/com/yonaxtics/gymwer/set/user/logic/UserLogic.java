@@ -28,7 +28,7 @@ public class UserLogic {
 		boolean result = false;
 		if (user != null && user.exists()) {
 			if (user.getRole().exists() && user.getDefaultAction().exists()) {
-				result = UserDao.update(user);
+				result = UserDao.update(user);			
 			}
 		}
 		return result;

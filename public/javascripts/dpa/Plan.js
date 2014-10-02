@@ -6,6 +6,7 @@ require.config({
 	
 	paths : {
 		
+		JsPlay :    'play/yonaxtics/JSPlay',
 	    Aes :       'play/yonaxtics/google/aes',	
 		Constants : 'play/yonaxtics/Constants',
 		Play :      'play/yonaxtics/Play',		
@@ -53,7 +54,7 @@ require.config({
 
 
 
-requirejs(['Aes', 'Constants', 'Play','Json','Nav','List','Select','Tab'],function(Aes,Constants, Play, Json,Nav,List,Select,Tab) {	
+requirejs(['JsPlay','Aes', 'Constants', 'Play','Json','Nav','List','Select','Tab'],function(JsPlay,Aes,Constants, Play, Json,Nav,List,Select,Tab) {	
 /* ==================================================================================================================
  * REGION ATTRIBUTES
  * ===================================================================================================================*/
@@ -61,6 +62,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','List','Select','Tab'],functi
 	var selectStatusFilter= null;
 	var selectStatus = null;
 	var tabs = null;
+	
 /* ==================================================================================================================
  * REGION READY
  * ===================================================================================================================
@@ -128,13 +130,14 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','List','Select','Tab'],functi
 		//set time out	
      }
 	
-
+	
 function fillEntityStatesList(items){ 
-		selectStatus =  new Select(Play.getId('selectStatus'),items);
-   		selectStatus.init(Constants.ENTYTY_STATES_ACTIVE);		
+		selectStatus =  new JSPlay.Select(Play.getId('selectStatus'),items);
+   		selectStatus.init(Constants.ENTYTY_STATES_ACTIVE);	 
 }	
-function fillEntityStatesListFull(items){ 
-	selectStatusFilter = new Select(Play.getId('selectStatusFilter'),items);						
+
+function fillEntityStatesListFull(items){ 	 
+	selectStatusFilter = new JSPlay.Select(Play.getId('selectStatusFilter'),items);			
 	selectStatusFilter.init();							
 	selectStatusFilter.addItem(Constants.ENTYTY_STATES_ALL,'ALL');
 	selectStatusFilter.selectItem(Constants.ENTYTY_STATES_ALL);		
@@ -149,7 +152,8 @@ function fillEntityStatesListFull(items){
 		  Nav.init();
 		  navegationTabs();
 		  load();		 
-		  filters();		
+		  filters();	
+
 	}
 	
 	

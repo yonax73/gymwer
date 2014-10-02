@@ -22,6 +22,7 @@ public class Gym extends Entity {
 	private Location location;	
 	private List<Client> clientList;
 	private List<Plan> planList;
+	private boolean loaded;      
 	
 	public Gym(int id) {		
 		super(id);		
@@ -87,6 +88,14 @@ public class Gym extends Entity {
 
 	public void setPlanList(List<Plan> planList) {
 		this.planList = planList;
+	}
+
+	public boolean isLoaded() {
+		return loaded;
+	}
+
+	public void setLoaded(boolean loaded) {
+		this.loaded = loaded;
 	}
 
 

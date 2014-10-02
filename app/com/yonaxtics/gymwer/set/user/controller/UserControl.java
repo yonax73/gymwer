@@ -45,7 +45,13 @@ public class UserControl extends SecuredController {
 			Login login = current_login();
 			if (login != null) {
 				user.setLogin(login);
-				return authenticated(enc(Json.toJson(user).toString()));
+				Role role = current_role();
+				if (role != null) {
+					user.setRole(role);
+					return authenticated(enc(Json.toJson(user).toString()));
+				} else {
+					return badRequest("The Role is Null");
+				}
 			} else {
 				return badRequest("The Login is Null");
 			}
@@ -80,7 +86,7 @@ public class UserControl extends SecuredController {
 						}
 						if (MasterLogic.save(phone)) {
 							if (MasterLogic.save(address)) {
-								if ((!phone.isEmpty() && phone.exists()) || (!address.isEmpty() && address.exists())) {
+								if ((!phone.isEmpty() && phone.exists())|| (!address.isEmpty() && address.exists())) {
 									location.setPhone(phone);
 									location.setAddress(address);
 									if (!LocationLogic.save(location)) {
@@ -94,8 +100,11 @@ public class UserControl extends SecuredController {
 									user.getDefaultAction().setId(Integer.parseInt(data.get("txtDefaultActionId")));
 								}
 								if (UserLogic.update(user)) {
-									Persitence.setObject(user.getSerial(), user);									
-									Persitence.setObject(login.getSerial(), login);
+									role.setLoginName(login.getName());
+									role.updateActionLoadUser();
+									Persitence.setObject(user.getSerial(), user);
+									Persitence.setObject(login.getSerial(),login);
+									Persitence.setObject(role.getSerial(),role);
 									result = SUCCESS_REQUEST;
 								} else {
 									result = "Error trying save the user!";

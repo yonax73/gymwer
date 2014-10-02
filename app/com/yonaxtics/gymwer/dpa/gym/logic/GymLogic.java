@@ -27,7 +27,9 @@ public class GymLogic {
 	public static boolean load(Gym gym) {
 		boolean result = false;
 		if (gym != null && gym.exists()) {
-			result = Persitence.find(gym);
+			if(gym.isLoaded()){
+				result =  Persitence.find(gym);	
+			}			
 			if (!result) {
 				result = GymDao.load(gym);
 				if (result) {

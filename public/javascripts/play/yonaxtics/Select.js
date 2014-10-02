@@ -30,198 +30,197 @@
  */
 
 define([], function() {
-	
-	
-	 Select.element;
-	 Select.items;	 
-     Select.span;    
-     Select.input;
-     Select.inputHidden;
-     Select.i;     
-     Select.ul;
-     Select.oldItemLi;
-     Select.currentItemLi;     
-     Select.disabled;
-    
-	
-	function Select(element,items){
-		
-		Select.element = element;
-		Select.items = items;				
-		Select.element.classList.add('select');
-		Select.element.classList.add('background');		
-		Select.disabled = false;		
-		return Select;
-	}
 
-	Select.init = function(option){	     
-		Select.create();
-		Select.fill();
-		if(option !== undefined){
-		    Select.selectItem(option);			
-		}		
-	}	
-	
-	Select.create =function(){
+
+	JSPlay.Select = function(element,items){
 		
-	     Select.span = 	document.createElement('span');
-	     Select.input = document.createElement('input');	     
-	     Select.ul=  document.createElement('ul');	
-	     Select.i = document.createElement('i');	    	     
-	     Select.input.type = 'text';	 
-	     Select.input.readOnly  = true;	     
-	     Select.input.className = 'form-control'
-	     Select.i.className = 'fa fa-chevron-circle-down';	     
-	     Select.input.onchange =function(){return true;}	
-	     Select.span.appendChild(Select.input);
-	     Select.span.appendChild(Select.i);	  
-	     Select.span.onclick = function(){				 
-	    	  Select.toggle();
-	    	  Select.currentItemLi.focus();
-		 }	     
-	     Select.span.onkeydown = function checkKey(e) {
-	         e = e || window.event;
-	         if (e.keyCode === 9) {
-	        	  e.preventDefault();
-		    	  Select.toggle();
-		    	  Select.currentItemLi.focus();
-	         }
-	     }	     
-	     Select.ul.classList.add('select-list');
-	     Select.ul.classList.add('hidden');
-	     Select.inputHidden = document.createElement('input'); 
-	     Select.element.appendChild(Select.inputHidden); 	
-	     Select.inputHidden.type ='hidden';
-	     if(Select.element.dataset.name!==undefined && Select.element.dataset.name!==null){           
-           Select.inputHidden.name = Select.element.dataset.name;           
-	     }	     
-	     Select.element.appendChild(Select.span);
-	     Select.element.appendChild(Select.ul);	 
-	     
+		 var element= element;
+		 var items= items;	 
+	     var span= null;    
+	     var input= null;
+	     var inputHidden= null;
+	     var i= null;     
+	     var ul= null;
+	     var oldItemLi= null;
+	     var currentItemLi= null;     
+	     var disabled= false;
+	    
+
+
+		this.init = function(option){	  
+	        element.classList.add('select');
+		    element.classList.add('background');
+			this.create();
+			this.fill();
+			if(option !== undefined){
+			    this.selectItem(option);			
+			}		
+		}	
 		
-	}
-	
-	
-	
-	Select.fill = function(){
+		this.create =function(){
+			
+		    span = 	document.createElement('span');
+		    input = document.createElement('input');	     
+		    ul=  document.createElement('ul');	
+		    i = document.createElement('i');	    	     
+		    input.type = 'text';	 
+		    input.readOnly  = true;	     
+		    input.className = 'form-control'
+		    i.className = 'fa fa-chevron-circle-down';	     
+		    input.onchange =function(){return true;}	
+		    span.appendChild(input);
+		    span.appendChild(i);
+		    var self = this;
+		    span.onclick = function(){				 
+		    	self.toggle();
+		    	currentItemLi.focus();
+			 }	     
+		     span.onkeydown = function checkKey(e) {
+		         e = e || window.event;
+		         if (e.keyCode === 9) {
+		        	  e.preventDefault();
+		        	  self.toggle();
+		        	  currentItemLi.focus();
+		         }
+		     }	     
+		     ul.classList.add('select-list');
+		      ul.classList.add('hidden');
+		      inputHidden = document.createElement('input'); 
+		      element.appendChild( inputHidden); 	
+		      inputHidden.type ='hidden';
+		     if( element.dataset.name!==undefined &&  element.dataset.name!==null){           
+	            inputHidden.name =  element.dataset.name;           
+		     }	     
+		      element.appendChild( span);
+		      element.appendChild( ul);	 
+		     
+			
+		}
 		
-		var n = Select.items.length;		
-		for (var i = 0; i < n; i++) {			
-			  var item = Select.items[i];
-			  var li = document.createElement('li');
-			  li.textContent= item.value;			  
-			  li.tabIndex = i;
-			  li.dataset.option = item.option;
+		
+		
+		this.fill = function(){
+			
+			var n =  items.length;		
+			for (var i = 0; i < n; i++) {			
+				  var item =  items[i];
+				  var li = document.createElement('li');				
+				  li.textContent= item.value;			  
+				  li.tabIndex = i;
+				  li.dataset.option = item.option;
+				  var self = this;
+				  li.onclick = function(){					  	
+					  self.changeValue(this);			  	  
+			     }
+				 li.onkeydown = function checkKey(e) {
+			         e = e || window.event;
+			         if (e.keyCode === 13) {
+			        	  e.preventDefault();
+			        	  self.changeValue(this);
+			         }
+			     }			  
+				   ul.appendChild(li);			
+			}		
+		}
+		
+		
+		this.selectItem = function(option){
+			
+			  var itemsLi =  ul.getElementsByTagName('li');
+			  var n = itemsLi.length;		  
+			  
+			  if(n > 0){			 
+				  var flag = true;
+				  var i = 0;	
+				  do{				  
+					  var item = itemsLi[i++];			  
+					  if(item.dataset.option == option){					  
+						   currentItemLi = item;
+						  flag = false;					  
+					  }				  
+				  }while(flag || i < n);			  
+			  }
+			  
+			  input.value =   currentItemLi.textContent;
+			 
+			  input.dataset.option =  currentItemLi.dataset.option;
+			  inputHidden.value=  currentItemLi.dataset.option;
+			  currentItemLi.focus();
+			  currentItemLi.classList.add('selected');
+		}
+		
+		
+		
+	    this.toggle = function(){   	 
+	    	 if(!disabled){
+	    		 ul.classList.toggle('hidden');
+		    }  	 
+	   }
+
+	   this.changeValue = function(li){
+	       oldItemLi =  currentItemLi;
+		   currentItemLi = li;
+		   input.value = li.textContent;				  
+		   input.dataset.option = li.dataset.option;
+		   inputHidden.value= li.dataset.option;
+		   input.onchange();	
+		  this.toggle();	
+		  li.classList.add('selected');	
+		   oldItemLi.classList.remove('selected');	
+	   }
+	    
+	   this.addItem = function(option,value){
+	     	 var li = document.createElement('li');
+	     	 var self = this;
+			  li.textContent= value;			  
+			  li.tabIndex =   items.length+1;
+			  li.dataset.option = option;
 			  li.onclick = function(){					  	
-                    Select.changeValue(this);			  	  
+				  self.changeValue(this);			  	  
 		     }
 			 li.onkeydown = function checkKey(e) {
 		         e = e || window.event;
 		         if (e.keyCode === 13) {
 		        	  e.preventDefault();
-                      Select.changeValue(this);
+		        	  self.changeValue(this);	
 		         }
 		     }			  
-			  Select.ul.appendChild(li);			
-		}		
-	}
-	
-	
-	Select.selectItem = function(option){
-		
-		  var itemsLi = Select.ul.getElementsByTagName('li');
-		  var n = itemsLi.length;		  
-		  
-		  if(n > 0){			 
-			  var flag = true;
-			  var i = 0;	
-			  do{				  
-				  var item = itemsLi[i++];			  
-				  if(item.dataset.option == option){					  
-					  Select.currentItemLi = item;
-					  flag = false;					  
-				  }				  
-			  }while(flag || i < n);			  
-		  }
-		  
-		 Select.input.value =  Select.currentItemLi.textContent;
-		 
-		 Select.input.dataset.option = Select.currentItemLi.dataset.option;
-		 Select.inputHidden.value= Select.currentItemLi.dataset.option;
-		 Select.currentItemLi.focus();
-		 Select.currentItemLi.classList.add('selected');
-	}
-	
-	
-	
-    Select.toggle = function(){   	 
-    	 if(!Select.disabled){
-    		 Select.ul.classList.toggle('hidden');
-	    }  	 
-   }
+			   ul.appendChild(li);			
+	    }
+	    
+	   this.getItem = function(){
+		   
+		   return {value:input.value, option:input.dataset.option};
+	   } 
 
-   Select.changeValue = function(li){
-      Select.oldItemLi = Select.currentItemLi;
-	  Select.currentItemLi = li;
-	  Select.input.value = li.textContent;				  
-	  Select.input.dataset.option = li.dataset.option;
-	  Select.inputHidden.value= li.dataset.option;
-	  Select.input.onchange();	
-	  Select.toggle();	
-	  li.classList.add('selected');	
-	  Select.oldItemLi.classList.remove('selected');	
-   }
-    
-   Select.addItem = function(option,value){
-     	 var li = document.createElement('li');
-		  li.textContent= value;			  
-		  li.tabIndex =  Select.items.length+1;
-		  li.dataset.option = option;
-		  li.onclick = function(){					  	
-              Select.changeValue(this);			  	  
-	     }
-		 li.onkeydown = function checkKey(e) {
-	         e = e || window.event;
-	         if (e.keyCode === 13) {
-	        	  e.preventDefault();
-                  Select.changeValue(this);	
-	         }
-	     }			  
-		  Select.ul.appendChild(li);			
-    }
-    
-   Select.getItem = function(){
 	   
-	   return {value:Select.input.value, option:Select.input.dataset.option};
-   } 
-
-   
-   Select.getValue = function(){
-	   
-	   return Select.input.value;
-   }
-   
-   
-   Select.getOption = function(){
-	   
-	   return  Select.input.dataset.option;
-   } 
-	
-   Select.setDisabled = function(disabled){
-	   Select.disabled = disabled;
-	   
-	   if(Select.disabled){
-		   Select.element.classList.remove('background');		
-		   Select.element.classList.add('disabled');	
-	   }else {
-		   Select.element.classList.remove('disabled');		   	
-		   Select.element.classList.add('background');	
+	   this.getValue = function(){
+		   
+		   return input.value;
 	   }
-   }
-	
-	
-	
-	
-	return Select;
+	   
+	   
+	   this.getOption = function(){
+		   
+		   return  input.dataset.option;
+	   } 
+		
+	   this.setDisabled = function(_disabled){
+		    disabled = _disabled;
+		   
+		   if( disabled){
+			    element.classList.remove('background');		
+			    element.classList.add('disabled');	
+		   }else {
+			    element.classList.remove('disabled');		   	
+			    element.classList.add('background');	
+		   }
+	   }
+		
+		
+		
+		
+		
+	}
 	
 });

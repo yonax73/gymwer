@@ -57,16 +57,18 @@ public class GymControl extends SecuredController {
 		if (role != null) {
 			if (role.isAuthorizedToUpdateGym()) {
 				Gym gym = current_gym();
-				if (gym != null) {
+				if(gym!=null){
+					String oldName = gym.getName();
 					final Map<String, String> data = Utils.deserializeJson(dec(request().body().asText()));
 					gym.setName(data.get("txtName"));
 					if (!gym.getName().isEmpty()) {
+					  if(oldName.equals(gym.getName()) || !GymLogic.exists(gym)){
 						gym.getLocation().getPhone().setPhone(data.get("txtPhone"));
 						if (MasterLogic.save(gym.getLocation().getPhone())) {
 							gym.getLocation().getAddress().setAddress(data.get("txtAddress"));
 							if (MasterLogic.save(gym.getLocation().getAddress())) {
 								if (LocationLogic.save(gym.getLocation())) {
-									gym.setName(data.get("txtNit"));
+									gym.setNit(data.get("txtNit"));
 									if (GymLogic.update(gym)) {
 										message = SUCCESS_REQUEST;
 									} else {
@@ -81,11 +83,14 @@ public class GymControl extends SecuredController {
 						} else {
 							message = "Error trying to save Phone!";
 						}
+					  }else{
+						  message = "The name gym already exists!";
+					  }
 					} else {
-						message = "The user Name is required and can't empty";
-					}
-				} else {
-					message = "The gym is Null";
+						message = "The user Name is required and can't empty!";
+					}	
+				}else{
+					message = "The Gym Is Null";
 				}
 			} else {
 				message = "You do not have permission to edit Gym information!";

@@ -86,7 +86,19 @@ public class Role extends MasterValue {
 			permissionsDelete = role.permissionsDelete;
 			permissionsChangeStatus = role.permissionsChangeStatus;
 		}
-
+	}
+	
+	public void updateActionLoadUser(){
+		int n = permissionsLoad.size();
+		int i = 0;
+		boolean result = false;
+		do {
+			Action action = permissionsLoad.get(i++).getAction();
+			if(action.getId() == Action.LOAD_USER){
+				action.getModule().setDescription(getLoginName());
+				result = true;
+			}
+		} while (!result && i<n);
 	}
 	
 	public boolean isSuperAdmin(){

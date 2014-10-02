@@ -6,6 +6,7 @@ require.config({
 	
 	paths : {
 		
+		JsPlay :    'play/yonaxtics/JSPlay',
 	    Aes :       'play/yonaxtics/google/aes',	
 		Constants : 'play/yonaxtics/Constants',
 		Play :      'play/yonaxtics/Play',		
@@ -54,7 +55,7 @@ require.config({
 
 
 
-requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','FormOk'],function(Aes,Constants, Play, Json,Nav,Select,List,Notify,FormOk ) {
+requirejs(['JsPlay','Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','FormOk'],function(JsPlay,Aes,Constants, Play, Json,Nav,Select,List,Notify,FormOk ) {
 
 	
 	
@@ -96,7 +97,7 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 		  Play.getId('txtAddress').value = user.location.address.address;
 		  Play.getId('txtPhone').value = user.location.phone.phone;
 		  List.actionsLoad(function(xhr){
-			  selectPageHome = new Select(Play.getId('selectPageHome'),Json.parse(xhr.responseText));
+			  selectPageHome = new JSPlay.Select(Play.getId('selectPageHome'),Json.parse(xhr.responseText));
 			  selectPageHome.init(user.defaultAction.id);	
 		  });
 	}
@@ -164,6 +165,9 @@ requirejs(['Aes', 'Constants', 'Play','Json','Nav','Select','List','Notify','For
 						 btnSave.disabled = false;
 						 if(xhr.responseText === Constants.SUCCESS_REQUEST){
 							 notify.success('Your User has been saved successfully!');
+							 var loginName = Play.getId('txtNameUser').value;
+							 Play.getId('nameUser').textContent = loginName;                                               //Set the login Name of Tab
+							 document.getElementsByClassName('fa fa-user fa-fw')[0].nextSibling.textContent = loginName;   //Set the login Name of Menu
 						 }else{
 							 notify.danger(xhr.responseText); 
 						 }						

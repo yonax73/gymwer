@@ -64,7 +64,8 @@ public class GymDao extends Dao{
 			      gym.setName(rs.getString(2));
 			      gym.setLocation(new Location(rs.getInt(3)));
 			      gym.getLocation().setPhone(new Phone(rs.getInt(4),rs.getString(5)));
-			      gym.getLocation().setAddress(new Address(rs.getInt(6),rs.getString(7)));			      				
+			      gym.getLocation().setAddress(new Address(rs.getInt(6),rs.getString(7)));	
+			      gym.setLoaded(true);
 			}			
 		} catch (Exception e) {			
 			Logger.error(e.getMessage());			
