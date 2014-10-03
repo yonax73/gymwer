@@ -45,55 +45,38 @@ public class LoginControl extends SecuredController {
 
 	/**
 	 * Solo se permite crear un super admin por gimnasio, en caso de que exista
-	 * el gimansio y el usuario, o solo el gimnasio no se podra crear la cuenta.
+	 * el gimansio no se podra crear la cuenta.
 	 * 
 	 * @return result
 	 */
 	public static Result createAccount() {
 		String result = null;
 		User user = null;
+		Login login = null;
+		Gym gym = null;
 		final Map<String, String> data = Utils.deserializeJson(dec(request().body().asText()));
 		if (data.get("cbxTerms").equals(CHECKED)) {
 			if (data.get("txtPassword").equals(data.get("txtPasswordConfirm"))) {
-				user = new User(new Role(Role.SUPER_ADMIN), new Login(data.get("txtEmail"), data.get("txtPassword")));
-				user.getLogin().setUserNameByUserEmail();
-				user.setGym(new Gym(data.get("txtNameGym")));
-				if (LoginLogic.exists(user.getLogin())) {
-					if (GymLogic.exists(user.getGym())) {
-						result = "This user and gym already exists!";
-					} else if (GymLogic.create(user.getGym())) {
-						if (UserLogic.loadByEmail(user)) {
-							if (UserLogic.relationalWithGym(user)) {
-								return ok(SUCCESS_REQUEST);
+				if (!GymLogic.exists(gym)) {
+					if (GymLogic.create(gym)) {
+						login = new Login(data.get("txtEmail"),data.get("txtPassword"));
+						login.setGym(gym);
+						login.setLoginNameByUserEmail();
+						if (LoginLogic.create(login)) {
+							user = new User(new Role(Role.SUPER_ADMIN), login);
+							if (UserLogic.create(user)) {
+								result = SUCCESS_REQUEST;
 							} else {
-								result = "Error trying relational User with Gym!";
+								result = "Error trying Load User!";
 							}
 						} else {
-							result = "Error trying Load User!";
+							result = "Error trying create Login!";
 						}
 					} else {
 						result = "Error trying Create the Gym!";
 					}
-				} else if (LoginLogic.create(user.getLogin())) {
-					if (!GymLogic.exists(user.getGym())) {
-						if (GymLogic.create(user.getGym())) {
-							if (UserLogic.create(user)) {
-								if (UserLogic.relationalWithGym(user)) {
-									return ok(SUCCESS_REQUEST);
-								} else {
-									result = "Error trying relational User with Gym!";
-								}
-							} else {
-								result = "Error trying create Login!";
-							}
-						} else {
-							result = "Error trying Create the Gym!";
-						}
-					} else {
-						result = "This gym already exists!";
-					}
 				} else {
-					result = "Error trying create Login!";
+					result = "This gym already exists!";
 				}
 			} else {
 				result = "The password and its confirm are not the same!";
@@ -104,10 +87,12 @@ public class LoginControl extends SecuredController {
 		return ok(result);
 	}
 
-	public static Result signIn() {		
+	public static Result signIn() {	
+		Login login = null;		
 		final Map<String, String> data = Utils.deserializeJson(dec(request().body().asText()));
-		User user = new User(new Login(data.get("email"), data.get("password")), new Gym(data.get("gymName")));
-		if (LoginLogic.signIn(user.getLogin(), user.getGym())) {
+		login = new Login(data.get("email"), data.get("password"),new Gym(data.get("gymName")));		
+		if (LoginLogic.signIn(login)) {
+			User user = new User(login);
 			if (UserLogic.loadByLogin(user)) {				
 				session_start(user);				
 				return ok(user.getDefaultAction().getUrl());

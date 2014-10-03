@@ -2,7 +2,6 @@ package com.yonaxtics.gymwer.set.user.entity;
 
 import play.Logger;
 
-import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 import com.yonaxtics.gymwer.dpa.role.entity.Role;
 import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.set.action.entity.Action;
@@ -52,9 +51,8 @@ public class User extends Person {
         this.login = login;
 	}
 
-	public User(Login login, Gym gym) {
-		this.login = login;
-		this.gym = gym;
+	public User(Login login) {
+		this.login = login;	
 	}
 	
 	@Override
@@ -86,8 +84,7 @@ public class User extends Person {
 		this.active = user.active;
 		this.created = user.created;
 		this.defaultAction = user.defaultAction;
-		this.document = user.document;
-		this.gym = user.gym;
+		this.document = user.document;	
 		this.id = user.id;
 		this.lastName = user.lastName;
 		this.location = user.location;

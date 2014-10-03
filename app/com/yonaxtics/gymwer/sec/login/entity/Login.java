@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 
 import play.Logger;
 
+import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 import com.yonaxtics.gymwer.util.base.entity.Entity;
 
 /** 
@@ -29,13 +30,21 @@ public class Login extends Entity{
 	private String name;
 	private String email;
 	private transient String password;
+	private transient Gym gym;
 	private  String hostAddress;
 	private LocalDateTime timeout;
 	
 	public Login(String email,String password) {		
 		super(0);		
 		this.email = email;
-		this.password = password;		
+		this.password = password;			
+	}
+	
+	public Login(String email,String password,Gym gym) {		
+		super(0);		
+		this.email = email;
+		this.password = password;			
+		this.gym = gym;
 	}
 
 	@Override
@@ -49,7 +58,7 @@ public class Login extends Entity{
 		
 	}
 	
-	public void setUserNameByUserEmail(){
+	public void setLoginNameByUserEmail(){
 		 name = email.split("@")[0];
 	}
 	
@@ -133,6 +142,14 @@ public class Login extends Entity{
 
 	public void setTimeout(LocalDateTime timeout) {
 		this.timeout = timeout;
+	}
+
+	public Gym getGym() {
+		return gym;
+	}
+
+	public void setGym(Gym gym) {
+		this.gym = gym;
 	}
 
 }

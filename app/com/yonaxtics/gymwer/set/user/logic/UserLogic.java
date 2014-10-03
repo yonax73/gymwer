@@ -34,25 +34,7 @@ public class UserLogic {
 		return result;
 	}
 
-	/**
-	 * @param user
-	 * @return
-	 */
-	public static boolean relationalWithGym(User user) {
-		boolean result = false;
-		if (user != null && user.exists() && user.getGym() != null && user.getGym().exists()) {
-			result = UserDao.relationalWithGym(user);
-		}
-		return result;
-	}
 
-	public static boolean loadByEmail(User user) {
-		boolean result = false;
-		if (user != null && user.getLogin() != null && !user.getLogin().isEmpty()) {
-			result = UserDao.loadByEmail(user);
-		}
-		return result;
-	}
 
 	/**
 	 * @param user
@@ -60,7 +42,7 @@ public class UserLogic {
 	 */
 	public static boolean loadByLogin(User user) {
 		boolean result = false;
-		if (user != null && user.getLogin() != null && user.getLogin().exists() && !user.getGym().isEmpty()) {
+		if (user != null && user.getLogin() != null && user.getLogin().exists() && !user.getLogin().getGym().isEmpty()) {
 			result = Persitence.find(user);
 			if (!result) {
 				result = UserDao.loadByLogin(user);
@@ -71,7 +53,7 @@ public class UserLogic {
 					result = PermissionDao.load(role);
 				}
 				if (result) {
-					Gym gym = user.getGym();
+					Gym gym = user.getLogin().getGym();
 					Persitence.setObject(user.getSerial(), user);
 					Persitence.setObject(role.getSerial(), role);					
 					Persitence.setObject(gym.getSerial(), gym);
@@ -81,16 +63,6 @@ public class UserLogic {
 		return result;
 	}
 
-	/**
-	 * @param user
-	 * @return
-	 */
-	public static boolean loadById(User user) {
-		boolean result = false;
-		if (user != null && user.getLogin() != null && user.getLogin().exists() && !user.getGym().isEmpty()) {
-			result = UserDao.loadByLogin(user);
-		}
-		return result;
-	}
+
 
 }

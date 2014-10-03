@@ -50,12 +50,13 @@ define([], function() {
 		FormOk.inputs = element.getElementsByTagName('input');	
 		FormOk.result = false;
 		FormOk.changed = false;
-		FormOk.msgRequired = 'This field is required and can\'t be empty!!!';
-		FormOk.msgFullName = 'This field is not a valid name!!!';
-		FormOk.msgEmail = 'This field is not a valid email address!!!';
-		FormOk.msgEquals = 'This field and the field to confirm are not the same!!!';
-		FormOk.msgCheck = 'Plase check!!!;'
-		FormOk.msgAccept = 'Please accept!!!'
+		FormOk.msgRequired = 'This field is required and can\'t be empty!';
+		FormOk.msgFullName = 'This field is not a valid name!';
+		FormOk.msgEmail = 'This field is not a valid email address!';
+		FormOk.msgEquals = 'This field and the field to confirm are not the same!';
+		FormOk.msgCheck = 'Plase check!;'
+		FormOk.msgAccept = 'Please accept!'
+	    FormOk.msgMoney = 'This money format is incorrect,please check!';
 		FormOk.hasSuccess = 'has-success';
 		FormOk.hasError = 'has-error';
 		FormOk.init();
@@ -136,14 +137,10 @@ define([], function() {
 	    		  if(input.dataset.required==='true'){
 	    			  FormOk.result = FormOk.isNotEmpty(input);
 	    			  if(FormOk.result){
-	            		  if(input.dataset.fullname==='true') FormOk.result =  FormOk.isFullName(input);
-	            		  if(input.dataset.email==='true') FormOk.result =  FormOk.isEmail(input); 
-	            		  if(input.dataset.match!== undefined) FormOk.result = FormOk.isEquals(document.getElementById(input.dataset.match),input);
+	    				  FormOk.generalValidations(input);
 	    			  }
 	    		  }else{
-	        		  if(input.dataset.fullname==='true') FormOk.result =  FormOk.isFullName(input);
-	        		  if(input.dataset.email==='true') FormOk.result =  FormOk.isEmail(input);
-	        		  if(input.dataset.match!== undefined) FormOk.result = FormOk.isEquals(input, document.getElementById(input.dataset.match));
+	    			  FormOk.generalValidations(input);
 	    		  }    				
 			  break;		
 			 case 'radio':
@@ -154,6 +151,12 @@ define([], function() {
 			default:
 				break;
 		}		
+	}
+	FormOk.generalValidations=function(input){
+		  if(input.dataset.fullname==='true') FormOk.result =  FormOk.isFullName(input);
+		  if(input.dataset.email==='true') FormOk.result =  FormOk.isEmail(input); 
+		  if(input.dataset.match!== undefined) FormOk.result = FormOk.isEquals(document.getElementById(input.dataset.match),input);
+		  if(input.dataset.money==='true') FormOk.result =  FormOk.isMoney(input); 
 	}
 	
 	FormOk.isFullName = function(input){		
@@ -185,7 +188,10 @@ define([], function() {
 		return FormOk.error(input, FormOk.msgAccept); 
 	}
 	
-	
+	FormOk.isMoney = function(input){
+		if (input.value.match(/^\d+(,\d{3})*(\.\d*)?$/))return FormOk.success(input);		
+		return FormOk.error(input, FormOk.msgMoney);
+	}
 	
     FormOk.showMessage = function(input,message){    	
         var small = input.parentNode.getElementsByTagName('small')[0];
@@ -196,8 +202,7 @@ define([], function() {
     
     FormOk.hiddeMessage = function(input){    	
     	input.parentNode.getElementsByTagName('small')[0].className='hidden';        
-    }
-    
+    }    
     
     FormOk.success = function(input){
 		if(!input.parentNode.parentNode.classList.contains(FormOk.hasSuccess)){
@@ -208,8 +213,7 @@ define([], function() {
 		}
 		FormOk.hiddeMessage(input);
 		return true;
-    }
-        
+    }        
         
     FormOk.error = function(input,message){
 		if(input.parentNode.parentNode.classList.contains(FormOk.hasSuccess)){

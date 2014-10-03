@@ -8,7 +8,6 @@ import java.sql.Types;
 import play.Logger;
 import play.db.DB;
 
-import com.yonaxtics.gymwer.dpa.gym.entity.Gym;
 import com.yonaxtics.gymwer.sec.login.entity.Login;
 import com.yonaxtics.gymwer.util.base.dao.Dao;
 /** 
@@ -28,12 +27,13 @@ public class LoginDao extends Dao{
 		Connection conn = null;		
 		try {			 
 			 conn = DB.getConnection();			 
-			 String sql = "CALL sp_sec_login_CREATE(?,?,?,?);";			 
+			 String sql = "CALL sp_sec_login_CREATE(?,?,?,?,?);";			 
 			 cst = conn.prepareCall(sql);
 			 cst.registerOutParameter(1, Types.INTEGER);
 			 cst.setString(2, login.getName());
 			 cst.setString(3, login.getPassword());			 
-			 cst.setString(4, login.getEmail());				 
+			 cst.setString(4, login.getEmail());
+			 cst.setInt(5, login.getGym().getId());
 			 result = cst.executeUpdate() > 0;			 
 			 if(result) login.setId(cst.getInt(1));			 
 		} catch (Exception e) {              
@@ -45,7 +45,7 @@ public class LoginDao extends Dao{
 		return result;		
 	}	
 	
-	public static boolean signIn(Login login, Gym gym) {		
+	public static boolean signIn(Login login) {		
 		boolean result = false;		
 		CallableStatement cst = null;
 		ResultSet rs  = null;
@@ -54,7 +54,7 @@ public class LoginDao extends Dao{
 			conn = DB.getConnection();
 			String sql = "CALL sp_sec_login_SIGN_IN(?,?,?);";
 			cst = conn.prepareCall(sql);			
-			cst.setString(1, gym.getName());
+			cst.setString(1, login.getGym().getName());
 			cst.setString(2, login.getEmail());
 			cst.setString(3, login.getPassword());			
 			rs  = cst.executeQuery();			

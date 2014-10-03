@@ -70,7 +70,7 @@ public class SecuredController extends Controller {
 		Persitence.setObject(serialLogin, login);
 		currentSession.put(Login.KEY, enc(serialLogin));
 		currentSession.put(User.KEY, enc(user.getSerial()));
-		currentSession.put(Gym.KEY, enc(user.getGym().getSerial()));
+		currentSession.put(Gym.KEY, enc(login.getGym().getSerial()));
 		currentSession.put(Role.KEY, enc(user.getRole().getSerial()));
 	}
 

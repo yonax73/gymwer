@@ -217,6 +217,12 @@
 		}
     }
     
+    Play.formatMoney = function(input){
+    	input.onchange = function(){
+    		
+    	}
+    }
+    
     Play.serializeToJson = function(form){
     	var elems = form.elements;	
 		var data = {};
